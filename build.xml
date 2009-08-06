@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+
+<project name="getpartialmessages" default="dist">
+	<property name="src.dir" value="." />
+	<property name="dist.dir" value="dist" />
+	<property name="app.name" value="CompactHeader" />
+	<property name="app.id" value="${app.name}" /> <!-- extension id like: xxx@xxx.com -->
+	<property name="ff.dir" value="C:\Users\joachim\comm-central\objdir-tb-release\mozilla\dist\bin" />
+
+	<condition property="ff.present">
+		<and>
+			<isset property="ff.dir" />
+			<available file="${ff.dir}" type="dir" />
+		</and>
+	</condition>
+ 
+	<!-- copy to extensions directory -->
+	<!--
+	<target name="test.ext" depends="chrome" if="ff.present">
+		<copy file="${dist.dir}/${app.name}.jar" todir="${ff.dir}/extensions/${app.id}/chrome" overwrite="true" />
+		<copy file="${src.dir}/chrome.manifest" todir="${ff.dir}/extensions/${app.id}" overwrite="true" />
+	</target>
+	-->
+	
+	<target name="dist">
+		<zip destfile="${dist.dir}/${app.name}.xpi">
+			<fileset dir="${src.dir}">
+				<include name="chrome.manifest" />
+				<include name="install.rdf" />
+				<include name="defaults/**" />
+				<include name="chrome/**" />				
+				<exclude name="**/.*" />
+				<exclude name="**/CVS/**" />
+			</fileset>
+		</zip>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="clean.ff"  if="ff.present">
+		<delete dir="${ff.dir}/extensions/${app.id}" failonerror="false" />
+		<delete file="${ff.dir}/chrome/${app.name}.manifest" failonerror="false" />
+		<delete file="${ff.dir}/chrome/chrome/${app.name}.jar" failonerror="false" />
+	</target>
+
+</project>
