@@ -1,0 +1,5 @@
+content CompactHeader chrome/CompactHeader/content/
+skin CompactHeader global chrome/CompactHeader/skin/global/
+locale CompactHeader en-US chrome/CompactHeader/locale/en-US/
+locale CompactHeader de-DE chrome/CompactHeader/locale/de-DE/
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul 
