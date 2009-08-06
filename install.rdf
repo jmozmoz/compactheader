@@ -15,5 +15,5 @@
 				<em:maxVersion>4.0</em:maxVersion>
 			</RDF:Description>
 		</em:targetApplication>
-	<em:optionsURL/><em:updateKey/><em:hidden/></RDF:Description>
+	</RDF:Description>
 </RDF>
