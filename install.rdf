@@ -1,11 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	 xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	 xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
-		<em:version>0.2</em:version>
+		<em:version>0.2.1</em:version>
 		<em:description>Add ability to reduce header size to one line.</em:description>
 		<em:creator>Joachim Herb</em:creator>
-		<em:homepageURL> 		</em:homepageURL>
-		<em:iconURL/>
+		<em:homepageURL>http://compactheader.mozdev.org/</em:homepageURL>
 		<em:id>CompactHeader@mozilla.org</em:id>
 		<em:type>2</em:type>
 		<em:targetApplication>
