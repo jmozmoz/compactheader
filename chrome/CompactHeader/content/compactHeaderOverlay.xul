@@ -19,59 +19,56 @@
 
   <deck id="msgHeaderViewDeck">
 
-    <!-- YYY namespace ids added here? -->
-    <hbox id="expandedHeaderView">
-       <vbox insertbefore="expandedHeaders">
-				<button id="hideDetailsButton"  
-				        tooltiptext="&hideDetailsButton.label;"
-				        onclick="coheToggleHeaderView();" 
-				        class="msgHeaderView-button msgHeaderView-flat-button"/>
-	   </vbox>
-     <!-- 	
-    	<vbox id="expandedHeaders">
-
-        <hbox id="otherHeadersAndButtonsBox" flex="1">
-
-    		<hbox id="otherHeadersAndButtonsBox">
-          <vbox id="otherActionsBox">
-            <button id="hideDetailsButton" insertbefore="otherActionsButton" 
-			              label="&hideDetailsButton.label;"
-							      onclick="coheToggleHeaderView();" 
-                    class="msgHeaderView-button msgHeaderView-flat-button"/>
-		      </vbox>
-			  </hbox>
-        </hbox>
-			</vbox>
-		-->
-		</hbox>
+	<!-- YYY namespace ids added here? -->
+	<hbox id="expandedHeaderView">
+		<vbox id="hideDetailsButtonID" flex="0" insertbefore="expandedHeaders">
+			<button id="hideDetailsButton"  
+							tooltiptext="&hideDetailsButton.label;"
+							onclick="coheToggleHeaderView();" 
+							class="msgHeaderView-button msgHeaderView-flat-button"/>
+	  </vbox>
+		<vbox id="expandedHeaders" flex="1">
+			<hbox id="otherHeadersAndButtonsBox" flex="1">
+				<vbox id="otherActionsBox" align="end">
+					<button type="menu" id="otherActionsButton"
+							label="&otherActionsButton.label;"
+	                        class="msgHeaderView-button msgHeaderView-flat-button">
+						<menupopup id="otherActionsPopup">
+							<menuitem id="hideDetailsMenu" label="&hideDetailsButton.label;"
+							                               oncommand="coheToggleHeaderView();" />
+						</menupopup>
+					</button>
+				</vbox>
+			</hbox>
+		</vbox>
+	</hbox>
 
     <vbox id="collapsedHeaderView" class="header-part1 headerContainer" flex="2" pack="start">
       <hbox align="start">
-      <hbox flex="0" align="start">
-        <button id="showDetailsButton"
-                tooltiptext="&showDetailsButton.label;"
-                onclick="coheToggleHeaderView();"
-                class="msgHeaderView-button msgHeaderView-flat-button"/>
+			  <hbox flex="0" align="start">
+				<button id="showDetailsButton"
+				        tooltiptext="&showDetailsButton.label;"
+				        onclick="coheToggleHeaderView();"
+				        class="msgHeaderView-button msgHeaderView-flat-button"/>
+			  </hbox>
+			  <hbox align="baseline" flex="2">
+					<hbox id="collapsedsubjectBox" flex="1" align="start">
+					  <textbox id="collapsedsubjectValue" flex="1" readonly="true"
+					           class="collapsedHeaderValue plain"/>
+					</hbox>
+					<hbox id="collapsedfromBox" flex="0" align="end">
+					  <mail-multi-emailHeaderField id="collapsedfromValue"
+					                               class="collapsedHeaderDisplayName"
+					                               label="&fromField2.label;"/>
+					</hbox>
+					<hbox id="collapseddateBox" align="end">
+					  <textbox id="collapseddateValue" class="collapsedHeaderValue plain"
+					           readonly="true"/>
+					</hbox>
+					<header-view-button-box id="collapsedButtonBox"/>
+			  </hbox>
       </hbox>
-      <hbox align="baseline" flex="2">
-        <hbox id="collapsedsubjectBox" flex="1" align="start">
-          <textbox id="collapsedsubjectValue" flex="1" readonly="true"
-                   class="collapsedHeaderValue plain"/>
-        </hbox>
-        <hbox id="collapsedfromBox" flex="0" align="end">
-          <mail-multi-emailHeaderField id="collapsedfromValue"
-                                       class="collapsedHeaderDisplayName"
-                                       label="&fromField2.label;"/>
-        </hbox>
-        <hbox id="collapseddateBox" align="end">
-          <textbox id="collapseddateValue" class="collapsedHeaderValue plain"
-                   readonly="true"/>
-        </hbox>
-        <header-view-button-box id="collapsedButtonBox"/>
-      </hbox>
-      </hbox>
-    </vbox>
-				
- </deck>
+    </vbox>			
+	</deck>
 
 </overlay>
