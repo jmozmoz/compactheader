@@ -6,11 +6,11 @@
 
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
-		<em:version>0.2.1</em:version>
+		<em:version>0.3</em:version>
 		<em:description>Add ability to reduce header size to one line.</em:description>
 		<em:creator>Joachim Herb</em:creator>
 		<em:homepageURL>http://compactheader.mozdev.org/</em:homepageURL>
-		<em:id>CompactHeader@mozilla.org</em:id>
+		<em:id>{58D4392A-842E-11DE-B51A-C7B855D89593}</em:id>
 		<em:type>2</em:type>
 		<em:targetApplication>
 			<RDF:Description>
