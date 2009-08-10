@@ -35,6 +35,6 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY hideDetailsButton.label "hide details">
-<!ENTITY showDetailsButton.label "show details">
+<!ENTITY hideDetailsButton.label "Hide details">
+<!ENTITY showDetailsButton.label "Show details">
 

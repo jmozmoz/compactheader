@@ -69,7 +69,7 @@
   width: 1.7em;
   height: 1.7em;
   padding-bottom: 0px !important;
-  background-image: url("chrome://global/skin/tree/twisty-open.png");
+  background-image: url("chrome://CompactHeader/skin/twisty-open.png");
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -86,7 +86,7 @@
   width: 1.7em;
   height: 1.7em;
   padding-bottom: 0px !important;
-  background-image: url("chrome://global/skin/tree/twisty-clsd.png");
+  background-image: url("chrome://CompactHeader/skin/twisty-clsd.png");
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -96,7 +96,7 @@
   border: 2px solid #C0C3C6;
 }
 
-#collapsedsubjectBox {
+#collapsedsubjectBox, collapsedfromBox, collapsedfromBox,collapsedButtonBox {
   margin: 0px;
   padding: 0px;
 }
@@ -105,17 +105,32 @@
   display: none;
 }
 
-/* Header: Hide Reply Button */
-.hdrReplyButton { display: none !important; }
+/* ::::: Message Header Pane - Button Icons ::::: */
 
-/* Header: Hide Forward Button */
-.hdrForwardButton { display: none !important; }
+.hdrReplyButton {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  -moz-image-region: rect(0px 63px 16px 47px);
+}
 
-/* Header: Hide Archive Button */
-.hdrArchiveButton { display: none !important; }
+.hdrForwardButton {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  -moz-image-region: rect(0px 96px 16px 80px);
+  -moz-margin-start: 1px !important;
+}
 
-/* Header: Hide Junk Button */
-.hdrJunkButton { display: none !important; }
+.hdrArchiveButton {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  -moz-image-region: rect(0px 180px 16px 160px);
+  -moz-margin-start: 20px !important;
+}
 
-/* Header: Hide Trash Button */
-.hdrTrashButton { display: none !important; }
+.hdrJunkButton {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  -moz-image-region: rect(0px 128px 16px 112px);
+  -moz-margin-start: 10px !important;
+}
+
+.hdrTrashButton {
+  -moz-padding-start: 3px !important;
+  -moz-margin-start: 10px !important;
+}

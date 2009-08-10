@@ -21,7 +21,7 @@
 
 	<!-- YYY namespace ids added here? -->
 	<hbox id="expandedHeaderView">
-		<vbox id="hideDetailsButtonID" flex="0" insertbefore="expandedHeaders">
+		<vbox id="hideDetailsButtonID" insertbefore="expandedHeaders">
 			<button id="hideDetailsButton"  
 							tooltiptext="&hideDetailsButton.label;"
 							onclick="coheToggleHeaderView();" 
@@ -43,32 +43,33 @@
 		</vbox>
 	</hbox>
 
-    <vbox id="collapsedHeaderView" class="header-part1 headerContainer" flex="2" pack="start">
-      <hbox align="start">
-			  <hbox flex="0" align="start">
-				<button id="showDetailsButton"
-				        tooltiptext="&showDetailsButton.label;"
-				        onclick="coheToggleHeaderView();"
-				        class="msgHeaderView-button msgHeaderView-flat-button"/>
+  <vbox id="collapsedHeaderView" class="header-part1 headerContainer" flex="2" pack="start">
+
+    <hbox align="start">
+      <hbox id="showDetailsButtonBox" align="start">
+		    <button id="showDetailsButton"
+			          tooltiptext="&showDetailsButton.label;"
+			          onclick="coheToggleHeaderView();"
+			          class="msgHeaderView-button msgHeaderView-flat-button"/>
+	    </hbox>
+	    <hbox align="baseline" flex="2">
+			  <hbox id="collapsedsubjectBox" align="start" flex="1">
+			    <textbox id="collapsedsubjectValue" flex="1" readonly="true" class="collapsedHeaderValue plain"/>
 			  </hbox>
-			  <hbox align="baseline" flex="2">
-					<hbox id="collapsedsubjectBox" flex="1" align="start">
-					  <textbox id="collapsedsubjectValue" flex="1" readonly="true"
-					           class="collapsedHeaderValue plain"/>
-					</hbox>
-					<hbox id="collapsedfromBox" flex="0" align="end">
-					  <mail-multi-emailHeaderField id="collapsedfromValue"
-					                               class="collapsedHeaderDisplayName"
-					                               label="&fromField2.label;"/>
-					</hbox>
-					<hbox id="collapseddateBox" align="end">
-					  <textbox id="collapseddateValue" class="collapsedHeaderValue plain"
-					           readonly="true"/>
-					</hbox>
-					<header-view-button-box id="collapsedButtonBox"/>
+			  <hbox id="collapsedfromBox" align="end">
+			    <mail-multi-emailHeaderField id="collapsedfromValue"
+			                                 class="collapsedHeaderDisplayName"
+			                                 label="&fromField2.label;"/>
 			  </hbox>
-      </hbox>
-    </vbox>			
+			  <hbox id="collapseddateBox" align="end">
+			    <textbox id="collapseddateValue" class="collapsedHeaderValue plain" readonly="true"/>
+			  </hbox>
+			  <header-view-button-box id="collapsedButtonBox" style="display:none"/>
+	    </hbox>
+    </hbox>
+  
+  </vbox>			
+
 	</deck>
 
 </overlay>
