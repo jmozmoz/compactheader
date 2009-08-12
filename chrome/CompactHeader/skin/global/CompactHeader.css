@@ -66,8 +66,8 @@
   -moz-appearance: none !important;
   border: 2px solid transparent;
   background-color: transparent;
-  width: 1.7em;
-  height: 1.7em;
+  width: 1.3em;
+  height: 1.3em;
   padding-bottom: 0px !important;
   background-image: url("chrome://CompactHeader/skin/twisty-open.png");
   background-repeat: no-repeat;
@@ -83,8 +83,8 @@
   -moz-appearance: none !important;
   border: 2px solid transparent;
   background-color: transparent;
-  width: 1.7em;
-  height: 1.7em;
+  width: 1.3em;
+  height: 1.3em;
   padding-bottom: 0px !important;
   background-image: url("chrome://CompactHeader/skin/twisty-clsd.png");
   background-repeat: no-repeat;
@@ -133,4 +133,24 @@
 .hdrTrashButton {
   -moz-padding-start: 3px !important;
   -moz-margin-start: 10px !important;
+}
+
+.hdrReplyButton[hidden="true"] {
+	display: none !important;
+}
+
+.hdrForwardButton[hidden="true"] {
+	display: none !important;
+}
+
+.hdrArchiveButton[hidden="true"] {
+	display: none !important;
+}
+
+.hdrJunkButton[hidden="true"] {
+	display: none !important;
+}
+
+.hdrTrashButton[hidden="true"] {
+	display: none !important;
 }

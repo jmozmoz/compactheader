@@ -66,6 +66,22 @@ var gCoheBuiltCollapsedView = false;
 //  {name:"toCcBcc", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
   {name:"date", outputFunction:OutputDate}];
 
+	var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+    .getService(Components.interfaces.nsIPrefService)
+    .getBranch("extensions.CompactHeader.");
+
+	var buttonslist = ["Reply", "Forward", "Archive", "Junk", "Trash"];
+	var buttonsanonid = [["hdrReplyButton", "hdrReplyAllButton", "hdrReplyListButton"], 
+//												"hdrReplyDropdown", "hdrReplySubButton", "hdrReplyAllSubButtonSep",
+//												"hdrReplyAllSubButton", "hdrReplyAllDropdown", "hdrReplyAllSubButton",
+//												"hdrReplySubButton", "hdrReplyListDropdown", "hdrReplyListSubButton",
+//												"hdrReplyAllSubButton", "hdrReplySubButton"],
+											 ["hdrForwardButton"],
+											 ["archiveButton"],
+											 ["hdrJunkButton"],
+											 ["hdrTrashButton"]
+			];
+  
 // Now, for each view the message pane can generate, we need a global table
 // of headerEntries. These header entry objects are generated dynamically
 // based on the static data in the header lists (see above) and elements
@@ -96,9 +112,10 @@ function coheOnLoadMsgHeaderPane()
                                     Components.interfaces.nsIAbListener.all);
 
   var deckHeaderView = document.getElementById("msgHeaderViewDeck");
+  
   gCoheCollapsedHeaderViewMode = 
-	  deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
-	
+	  deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');	  
+	  
   // work around XUL deck bug where collapsed header view, if it's the persisted
   // default, wouldn't be sized properly because of the larger expanded
   // view "stretches" the deck.
@@ -179,6 +196,7 @@ function coheUpdateHeaderView()
   		showHeaderView(gCoheCollapsedHeaderView);
  	
   	UpdateJunkButton();
+  	updateHdrButtons();
 }
 
 function coheToggleHeaderView ()
@@ -198,7 +216,9 @@ function coheToggleHeaderView ()
     ClearHeaderView(gExpandedHeaderView);
     UpdateExpandedMessageHeaders();
   }
-	
+
+  updateHdrButtons();
+  
   // Work around a xul deck bug where the height of the deck is determined
 	// by the tallest panel in the deck even if that panel is not selected...
   deck.selectedPanel.collapsed = false;
@@ -219,7 +239,7 @@ function coheUpdateMessageHeaders()
 	// problem that attachment-splitter causes if it's moved high enough to
 	// affect the header box:
   document.getElementById('msgHeaderView').removeAttribute('height');
-
+	
   // iterate over each header we received and see if we have a matching entry
 	// in each header view table...
   for (var headerName in currentHeaderData)
@@ -250,5 +270,28 @@ function coheUpdateMessageHeaders()
 
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
+addEventListener('messagepane-update', coheUpdateHeaderView, true);
 
+function getCurrentMsgHdrButtonBox() {
+	return document.getElementById('msgHeaderViewDeck').selectedPanel
+									.getElementsByTagName("header-view-button-box").item(0);
+}
 
+function updateHdrButtons() {
+	  for(var i = 0; i<buttonslist.length; i++) {
+	  var buttonBox = getCurrentMsgHdrButtonBox();
+	  for (var j=0; j<buttonsanonid[i].length; j++){
+	  	var myElement = buttonBox.getButton(buttonsanonid[i][j]);
+	  	if (myElement != null) {
+		  	if (prefBranch.getBoolPref("expandedview.display" + buttonslist[i])) {
+		  		if (buttonslist[i] != "Reply") {
+		  			myElement.removeAttribute("hidden");
+		  		}
+		  	}
+		  	else {
+					myElement.setAttribute("hidden", "true");
+		  	}
+	  	}
+	  }
+  }
+}

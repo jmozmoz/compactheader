@@ -1,0 +1,8 @@
+<!ENTITY dialog.title "Compact Header">
+
+<!ENTITY groupbox.Buttons.caption "Anzuzeigende Schaltflächen">
+<!ENTITY checkbox.Compact.Reply.caption "Antworten">
+<!ENTITY checkbox.Compact.Forward.caption "Weiterleiten">
+<!ENTITY checkbox.Compact.Archive.caption "Archivieren">
+<!ENTITY checkbox.Compact.Junk.caption "Junk">
+<!ENTITY checkbox.Compact.Trash.caption "Trash">

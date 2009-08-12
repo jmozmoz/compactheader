@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
+<?xml-stylesheet type="text/css" href="chrome://communicator/skin/"?>
+<?xml-stylesheet type="text/css" href="chrome://CompactHeader/skin/preferences.css"?>
+
+<!DOCTYPE window SYSTEM "chrome://CompactHeader/locale/preferences.dtd">
+
+<!--
+  void(openDialog("chrome://CompactHeader/content/preferences.xul"))
+-->
+
+<dialog title="&dialog.title;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  onload="onLoad()" ondialogaccept="return onDialogAccept()">
+
+  <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
+
+  <groupbox>
+    <caption label="&groupbox.Buttons.caption;"/>
+    <grid>
+    	<columns>
+    		<column flex="0"/>
+    		<column flex="1"/>
+    		<column flex="1"/>
+    	</columns>
+    	<rows>
+    		<row>
+    			<label value=""/>    			
+    			<hbox pack="center">
+    			<label value="Compact"/>
+    			</hbox>
+    			<hbox pack="center">
+    			<label value="Expanded"/>
+    			</hbox>
+				</row>
+    		<row>
+    			<hbox pack="end">
+    			<label value="&checkbox.Compact.Reply.caption;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox id="checkbox.Compact.Reply"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.Reply"/>    			
+    			</hbox>
+    		</row>
+    		<row>
+    			<hbox align="center" pack="end">
+    			<label value="&checkbox.Compact.Forward.caption;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox id="checkbox.Compact.Forward"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.Forward"/>    			
+    			</hbox>
+    		</row>
+    		<row>
+    			<hbox align="center" pack="end">
+    			<label value="&checkbox.Compact.Archive.caption;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox id="checkbox.Compact.Archive"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.Archive"/>    			
+    			</hbox>
+    		</row>
+    		<row>
+    			<hbox align="center" pack="end">
+    			<label value="&checkbox.Compact.Junk.caption;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox id="checkbox.Compact.Junk"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.Junk"/>    			
+    			</hbox>
+    		</row>
+    		<row>
+    			<hbox align="center" pack="end">
+    			<label value="&checkbox.Compact.Trash.caption;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox id="checkbox.Compact.Trash"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.Trash"/>    			
+    			</hbox>
+    		</row>
+    	</rows>
+    </grid>
+  </groupbox>
+</dialog>
