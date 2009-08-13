@@ -17,16 +17,6 @@
 var prefBranch;
 
 	var buttonslist = ["Reply", "Forward", "Archive", "Junk", "Trash"];
-	var buttonsanonid = [["hdrReplyButton", "hdrReplyAllButton", "hdrReplyListButton", 
-												"hdrReplyDropdown", "hdrReplySubButton", "hdrReplyAllSubButtonSep",
-												"hdrReplyAllSubButton", "hdrReplyAllDropdown", "hdrReplyAllSubButton",
-												"hdrReplySubButton", "hdrReplyListDropdown", "hdrReplyListSubButton",
-												"hdrReplyAllSubButton", "hdrReplySubButton"],
-											 ["hdrForwardButton"],
-											 ["archiveButton"],
-											 ["hdrJunkButton"],
-											 ["hdrTrashButton"]
-			];
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -64,8 +54,6 @@ function onDialogAccept()
 	  savePrefCheckbox("expandedview.display" + buttonslist[i], "checkbox.Expanded." + buttonslist[i]);
   }
 
-  updateHdrButtons();
-  
   return true;
 }
 
@@ -80,30 +68,6 @@ function getCurrentMsgHdrButtonBox() {
 	else {
 		return null;
 	}
-}
-
-function updateHdrButtons() {
-	if (0) {
-  for(var i = 0; i<buttonslist.length; i++) {
-	  var buttonBox = getCurrentMsgHdrButtonBox();
-		if (buttonBox) {
-		  for (var j=0; j<buttonsanonid[i].length; j++){
-		  	var myElement = buttonBox.getButton(buttonsanonid[i][j]);
-		  	if (myElement != null) {
-			  	if (prefBranch.getBoolPref("expandedview.display" + buttonslist[i])) {
-			  		myElement.removeAttribute("hidden");
-			  	}
-			  	else {
-						myElement.setAttribute("hidden", "true");
-			  	}
-		  	}
-		  }
-	  }
-  }
-	var event = document.createEvent('Events');
-	event.initEvent('messagepane-loaded', true, false);
-	}
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////

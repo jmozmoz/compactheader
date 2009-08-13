@@ -108,49 +108,33 @@
 /* ::::: Message Header Pane - Button Icons ::::: */
 
 .hdrReplyButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 63px 16px 47px);
 }
 
 .hdrForwardButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 96px 16px 80px);
-  -moz-margin-start: 1px !important;
+/*  -moz-margin-start: 1px !important; */
 }
 
 .hdrArchiveButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 180px 16px 160px);
-  -moz-margin-start: 20px !important;
+/*  -moz-margin-start: 20px !important; */
 }
 
 .hdrJunkButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png") !important;
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 128px 16px 112px);
-  -moz-margin-start: 10px !important;
+/*  -moz-margin-start: 10px !important; */
 }
 
 .hdrTrashButton {
-  -moz-padding-start: 3px !important;
-  -moz-margin-start: 10px !important;
+/*  -moz-padding-start: 3px !important;
+  -moz-margin-start: 10px !important; */
 }
 
-.hdrReplyButton[hidden="true"] {
-	display: none !important;
-}
-
-.hdrForwardButton[hidden="true"] {
-	display: none !important;
-}
-
-.hdrArchiveButton[hidden="true"] {
-	display: none !important;
-}
-
-.hdrJunkButton[hidden="true"] {
-	display: none !important;
-}
-
-.hdrTrashButton[hidden="true"] {
-	display: none !important;
+.msgHeaderView-button .button-icon {
+  -moz-margin-end: 3px;
 }

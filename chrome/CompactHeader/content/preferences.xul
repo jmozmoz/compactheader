@@ -38,7 +38,7 @@
     			<label value="&checkbox.Compact.Reply.caption;"/>
     			</hbox>
     			<hbox pack="center">
-	    		<checkbox id="checkbox.Compact.Reply"/>
+	    		<checkbox disabled="true" id="checkbox.Compact.Reply"/>
     			</hbox>
     			<hbox pack="center">
   	    	<checkbox id="checkbox.Expanded.Reply"/>    			
@@ -49,7 +49,7 @@
     			<label value="&checkbox.Compact.Forward.caption;"/>
     			</hbox>
     			<hbox pack="center">
-	    		<checkbox id="checkbox.Compact.Forward"/>
+	    		<checkbox disabled="true" id="checkbox.Compact.Forward"/>
     			</hbox>
     			<hbox pack="center">
   	    	<checkbox id="checkbox.Expanded.Forward"/>    			
@@ -60,7 +60,7 @@
     			<label value="&checkbox.Compact.Archive.caption;"/>
     			</hbox>
     			<hbox pack="center">
-	    		<checkbox id="checkbox.Compact.Archive"/>
+	    		<checkbox disabled="true" id="checkbox.Compact.Archive"/>
     			</hbox>
     			<hbox pack="center">
   	    	<checkbox id="checkbox.Expanded.Archive"/>    			
@@ -71,7 +71,7 @@
     			<label value="&checkbox.Compact.Junk.caption;"/>
     			</hbox>
     			<hbox pack="center">
-	    		<checkbox id="checkbox.Compact.Junk"/>
+	    		<checkbox disabled="true" id="checkbox.Compact.Junk"/>
     			</hbox>
     			<hbox pack="center">
   	    	<checkbox id="checkbox.Expanded.Junk"/>    			
@@ -82,7 +82,7 @@
     			<label value="&checkbox.Compact.Trash.caption;"/>
     			</hbox>
     			<hbox pack="center">
-	    		<checkbox id="checkbox.Compact.Trash"/>
+	    		<checkbox disabled="true" id="checkbox.Compact.Trash"/>
     			</hbox>
     			<hbox pack="center">
   	    	<checkbox id="checkbox.Expanded.Trash"/>    			

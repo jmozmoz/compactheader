@@ -270,28 +270,71 @@ function coheUpdateMessageHeaders()
 
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
-addEventListener('messagepane-update', coheUpdateHeaderView, true);
-
-function getCurrentMsgHdrButtonBox() {
-	return document.getElementById('msgHeaderViewDeck').selectedPanel
-									.getElementsByTagName("header-view-button-box").item(0);
-}
 
 function updateHdrButtons() {
-	  for(var i = 0; i<buttonslist.length; i++) {
-	  var buttonBox = getCurrentMsgHdrButtonBox();
+	UpdateReplyButtons();
+  for(var i = 0; i<buttonslist.length; i++) {
+	  var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
+										.getElementsByTagName("header-view-button-box").item(0);
 	  for (var j=0; j<buttonsanonid[i].length; j++){
 	  	var myElement = buttonBox.getButton(buttonsanonid[i][j]);
 	  	if (myElement != null) {
-		  	if (prefBranch.getBoolPref("expandedview.display" + buttonslist[i])) {
+	  		if (prefBranch.getBoolPref("expandedview.display" + buttonslist[i])) {
 		  		if (buttonslist[i] != "Reply") {
-		  			myElement.removeAttribute("hidden");
+			  		myElement.hidden =  ! prefBranch.getBoolPref("expandedview.display" + buttonslist[i]);
 		  		}
 		  	}
 		  	else {
-					myElement.setAttribute("hidden", "true");
+		  		myElement.hidden =  ! prefBranch.getBoolPref("expandedview.display" + buttonslist[i]);
 		  	}
 	  	}
 	  }
   }
 }
+
+var myPrefObserver =
+{
+  register: function()
+  {
+    // First we'll need the preference services to look for preferences.
+    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
+                                .getService(Components.interfaces.nsIPrefService);
+
+    // For this._branch we ask that the preferences for extensions.myextension. and children
+    this._branch = prefService.getBranch("extensions.CompactHeader.");
+
+    // Now we queue the interface called nsIPrefBranch2. This interface is described as:  
+    // "nsIPrefBranch2 allows clients to observe changes to pref values."
+    this._branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+
+    // Finally add the observer.
+    this._branch.addObserver("", this, false);
+  },
+
+  unregister: function()
+  {
+    if(!this._branch) return;
+    this._branch.removeObserver("", this);
+  },
+
+  observe: function(aSubject, aTopic, aData)
+  {
+    if(aTopic != "nsPref:changed") return;
+    // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
+    // aData is the name of the pref that's been changed (relative to aSubject)
+
+    updateHdrButtons();
+    
+    /*
+    switch (aData) {
+      case "pref1":
+        // extensions.myextension.pref1 was changed
+        break;
+      case "pref2":
+        // extensions.myextension.pref2 was changed
+        break;
+    }
+    */
+  }
+}
+myPrefObserver.register();
