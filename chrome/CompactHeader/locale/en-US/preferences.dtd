@@ -1,6 +1,7 @@
 <!ENTITY dialog.title "Compact Header">
 
 <!ENTITY groupbox.Buttons.caption "Select Buttons to Display">
+<!ENTITY checkbox.Compact.TwolineView.caption "Display two lines in compact view">
 <!ENTITY checkbox.Compact.Reply.caption "Reply">
 <!ENTITY checkbox.Compact.Forward.caption "Forward">
 <!ENTITY checkbox.Compact.Archive.caption "Archive">

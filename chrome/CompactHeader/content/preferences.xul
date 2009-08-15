@@ -17,6 +17,11 @@
 
   <groupbox>
     <caption label="&groupbox.Buttons.caption;"/>
+    
+ 		<checkbox id="checkbox.Compact.TwolineView" 
+ 							label="&checkbox.Compact.TwolineView.caption;"
+ 							oncommand="updateTwolineView(this.checked);"/>
+
     <grid>
     	<columns>
     		<column flex="0"/>

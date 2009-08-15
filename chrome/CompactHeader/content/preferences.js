@@ -32,12 +32,21 @@ function onLoad()
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
 
+  loadPrefCheckbox("compactview.twolineview", "checkbox.Compact.TwolineView");
+	
+  updateTwolineView(prefBranch.getBoolPref("compactview.twolineview")); 
+  
   for(var i = 0; i<buttonslist.length; i++) {
 	  loadPrefCheckbox("compactview.display" + buttonslist[i],  "checkbox.Compact." + buttonslist[i]);
 	  loadPrefCheckbox("expandedview.display" + buttonslist[i], "checkbox.Expanded." + buttonslist[i]);
   }
 }
 
+function updateTwolineView(boolTwolineview) {
+  for(var i = 0; i<buttonslist.length; i++) {
+		document.getElementById("checkbox.Compact." + buttonslist[i]).disabled = ! boolTwolineview;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -49,7 +58,9 @@ function onLoad()
 
 function onDialogAccept()
 {
-  for(var i = 0; i<buttonslist.length; i++) {
+  savePrefCheckbox("compactview.twolineview", "checkbox.Compact.TwolineView");
+	
+	for(var i = 0; i<buttonslist.length; i++) {
 	  savePrefCheckbox("compactview.display" + buttonslist[i],  "checkbox.Compact." + buttonslist[i]);
 	  savePrefCheckbox("expandedview.display" + buttonslist[i], "checkbox.Expanded." + buttonslist[i]);
   }
@@ -57,18 +68,6 @@ function onDialogAccept()
   return true;
 }
 
-
-function getCurrentMsgHdrButtonBox() {
-	var msgHeaderViewDeck = top.document.getElementById('msgHeaderViewDeck');
-	if (msgHeaderViewDeck) {
-		return 	msgHeaderViewDeck.selectedPanel
-						.getElementsByTagName("header-view-button-box").item(0);
- 
-	}
-	else {
-		return null;
-	}
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
