@@ -14,8 +14,8 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/javascript"
-          src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
   <deck id="msgHeaderViewDeck">
 
@@ -43,32 +43,41 @@
 		</vbox>
 	</hbox>
 
-  <vbox id="collapsedHeaderView" class="header-part1 headerContainer" flex="2" pack="start">
-
-    <hbox align="start">
-      <hbox id="showDetailsButtonBox" align="start">
+	<vbox id="collapsedHeaderView" flex="2" pack="start" class="header-part1 headerContainer">
+		<hbox align="start" flex="0" id="collapsedHeaderViewFirstLine">
+      <hbox id="showDetailsButtonBox" align="start" flex="0">
 		    <button id="showDetailsButton"
 			          tooltiptext="&showDetailsButton.label;"
 			          onclick="coheToggleHeaderView();"
 			          class="msgHeaderView-button msgHeaderView-flat-button"/>
 	    </hbox>
-	    <hbox align="baseline" flex="2">
-			  <hbox id="collapsedsubjectBox" align="start" flex="1">
-			    <textbox id="collapsedsubjectValue" flex="1" readonly="true" class="collapsedHeaderValue plain"/>
-			  </hbox>
-			  <hbox id="collapsedfromBox" align="end">
-			    <mail-multi-emailHeaderField id="collapsedfromValue"
-			                                 class="collapsedHeaderDisplayName"
-			                                 label="&fromField2.label;"/>
-			  </hbox>
-			  <hbox id="collapseddateBox" align="end">
-			    <textbox id="collapseddateValue" class="collapsedHeaderValue plain" readonly="true"/>
-			  </hbox>
-			  <header-view-button-box id="collapsedButtonBox" style="display:none"/>
-	    </hbox>
-    </hbox>
-  
-  </vbox>			
+			<hbox id="collapsedfromBox" align="start" flex="1">
+				<mail-multi-emailHeaderField id="collapsedfromValue"
+																		 flex="0"
+																		 align="end"
+																		 pack="end"
+																		 class="collapsedHeaderDisplayName"
+																		 label="&fromField2.label;"/>
+			</hbox>
+			<hbox id="collapsedtoCcBccBox" align="end" pack="end" flex="3">
+				<hbox align="start" flex="100">
+				</hbox>
+				<mail-multi-emailHeaderField id="collapsedtoCcBccValue"
+																		 flex="1"
+																		 pack="end"
+																		 class="collapsedHeaderDisplayName"/>
+			</hbox>
+			<header-view-button-box id="collapsedButtonBox"/>
+		</hbox>	
+		<hbox align="start" flex="1" id="collapsedHeaderViewSecondLine">
+			<hbox id="collapsedsubjectBox" align="start" flex="1" style="padding-left: 10px; padding-top: 1.6px">
+				<textbox id="collapsedsubjectValue" flex="1" readonly="true" class="collapsedHeaderValue plain"/>
+			</hbox>
+			<hbox id="collapseddateBox" align="end" flex="0" style="padding-bottom: 2px">
+				<textbox id="collapseddateValue" class="plain collapsedHeaderValue" flex="0" readonly="true"/>
+			</hbox>
+		</hbox>
+	</vbox>
 
 	</deck>
 

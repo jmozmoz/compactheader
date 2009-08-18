@@ -16,8 +16,6 @@
 
 var prefBranch;
 
-	var buttonslist = ["Reply", "Forward", "Archive", "Junk", "Trash"];
-
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  onLoad
@@ -32,19 +30,18 @@ function onLoad()
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
 
-  loadPrefCheckbox("compactview.twolineview", "checkbox.Compact.TwolineView");
-	
-  updateTwolineView(prefBranch.getBoolPref("compactview.twolineview")); 
+  loadPrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
+  updateTwolineView(prefBranch.getBoolPref("headersize.twolineview")); 
   
-  for(var i = 0; i<buttonslist.length; i++) {
-	  loadPrefCheckbox("compactview.display" + buttonslist[i],  "checkbox.Compact." + buttonslist[i]);
-	  loadPrefCheckbox("expandedview.display" + buttonslist[i], "checkbox.Expanded." + buttonslist[i]);
+  for(var buttonname in buttonslist) {
+	  loadPrefCheckbox("view.compact.display" + buttonname,  "checkbox.Compact." + buttonname);
+	  loadPrefCheckbox("view.expanded.display" + buttonname, "checkbox.Expanded." + buttonname);
   }
 }
 
 function updateTwolineView(boolTwolineview) {
-  for(var i = 0; i<buttonslist.length; i++) {
-		document.getElementById("checkbox.Compact." + buttonslist[i]).disabled = ! boolTwolineview;
+  for(var buttonname in buttonslist) {
+		document.getElementById("checkbox.Compact." + buttonname).disabled = ! boolTwolineview;
   }
 }
 
@@ -58,11 +55,11 @@ function updateTwolineView(boolTwolineview) {
 
 function onDialogAccept()
 {
-  savePrefCheckbox("compactview.twolineview", "checkbox.Compact.TwolineView");
+  savePrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
 	
-	for(var i = 0; i<buttonslist.length; i++) {
-	  savePrefCheckbox("compactview.display" + buttonslist[i],  "checkbox.Compact." + buttonslist[i]);
-	  savePrefCheckbox("expandedview.display" + buttonslist[i], "checkbox.Expanded." + buttonslist[i]);
+  for(var buttonname in buttonslist) {
+	  savePrefCheckbox("view.compact.display" + buttonname,  "checkbox.Compact." + buttonname);
+	  savePrefCheckbox("view.expanded.display" + buttonname, "checkbox.Expanded." + buttonname);
   }
 
   return true;

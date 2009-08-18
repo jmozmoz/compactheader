@@ -14,6 +14,7 @@
   onload="onLoad()" ondialogaccept="return onDialogAccept()">
 
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
+  <script type="application/x-javascript" src="chrome://CompactHeader/content/buttons.js"/>
 
   <groupbox>
     <caption label="&groupbox.Buttons.caption;"/>

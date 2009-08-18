@@ -60,49 +60,224 @@ var gCoheBuiltCollapsedView = false;
  * The collapsed view: very lightweight. We only show a couple of fields.  See
  * msgHdrViewOverlay.js for details of the field definition semantics.
  */
- var gCoheCollapsedHeaderList = [
+var gCoheCollapsedHeaderList = [
   {name:"subject", outputFunction:coheUpdateHeaderValueInTextNode},
   {name:"from", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
-//  {name:"toCcBcc", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
+  {name:"toCcBcc", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
   {name:"date", outputFunction:OutputDate}];
 
 	var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
 
-	var buttonslist = ["Reply", "Forward", "Archive", "Junk", "Trash"];
-	var buttonsanonid = [["hdrReplyButton", "hdrReplyAllButton", "hdrReplyListButton"], 
-//												"hdrReplyDropdown", "hdrReplySubButton", "hdrReplyAllSubButtonSep",
-//												"hdrReplyAllSubButton", "hdrReplyAllDropdown", "hdrReplyAllSubButton",
-//												"hdrReplySubButton", "hdrReplyListDropdown", "hdrReplyListSubButton",
-//												"hdrReplyAllSubButton", "hdrReplySubButton"],
-											 ["hdrForwardButton"],
-											 ["archiveButton"],
-											 ["hdrJunkButton"],
-											 ["hdrTrashButton"]
-			];
-  
+
+function cleanupHeaderXUL(){
+	var xularray = ["collapsedfromBox", "collapsedtoCcBccBox", 
+									"collapsedButtonBox", "collapsedsubjectBox", 
+									"collapseddateBox", "coheBaselineBox"];
+	for (var i=0; i<xularray.length; i++) {
+		var x = document.getElementById(xularray[i]);
+		if (x != null) {
+			x.parentNode.removeChild(x);
+		}
+	}
+}
+    
+function create2LHeaderXUL() {
+	cleanupHeaderXUL();
+	
+	var myElement = document.getElementById("collapsedHeaderViewFirstLine");
+
+	var xul1   = document.createElement("hbox");
+	xul1.id    = "collapsedfromBox";
+	xul1.align = "start";
+	xul1.flex  = "0";
+
+	var xultmp   = document.createElement("mail-multi-emailHeaderField");
+	xultmp.id    = "collapsedfromValue";
+	xultmp.setAttribute("class","collapsedHeaderDisplayName");
+	xultmp.label = "&fromField2.label;";
+	xul1.appendChild(xultmp,xul1);
+	
+	myElement.appendChild(xul1, myElement);
+
+	var xul2   = document.createElement("hbox");
+	xul2.id    = "collapsedtoCcBccBox";
+	xul2.align = "end";
+	xul2.pack  = "end";
+	xul2.flex  = "1";
+
+	var xultmp   = document.createElement("hbox");
+	xultmp.flex  = "100";
+	xultmp.align = "start";
+	xul2.appendChild(xultmp, xul2);
+	
+	var xultmp   = document.createElement("mail-multi-emailHeaderField");
+	xultmp.id    = "collapsedtoCcBccValue";
+	xultmp.flex  = "1";
+	xultmp.align = "end";
+	xultmp.pack  = "end";
+	xultmp.setAttribute("class","collapsedHeaderDisplayName");
+	xul2.appendChild(xultmp, xul2);
+
+	myElement.appendChild(xul2, myElement);
+
+	var xul3   = document.createElement("header-view-button-box");
+	xul3.id    = "collapsedButtonBox";
+
+	myElement.appendChild(xul3, myElement);
+	
+	//				<hbox id="collapsedsubjectBox" align="start" flex="1" style="padding-left: 10px; padding-top: 1.6px">
+	//				<textbox id="collapsedsubjectValue" flex="1" readonly="true" class="collapsedHeaderValue plain"/>
+	//			</hbox>
+
+	var myElement = document.getElementById("collapsedHeaderViewSecondLine");
+				
+	var xul4   = document.createElement("hbox");
+	xul4.id    = "collapsedsubjectBox";
+	xul4.align = "start";
+	xul4.flex  = "1";
+
+	var xultmp   = document.createElement("textbox");
+	xultmp.id    = "collapsedsubjectValue";
+	xultmp.flex  = "1";
+	xultmp.setAttribute("class", "collapsedHeaderValue plain");
+	xultmp.setAttribute("readonly", "true");
+
+	xul4.appendChild(xultmp, xul4);
+
+	myElement.appendChild(xul4, myElement);
+
+//				<hbox id="collapseddateBox" align="end" flex="0" style="padding-bottom: 2px">
+//					<textbox id="collapseddateValue" class="plain collapsedHeaderValue" flex="0" readonly="true"/>
+//				</hbox>
+	var xul5   = document.createElement("hbox");
+	xul5.id    = "collapseddateBox";
+	xul5.align = "end";
+	xul5.pack  = "end";
+	xul5.flex  = "0";
+
+	var xultmp   = document.createElement("textbox");
+	xultmp.id    = "collapseddateValue";
+	xultmp.flex  = "0";
+	xultmp.pack  = "end";
+	xultmp.setAttribute("class", "collapsedHeaderValue plain");
+	xultmp.setAttribute("readonly", "true");
+	xul5.appendChild(xultmp, xul5);
+
+	myElement.appendChild(xul5, myElement);
+
+}
+
+function create1LHeaderXUL() {
+	cleanupHeaderXUL();
+	
+	var myElement = document.getElementById("collapsedHeaderViewFirstLine");
+
+	var xul0   = document.createElement("hbox");
+	xul0.id    = "coheBaselineBox";
+	xul0.align = "baseline";
+	xul0.flex  = "2";
+
+	myElement.appendChild(xul0, myElement);
+
+	var xul4   = document.createElement("hbox");
+	xul4.id    = "collapsedsubjectBox";
+	xul4.align = "start";
+	xul4.flex  = "1";
+	xul0.appendChild(xul4, xul0);
+
+	var xultmp   = document.createElement("textbox");
+	xultmp.id    = "collapsedsubjectValue";
+	xultmp.flex  = "1";
+	xultmp.setAttribute("class", "collapsedHeaderValue plain");
+	xultmp.setAttribute("readonly", "true");
+	xul4.appendChild(xultmp, xul4);
+
+	
+	var xul2   = document.createElement("hbox");
+	xul2.id    = "collapsedtoCcBccBox";
+	xul2.align = "end";
+	xul2.pack  = "end";
+	xul2.flex  = "1";
+	xul0.appendChild(xul2, xul0);
+
+	var xultmp   = document.createElement("mail-multi-emailHeaderField");
+	xultmp.id    = "collapsedtoCcBccValue";
+	xultmp.flex  = "1";
+	xultmp.align = "end";
+	xultmp.pack  = "end";
+	xultmp.setAttribute("class", "collapsedHeaderDisplayName");
+	xultmp.hidden = "true";
+	xul2.appendChild(xultmp, xul2);
+
+	
+	var xul1   = document.createElement("hbox");
+	xul1.id    = "collapsedfromBox";
+	xul1.align = "end";
+	xul0.appendChild(xul1, xul0);
+
+	var xultmp   = document.createElement("mail-multi-emailHeaderField");
+	xultmp.id    = "collapsedfromValue";
+	xultmp.setAttribute("class", "collapsedHeaderDisplayName");
+	xultmp.label = "&fromField2.label;";
+	xul1.appendChild(xultmp,xul1);
+
+	var xul5   = document.createElement("hbox");
+	xul5.id    = "collapseddateBox";
+	xul5.align = "end";
+	xul0.appendChild(xul5, xul0);
+
+	var xultmp   = document.createElement("textbox");
+	xultmp.id    = "collapseddateValue";
+	xultmp.setAttribute("readonly", "true");
+
+	xultmp.setAttribute("class", "collapsedHeaderValue plain");
+	xul5.appendChild(xultmp, xul5);
+
+
+	var xul3   = document.createElement("header-view-button-box");
+	xul3.id    = "collapsedButtonBox";
+	xul3.hidden = "true";
+
+	myElement.appendChild(xul3, myElement);
+	
+}
+
 // Now, for each view the message pane can generate, we need a global table
 // of headerEntries. These header entry objects are generated dynamically
 // based on the static data in the header lists (see above) and elements
 // we find in the DOM based on properties in the header lists.
 var gCoheCollapsedHeaderView = {};
 
-function coheInitializeHeaderViewTables()
+function coheReInitializeHeaderViewTables()
 {
   // iterate over each header in our header list array, create a header entry
 	// for it, and store it in our header table
+	if (prefBranch.getBoolPref("headersize.twolineview")) {
+  	create2LHeaderXUL();
+	} else {
+  	create1LHeaderXUL();
+	}
+	
+	var tb = document.getElementById("collapsedsubjectValue");
+  gCoheCollapsedHeaderView = {};
   var index;
-  for (index = 0; index < gCoheCollapsedHeaderList.length; index++)
-    {
-      gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
-        new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
-    }
+  for (index = 0; index < gCoheCollapsedHeaderList.length; index++) {
+    gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
+      new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
+  }
+}
+
+function coheInitializeHeaderViewTables()
+{
+  coheReInitializeHeaderViewTables();
+  updateHdrButtons();
 }
 
 function coheOnLoadMsgHeaderPane()
 { 
-  coheInitializeHeaderViewTables();
+	coheInitializeHeaderViewTables();
 
   // Add an address book listener so we can update the header view when things
   // change.
@@ -112,7 +287,7 @@ function coheOnLoadMsgHeaderPane()
                                     Components.interfaces.nsIAbListener.all);
 
   var deckHeaderView = document.getElementById("msgHeaderViewDeck");
-  
+
   gCoheCollapsedHeaderViewMode = 
 	  deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');	  
 	  
@@ -137,7 +312,7 @@ var coheMessageListener =
   onEndHeaders: 
 	function cML_onEndHeaders() {
 		ClearHeaderView(gCoheCollapsedHeaderView);	
-    	coheUpdateMessageHeaders();
+   	coheUpdateMessageHeaders();
 	},
 	
 	onEndAttachments: function cML_onEndAttachments(){}
@@ -196,6 +371,7 @@ function coheUpdateHeaderView()
   		showHeaderView(gCoheCollapsedHeaderView);
  	
   	UpdateJunkButton();
+ 		UpdateReplyButtons();
   	updateHdrButtons();
 }
 
@@ -217,6 +393,7 @@ function coheToggleHeaderView ()
     UpdateExpandedMessageHeaders();
   }
 
+ 	UpdateReplyButtons();
   updateHdrButtons();
   
   // Work around a xul deck bug where the height of the deck is determined
@@ -272,27 +449,37 @@ addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 
 function updateHdrButtons() {
-	UpdateReplyButtons();
-  for(var i = 0; i<buttonslist.length; i++) {
-	  var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
+	
+  for(var buttonname in buttonslist) {
+  	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
 										.getElementsByTagName("header-view-button-box").item(0);
-	  for (var j=0; j<buttonsanonid[i].length; j++){
-	  	var myElement = buttonBox.getButton(buttonsanonid[i][j]);
+
+		var strViewMode;
+		if (gCoheCollapsedHeaderViewMode)
+			strViewMode = "view.compact";
+		else
+		  strViewMode = "view.expanded";
+		for (var j=0; j<buttonslist[buttonname].length; j++){
+	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]);
 	  	if (myElement != null) {
-	  		if (prefBranch.getBoolPref("expandedview.display" + buttonslist[i])) {
-		  		if (buttonslist[i] != "Reply") {
-			  		myElement.hidden =  ! prefBranch.getBoolPref("expandedview.display" + buttonslist[i]);
+	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {
+		  		if (buttonname != "Reply") {
+			  		myElement.hidden =  false; //! prefBranch.getBoolPref("expandedview.display" + buttonname);
 		  		}
 		  	}
 		  	else {
-		  		myElement.hidden =  ! prefBranch.getBoolPref("expandedview.display" + buttonslist[i]);
+		  		myElement.hidden =  true ; //! prefBranch.getBoolPref(strViewMode + "display" + buttonname);
 		  	}
+	  	}
+	  	else {
+	  		alert("myElement null");
 	  	}
 	  }
   }
 }
 
-var myPrefObserver =
+
+var myPrefObserverView =
 {
   register: function()
   {
@@ -301,7 +488,7 @@ var myPrefObserver =
                                 .getService(Components.interfaces.nsIPrefService);
 
     // For this._branch we ask that the preferences for extensions.myextension. and children
-    this._branch = prefService.getBranch("extensions.CompactHeader.");
+    this._branch = prefService.getBranch("extensions.CompactHeader.view.");
 
     // Now we queue the interface called nsIPrefBranch2. This interface is described as:  
     // "nsIPrefBranch2 allows clients to observe changes to pref values."
@@ -323,18 +510,50 @@ var myPrefObserver =
     // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
     // aData is the name of the pref that's been changed (relative to aSubject)
 
+ 		UpdateReplyButtons();
     updateHdrButtons();
     
-    /*
-    switch (aData) {
-      case "pref1":
-        // extensions.myextension.pref1 was changed
-        break;
-      case "pref2":
-        // extensions.myextension.pref2 was changed
-        break;
-    }
-    */
   }
 }
-myPrefObserver.register();
+
+var myPrefObserverHeaderSize =
+{
+  register: function()
+  {
+    // First we'll need the preference services to look for preferences.
+    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
+                                .getService(Components.interfaces.nsIPrefService);
+
+    // For this._branch we ask that the preferences for extensions.myextension. and children
+    this._branch = prefService.getBranch("extensions.CompactHeader.headersize.");
+
+    // Now we queue the interface called nsIPrefBranch2. This interface is described as:  
+    // "nsIPrefBranch2 allows clients to observe changes to pref values."
+    this._branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+
+    // Finally add the observer.
+    this._branch.addObserver("", this, false);
+  },
+
+  unregister: function()
+  {
+    if(!this._branch) return;
+    this._branch.removeObserver("", this);
+  },
+
+  observe: function(aSubject, aTopic, aData)
+  {
+    if(aTopic != "nsPref:changed") return;
+    // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
+    // aData is the name of the pref that's been changed (relative to aSubject)
+
+		coheReInitializeHeaderViewTables();
+		UpdateReplyButtons();
+    updateHdrButtons();
+	  gDBView.reloadMessage();
+  
+  }
+}
+
+myPrefObserverView.register();
+myPrefObserverHeaderSize.register();
