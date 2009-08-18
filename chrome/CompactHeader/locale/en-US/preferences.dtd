@@ -7,3 +7,8 @@
 <!ENTITY checkbox.Compact.Archive.caption "Archive">
 <!ENTITY checkbox.Compact.Junk.caption "Junk">
 <!ENTITY checkbox.Compact.Trash.caption "Trash">
+
+<!ENTITY menu.IconText.caption "Button Style">
+<!ENTITY menu.IconText.IconText "Icon &amp; Text">
+<!ENTITY menu.IconText.Icon "Icon">
+<!ENTITY menu.IconText.Text "Text">

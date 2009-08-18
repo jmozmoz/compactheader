@@ -91,7 +91,7 @@ function create2LHeaderXUL() {
 	var xul1   = document.createElement("hbox");
 	xul1.id    = "collapsedfromBox";
 	xul1.align = "start";
-	xul1.flex  = "0";
+	xul1.flex  = "100";
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
 	xultmp.id    = "collapsedfromValue";
@@ -107,11 +107,12 @@ function create2LHeaderXUL() {
 	xul2.pack  = "end";
 	xul2.flex  = "1";
 
+	/*
 	var xultmp   = document.createElement("hbox");
 	xultmp.flex  = "100";
 	xultmp.align = "start";
 	xul2.appendChild(xultmp, xul2);
-	
+	*/
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
 	xultmp.id    = "collapsedtoCcBccValue";
 	xultmp.flex  = "1";

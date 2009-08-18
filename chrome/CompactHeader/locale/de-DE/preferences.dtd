@@ -7,3 +7,9 @@
 <!ENTITY checkbox.Compact.Archive.caption "Archivieren">
 <!ENTITY checkbox.Compact.Junk.caption "Junk">
 <!ENTITY checkbox.Compact.Trash.caption "Löschen">
+
+
+<!ENTITY menu.IconText.caption "Schaltflächenlayout">
+<!ENTITY menu.IconText.IconText "Icon &amp; Text">
+<!ENTITY menu.IconText.Icon "Icon">
+<!ENTITY menu.IconText.Text "Text">

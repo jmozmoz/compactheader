@@ -32,6 +32,8 @@ function onLoad()
 
   loadPrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
   updateTwolineView(prefBranch.getBoolPref("headersize.twolineview")); 
+
+  //document.getElementById("prefIconText").value = prefBranch.getIntPref("buttons.showicontext");
   
   for(var buttonname in buttonslist) {
 	  loadPrefCheckbox("view.compact.display" + buttonname,  "checkbox.Compact." + buttonname);
@@ -56,7 +58,8 @@ function updateTwolineView(boolTwolineview) {
 function onDialogAccept()
 {
   savePrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
-	
+
+  //prefBranch.setIntPref("buttons.showicontext", document.getElementById("prefIconText").value);
   for(var buttonname in buttonslist) {
 	  savePrefCheckbox("view.compact.display" + buttonname,  "checkbox.Compact." + buttonname);
 	  savePrefCheckbox("view.expanded.display" + buttonname, "checkbox.Expanded." + buttonname);
