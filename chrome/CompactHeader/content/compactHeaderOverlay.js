@@ -168,6 +168,8 @@ function create2LHeaderXUL() {
 
 	myElement.appendChild(xul5, myElement);
 
+	document.getElementById("collapsedsubjectBox").setAttribute("twolineview", "true");
+
 }
 
 function create1LHeaderXUL() {
@@ -185,12 +187,12 @@ function create1LHeaderXUL() {
 	var xul4   = document.createElement("hbox");
 	xul4.id    = "collapsedsubjectBox";
 	xul4.align = "start";
-	xul4.flex  = "1";
+	xul4.flex  = "99";
 	xul0.appendChild(xul4, xul0);
 
 	var xultmp   = document.createElement("textbox");
 	xultmp.id    = "collapsedsubjectValue";
-	xultmp.flex  = "1";
+	xultmp.flex  = "99";
 	xultmp.setAttribute("class", "collapsedHeaderValue plain");
 	xultmp.setAttribute("readonly", "true");
 	xul4.appendChild(xultmp, xul4);
@@ -242,7 +244,7 @@ function create1LHeaderXUL() {
 	xul3.hidden = "true";
 
 	myElement.appendChild(xul3, myElement);
-	
+	document.getElementById("collapsedsubjectBox").removeAttribute("twolineview");
 }
 
 // Now, for each view the message pane can generate, we need a global table
@@ -268,12 +270,30 @@ function coheReInitializeHeaderViewTables()
     gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
       new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
   }
+  updateHdrButtons();
+  updateHdrIconText();
 }
 
 function coheInitializeHeaderViewTables()
 {
-  coheReInitializeHeaderViewTables();
+/*  coheReInitializeHeaderViewTables(); */
+  // iterate over each header in our header list array, create a header entry
+	// for it, and store it in our header table
+	if (prefBranch.getBoolPref("headersize.twolineview")) {
+  	create2LHeaderXUL();
+	} else {
+  	create1LHeaderXUL();
+	}
+	
+	var tb = document.getElementById("collapsedsubjectValue");
+  gCoheCollapsedHeaderView = {};
+  var index;
+  for (index = 0; index < gCoheCollapsedHeaderList.length; index++) {
+    gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
+      new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
+  }
   updateHdrButtons();
+  updateHdrIconText();
 }
 
 function coheOnLoadMsgHeaderPane()
@@ -451,9 +471,9 @@ addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 
 function updateHdrButtons() {
 	
+	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
+									.getElementsByTagName("header-view-button-box").item(0);
   for(var buttonname in buttonslist) {
-  	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
-										.getElementsByTagName("header-view-button-box").item(0);
 
 		var strViewMode;
 		if (gCoheCollapsedHeaderViewMode)
@@ -479,6 +499,18 @@ function updateHdrButtons() {
   }
 }
 
+function updateHdrIconText() {
+	var myE1 = document.getElementById("collapsedButtonBox");
+	var myE2 = document.getElementById("expandedButtonBox");
+	
+	if (prefBranch.getBoolPref("buttons.showonlyicon")) {
+		myE1.setAttribute("OnlyIcon", "Icon");
+		myE2.setAttribute("OnlyIcon", "Icon");
+	} else {
+		myE1.removeAttribute("OnlyIcon");
+		myE2.removeAttribute("OnlyIcon");
+	}
+}
 
 var myPrefObserverView =
 {
@@ -550,11 +582,46 @@ var myPrefObserverHeaderSize =
 
 		coheReInitializeHeaderViewTables();
 		UpdateReplyButtons();
-    updateHdrButtons();
 	  gDBView.reloadMessage();
   
   }
 }
 
+var myPrefObserverIconText =
+{
+  register: function()
+  {
+    // First we'll need the preference services to look for preferences.
+    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
+                                .getService(Components.interfaces.nsIPrefService);
+
+    // For this._branch we ask that the preferences for extensions.myextension. and children
+    this._branch = prefService.getBranch("extensions.CompactHeader.buttons.");
+
+    // Now we queue the interface called nsIPrefBranch2. This interface is described as:  
+    // "nsIPrefBranch2 allows clients to observe changes to pref values."
+    this._branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+
+    // Finally add the observer.
+    this._branch.addObserver("", this, false);
+  },
+
+  unregister: function()
+  {
+    if(!this._branch) return;
+    this._branch.removeObserver("", this);
+  },
+
+  observe: function(aSubject, aTopic, aData)
+  {
+    if(aTopic != "nsPref:changed") return;
+    // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
+    // aData is the name of the pref that's been changed (relative to aSubject)
+
+    updateHdrIconText();  
+  }
+}
+
 myPrefObserverView.register();
 myPrefObserverHeaderSize.register();
+myPrefObserverIconText.register();

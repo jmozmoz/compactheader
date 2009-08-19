@@ -6,8 +6,8 @@
 
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
-		<em:version>0.3.5</em:version>
-		<em:description>Add ability to reduce header size to one line.</em:description>
+		<em:version>0.4.0</em:version>
+		<em:description>Add ability to reduce header size to one or two lines.</em:description>
 		<em:creator>Joachim Herb</em:creator>
 		<em:contributor>Zamula</em:contributor>
     <em:optionsURL>chrome://CompactHeader/content/preferences.xul</em:optionsURL>

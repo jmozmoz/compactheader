@@ -16,28 +16,16 @@
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
   <script type="application/x-javascript" src="chrome://CompactHeader/content/buttons.js"/>
 
+	<checkbox id="checkbox.Compact.TwolineView" 
+						label="&checkbox.Compact.TwolineView.caption;"
+						oncommand="updateTwolineView(this.checked);"/>
+						
+	<checkbox id="checkbox.IconText" 
+						label="&menu.IconText.caption;"/>
+
   <groupbox>
     <caption label="&groupbox.Buttons.caption;"/>
-    
- 		<checkbox id="checkbox.Compact.TwolineView" 
- 							label="&checkbox.Compact.TwolineView.caption;"
- 							oncommand="updateTwolineView(this.checked);"/>
-		<!--
-		<hbox>
-	    <vbox flex="2" align="center" pack="center">
-	 	  	<label value="&menu.IconText.caption;" control="prefIconText"/>
-	 	  </vbox>
-			<vbox flex="1">
-		    <menulist id="prefIconText">
-		      <menupopup>
-		        <menuitem value="0" label="&menu.IconText.IconText;"/>
-		        <menuitem value="1" label="&menu.IconText.Icon;"/>
-		        <menuitem value="2" label="&menu.IconText.Text;"/>
-		      </menupopup>
-		    </menulist>
-	    </vbox>
-		</hbox>
-		-->
+ 							
     <grid>
     	<columns>
     		<column flex="0"/>
@@ -48,10 +36,10 @@
     		<row>
     			<label value=""/>    			
     			<hbox pack="center">
-    			<label value="Compact"/>
+    			<label value="&groupbox.Column.Compact;"/>
     			</hbox>
     			<hbox pack="center">
-    			<label value="Expanded"/>
+    			<label value="&groupbox.Column.Expanded;"/>
     			</hbox>
 				</row>
     		<row>
