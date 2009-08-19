@@ -14,6 +14,7 @@
 		<em:homepageURL>http://compactheader.mozdev.org/</em:homepageURL>
 		<em:id>{58D4392A-842E-11DE-B51A-C7B855D89593}</em:id>
 		<em:type>2</em:type>
+  	<em:iconURL>chrome://CompactHeader/skin/cohe-icon.png</em:iconURL>
 		<em:targetApplication>
 			<RDF:Description>
 				<em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
