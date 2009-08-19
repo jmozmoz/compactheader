@@ -51,7 +51,7 @@
 }
 
 #collapsedsubjectValue {
-  -moz-margin-start: 3px !important;
+  -moz-margin-start: 3px;
   -moz-box-align: stretch;
   font-weight: bold;
 }
@@ -59,16 +59,16 @@
 #collapseddateValue {
   -moz-box-align: stretch;
   text-align: right;
-  -moz-padding-end: 0.5em !important;
+  -moz-padding-end: 0.5em;
 }
 
 #hideDetailsButton {
-  -moz-appearance: none !important;
+  -moz-appearance: none;
   border: 2px solid transparent;
   background-color: transparent;
   width: 1.3em;
   height: 1.3em;
-  padding-bottom: 0px !important;
+  padding-bottom: 0px;
   background-image: url("chrome://CompactHeader/skin/twisty-open.png");
   background-repeat: no-repeat;
   background-position: center center;
@@ -80,12 +80,12 @@
 }
 
 #showDetailsButton {
-  -moz-appearance: none !important;
+  -moz-appearance: none;
   border: 2px solid transparent;
   background-color: transparent;
   width: 1.3em;
   height: 1.3em;
-  padding-bottom: 0px !important;
+  padding-bottom: 0px;
   background-image: url("chrome://CompactHeader/skin/twisty-clsd.png");
   background-repeat: no-repeat;
   background-position: center center;
@@ -99,6 +99,10 @@
 #collapsedsubjectBox, collapsedfromBox, collapsedfromBox,collapsedButtonBox {
   margin: 0px;
   padding: 0px;
+}
+
+#collapsedsubjectBox[twolineview="true"] {
+  -moz-margin-start: 2.5em;
 }
 
 #collapsedfromValue > .headerNameBox {
@@ -115,26 +119,26 @@
 .hdrForwardButton {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 96px 16px 80px);
-/*  -moz-margin-start: 1px !important; */
 }
 
 .hdrArchiveButton {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 180px 16px 160px);
-/*  -moz-margin-start: 20px !important; */
 }
 
 .hdrJunkButton {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 128px 16px 112px);
-/*  -moz-margin-start: 10px !important; */
 }
 
-.hdrTrashButton {
-/*  -moz-padding-start: 3px !important;
-  -moz-margin-start: 10px !important; */
+#collapsedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text,
+#expandedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text {
+  display: none;
 }
 
-.msgHeaderView-button .button-icon {
-  -moz-margin-end: 3px;
+/* set button margins */
+#collapsedButtonBox .msgHeaderView-button .button-icon,
+#expandedButtonBox .msgHeaderView-button .button-icon {
+  -moz-margin-start: 1px;
+  -moz-margin-end: 1px;
 }

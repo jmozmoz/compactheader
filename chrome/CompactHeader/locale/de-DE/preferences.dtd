@@ -1,6 +1,9 @@
 <!ENTITY dialog.title "Compact Header">
 
 <!ENTITY groupbox.Buttons.caption "Anzuzeigende Schaltflächen">
+<!ENTITY groupbox.Column.Compact "Kompakt">
+<!ENTITY groupbox.Column.Expanded "Erweitert">
+
 <!ENTITY checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
 <!ENTITY checkbox.Compact.Reply.caption "Antworten">
 <!ENTITY checkbox.Compact.Forward.caption "Weiterleiten">
@@ -9,7 +12,4 @@
 <!ENTITY checkbox.Compact.Trash.caption "Löschen">
 
 
-<!ENTITY menu.IconText.caption "Schaltflächenlayout">
-<!ENTITY menu.IconText.IconText "Icon &amp; Text">
-<!ENTITY menu.IconText.Icon "Icon">
-<!ENTITY menu.IconText.Text "Text">
+<!ENTITY menu.IconText.caption "Nur Icons in Schaltflächen">
