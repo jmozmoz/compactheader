@@ -392,7 +392,7 @@ function coheUpdateHeaderView()
   		showHeaderView(gCoheCollapsedHeaderView);
  	
   	UpdateJunkButton();
- 		UpdateReplyButtons();
+ 		updateMyReplyButtons();
   	updateHdrButtons();
 }
 
@@ -412,10 +412,10 @@ function coheToggleHeaderView ()
     deck.selectedPanel = document.getElementById("expandedHeaderView");
     ClearHeaderView(gExpandedHeaderView);
     UpdateExpandedMessageHeaders();
+	 	updateMyReplyButtons();
+	  updateHdrButtons();
   }
 
- 	UpdateReplyButtons();
-  updateHdrButtons();
   
   // Work around a xul deck bug where the height of the deck is determined
 	// by the tallest panel in the deck even if that panel is not selected...
@@ -512,6 +512,19 @@ function updateHdrIconText() {
 	}
 }
 
+function updateMyReplyButtons() {
+	UpdateReplyButtons();
+	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
+									.getElementsByTagName("header-view-button-box").item(0);
+	for (var j=0;j<buttonslist["Reply"].length; j++) {
+		var myElement = buttonBox.getButton(buttonslist["Reply"][j]);
+		if (!myElement.hidden) {
+			myElement.setAttribute("mode", buttonslist["Reply"][j]);
+		}
+	}
+}
+
+
 var myPrefObserverView =
 {
   register: function()
@@ -543,7 +556,7 @@ var myPrefObserverView =
     // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
     // aData is the name of the pref that's been changed (relative to aSubject)
 
- 		UpdateReplyButtons();
+ 		updateMyReplyButtons();
     updateHdrButtons();
     
   }
@@ -581,7 +594,7 @@ var myPrefObserverHeaderSize =
     // aData is the name of the pref that's been changed (relative to aSubject)
 
 		coheReInitializeHeaderViewTables();
-		UpdateReplyButtons();
+		updateMyReplyButtons();
 	  gDBView.reloadMessage();
   
   }

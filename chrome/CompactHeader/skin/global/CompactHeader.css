@@ -111,9 +111,19 @@
 
 /* ::::: Message Header Pane - Button Icons ::::: */
 
-.hdrReplyButton {
+.hdrReplyButton[mode="hdrReplyButton"] {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 63px 16px 47px);
+}
+
+.hdrReplyButton[mode="hdrReplyAllButton"] {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
+  -moz-image-region: rect(0px 79px 16px 64px);
+}
+
+.hdrReplyButton[mode="hdrReplyListButton"] {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
+  -moz-image-region: rect(0px 79px 16px 64px);
 }
 
 .hdrForwardButton {
