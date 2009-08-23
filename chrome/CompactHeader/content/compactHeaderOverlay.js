@@ -70,7 +70,17 @@ var gCoheCollapsedHeaderList = [
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
 
+var coheIntegrateRSSLinkify = false;
 
+if (coheIntegrateRSSLinkify) {
+	var RSSLinkify = {
+	    oldSubject: null,
+	    newSubject: null
+	};
+}
+
+var coheFirstTime = true;
+    
 function cleanupHeaderXUL(){
 	var xularray = ["collapsedfromBox", "collapsedtoCcBccBox", 
 									"collapsedButtonBox", "collapsedsubjectBox", 
@@ -253,6 +263,7 @@ function create1LHeaderXUL() {
 // we find in the DOM based on properties in the header lists.
 var gCoheCollapsedHeaderView = {};
 
+/*
 function coheReInitializeHeaderViewTables()
 {
   // iterate over each header in our header list array, create a header entry
@@ -263,16 +274,18 @@ function coheReInitializeHeaderViewTables()
   	create1LHeaderXUL();
 	}
 	
-	var tb = document.getElementById("collapsedsubjectValue");
+	// var tb = document.getElementById("collapsedsubjectValue");
   gCoheCollapsedHeaderView = {};
   var index;
   for (index = 0; index < gCoheCollapsedHeaderList.length; index++) {
     gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
       new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
   }
+    
   updateHdrButtons();
   updateHdrIconText();
 }
+*/
 
 function coheInitializeHeaderViewTables()
 {
@@ -285,13 +298,27 @@ function coheInitializeHeaderViewTables()
   	create1LHeaderXUL();
 	}
 	
-	var tb = document.getElementById("collapsedsubjectValue");
+	//var tb = document.getElementById("collapsedsubjectValue");
   gCoheCollapsedHeaderView = {};
   var index;
   for (index = 0; index < gCoheCollapsedHeaderList.length; index++) {
     gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
       new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
   }
+	if (coheIntegrateRSSLinkify) {
+	  RSSLinkify.newSubject = document.createElement("label");
+	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkValue");
+	  RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
+	  RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
+	  RSSLinkify.newSubject.setAttribute("context", "copyUrlPopup");
+	  RSSLinkify.newSubject.setAttribute("keywordrelated", "true");
+	  RSSLinkify.newSubject.setAttribute("readonly", "true");
+	  RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
+	  RSSLinkify.newSubject.setAttribute("flex", "1");
+	
+	  RSSLinkify.oldSubject = document.getElementById("collapsedsubjectValue");
+	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
+	}  
   updateHdrButtons();
   updateHdrIconText();
 }
@@ -320,7 +347,11 @@ function coheOnLoadMsgHeaderPane()
   else
     document.getElementById('collapsedHeaderView').collapsed = true;
 
-  gMessageListeners.push(coheMessageListener);
+	if (coheFirstTime)
+	{
+  	gMessageListeners.push(coheMessageListener);
+  	coheFirstTime = false;
+	}
 }
 
 var coheMessageListener = 
@@ -390,10 +421,24 @@ function coheUpdateHeaderView()
 {
 	if (gCoheCollapsedHeaderViewMode)
   		showHeaderView(gCoheCollapsedHeaderView);
- 	
-  	UpdateJunkButton();
- 		updateMyReplyButtons();
-  	updateHdrButtons();
+
+  if (coheIntegrateRSSLinkify) {
+		var url = currentHeaderData["content-base"];
+		if(url) {
+		    RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
+		                                        url.headerValue + "');");
+		    RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
+		    RSSLinkify.newSubject.setAttribute("collapsed", "false");
+		    RSSLinkify.oldSubject.setAttribute("collapsed", "true");
+		} else {
+		    RSSLinkify.newSubject.setAttribute("collapsed", "true");
+		    RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+		}
+  }
+  
+	UpdateJunkButton();
+	updateMyReplyButtons();
+	updateHdrButtons();
 }
 
 function coheToggleHeaderView ()
@@ -558,8 +603,7 @@ var myPrefObserverView =
 
  		updateMyReplyButtons();
     updateHdrButtons();
-    
-  }
+	}
 }
 
 var myPrefObserverHeaderSize =
@@ -593,10 +637,17 @@ var myPrefObserverHeaderSize =
     // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
     // aData is the name of the pref that's been changed (relative to aSubject)
 
-		coheReInitializeHeaderViewTables();
+/*		coheOnLoadMsgHeaderPane();
+		coheInitializeHeaderViewTables(); */  
+
+		var event = document.createEvent('Events');
+ 		event.initEvent('messagepane-loaded', false, true);
+		var headerViewElement = document.getElementById("msgHeaderView");
+		headerViewElement.dispatchEvent(event);
+
 		updateMyReplyButtons();
+		/*updateHdrButtons();*/
 	  gDBView.reloadMessage();
-  
   }
 }
 
