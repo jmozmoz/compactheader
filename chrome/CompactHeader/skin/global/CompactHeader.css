@@ -147,8 +147,15 @@
 }
 
 /* set button margins */
-#collapsedButtonBox .msgHeaderView-button .button-icon,
-#expandedButtonBox .msgHeaderView-button .button-icon {
+#collapsedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-icon,
+#expandedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-icon {
   -moz-margin-start: 1px;
   -moz-margin-end: 1px;
+}
+
+/* set button margins */
+#collapsedButtonBox[OnlyIcon="Text"] .msgHeaderView-button .button-icon,
+#expandedButtonBox[OnlyIcon="Text"] .msgHeaderView-button .button-icon {
+  -moz-margin-start: 1px;
+  -moz-margin-end: 5px;
 }

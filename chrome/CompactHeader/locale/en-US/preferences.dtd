@@ -1,4 +1,4 @@
-<!ENTITY dialog.title "Compact Header">
+<!ENTITY dialog.title "CompactHeader Preferences">
 
 <!ENTITY groupbox.Buttons.caption "Select Buttons to Display">
 <!ENTITY groupbox.Column.Compact "Compact">

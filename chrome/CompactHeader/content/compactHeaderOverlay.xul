@@ -7,13 +7,30 @@
 	<!ENTITY % compactHeaderDTD SYSTEM
 	"chrome://CompactHeader/locale/CompactHeader.dtd">
 	%compactHeaderDTD;
+	<!ENTITY % preferencesDTD SYSTEM
+	"chrome://CompactHeader/locale/preferences.dtd">
+	%preferencesDTD;
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd">
+  %messengerDTD;
 ]>
 
 <?xml-stylesheet href="chrome://CompactHeader/skin/CompactHeader.css" type="text/css"?>
 
+
+
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-
+<!--
+	<commandset id="mailMarkMenuItems"
+	              commandupdater="true"
+	              events="create-menu-mark"
+	              oncommandupdate="goUpdateMailMenuItems(this)">
+	
+	    <command id="cmd_markAsFlagged" 
+	    				 oncommand="goDoCommand('cmd_markAsFlagged'); event.stopPropagation()" 
+	    				 disabled="false"/>
+	</commandset>
+-->
   <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
@@ -33,9 +50,19 @@
 					<button type="menu" id="otherActionsButton"
 							label="&otherActionsButton.label;"
 	                        class="msgHeaderView-button msgHeaderView-flat-button">
-						<menupopup id="otherActionsPopup">
-							<menuitem id="hideDetailsMenu" label="&hideDetailsButton.label;"
-							                               oncommand="coheToggleHeaderView();" />
+						<menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
+							<menuitem id="hideDetailsMenu" 
+												label="&hideDetailsButton.label;"
+							          oncommand="coheToggleHeaderView();"/>
+							<menuitem id="hidecohePreferencesButton" 
+												label="&dialog.title;"
+							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
+			        <menuitem id="mailContext-markFlagged"
+			                  type="checkbox"
+			                  label="&markStarredCmd.label;"
+			                  accesskey="&markStarredCmd.accesskey;"
+			                  command="cmd_markAsFlagged"
+			                  key="key_toggleFlagged"/>
 						</menupopup>
 					</button>
 				</vbox>

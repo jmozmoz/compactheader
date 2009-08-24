@@ -10,7 +10,7 @@
   void(openDialog("chrome://CompactHeader/content/preferences.xul"))
 -->
 
-<dialog title="&dialog.title;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+<dialog id="cohePreferences" title="&dialog.title;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   onload="onLoad()" ondialogaccept="return onDialogAccept()">
 
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>

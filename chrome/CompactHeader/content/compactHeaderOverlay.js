@@ -549,11 +549,15 @@ function updateHdrIconText() {
 	var myE2 = document.getElementById("expandedButtonBox");
 	
 	if (prefBranch.getBoolPref("buttons.showonlyicon")) {
+		myE1.removeAttribute("OnlyIcon");
+		myE2.removeAttribute("OnlyIcon");
 		myE1.setAttribute("OnlyIcon", "Icon");
 		myE2.setAttribute("OnlyIcon", "Icon");
 	} else {
 		myE1.removeAttribute("OnlyIcon");
 		myE2.removeAttribute("OnlyIcon");
+		myE1.setAttribute("OnlyIcon", "Text");
+		myE2.setAttribute("OnlyIcon", "Text");
 	}
 }
 
