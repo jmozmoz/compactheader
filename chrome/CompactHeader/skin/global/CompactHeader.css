@@ -159,3 +159,7 @@
   -moz-margin-start: 1px;
   -moz-margin-end: 5px;
 }
+
+#menuLineBox{
+	margin-top: -3em;
+}

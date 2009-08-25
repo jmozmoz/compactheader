@@ -34,7 +34,16 @@
   <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
+
+	<keyset>
+		<key id="hideDetailsKey" 
+				 modifiers="shift" 
+				 key="&toggleDetails.key;"
+				 oncommand="coheToggleHeaderView();"/>
+	</keyset>
+
   <deck id="msgHeaderViewDeck">
+
 
 	<!-- YYY namespace ids added here? -->
 	<hbox id="expandedHeaderView">
@@ -44,30 +53,91 @@
 							onclick="coheToggleHeaderView();" 
 							class="msgHeaderView-button msgHeaderView-flat-button"/>
 	  </vbox>
+	  <!--
 		<vbox id="expandedHeaders" flex="1">
-			<hbox id="otherHeadersAndButtonsBox" flex="1">
-				<vbox id="otherActionsBox" align="end">
-					<button type="menu" id="otherActionsButton"
-							label="&otherActionsButton.label;"
-	                        class="msgHeaderView-button msgHeaderView-flat-button">
-						<menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
+			<hbox align="end" pack="end" flex="1">
+				<vbox id="tagMenuBox" insertbefore="otherActionsBox2" align="end" pack="end">
+					<button type="menu" 
+									id="tagMenuPopup"
+									label="&tagMenu.label;"
+	  		          class="msgHeaderView-button msgHeaderView-flat-button">
+            <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
+              <menuitem id="tagMenuPopup-tagRemoveAll" oncommand="RemoveAllMessageTags();"/>
+                <menuseparator id="tagMenuPopupAfterRemoveSeparator"/>
+                <menuseparator id="tagMenuPopupBeforeAddSeparator"/>
+                <menuitem id="PopupaddNewTag" label="&addNewTag.label;" accesskey="&addNewTag.accesskey;"
+                          oncommand="AddTag();"/>
+            </menupopup>
+					</button>
+				</vbox>
+				<vbox id="otherActionsBox2" align="end" pack="end">
+					<button type="menu" id="otherActionsButton2"
+									label="&otherActionsButton.label;"
+	                class="msgHeaderView-button msgHeaderView-flat-button">
+						<menupopup id="otherActionsPopup2" onpopupshowing="InitMessageMark()">
+			        <menuitem id="hdrPlane-markFlagged"
+			                  type="checkbox"
+			                  label="&markStarredCmd.label;"
+			                  accesskey="&markStarredCmd.accesskey;"
+			                  command="cmd_markAsFlagged"
+			                  insertbefore="viewSourceMenuItem"
+			                  key="key_toggleFlagged"/>
+							<menuseparator id="otherActionPopupAfterViewSource"/>
 							<menuitem id="hideDetailsMenu" 
 												label="&hideDetailsButton.label;"
 							          oncommand="coheToggleHeaderView();"/>
 							<menuitem id="hidecohePreferencesButton" 
 												label="&dialog.title;"
 							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
-			        <menuitem id="mailContext-markFlagged"
-			                  type="checkbox"
-			                  label="&markStarredCmd.label;"
-			                  accesskey="&markStarredCmd.accesskey;"
-			                  command="cmd_markAsFlagged"
-			                  key="key_toggleFlagged"/>
 						</menupopup>
 					</button>
 				</vbox>
 			</hbox>
 		</vbox>
+		-->
+	  
+		<hbox id="expandedHeaders" flex="1">
+			<vbox id="otherHeadersAndButtonsBox" flex="1">
+				<vbox id="otherActionsBox">
+					<button type="menu" id="otherActionsButton"
+									label="&otherActionsButton.label;"
+	                class="msgHeaderView-button msgHeaderView-flat-button">
+						<menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
+			        <menuitem id="hdrPlane-markFlagged"
+			                  type="checkbox"
+			                  label="&markStarredCmd.label;"
+			                  accesskey="&markStarredCmd.accesskey;"
+			                  command="cmd_markAsFlagged"
+			                  insertbefore="viewSourceMenuItem"
+			                  key="key_toggleFlagged"/>
+							<menuseparator id="otherActionPopupAfterViewSource"/>
+							<menuitem id="hideDetailsMenu" 
+												label="&hideDetailsButton.label;"
+							          oncommand="coheToggleHeaderView();"/>
+							<menuitem id="hidecohePreferencesButton" 
+												label="&dialog.title;"
+							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
+						</menupopup>
+					</button>
+				</vbox>
+				<vbox id="tagMenuBox">
+					<button type="menu" 
+									id="tagMenuPopup"
+									label="&tagMenu.label;"
+	  		          class="msgHeaderView-button msgHeaderView-flat-button">
+	          <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
+	            <menuitem id="tagMenuPopup-tagRemoveAll" oncommand="RemoveAllMessageTags();"/>
+	              <menuseparator id="tagMenuPopupAfterRemoveSeparator"/>
+	              <menuseparator id="tagMenuPopupBeforeAddSeparator"/>
+	              <menuitem id="PopupaddNewTag" label="&addNewTag.label;" accesskey="&addNewTag.accesskey;"
+	                        oncommand="AddTag();"/>
+	          </menupopup>
+					</button>
+				</vbox>
+			</vbox>
+			<hbox id="menuLineBox" flex="1" align="baseline" pack="end">
+			</hbox> 
+		</hbox>
 	</hbox>
 
 	<vbox id="collapsedHeaderView" flex="2" pack="start" class="header-part1 headerContainer">

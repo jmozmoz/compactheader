@@ -318,9 +318,20 @@ function coheInitializeHeaderViewTables()
 	
 	  RSSLinkify.oldSubject = document.getElementById("collapsedsubjectValue");
 	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
-	}  
+	}
+	
+	moveOtherActionBox();
   updateHdrButtons();
   updateHdrIconText();
+}
+
+function moveOtherActionBox() {
+	var newParent = document.getElementById("menuLineBox");
+	var myElement = document.getElementById("tagMenuBox");
+	newParent.appendChild(myElement);
+	//newParent = document.getElementById("otherBoxSpace");
+	myElement = document.getElementById("otherActionsBox");
+	newParent.appendChild(myElement);
 }
 
 function coheOnLoadMsgHeaderPane()
@@ -435,7 +446,8 @@ function coheUpdateHeaderView()
 		    RSSLinkify.oldSubject.setAttribute("collapsed", "false");
 		}
   }
-  
+
+	//moveOtherActionBox();
 	UpdateJunkButton();
 	updateMyReplyButtons();
 	updateHdrButtons();
