@@ -36,5 +36,6 @@
  ***** END LICENSE BLOCK ***** -->
 
 <!ENTITY hideDetailsButton.label "Hide details">
+<!ENTITY toggleDetails.key "h">
 <!ENTITY showDetailsButton.label "Show details">
 
