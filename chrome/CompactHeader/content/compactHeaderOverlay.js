@@ -320,7 +320,7 @@ function coheInitializeHeaderViewTables()
 	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
 	}
 	
-	moveOtherActionBox();
+	//moveOtherActionBox();
   updateHdrButtons();
   updateHdrIconText();
 }
@@ -584,6 +584,36 @@ function updateMyReplyButtons() {
 		}
 	}
 }
+
+function MyInitViewHeadersMenu()
+{
+  var headerchoice = 1;
+  try
+  {
+    headerchoice = pref.getIntPref("mail.show_headers");
+  }
+  catch (ex)
+  {
+    dump("failed to get the header pref\n");
+  }
+
+  var id = null;
+  switch (headerchoice)
+  {
+    case 2:
+      id = "my_viewallheaders";
+      break;
+    case 1:
+    default:
+      id = "my_viewnormalheaders";
+      break;
+  }
+
+  var menuitem = document.getElementById(id);
+  if (menuitem)
+    menuitem.setAttribute("checked", "true");
+}
+
 
 
 var myPrefObserverView =

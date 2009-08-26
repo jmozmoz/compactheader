@@ -20,20 +20,18 @@
 
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-<!--
-	<commandset id="mailMarkMenuItems"
-	              commandupdater="true"
-	              events="create-menu-mark"
-	              oncommandupdate="goUpdateMailMenuItems(this)">
-	
-	    <command id="cmd_markAsFlagged" 
-	    				 oncommand="goDoCommand('cmd_markAsFlagged'); event.stopPropagation()" 
-	    				 disabled="false"/>
-	</commandset>
--->
+
   <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
+	<commandset id="mailViewHeaderCommands"
+	              commandupdater="true"
+	              events="create-menu-view-header"
+	              oncommandupdate="alert('test1');goUpdateMailMenuItems(this);">
+	
+	    <command id="cmd_viewAllHeader" oncommand="alert('test2');goDoCommand('cmd_viewAllHeader'); event.stopPropagation()"/>
+	    <command id="cmd_viewNormalHeader" oncommand="alert('test2');goDoCommand('cmd_viewNormalHeader'); event.stopPropagation()"/>
+	</commandset>
 
 	<keyset>
 		<key id="hideDetailsKey" 
@@ -53,48 +51,6 @@
 							onclick="coheToggleHeaderView();" 
 							class="msgHeaderView-button msgHeaderView-flat-button"/>
 	  </vbox>
-	  <!--
-		<vbox id="expandedHeaders" flex="1">
-			<hbox align="end" pack="end" flex="1">
-				<vbox id="tagMenuBox" insertbefore="otherActionsBox2" align="end" pack="end">
-					<button type="menu" 
-									id="tagMenuPopup"
-									label="&tagMenu.label;"
-	  		          class="msgHeaderView-button msgHeaderView-flat-button">
-            <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
-              <menuitem id="tagMenuPopup-tagRemoveAll" oncommand="RemoveAllMessageTags();"/>
-                <menuseparator id="tagMenuPopupAfterRemoveSeparator"/>
-                <menuseparator id="tagMenuPopupBeforeAddSeparator"/>
-                <menuitem id="PopupaddNewTag" label="&addNewTag.label;" accesskey="&addNewTag.accesskey;"
-                          oncommand="AddTag();"/>
-            </menupopup>
-					</button>
-				</vbox>
-				<vbox id="otherActionsBox2" align="end" pack="end">
-					<button type="menu" id="otherActionsButton2"
-									label="&otherActionsButton.label;"
-	                class="msgHeaderView-button msgHeaderView-flat-button">
-						<menupopup id="otherActionsPopup2" onpopupshowing="InitMessageMark()">
-			        <menuitem id="hdrPlane-markFlagged"
-			                  type="checkbox"
-			                  label="&markStarredCmd.label;"
-			                  accesskey="&markStarredCmd.accesskey;"
-			                  command="cmd_markAsFlagged"
-			                  insertbefore="viewSourceMenuItem"
-			                  key="key_toggleFlagged"/>
-							<menuseparator id="otherActionPopupAfterViewSource"/>
-							<menuitem id="hideDetailsMenu" 
-												label="&hideDetailsButton.label;"
-							          oncommand="coheToggleHeaderView();"/>
-							<menuitem id="hidecohePreferencesButton" 
-												label="&dialog.title;"
-							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
-						</menupopup>
-					</button>
-				</vbox>
-			</hbox>
-		</vbox>
-		-->
 	  
 		<hbox id="expandedHeaders" flex="1">
 			<vbox id="otherHeadersAndButtonsBox" flex="1">
@@ -110,6 +66,22 @@
 			                  command="cmd_markAsFlagged"
 			                  insertbefore="viewSourceMenuItem"
 			                  key="key_toggleFlagged"/>
+			        <menu id="hdrPlane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+	            <menupopup id="hdrPlane-HeadersPopup" onpopupshowing="MyInitViewHeadersMenu();">
+	              <menuitem id="my_viewallheaders"
+	               type="radio"
+	               name="viewheadergroup"
+	               label="&headersAllCmd.label;"
+	               accesskey="&headersAllCmd.accesskey;"
+		               oncommand="MsgViewAllHeaders();"/>
+		              <menuitem id="my_viewnormalheaders"
+	               type="radio"
+	               name="viewheadergroup"
+	               label="&headersNormalCmd.label;"
+	               accesskey="&headersNormalCmd.accesskey;"
+		               oncommand="MsgViewNormalHeaders();"/>
+	            </menupopup>
+	            </menu>
 							<menuseparator id="otherActionPopupAfterViewSource"/>
 							<menuitem id="hideDetailsMenu" 
 												label="&hideDetailsButton.label;"
@@ -119,8 +91,10 @@
 							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
 						</menupopup>
 					</button>
+<!--
 				</vbox>
 				<vbox id="tagMenuBox">
+		-->
 					<button type="menu" 
 									id="tagMenuPopup"
 									label="&tagMenu.label;"
@@ -135,8 +109,10 @@
 					</button>
 				</vbox>
 			</vbox>
+			<!--
 			<hbox id="menuLineBox" flex="1" align="baseline" pack="end">
 			</hbox> 
+			-->
 		</hbox>
 	</hbox>
 

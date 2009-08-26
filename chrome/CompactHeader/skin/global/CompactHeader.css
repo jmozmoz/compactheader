@@ -160,6 +160,12 @@
   -moz-margin-end: 5px;
 }
 
+/*
 #menuLineBox{
 	margin-top: -3em;
+}
+*/
+
+#otherActionsTopSpacer {
+  display: none;
 }
