@@ -179,6 +179,7 @@ function create2LHeaderXUL() {
 	myElement.appendChild(xul5, myElement);
 
 	document.getElementById("collapsedsubjectBox").setAttribute("twolineview", "true");
+	document.getElementById("collapseddateBox").setAttribute("twolineview", "true");
 
 }
 
@@ -255,6 +256,7 @@ function create1LHeaderXUL() {
 
 	myElement.appendChild(xul3, myElement);
 	document.getElementById("collapsedsubjectBox").removeAttribute("twolineview");
+	document.getElementById("collapseddateBox").removeAttribute("twolineview");
 }
 
 // Now, for each view the message pane can generate, we need a global table
@@ -262,30 +264,6 @@ function create1LHeaderXUL() {
 // based on the static data in the header lists (see above) and elements
 // we find in the DOM based on properties in the header lists.
 var gCoheCollapsedHeaderView = {};
-
-/*
-function coheReInitializeHeaderViewTables()
-{
-  // iterate over each header in our header list array, create a header entry
-	// for it, and store it in our header table
-	if (prefBranch.getBoolPref("headersize.twolineview")) {
-  	create2LHeaderXUL();
-	} else {
-  	create1LHeaderXUL();
-	}
-	
-	// var tb = document.getElementById("collapsedsubjectValue");
-  gCoheCollapsedHeaderView = {};
-  var index;
-  for (index = 0; index < gCoheCollapsedHeaderList.length; index++) {
-    gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
-      new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
-  }
-    
-  updateHdrButtons();
-  updateHdrIconText();
-}
-*/
 
 function coheInitializeHeaderViewTables()
 {
@@ -613,8 +591,6 @@ function MyInitViewHeadersMenu()
   if (menuitem)
     menuitem.setAttribute("checked", "true");
 }
-
-
 
 var myPrefObserverView =
 {

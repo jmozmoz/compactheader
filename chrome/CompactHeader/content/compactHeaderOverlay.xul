@@ -45,7 +45,7 @@
 
 	<!-- YYY namespace ids added here? -->
 	<hbox id="expandedHeaderView">
-		<vbox id="hideDetailsButtonID" insertbefore="expandedHeaders">
+		<vbox id="hideDetailsButtonBox" insertbefore="expandedHeaders">
 			<button id="hideDetailsButton"  
 							tooltiptext="&hideDetailsButton.label;"
 							onclick="coheToggleHeaderView();" 
@@ -67,6 +67,22 @@
 			                  insertbefore="viewSourceMenuItem"
 			                  key="key_toggleFlagged"/>
 			        <menu id="hdrPlane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+<!--
+		            <menupopup id="menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
+		              <menuitem id="hdrPlane-viewallheaders"
+		               type="radio"
+		               name="viewheadergroup"
+		               label="&headersAllCmd.label;"
+		               accesskey="&headersAllCmd.accesskey;"
+		               command="cmd_viewAllHeader"/>
+		              <menuitem id="hdrPlane-viewnormalheaders"
+		               type="radio"
+		               name="viewheadergroup"
+		               label="&headersNormalCmd.label;"
+		               accesskey="&headersNormalCmd.accesskey;"
+		               command="cmd_viewNormalHeader"/>
+		            </menupopup>
+-->
 	            <menupopup id="hdrPlane-HeadersPopup" onpopupshowing="MyInitViewHeadersMenu();">
 	              <menuitem id="my_viewallheaders"
 	               type="radio"
@@ -91,10 +107,6 @@
 							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
 						</menupopup>
 					</button>
-<!--
-				</vbox>
-				<vbox id="tagMenuBox">
-		-->
 					<button type="menu" 
 									id="tagMenuPopup"
 									label="&tagMenu.label;"
@@ -109,48 +121,47 @@
 					</button>
 				</vbox>
 			</vbox>
-			<!--
-			<hbox id="menuLineBox" flex="1" align="baseline" pack="end">
-			</hbox> 
-			-->
 		</hbox>
 	</hbox>
 
-	<vbox id="collapsedHeaderView" flex="2" pack="start" class="header-part1 headerContainer">
-		<hbox align="start" flex="0" id="collapsedHeaderViewFirstLine">
-      <hbox id="showDetailsButtonBox" align="start" flex="0">
-		    <button id="showDetailsButton"
-			          tooltiptext="&showDetailsButton.label;"
-			          onclick="coheToggleHeaderView();"
-			          class="msgHeaderView-button msgHeaderView-flat-button"/>
-	    </hbox>
-			<hbox id="collapsedfromBox" align="start" flex="1">
-				<mail-multi-emailHeaderField id="collapsedfromValue"
-																		 flex="0"
-																		 align="end"
-																		 pack="end"
-																		 class="collapsedHeaderDisplayName"
-																		 label="&fromField2.label;"/>
-			</hbox>
-			<hbox id="collapsedtoCcBccBox" align="end" pack="end" flex="3">
-				<hbox align="start" flex="100">
+	<hbox id="collapsedHeaderView" flex="2" pack="start" class="header-part1 headerContainer">
+    <vbox id="showDetailsButtonBox" align="start" flex="0">
+	    <button id="showDetailsButton"
+		          tooltiptext="&showDetailsButton.label;"
+		          onclick="coheToggleHeaderView();"
+		          class="msgHeaderView-button msgHeaderView-flat-button"/>
+    </vbox>
+		<vbox id="collapsedHeaderElementBox" flex="1">
+			<hbox align="start" flex="1" id="collapsedHeaderViewFirstLine">
+	<!--
+				<hbox id="collapsedfromBox" align="start" flex="100">
+					<mail-multi-emailHeaderField id="collapsedfromValue"
+																			 class="collapsedHeaderDisplayName"
+																			 label="&fromField2.label;"/>
 				</hbox>
-				<mail-multi-emailHeaderField id="collapsedtoCcBccValue"
-																		 flex="1"
-																		 pack="end"
-																		 class="collapsedHeaderDisplayName"/>
+				<hbox id="collapsedtoCcBccBox" align="end" pack="end" flex="1">
+					<hbox align="start" flex="100">
+					</hbox>
+					<mail-multi-emailHeaderField id="collapsedtoCcBccValue"
+																			 flex="1"
+																			 pack="end"
+																			 class="collapsedHeaderDisplayName"/>
+				</hbox>
+				<header-view-button-box id="collapsedButtonBox"/>
+	-->	
 			</hbox>
-			<header-view-button-box id="collapsedButtonBox"/>
-		</hbox>	
-		<hbox align="start" flex="1" id="collapsedHeaderViewSecondLine">
-			<hbox id="collapsedsubjectBox" align="start" flex="1" style="padding-left: 10px; padding-top: 1.6px">
-				<textbox id="collapsedsubjectValue" flex="1" readonly="true" class="collapsedHeaderValue plain"/>
+			<hbox align="start" flex="1" id="collapsedHeaderViewSecondLine">
+	<!--
+				<hbox id="collapsedsubjectBox" align="start" flex="99">
+					<textbox id="collapsedsubjectValue" flex="99" readonly="true" class="collapsedHeaderValue plain"/>
+				</hbox>
+				<hbox id="collapseddateBox" align="end" flex="0">
+					<textbox id="collapseddateValue" class="plain collapsedHeaderValue" flex="0" readonly="true"/>
+				</hbox>
+	-->
 			</hbox>
-			<hbox id="collapseddateBox" align="end" flex="0" style="padding-bottom: 2px">
-				<textbox id="collapseddateValue" class="plain collapsedHeaderValue" flex="0" readonly="true"/>
-			</hbox>
-		</hbox>
-	</vbox>
+		</vbox>
+	</hbox>
 
 	</deck>
 

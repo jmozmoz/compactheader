@@ -51,9 +51,22 @@
 }
 
 #collapsedsubjectValue {
-  -moz-margin-start: 3px;
-  -moz-box-align: stretch;
-  font-weight: bold;
+	font-weight: bold;
+}
+
+#tagMenuPopup,
+#otherActionsButton {
+  margin: 0px;
+  padding: 0px;
+}
+
+#tagMenuPopup .button-box,
+#otherActionsButton .button-box {
+  -moz-margin-start: 0px;
+  -moz-margin-end: 0px;
+  -moz-padding-start: 0px;
+  -moz-padding-end: 0px;
+	border: 0px;
 }
 
 #collapseddateValue {
@@ -69,6 +82,8 @@
   width: 1.3em;
   height: 1.3em;
   padding-bottom: 0px;
+  margin:0px;
+  padding:0px;
   background-image: url("chrome://CompactHeader/skin/twisty-open.png");
   background-repeat: no-repeat;
   background-position: center center;
@@ -77,6 +92,8 @@
 #hideDetailsButton:hover {
   background-color: rgb(230,231,227);
   border: 2px solid #C0C3C6;
+  margin:0px;
+  padding:0px;
 }
 
 #showDetailsButton {
@@ -86,6 +103,8 @@
   width: 1.3em;
   height: 1.3em;
   padding-bottom: 0px;
+  margin:0px;
+  padding:0px;
   background-image: url("chrome://CompactHeader/skin/twisty-clsd.png");
   background-repeat: no-repeat;
   background-position: center center;
@@ -94,15 +113,22 @@
 #showDetailsButton:hover {
   background-color: rgb(230,231,227);
   border: 2px solid #C0C3C6;
+  margin:0px;
+  padding:0px;
 }
 
-#collapsedsubjectBox, collapsedfromBox, collapsedfromBox,collapsedButtonBox {
+#collapsedsubjectBox, collapsedfromBox,collapsedButtonBox,
+#collapsedsubjectValue, #collapsedfromValue {
   margin: 0px;
   padding: 0px;
 }
 
 #collapsedsubjectBox[twolineview="true"] {
-  -moz-margin-start: 2.5em;
+  -moz-margin-start: .2em;
+}
+
+#collapseddateBox[twolineview="true"] {
+  -moz-margin-end: 0.5em;
 }
 
 #collapsedfromValue > .headerNameBox {
@@ -113,17 +139,17 @@
 
 .hdrReplyButton[mode="hdrReplyButton"] {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 63px 16px 47px);
+  -moz-image-region: rect(0px 64px 16px 48px);
 }
 
 .hdrReplyButton[mode="hdrReplyAllButton"] {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 79px 16px 64px);
+  -moz-image-region: rect(0px 80px 16px 64px);
 }
 
 .hdrReplyButton[mode="hdrReplyListButton"] {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 79px 16px 64px);
+  -moz-image-region: rect(0px 80px 16px 64px);
 }
 
 .hdrForwardButton {
@@ -146,25 +172,18 @@
   display: none;
 }
 
-/* set button margins */
-#collapsedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-icon,
-#expandedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-icon {
-  -moz-margin-start: 1px;
+#collapsedButtonBox[OnlyIcon="Text"] .msgHeaderView-button .button-text,
+#expandedButtonBox[OnlyIcon="Text"] .msgHeaderView-button .button-text {
+  -moz-padding-start: 5px;
   -moz-margin-end: 1px;
 }
 
 /* set button margins */
-#collapsedButtonBox[OnlyIcon="Text"] .msgHeaderView-button .button-icon,
-#expandedButtonBox[OnlyIcon="Text"] .msgHeaderView-button .button-icon {
+#collapsedButtonBox .msgHeaderView-button .button-icon,
+#expandedButtonBox .msgHeaderView-button .button-icon {
   -moz-margin-start: 1px;
-  -moz-margin-end: 5px;
+  -moz-margin-end: 1px;
 }
-
-/*
-#menuLineBox{
-	margin-top: -3em;
-}
-*/
 
 #otherActionsTopSpacer {
   display: none;
