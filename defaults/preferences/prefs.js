@@ -1,4 +1,6 @@
 pref("extensions.CompactHeader.headersize.twolineview", false);
+pref("extensions.CompactHeader.headersize.linkify", false);
+
 pref("extensions.CompactHeader.buttons.showonlyicon", true);
 
 pref("extensions.CompactHeader.view.compact.displayReply", true);

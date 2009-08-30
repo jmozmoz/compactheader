@@ -12,3 +12,5 @@
 <!ENTITY checkbox.Compact.Trash.caption "Trash">
 
 <!ENTITY menu.IconText.caption "Show only icons inside buttons">
+
+<!ENTITY menu.Linkify.caption "Link in subjects of RSS feeds">

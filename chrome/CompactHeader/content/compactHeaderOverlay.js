@@ -72,12 +72,10 @@ var gCoheCollapsedHeaderList = [
 
 var coheIntegrateRSSLinkify = false;
 
-if (coheIntegrateRSSLinkify) {
-	var RSSLinkify = {
-	    oldSubject: null,
-	    newSubject: null
-	};
-}
+var RSSLinkify = {
+    oldSubject: null,
+    newSubject: null
+};
 
 var coheFirstTime = true;
     
@@ -275,7 +273,7 @@ function coheInitializeHeaderViewTables()
 	} else {
   	create1LHeaderXUL();
 	}
-	
+  
 	//var tb = document.getElementById("collapsedsubjectValue");
   gCoheCollapsedHeaderView = {};
   var index;
@@ -283,7 +281,7 @@ function coheInitializeHeaderViewTables()
     gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
       new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
   }
-	if (coheIntegrateRSSLinkify) {
+	if (prefBranch.getBoolPref("headersize.linkify")) {
 	  RSSLinkify.newSubject = document.createElement("label");
 	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkValue");
 	  RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
@@ -298,18 +296,8 @@ function coheInitializeHeaderViewTables()
 	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
 	}
 	
-	//moveOtherActionBox();
   updateHdrButtons();
   updateHdrIconText();
-}
-
-function moveOtherActionBox() {
-	var newParent = document.getElementById("menuLineBox");
-	var myElement = document.getElementById("tagMenuBox");
-	newParent.appendChild(myElement);
-	//newParent = document.getElementById("otherBoxSpace");
-	myElement = document.getElementById("otherActionsBox");
-	newParent.appendChild(myElement);
 }
 
 function coheOnLoadMsgHeaderPane()
@@ -411,7 +399,7 @@ function coheUpdateHeaderView()
 	if (gCoheCollapsedHeaderViewMode)
   		showHeaderView(gCoheCollapsedHeaderView);
 
-  if (coheIntegrateRSSLinkify) {
+  if (prefBranch.getBoolPref("headersize.linkify")) {
 		var url = currentHeaderData["content-base"];
 		if(url) {
 		    RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 

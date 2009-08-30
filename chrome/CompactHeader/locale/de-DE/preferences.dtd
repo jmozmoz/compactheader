@@ -13,3 +13,5 @@
 
 
 <!ENTITY menu.IconText.caption "Nur Icons in Schaltflächen">
+
+<!ENTITY menu.Linkify.caption "Link in Betreff von RSS Feeds">

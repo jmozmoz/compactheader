@@ -100,4 +100,8 @@
     	</rows>
     </grid>
   </groupbox>
+
+	<checkbox id="checkbox.Linkify" 
+						label="&menu.Linkify.caption;"/>
+
 </dialog>
