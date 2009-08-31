@@ -46,6 +46,15 @@
   min-width: 1px;
 }
 
+#collapsedtoCcBccBox .headerNameBox,
+#collapsedfromBox .headerNameBox {
+	display: none;
+}
+#collapsedfromValue > .headerNameBox {
+  display: none;
+}
+
+
 #collapsedHeaderDisplayName {
   text-align: left;
 }
@@ -117,7 +126,7 @@
   padding:0px;
 }
 
-#collapsedsubjectBox, collapsedfromBox,collapsedButtonBox,
+#collapsedsubjectBox, collapsedfromOutBox,collapsedButtonBox,
 #collapsedsubjectValue, #collapsedfromValue {
   margin: 0px;
   padding: 0px;
@@ -129,10 +138,6 @@
 
 #collapseddateBox[twolineview="true"] {
   -moz-margin-end: 0.5em;
-}
-
-#collapsedfromValue > .headerNameBox {
-  display: none;
 }
 
 /* ::::: Message Header Pane - Button Icons ::::: */

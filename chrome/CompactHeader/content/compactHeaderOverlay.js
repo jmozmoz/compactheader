@@ -60,13 +60,22 @@ var gCoheBuiltCollapsedView = false;
  * The collapsed view: very lightweight. We only show a couple of fields.  See
  * msgHdrViewOverlay.js for details of the field definition semantics.
  */
-var gCoheCollapsedHeaderList = [
+var gCoheCollapsedHeaderListLongAddresses = [
   {name:"subject", outputFunction:coheUpdateHeaderValueInTextNode},
-  {name:"from", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
-  {name:"toCcBcc", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
-  {name:"date", outputFunction:OutputDate}];
+  {name:"from", useToggle:true, outputFunction:OutputEmailAddresses},
+//  {name:"from", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
+  {name:"toCcBcc", useToggle:true, outputFunction: OutputEmailAddresses},
+  {name:"date", outputFunction:OutputDate}
+  ];
 
-	var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+var gCoheCollapsedHeaderListShortAddresses = [
+  {name:"subject", outputFunction:coheUpdateHeaderValueInTextNode},
+  {name:"from", useToggle:true, useShortView:true, outputFunction:OutputEmailAddresses},
+  {name:"toCcBcc", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
+  {name:"date", outputFunction:OutputDate}
+  ];
+    
+  var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
 
@@ -80,7 +89,7 @@ var RSSLinkify = {
 var coheFirstTime = true;
     
 function cleanupHeaderXUL(){
-	var xularray = ["collapsedfromBox", "collapsedtoCcBccBox", 
+	var xularray = ["collapsedfromOutBox", "collapsedtoCcBccOutBox", 
 									"collapsedButtonBox", "collapsedsubjectBox", 
 									"collapseddateBox", "coheBaselineBox"];
 	for (var i=0; i<xularray.length; i++) {
@@ -97,32 +106,32 @@ function create2LHeaderXUL() {
 	var myElement = document.getElementById("collapsedHeaderViewFirstLine");
 
 	var xul1   = document.createElement("hbox");
-	xul1.id    = "collapsedfromBox";
+	xul1.id    = "collapsedfromOutBox";
 	xul1.align = "start";
 	xul1.flex  = "100";
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	xultmp.id    = "collapsedfromValue";
+	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+		xultmp.id    = "collapsedfromBox";
+	} else {
+		xultmp.id    = "collapsedfromValue";
+	}
 	xultmp.setAttribute("class","collapsedHeaderDisplayName");
-	xultmp.label = "&fromField2.label;";
 	xul1.appendChild(xultmp,xul1);
-	
 	myElement.appendChild(xul1, myElement);
 
 	var xul2   = document.createElement("hbox");
-	xul2.id    = "collapsedtoCcBccBox";
+	xul2.id    = "collapsedtoCcBccOutBox";
 	xul2.align = "end";
 	xul2.pack  = "end";
 	xul2.flex  = "1";
 
-	/*
-	var xultmp   = document.createElement("hbox");
-	xultmp.flex  = "100";
-	xultmp.align = "start";
-	xul2.appendChild(xultmp, xul2);
-	*/
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	xultmp.id    = "collapsedtoCcBccValue";
+	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+		xultmp.id    = "collapsedtoCcBccBox";
+	} else {
+		xultmp.id    = "collapsedtoCcBccValue";		
+	}
 	xultmp.flex  = "1";
 	xultmp.align = "end";
 	xultmp.pack  = "end";
@@ -208,14 +217,18 @@ function create1LHeaderXUL() {
 
 	
 	var xul2   = document.createElement("hbox");
-	xul2.id    = "collapsedtoCcBccBox";
+	xul2.id    = "collapsedtoCcBccOutBox";
 	xul2.align = "end";
 	xul2.pack  = "end";
 	xul2.flex  = "1";
 	xul0.appendChild(xul2, xul0);
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	xultmp.id    = "collapsedtoCcBccValue";
+	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+		xultmp.id    = "collapsedtoCcBccBox";
+	} else {
+		xultmp.id    = "collapsedtoCcBccValue";		
+	}
 	xultmp.flex  = "1";
 	xultmp.align = "end";
 	xultmp.pack  = "end";
@@ -225,14 +238,18 @@ function create1LHeaderXUL() {
 
 	
 	var xul1   = document.createElement("hbox");
-	xul1.id    = "collapsedfromBox";
+	xul1.id    = "collapsedfromOutBox";
 	xul1.align = "end";
 	xul0.appendChild(xul1, xul0);
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	xultmp.id    = "collapsedfromValue";
+	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+		xultmp.id    = "collapsedfromBox";
+	} else {
+		xultmp.id    = "collapsedfromValue";
+	}
 	xultmp.setAttribute("class", "collapsedHeaderDisplayName");
-	xultmp.label = "&fromField2.label;";
+	//xultmp.label = "&fromField2.label;";
 	xul1.appendChild(xultmp,xul1);
 
 	var xul5   = document.createElement("hbox");
@@ -277,11 +294,18 @@ function coheInitializeHeaderViewTables()
 	//var tb = document.getElementById("collapsedsubjectValue");
   gCoheCollapsedHeaderView = {};
   var index;
-  for (index = 0; index < gCoheCollapsedHeaderList.length; index++) {
-    gCoheCollapsedHeaderView[gCoheCollapsedHeaderList[index].name] =
-      new createHeaderEntry('collapsed', gCoheCollapsedHeaderList[index]);
-  }
-	if (prefBranch.getBoolPref("headersize.linkify")) {
+	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+	  for (index = 0; index < gCoheCollapsedHeaderListLongAddresses.length; index++) {
+	    gCoheCollapsedHeaderView[gCoheCollapsedHeaderListLongAddresses[index].name] =
+	      new createHeaderEntry('collapsed', gCoheCollapsedHeaderListLongAddresses[index]);
+	  }
+	} else {
+	  for (index = 0; index < gCoheCollapsedHeaderListShortAddresses.length; index++) {
+	    gCoheCollapsedHeaderView[gCoheCollapsedHeaderListShortAddresses[index].name] =
+	      new createHeaderEntry('collapsed', gCoheCollapsedHeaderListShortAddresses[index]);
+		}
+	}
+  if (prefBranch.getBoolPref("headersize.linkify")) {
 	  RSSLinkify.newSubject = document.createElement("label");
 	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkValue");
 	  RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");

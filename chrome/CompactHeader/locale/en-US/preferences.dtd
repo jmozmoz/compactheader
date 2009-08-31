@@ -14,3 +14,5 @@
 <!ENTITY menu.IconText.caption "Show only icons inside buttons">
 
 <!ENTITY menu.Linkify.caption "Link in subjects of RSS feeds">
+
+<!ENTITY menu.ShowFullAddress.caption "Show full email address">

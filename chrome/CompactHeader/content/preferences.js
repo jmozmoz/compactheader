@@ -32,6 +32,7 @@ function onLoad()
 
   loadPrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
   loadPrefCheckbox("headersize.linkify", "checkbox.Linkify");
+  loadPrefCheckbox("headersize.showlongaddress", "checkbox.ShowFullAddress");
   
   updateTwolineView(prefBranch.getBoolPref("headersize.twolineview")); 
 
@@ -60,9 +61,9 @@ function updateTwolineView(boolTwolineview) {
 function onDialogAccept()
 {
   savePrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
-
   savePrefCheckbox("headersize.linkify", "checkbox.Linkify");
-
+  savePrefCheckbox("headersize.showlongaddress", "checkbox.ShowFullAddress");  
+  
   savePrefCheckbox("buttons.showonlyicon", "checkbox.IconText");
 
   for(var buttonname in buttonslist) {

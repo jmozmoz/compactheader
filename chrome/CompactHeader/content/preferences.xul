@@ -104,4 +104,7 @@
 	<checkbox id="checkbox.Linkify" 
 						label="&menu.Linkify.caption;"/>
 
+	<checkbox id="checkbox.ShowFullAddress" 
+						label="&menu.ShowFullAddress.caption;"/>
+
 </dialog>
