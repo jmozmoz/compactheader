@@ -310,7 +310,7 @@ function coheInitializeHeaderViewTables()
 	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkValue");
 	  RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
 	  RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
-	  RSSLinkify.newSubject.setAttribute("context", "copyUrlPopup");
+	  RSSLinkify.newSubject.setAttribute("context", "CohecopyUrlPopup");
 	  RSSLinkify.newSubject.setAttribute("keywordrelated", "true");
 	  RSSLinkify.newSubject.setAttribute("readonly", "true");
 	  RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
@@ -429,6 +429,7 @@ function coheUpdateHeaderView()
 		    RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
 		                                        url.headerValue + "');");
 		    RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
+		    RSSLinkify.newSubject.setAttribute("url", url.headerValue);
 		    RSSLinkify.newSubject.setAttribute("collapsed", "false");
 		    RSSLinkify.oldSubject.setAttribute("collapsed", "true");
 		} else {
@@ -603,6 +604,21 @@ function MyInitViewHeadersMenu()
   if (menuitem)
     menuitem.setAttribute("checked", "true");
 }
+
+function CoheCopyWebsiteAddress(websiteAddressNode)
+{
+  if (websiteAddressNode)
+  {
+    var websiteAddress = websiteAddressNode.getAttribute("url");
+
+    var contractid = "@mozilla.org/widget/clipboardhelper;1";
+    var iid = Components.interfaces.nsIClipboardHelper;
+    var clipboard = Components.classes[contractid].getService(iid);
+    clipboard.copyString(websiteAddress);
+  }
+}
+
+
 
 var myPrefObserverView =
 {

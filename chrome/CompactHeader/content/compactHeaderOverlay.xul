@@ -33,12 +33,14 @@
 	    <command id="cmd_viewNormalHeader" oncommand="alert('test2');goDoCommand('cmd_viewNormalHeader'); event.stopPropagation()"/>
 	</commandset>
 
+
 	<keyset>
 		<key id="hideDetailsKey" 
 				 modifiers="shift" 
 				 key="&toggleDetails.key;"
 				 oncommand="coheToggleHeaderView();"/>
 	</keyset>
+
 
   <deck id="msgHeaderViewDeck">
 
@@ -125,6 +127,10 @@
 	</hbox>
 
 	<hbox id="collapsedHeaderView" flex="2" pack="start" class="header-part1 headerContainer">
+		<popup id="copyUrlPopup" hidden="true"/>
+		<popup id="CohecopyUrlPopup" popupanchor="bottomleft">
+			<menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
+		</popup>
     <vbox id="showDetailsButtonBox" align="start" flex="0">
 	    <button id="showDetailsButton"
 		          tooltiptext="&showDetailsButton.label;"
