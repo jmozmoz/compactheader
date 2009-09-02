@@ -17,3 +17,8 @@
 <!ENTITY menu.Linkify.caption "Link in Betreff von RSS Feeds">
 
 <!ENTITY menu.ShowFullAddress.caption "Adresse vollständig anzeigen">
+
+<!ENTITY AddressStyle.label "Adressstil">
+<!ENTITY AddressStyle.Full.label "Name und Adresse">
+<!ENTITY AddressStyle.Short.label "Nur Name">
+<!ENTITY AddressStyle.OnlyEmail.label "Nur Adresse">
