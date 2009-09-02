@@ -32,7 +32,7 @@ function onLoad()
 
   loadPrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
   loadPrefCheckbox("headersize.linkify", "checkbox.Linkify");
-  loadPrefCheckbox("headersize.showlongaddress", "checkbox.ShowFullAddress");
+  loadPrefInt("headersize.addressstyle", "AddressStyle");  
   
   updateTwolineView(prefBranch.getBoolPref("headersize.twolineview")); 
 
@@ -62,7 +62,7 @@ function onDialogAccept()
 {
   savePrefCheckbox("headersize.twolineview", "checkbox.Compact.TwolineView");
   savePrefCheckbox("headersize.linkify", "checkbox.Linkify");
-  savePrefCheckbox("headersize.showlongaddress", "checkbox.ShowFullAddress");  
+  savePrefInt("headersize.addressstyle", "AddressStyle");  
   
   savePrefCheckbox("buttons.showonlyicon", "checkbox.IconText");
 
@@ -88,6 +88,11 @@ function loadPrefCheckbox(pref, idCheckbox)
 }
 
 
+function loadPrefInt(pref, idCheckbox)
+{
+  document.getElementById(idCheckbox).value = prefBranch.getIntPref(pref);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  savePrefCheckbox
@@ -98,5 +103,10 @@ function loadPrefCheckbox(pref, idCheckbox)
 function savePrefCheckbox(pref, idCheckbox)
 {
   prefBranch.setBoolPref(pref, document.getElementById(idCheckbox).checked);
+}
+
+function savePrefInt(pref, idCheckbox)
+{
+  prefBranch.setIntPref(pref, document.getElementById(idCheckbox).value);
 }
 
