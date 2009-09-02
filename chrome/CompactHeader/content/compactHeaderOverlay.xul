@@ -127,7 +127,6 @@
 	</hbox>
 
 	<hbox id="collapsedHeaderView" flex="2" pack="start" class="header-part1 headerContainer">
-		<popup id="copyUrlPopup" hidden="true"/>
 		<popup id="CohecopyUrlPopup" popupanchor="bottomleft">
 			<menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
 		</popup>

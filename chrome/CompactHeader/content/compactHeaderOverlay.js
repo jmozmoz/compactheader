@@ -111,7 +111,7 @@ function create2LHeaderXUL() {
 	xul1.flex  = "100";
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
 		xultmp.id    = "collapsedfromBox";
 	} else {
 		xultmp.id    = "collapsedfromValue";
@@ -127,7 +127,7 @@ function create2LHeaderXUL() {
 	xul2.flex  = "1";
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
 		xultmp.id    = "collapsedtoCcBccBox";
 	} else {
 		xultmp.id    = "collapsedtoCcBccValue";		
@@ -224,7 +224,7 @@ function create1LHeaderXUL() {
 	xul0.appendChild(xul2, xul0);
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
 		xultmp.id    = "collapsedtoCcBccBox";
 	} else {
 		xultmp.id    = "collapsedtoCcBccValue";		
@@ -243,7 +243,7 @@ function create1LHeaderXUL() {
 	xul0.appendChild(xul1, xul0);
 
 	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
 		xultmp.id    = "collapsedfromBox";
 	} else {
 		xultmp.id    = "collapsedfromValue";
@@ -294,7 +294,7 @@ function coheInitializeHeaderViewTables()
 	//var tb = document.getElementById("collapsedsubjectValue");
   gCoheCollapsedHeaderView = {};
   var index;
-	if (prefBranch.getBoolPref("headersize.showlongaddress")) {
+	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
 	  for (index = 0; index < gCoheCollapsedHeaderListLongAddresses.length; index++) {
 	    gCoheCollapsedHeaderView[gCoheCollapsedHeaderListLongAddresses[index].name] =
 	      new createHeaderEntry('collapsed', gCoheCollapsedHeaderListLongAddresses[index]);
@@ -438,6 +438,10 @@ function coheUpdateHeaderView()
 		}
   }
 
+  if (prefBranch.getIntPref("headersize.addressstyle") == 2) {
+  	selectEmailDisplayed();
+  }
+  
 	//moveOtherActionBox();
 	UpdateJunkButton();
 	updateMyReplyButtons();
@@ -618,7 +622,44 @@ function CoheCopyWebsiteAddress(websiteAddressNode)
   }
 }
 
-
+function selectEmailDisplayed() {
+  var xulemail = document.getElementById("collapsedtoCcBccBox");
+  if (xulemail != null) {
+	  var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
+	  if (nextbox != null) {
+  		var xuldesc = document.getAnonymousElementByAttribute(xulemail, "containsEmail", "true");
+			if (xuldesc != null) {
+				var children = xuldesc.children;
+				for (var i=0; i<children.length; i++) {
+					if (children[i].localName == "mail-emailaddress") {
+						var rawAddress = children[i].getAttribute("emailAddress");
+						if (rawAddress) {
+							children[i].setAttribute("label", rawAddress);
+						}
+					}
+				}
+			}
+	  }
+  }
+  var xulemail = document.getElementById("collapsedfromBox");
+  if (xulemail != null) {
+	  var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
+	  if (nextbox != null) {
+  		var xuldesc = document.getAnonymousElementByAttribute(xulemail, "containsEmail", "true");
+			if (xuldesc != null) {
+				var children = xuldesc.children;
+				for (var i=0; i<children.length; i++) {
+					if (children[i].localName == "mail-emailaddress") {
+						var rawAddress = children[i].getAttribute("emailAddress");
+						if (rawAddress) {
+							children[i].setAttribute("label", rawAddress);
+						}
+					}
+				}
+			}
+	  }
+  }
+}
 
 var myPrefObserverView =
 {
