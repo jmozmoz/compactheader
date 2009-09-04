@@ -92,6 +92,9 @@ function cleanupHeaderXUL(){
 	var xularray = ["collapsedfromOutBox", "collapsedtoCcBccOutBox", 
 									"collapsedButtonBox", "collapsedsubjectBox", 
 									"collapseddateBox", "coheBaselineBox"];
+									
+	/* rescue otheraction and tagpopup */
+	moveMenusToButtonBox(false);
 	for (var i=0; i<xularray.length; i++) {
 		var x = document.getElementById(xularray[i]);
 		if (x != null) {
@@ -104,7 +107,7 @@ function create2LHeaderXUL() {
 	cleanupHeaderXUL();
 	
 	var myElement = document.getElementById("collapsedHeaderViewFirstLine");
-
+	
 	var xul1   = document.createElement("hbox");
 	xul1.id    = "collapsedfromOutBox";
 	xul1.align = "start";
@@ -320,7 +323,7 @@ function coheInitializeHeaderViewTables()
 	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
 	}
 
-//	moveMenusToButtonBox();
+//	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
 	
   updateHdrButtons();
   updateHdrIconText();
@@ -356,7 +359,7 @@ function coheOnLoadMsgHeaderPane()
   	coheFirstTime = false;
 	}
 	
-	moveMenusToButtonBox();
+	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
 }
 
 var coheMessageListener = 
@@ -452,10 +455,10 @@ function coheUpdateHeaderView()
 }
 
 
-function moveMenusToButtonBox() {
+function moveMenusToButtonBox(viewMode) {
 	var target;
 	
-	if (gCoheCollapsedHeaderViewMode)
+	if (viewMode)
 		target = "collapsedButtonBox";
 	else
 		target = "otherActionsBox";
@@ -493,7 +496,7 @@ function coheToggleHeaderView ()
 	  updateHdrButtons();
   }
 
-	moveMenusToButtonBox();
+	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
   
   // Work around a xul deck bug where the height of the deck is determined
 	// by the tallest panel in the deck even if that panel is not selected...
