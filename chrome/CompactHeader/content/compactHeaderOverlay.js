@@ -319,6 +319,8 @@ function coheInitializeHeaderViewTables()
 	  RSSLinkify.oldSubject = document.getElementById("collapsedsubjectValue");
 	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
 	}
+
+//	moveMenusToButtonBox();
 	
   updateHdrButtons();
   updateHdrIconText();
@@ -353,6 +355,8 @@ function coheOnLoadMsgHeaderPane()
   	gMessageListeners.push(coheMessageListener);
   	coheFirstTime = false;
 	}
+	
+	moveMenusToButtonBox();
 }
 
 var coheMessageListener = 
@@ -442,11 +446,32 @@ function coheUpdateHeaderView()
   	selectEmailDisplayed();
   }
   
-	//moveOtherActionBox();
 	UpdateJunkButton();
 	updateMyReplyButtons();
 	updateHdrButtons();
 }
+
+
+function moveMenusToButtonBox() {
+	var target;
+	
+	if (gCoheCollapsedHeaderViewMode)
+		target = "collapsedButtonBox";
+	else
+		target = "otherActionsBox";
+
+	
+	var newParent = document.getElementById(target);
+	if (newParent != null) {
+		var myElement = document.getElementById("otherActionsButton");
+		newParent.appendChild(myElement);
+		myElement = document.getElementById("tagMenuPopup");
+		newParent.appendChild(myElement);
+	} else {
+		alert ("null");
+	}
+}
+
 
 function coheToggleHeaderView ()
 {
@@ -468,6 +493,7 @@ function coheToggleHeaderView ()
 	  updateHdrButtons();
   }
 
+	moveMenusToButtonBox();
   
   // Work around a xul deck bug where the height of the deck is determined
 	// by the tallest panel in the deck even if that panel is not selected...
@@ -533,7 +559,7 @@ function updateHdrButtons() {
 		else
 		  strViewMode = "view.expanded";
 		for (var j=0; j<buttonslist[buttonname].length; j++){
-	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]);
+	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]) || document.getElementById(buttonslist[buttonname][j]);
 	  	if (myElement != null) {
 	  		addClass(myElement, "msgHeaderView-flat-button");
 	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {

@@ -109,8 +109,7 @@
 							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
 						</menupopup>
 					</button>
-					<button type="menu" 
-									id="tagMenuPopup"
+					<button type="menu" id="tagMenuPopup"
 									label="&tagMenu.label;"
 	  		          class="msgHeaderView-button msgHeaderView-flat-button">
 	          <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
