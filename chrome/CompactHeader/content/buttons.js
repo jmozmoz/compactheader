@@ -46,3 +46,5 @@ buttonslist["Forward"] = ["hdrForwardButton"];
 buttonslist["Archive"] = ["archiveButton"];
 buttonslist["Junk"]    = ["hdrJunkButton"];
 buttonslist["Trash"]   = ["hdrTrashButton"];
+buttonslist["OtherAction"] = ["otherActionsButton"];
+buttonslist["Tag"] = ["tagMenuPopup"];
