@@ -140,6 +140,7 @@
   background-image: url("chrome://CompactHeader/skin/twisty-open.png");
   background-repeat: no-repeat;
   background-position: center center;
+  margin-top: 2px;
 }
 
 #hideDetailsButton:hover {
@@ -147,6 +148,7 @@
   border: 2px solid #C0C3C6;
   margin:0px;
   padding:0px;
+  margin-top: 2px;
 }
 
 #showDetailsButton {
@@ -161,6 +163,7 @@
   background-image: url("chrome://CompactHeader/skin/twisty-clsd.png");
   background-repeat: no-repeat;
   background-position: center center;
+  margin-top: 2px;
 }
 
 #showDetailsButton:hover {
@@ -168,6 +171,7 @@
   border: 2px solid #C0C3C6;
   margin:0px;
   padding:0px;
+  margin-top: 2px;
 }
 
 #collapsedsubjectBox, collapsedfromOutBox,collapsedButtonBox,
