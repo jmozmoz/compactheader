@@ -4,7 +4,14 @@
 <?xml-stylesheet type="text/css" href="chrome://communicator/skin/"?>
 <?xml-stylesheet type="text/css" href="chrome://CompactHeader/skin/preferences.css"?>
 
-<!DOCTYPE window SYSTEM "chrome://CompactHeader/locale/preferences.dtd">
+<!DOCTYPE window [
+<!ENTITY % CompactHeaderDTD SYSTEM "chrome://CompactHeader/locale/preferences.dtd">
+%CompactHeaderDTD;
+<!ENTITY % msgHdrDTD SYSTEM "chrome://messenger/locale/msgHdrViewOverlay.dtd">
+%msgHdrDTD;
+<!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd">
+%messengerDTD;
+]>
 
 <!--
   void(openDialog("chrome://CompactHeader/content/preferences.xul"))
@@ -44,7 +51,7 @@
 				</row>
     		<row>
     			<hbox pack="end">
-    			<label value="&checkbox.Compact.Reply.caption;"/>
+    			<label value="&replyButton.label;"/>
     			</hbox>
     			<hbox pack="center">
 	    		<checkbox disabled="true" id="checkbox.Compact.Reply"/>
@@ -55,7 +62,7 @@
     		</row>
     		<row>
     			<hbox align="center" pack="end">
-    			<label value="&checkbox.Compact.Forward.caption;"/>
+    			<label value="&forwardButton.label;"/>
     			</hbox>
     			<hbox pack="center">
 	    		<checkbox disabled="true" id="checkbox.Compact.Forward"/>
@@ -66,7 +73,7 @@
     		</row>
     		<row>
     			<hbox align="center" pack="end">
-    			<label value="&checkbox.Compact.Archive.caption;"/>
+    			<label value="&archiveMsgCmd.label;"/>
     			</hbox>
     			<hbox pack="center">
 	    		<checkbox disabled="true" id="checkbox.Compact.Archive"/>
@@ -77,7 +84,7 @@
     		</row>
     		<row>
     			<hbox align="center" pack="end">
-    			<label value="&checkbox.Compact.Junk.caption;"/>
+    			<label value="&junkButton.label;"/>
     			</hbox>
     			<hbox pack="center">
 	    		<checkbox disabled="true" id="checkbox.Compact.Junk"/>
@@ -95,6 +102,28 @@
     			</hbox>
     			<hbox pack="center">
   	    	<checkbox id="checkbox.Expanded.Trash"/>    			
+    			</hbox>
+    		</row>
+    		<row>
+    			<hbox align="center" pack="end">
+    			<label value="&otherActionsButton.label;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox disabled="true" id="checkbox.Compact.OtherAction"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.OtherAction"/>    			
+    			</hbox>
+    		</row>
+    		<row>
+    			<hbox align="center" pack="end">
+    			<label value="&tagButton.label;"/>
+    			</hbox>
+    			<hbox pack="center">
+	    		<checkbox disabled="true" id="checkbox.Compact.Tag"/>
+    			</hbox>
+    			<hbox pack="center">
+  	    	<checkbox id="checkbox.Expanded.Tag"/>    			
     			</hbox>
     		</row>
     	</rows>
