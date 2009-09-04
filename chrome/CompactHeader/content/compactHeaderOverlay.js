@@ -535,6 +535,7 @@ function updateHdrButtons() {
 		for (var j=0; j<buttonslist[buttonname].length; j++){
 	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]);
 	  	if (myElement != null) {
+	  		addClass(myElement, "msgHeaderView-flat-button");
 	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {
 		  		if (buttonname != "Reply") {
 			  		myElement.hidden =  false; //! prefBranch.getBoolPref("expandedview.display" + buttonname);
@@ -552,19 +553,20 @@ function updateHdrButtons() {
 }
 
 function updateHdrIconText() {
-	var myE1 = document.getElementById("collapsedButtonBox");
-	var myE2 = document.getElementById("expandedButtonBox");
-	
+	var myE = [document.getElementById("collapsedButtonBox"),
+						 document.getElementById("expandedButtonBox"),
+						 document.getElementById("tagMenuPopup"),
+						 document.getElementById("otherActionsButton")];
 	if (prefBranch.getBoolPref("buttons.showonlyicon")) {
-		myE1.removeAttribute("OnlyIcon");
-		myE2.removeAttribute("OnlyIcon");
-		myE1.setAttribute("OnlyIcon", "Icon");
-		myE2.setAttribute("OnlyIcon", "Icon");
+		for (i=0; i<myE.length; i++) {
+			myE[i].removeAttribute("OnlyIcon");
+			myE[i].setAttribute("OnlyIcon", "Icon");
+		}
 	} else {
-		myE1.removeAttribute("OnlyIcon");
-		myE2.removeAttribute("OnlyIcon");
-		myE1.setAttribute("OnlyIcon", "Text");
-		myE2.setAttribute("OnlyIcon", "Text");
+		for (i=0; i<myE.length; i++) {
+			myE[i].removeAttribute("OnlyIcon");
+			myE[i].setAttribute("OnlyIcon", "Text");
+		}
 	}
 }
 
@@ -574,9 +576,17 @@ function updateMyReplyButtons() {
 									.getElementsByTagName("header-view-button-box").item(0);
 	for (var j=0;j<buttonslist["Reply"].length; j++) {
 		var myElement = buttonBox.getButton(buttonslist["Reply"][j]);
+		addClass(myElement, "msgHeaderView-flat-button");
 		if (!myElement.hidden) {
 			myElement.setAttribute("mode", buttonslist["Reply"][j]);
 		}
+	}
+}
+
+function addClass(el, strClass) {
+	var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);	
+	if (!testnew) {
+		el.className += el.className?' '+strClass:strClass;
 	}
 }
 

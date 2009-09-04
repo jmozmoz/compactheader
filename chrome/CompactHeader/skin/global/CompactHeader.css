@@ -46,6 +46,19 @@
   min-width: 1px;
 }
 
+
+#expandedButtonBox .button-menubutton-button,
+#collapsedButtonBox .button-menubutton-button {
+  background-color: transparent;
+  border: transparent;
+}
+
+#expandedButtonBox .msgHeaderView-flat-button,
+#collapsedButtonBox .msgHeaderView-flat-button {
+	padding: 0px;
+	margin: 0px;
+}
+
 #collapsedtoCcBccBox .headerNameBox,
 #collapsedfromBox .headerNameBox {
 	display: none;
@@ -54,6 +67,37 @@
   display: none;
 }
 
+#otherActionsButton .button-box .box-inherit,
+#tagMenuPopup .button-box .box-inherit {
+  -moz-box-direction: reverse;
+}
+
+#otherActionsButton {
+	list-style-image: url("chrome://CompactHeader/skin/other-action.png");
+	-moz-image-region: rect(0px 16px 16px 0px);
+}
+
+#tagMenuPopup {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
+	-moz-image-region: rect(0px 240px 16px 224px);
+}
+
+#otherActionsButton[OnlyIcon="Text"] .button-text,
+#tagMenuPopup[OnlyIcon="Text"] .button-text {
+  -moz-padding-start: 1px;
+  -moz-padding-end: 5px;
+}
+
+#otherActionsButton[OnlyIcon="Icon"] .button-text,
+#tagMenuPopup[OnlyIcon="Icon"] .button-text {
+	display: none;
+}
+
+#otherActionsButton .button-icon,
+#tagMenuPopup .button-icon {
+  -moz-margin-start: 1px;
+  -moz-margin-end: 1px;
+}
 
 #collapsedHeaderDisplayName {
   text-align: left;
@@ -184,8 +228,8 @@
 }
 
 /* set button margins */
-#collapsedButtonBox .msgHeaderView-button .button-icon,
-#expandedButtonBox .msgHeaderView-button .button-icon {
+#collapsedButtonBox .msgHeaderView-button .msgHeaderView-flat-button .button-icon,
+#expandedButtonBox .msgHeaderView-button .msgHeaderView-flat-button .button-icon {
   -moz-margin-start: 1px;
   -moz-margin-end: 1px;
 }
