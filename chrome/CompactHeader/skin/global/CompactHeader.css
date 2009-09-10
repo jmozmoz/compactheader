@@ -46,6 +46,15 @@
   min-width: 1px;
 }
 
+/*
+#HeaderPaneToolbarBox {
+	-moz-binding: url(chrome://CompactHeader/content/cohe.xml#CoHeToolbox);
+}
+
+#HeaderPaneToolbar{
+	-moz-binding: url(chrome://CompactHeader/content/cohe.xml#CoHeToolbar);
+}
+*/
 
 #expandedButtonBox .button-menubutton-button,
 #collapsedButtonBox .button-menubutton-button {

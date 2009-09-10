@@ -587,12 +587,12 @@ function updateHdrIconText() {
 						 document.getElementById("tagMenuPopup"),
 						 document.getElementById("otherActionsButton")];
 	if (prefBranch.getBoolPref("buttons.showonlyicon")) {
-		for (i=0; i<myE.length; i++) {
+		for (var i=0; i<myE.length; i++) {
 			myE[i].removeAttribute("OnlyIcon");
 			myE[i].setAttribute("OnlyIcon", "Icon");
 		}
 	} else {
-		for (i=0; i<myE.length; i++) {
+		for (var i=0; i<myE.length; i++) {
 			myE[i].removeAttribute("OnlyIcon");
 			myE[i].setAttribute("OnlyIcon", "Text");
 		}
@@ -819,3 +819,38 @@ var myPrefObserverIconText =
 myPrefObserverView.register();
 myPrefObserverHeaderSize.register();
 myPrefObserverIconText.register();
+
+/*
+function CoHe_customizeToolbar(aWhich) {
+
+	// feststellen, welche Toolbar konfiguriert werden soll
+	var elem = aWhich;
+	while(elem.tagName != "popup") {
+		elem = elem.parentNode;
+	}
+
+	var tbar = document.getElementById("HeaderPaneToolbar");
+	var toolbox = document.getElementById(tbar.parentNode.id);
+
+	toolbox.customizeDone = CoHe_customizeToolbarDone;
+	document.getElementById('CoHe-customize-mitem').setAttribute("disabled", "true");
+
+	// löst Reaktion auf Änderungen der Icongröße/Symbolanzeige im Anpassen-Dialog aus
+	CoHeInterval = window.setInterval("CoHe_adjustToolboxWidth(true)", 100);
+
+	openDialog("chrome://global/content/customizeToolbar.xul", "CustomizeToolbar", "chrome,all,dependent", toolbox);
+}
+*/
+
+/*
+	Schließt die Symbolleisten-Konfiguration ab
+		=> Aufruf durch CoHe_customizeToolbar()
+*/
+/*
+function CoHe_customizeToolbarDone(aToolboxChanged) {
+	if(document.getElementById('CoHe-customize-mitem'))
+		document.getElementById('CoHe-customize-mitem').removeAttribute("disabled");
+
+	window.focus();
+}
+*/

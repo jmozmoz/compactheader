@@ -33,14 +33,12 @@
 	    <command id="cmd_viewNormalHeader" oncommand="alert('test2');goDoCommand('cmd_viewNormalHeader'); event.stopPropagation()"/>
 	</commandset>
 
-
 	<keyset>
 		<key id="hideDetailsKey" 
 				 modifiers="shift" 
 				 key="&toggleDetails.key;"
 				 oncommand="coheToggleHeaderView();"/>
 	</keyset>
-
 
   <deck id="msgHeaderViewDeck">
 
@@ -55,6 +53,41 @@
 	  </vbox>
 	  
 		<hbox id="expandedHeaders" flex="1">
+<!--
+			<popup id="header-toolbar-contextmenu">
+				<menuitem id="CoHe-customize-mitem" label="TEST" oncommand="CoHe_customizeToolbar(this);" />
+			</popup>
+
+			<toolbarbox id="HeaderPaneToolbarBox" 
+									iconsize="small" 
+									mode="icons"
+									style="min-width: 29px; max-width: 29px; background-color: red; "
+									class="chromeclass-toolbar">
+				<toolbar id="HeaderPaneToolbar" 
+								 class="chromeclass-toolbar" 
+								 toolbarname="HeaderToolbar"
+								 fullscreentoolbar="true"
+								 mode="icons" 
+								 defaultmode="icons" 
+								 customizable="true" 
+								 context="header-toolbar-contextmenu"
+								 persist="posMode mode iconsize flexbuttons hidden" 
+								 defaultset="button-reply,button-replyall,button-replylist,button-forward,button-tag,button-delete,button-junk,button-print"
+								 currentset="button-reply,button-replyall,button-replylist,button-forward,button-tag,button-delete,button-junk,button-print"
+								 iconsize="small">
+					<toolbarbutton id="button-reply2" 
+												 class="toolbarbutton-1" 
+												 label="Reply" 
+												 tooltiptext="Reply to the message" 
+												 observes="button_reply" 
+												 oncommand="MsgReplyMessage(event)" 
+												 chromedir="ltr"/>
+				</toolbar>
+					 
+								 
+				<toolbarset id="HeaderPaneToolbarSet" context="header-toolbar-contextmenu"/>
+			</toolbarbox>
+-->
 			<vbox id="otherHeadersAndButtonsBox" flex="1">
 				<vbox id="otherActionsBox">
 					<button type="menu" id="otherActionsButton"
