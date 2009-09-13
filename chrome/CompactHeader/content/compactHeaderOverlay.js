@@ -61,23 +61,22 @@ var gCoheBuiltCollapsedView = false;
  * msgHdrViewOverlay.js for details of the field definition semantics.
  */
 var gCoheCollapsedHeaderListLongAddresses = [
-  {name:"subject", outputFunction:coheUpdateHeaderValueInTextNode},
+  {name:"subject"},
   {name:"from", useToggle:true, outputFunction:OutputEmailAddresses},
-//  {name:"from", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
   {name:"toCcBcc", useToggle:true, outputFunction: OutputEmailAddresses},
-  {name:"date", outputFunction:OutputDate}
+  {name:"date", outputFunction:coheUpdateDateValue}
   ];
 
 var gCoheCollapsedHeaderListShortAddresses = [
-  {name:"subject", outputFunction:coheUpdateHeaderValueInTextNode},
+  {name:"subject"},
   {name:"from", useToggle:true, useShortView:true, outputFunction:OutputEmailAddresses},
   {name:"toCcBcc", useToggle:true, useShortView:true, outputFunction: OutputEmailAddresses},
-  {name:"date", outputFunction:OutputDate}
+  {name:"date", outputFunction:coheUpdateDateValue}
   ];
     
-  var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
-    .getService(Components.interfaces.nsIPrefService)
-    .getBranch("extensions.CompactHeader.");
+var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+  .getService(Components.interfaces.nsIPrefService)
+  .getBranch("extensions.CompactHeader.");
 
 var coheIntegrateRSSLinkify = false;
 
@@ -89,9 +88,9 @@ var RSSLinkify = {
 var coheFirstTime = true;
     
 function cleanupHeaderXUL(){
-	var xularray = ["collapsedfromOutBox", "collapsedtoCcBccOutBox", 
-									"collapsedButtonBox", "collapsedsubjectBox", 
-									"collapseddateBox", "coheBaselineBox"];
+	var xularray = ["collapsedfromOutBox", "collapsedtoCcBccOutBox",
+									"collapsedButtonBox", "collapsedsubjectOutBox", 
+									"collapseddateOutBox", "coheBaselineBox"];
 									
 	/* rescue otheraction and tagpopup */
 	moveMenusToButtonBox(false);
@@ -107,90 +106,116 @@ function create2LHeaderXUL() {
 	cleanupHeaderXUL();
 	
 	var myElement = document.getElementById("collapsedHeaderViewFirstLine");
-	
+		
 	var xul1   = document.createElement("hbox");
 	xul1.id    = "collapsedfromOutBox";
 	xul1.align = "start";
-	xul1.flex  = "100";
+	xul1.flex  = "0";
+  myElement.appendChild(xul1,myElement);  
 
-	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
-		xultmp.id    = "collapsedfromBox";
-	} else {
-		xultmp.id    = "collapsedfromValue";
-	}
-	xultmp.setAttribute("class","collapsedHeaderDisplayName");
-	xul1.appendChild(xultmp,xul1);
-	myElement.appendChild(xul1, myElement);
+	var xultmp1   = document.createElement("grid");
+  xultmp1.flex  = "1";
+  xul1.appendChild(xultmp1,xul1);  
+  
+  var xultmp2   = document.createElement("columns");
+  xultmp1.appendChild(xultmp2,xultmp1);  
 
-	var xul2   = document.createElement("hbox");
-	xul2.id    = "collapsedtoCcBccOutBox";
-	xul2.align = "end";
-	xul2.pack  = "end";
-	xul2.flex  = "1";
+  var xultmp3   = document.createElement("column");
+  xultmp3.flex  = "0";
+  xultmp2.appendChild(xultmp3,xultmp2);
+  
+  var xultmp2   = document.createElement("rows");
+  xultmp1.appendChild(xultmp2,xultmp1);  
 
-	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
-		xultmp.id    = "collapsedtoCcBccBox";
-	} else {
-		xultmp.id    = "collapsedtoCcBccValue";		
-	}
-	xultmp.flex  = "1";
-	xultmp.align = "end";
-	xultmp.pack  = "end";
-	xultmp.setAttribute("class","collapsedHeaderDisplayName");
-	xul2.appendChild(xultmp, xul2);
-
-	myElement.appendChild(xul2, myElement);
-
-	var xul3   = document.createElement("header-view-button-box");
-	xul3.id    = "collapsedButtonBox";
-
-	myElement.appendChild(xul3, myElement);
+  var xultmp3   = document.createElement("row");
+  xultmp3.id    = "collapsedfromRow";
+  xultmp2.appendChild(xultmp3,xultmp2);
+    
+  var xultmp4   = document.createElement("mail-multi-emailHeaderField");   
+	xultmp4.id    = "collapsedfromBox";
+	xultmp4.flex  = "0";
+  xultmp3.appendChild(xultmp4,xultmp3);
 	
-	//				<hbox id="collapsedsubjectBox" align="start" flex="1" style="padding-left: 10px; padding-top: 1.6px">
-	//				<textbox id="collapsedsubjectValue" flex="1" readonly="true" class="collapsedHeaderValue plain"/>
-	//			</hbox>
+  var xultmp1   = document.createElement("grid");
+  xultmp1.id    = "collapsedtoCcBccOutBox";
+  xultmp1.flex  = "1";
+  myElement.appendChild(xultmp1,myElement);  
+  
+  var xultmp2   = document.createElement("columns");
+  xultmp1.appendChild(xultmp2,xultmp1);  
 
-	var myElement = document.getElementById("collapsedHeaderViewSecondLine");
-				
-	var xul4   = document.createElement("hbox");
-	xul4.id    = "collapsedsubjectBox";
-	xul4.align = "start";
-	xul4.flex  = "1";
+  var xultmp3   = document.createElement("column");
+  xultmp3.flex  = "0";
+  xultmp2.appendChild(xultmp3,xultmp2);
 
-	var xultmp   = document.createElement("textbox");
-	xultmp.id    = "collapsedsubjectValue";
-	xultmp.flex  = "1";
-	xultmp.setAttribute("class", "collapsedHeaderValue plain");
-	xultmp.setAttribute("readonly", "true");
+  var xultmp3   = document.createElement("column");
+  xultmp3.flex  = "1";
+  xultmp2.appendChild(xultmp3,xultmp2);
+  
+  var xultmp2   = document.createElement("rows");
+  xultmp1.appendChild(xultmp2,xultmp1);  
 
-	xul4.appendChild(xultmp, xul4);
+  var xultmp3   = document.createElement("row");
+  xultmp3.id    = "collapsedtoCcBccRow";
+  xultmp3.align = "baseline";
+  xultmp2.appendChild(xultmp3,xultmp2);
+    
+  var xultmp4   = document.createElement("label");   
+  xultmp4.id    = "collapsedtoCcBccLabel";
+  xultmp4.setAttribute("class","headerName");
+  xultmp4.setAttribute("value","to");
+  xultmp4.setAttribute("control","collapsedtoCcBccBox");
+  xultmp3.appendChild(xultmp4,xultmp3);
 
-	myElement.appendChild(xul4, myElement);
+  var xultmp4   = document.createElement("mail-multi-emailHeaderField");   
+  xultmp4.id    = "collapsedtoCcBccBox";
+  xultmp4.flex  = "1";
+  xultmp3.appendChild(xultmp4,xultmp3);
+  
+  var xultmp1   = document.createElement("header-view-button-box");
+  xultmp1.id    = "collapsedButtonBox";
+  xultmp1.flex  = "0";
+  xultmp1.align = "start";
+  myElement.appendChild(xultmp1,myElement);  
+  
+  
+  var myElement = document.getElementById("collapsedHeaderViewSecondLine");
+    
+  var xul1   = document.createElement("hbox");
+  xul1.id    = "collapsedsubjectOutBox";
+  xul1.align = "start";
+  xul1.flex  = "99";
+  myElement.appendChild(xul1,myElement);  
+	
+  var xultmp2   = document.createElement("row");
+  xultmp2.id    = "collapsedsubjectRow";
+  xultmp2.flex  = "99";
+  xul1.appendChild(xultmp2,xul1);
 
-//				<hbox id="collapseddateBox" align="end" flex="0" style="padding-bottom: 2px">
-//					<textbox id="collapseddateValue" class="plain collapsedHeaderValue" flex="0" readonly="true"/>
-//				</hbox>
-	var xul5   = document.createElement("hbox");
-	xul5.id    = "collapseddateBox";
-	xul5.align = "end";
-	xul5.pack  = "end";
-	xul5.flex  = "0";
+  var xultmp3   = document.createElement("mail-headerfield");
+  xultmp3.id    = "collapsedsubjectBox";
+  xultmp3.flex  = "99";
+  xultmp2.appendChild(xultmp3,xultmp2);
+  
+  var xul1   = document.createElement("hbox");
+  xul1.id    = "collapseddateOutBox";
+  xul1.align = "end";
+  xul1.flex  = "0";
+  myElement.appendChild(xul1,myElement);  
+  
+  var xultmp2   = document.createElement("row");
+  xultmp2.id    = "collapseddateRow";
+  xultmp2.align = "end";
+  xultmp2.pack  = "end";
+  xul1.appendChild(xultmp2,xul1);
 
-	var xultmp   = document.createElement("textbox");
-	xultmp.id    = "collapseddateValue";
-	xultmp.flex  = "0";
-	xultmp.pack  = "end";
-	xultmp.setAttribute("class", "collapsedHeaderValue plain");
-	xultmp.setAttribute("readonly", "true");
-	xul5.appendChild(xultmp, xul5);
+  var xultmp3   = document.createElement("label");
+  xultmp3.id    = "collapseddateBox";
+  xultmp3.flex  = "1";
+  xultmp3.setAttribute("class","dateLabel");
+  xultmp2.appendChild(xultmp3,xultmp2);
 
-	myElement.appendChild(xul5, myElement);
-
-	document.getElementById("collapsedsubjectBox").setAttribute("twolineview", "true");
-	document.getElementById("collapseddateBox").setAttribute("twolineview", "true");
-
+  document.getElementById("collapsedHeaderView").setAttribute("twolineview", "true");
 }
 
 function create1LHeaderXUL() {
@@ -198,85 +223,122 @@ function create1LHeaderXUL() {
 	
 	var myElement = document.getElementById("collapsedHeaderViewFirstLine");
 
-	var xul0   = document.createElement("hbox");
-	xul0.id    = "coheBaselineBox";
-	xul0.align = "baseline";
-	xul0.flex  = "2";
+  var xul1   = document.createElement("hbox");
+  xul1.id    = "collapsedsubjectOutBox";
+  xul1.align = "start";
+  xul1.flex  = "99";
+  myElement.appendChild(xul1,myElement);  
+  
+  var xultmp2   = document.createElement("row");
+  xultmp2.id    = "collapsedsubjectRow";
+  xultmp2.flex  = "99";
+  xul1.appendChild(xultmp2,xul1);
 
-	myElement.appendChild(xul0, myElement);
+  var xultmp3   = document.createElement("mail-headerfield");
+  xultmp3.id    = "collapsedsubjectBox";
+  xultmp3.flex  = "99";
+  xultmp2.appendChild(xultmp3,xultmp2);
 
-	var xul4   = document.createElement("hbox");
-	xul4.id    = "collapsedsubjectBox";
-	xul4.align = "start";
-	xul4.flex  = "99";
-	xul0.appendChild(xul4, xul0);
+  var xul1   = document.createElement("hbox");
+  xul1.id    = "collapsedfromOutBox";
+  xul1.align = "start";
+  xul1.flex  = "0";
+  myElement.appendChild(xul1,myElement);  
 
-	var xultmp   = document.createElement("textbox");
-	xultmp.id    = "collapsedsubjectValue";
-	xultmp.flex  = "99";
-	xultmp.setAttribute("class", "collapsedHeaderValue plain");
-	xultmp.setAttribute("readonly", "true");
-	xul4.appendChild(xultmp, xul4);
+  var xultmp1   = document.createElement("grid");
+  xultmp1.flex  = "1";
+  xul1.appendChild(xultmp1,xul1);  
+  
+  var xultmp2   = document.createElement("columns");
+  xultmp1.appendChild(xultmp2,xultmp1);  
 
+  var xultmp3   = document.createElement("column");
+  xultmp3.flex  = "0";
+  xultmp2.appendChild(xultmp3,xultmp2);
+  
+  var xultmp2   = document.createElement("rows");
+  xultmp1.appendChild(xultmp2,xultmp1);  
+
+  var xultmp3   = document.createElement("row");
+  xultmp3.id    = "collapsedfromRow";
+  xultmp2.appendChild(xultmp3,xultmp2);
+    
+  var xultmp4   = document.createElement("mail-multi-emailHeaderField");   
+  xultmp4.id    = "collapsedfromBox";
+  xultmp4.flex  = "0";
+  xultmp3.appendChild(xultmp4,xultmp3);
 	
-	var xul2   = document.createElement("hbox");
-	xul2.id    = "collapsedtoCcBccOutBox";
-	xul2.align = "end";
-	xul2.pack  = "end";
-	xul2.flex  = "1";
-	xul0.appendChild(xul2, xul0);
+  var xultmp1   = document.createElement("grid");
+  xultmp1.id    = "collapsedtoCcBccOutBox";
+  xultmp1.flex  = "1";
+  myElement.appendChild(xultmp1,myElement);  
+    
+  var xultmp2   = document.createElement("rows");
+  xultmp1.appendChild(xultmp2,xultmp1);  
 
-	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
-		xultmp.id    = "collapsedtoCcBccBox";
-	} else {
-		xultmp.id    = "collapsedtoCcBccValue";		
-	}
-	xultmp.flex  = "1";
-	xultmp.align = "end";
-	xultmp.pack  = "end";
-	xultmp.setAttribute("class", "collapsedHeaderDisplayName");
-	xultmp.hidden = "true";
-	xul2.appendChild(xultmp, xul2);
+  var xultmp3   = document.createElement("row");
+  xultmp3.id    = "collapsedtoCcBccRow";
+  xultmp3.align = "baseline";
+  xultmp2.appendChild(xultmp3,xultmp2);
+    
+  var xultmp4   = document.createElement("mail-multi-emailHeaderField");   
+  xultmp4.id    = "collapsedtoCcBccBox";
+  xultmp4.flex  = "1";
+  xultmp4.hidden = "true";
+  xultmp3.appendChild(xultmp4,xultmp3);
+  
+  var xul1   = document.createElement("hbox");
+  xul1.id    = "collapseddateOutBox";
+  xul1.align = "end";
+  xul1.flex  = "0";
+  myElement.appendChild(xul1,myElement);  
+  
+  var xultmp2   = document.createElement("row");
+  xultmp2.id    = "collapseddateRow";
+  xultmp2.align = "start";
+  xultmp2.pack  = "end";
+  xul1.appendChild(xultmp2,xul1);
 
+  var xultmp3   = document.createElement("label");
+  xultmp3.id    = "collapseddateBox";
+  xultmp3.flex  = "1";
+  xultmp3.setAttribute("class","dateLabel");
+  xultmp2.appendChild(xultmp3,xultmp2);
 	
-	var xul1   = document.createElement("hbox");
-	xul1.id    = "collapsedfromOutBox";
-	xul1.align = "end";
-	xul0.appendChild(xul1, xul0);
-
-	var xultmp   = document.createElement("mail-multi-emailHeaderField");
-	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
-		xultmp.id    = "collapsedfromBox";
-	} else {
-		xultmp.id    = "collapsedfromValue";
-	}
-	xultmp.setAttribute("class", "collapsedHeaderDisplayName");
-	//xultmp.label = "&fromField2.label;";
-	xul1.appendChild(xultmp,xul1);
-
-	var xul5   = document.createElement("hbox");
-	xul5.id    = "collapseddateBox";
-	xul5.align = "end";
-	xul0.appendChild(xul5, xul0);
-
-	var xultmp   = document.createElement("textbox");
-	xultmp.id    = "collapseddateValue";
-	xultmp.setAttribute("readonly", "true");
-
-	xultmp.setAttribute("class", "collapsedHeaderValue plain");
-	xul5.appendChild(xultmp, xul5);
-
-
 	var xul3   = document.createElement("header-view-button-box");
 	xul3.id    = "collapsedButtonBox";
 	xul3.hidden = "true";
 
 	myElement.appendChild(xul3, myElement);
-	document.getElementById("collapsedsubjectBox").removeAttribute("twolineview");
-	document.getElementById("collapseddateBox").removeAttribute("twolineview");
+
+	document.getElementById("collapsedHeaderView").removeAttribute("twolineview");
 }
 
+function createExpandedHeaderXUL() {
+	return;
+	
+  var myElement = document.getElementById("expandedHeaderView");
+
+	var xul0   = document.createElement("vbox");
+	xul0.id    = "expandedHeadersBox";
+	xul0.flex  = "1";
+	xul0.setAttribute("insertafter", "hideDetailsButtonBox");
+
+	myElement.appendChild(xul0, myElement);
+	//myElement.insertBefore(xul0, "expandedHeadersTopBox")
+	
+	var newParent = document.getElementById("expandedHeadersBox");
+	if (newParent != null) {
+		var myElement = document.getElementById("expandedHeadersTopBox");
+		newParent.appendChild(myElement);
+		myElement = document.getElementById("expandedHeadersBottomBox");
+		newParent.appendChild(myElement);
+	} else {
+		alert ("null");
+	}
+	
+	
+}
 // Now, for each view the message pane can generate, we need a global table
 // of headerEntries. These header entry objects are generated dynamically
 // based on the static data in the header lists (see above) and elements
@@ -285,6 +347,7 @@ var gCoheCollapsedHeaderView = {};
 
 function coheInitializeHeaderViewTables()
 {
+	
 /*  coheReInitializeHeaderViewTables(); */
   // iterate over each header in our header list array, create a header entry
 	// for it, and store it in our header table
@@ -293,11 +356,19 @@ function coheInitializeHeaderViewTables()
 	} else {
   	create1LHeaderXUL();
 	}
-  
+  //document.getElementById("collapsedHeaderView").removeAttribute("twolineview");
+	
 	//var tb = document.getElementById("collapsedsubjectValue");
   gCoheCollapsedHeaderView = {};
   var index;
-	if (prefBranch.getIntPref("headersize.addressstyle") != 1) {
+
+  for (index = 0; index < gCoheCollapsedHeaderListLongAddresses.length; index++) {
+    gCoheCollapsedHeaderView[gCoheCollapsedHeaderListLongAddresses[index].name] =
+      new createHeaderEntry('collapsed', gCoheCollapsedHeaderListLongAddresses[index]);
+  }
+
+  /*
+  if (prefBranch.getBoolPref("headersize.addressstyle") != 1) {
 	  for (index = 0; index < gCoheCollapsedHeaderListLongAddresses.length; index++) {
 	    gCoheCollapsedHeaderView[gCoheCollapsedHeaderListLongAddresses[index].name] =
 	      new createHeaderEntry('collapsed', gCoheCollapsedHeaderListLongAddresses[index]);
@@ -308,9 +379,11 @@ function coheInitializeHeaderViewTables()
 	      new createHeaderEntry('collapsed', gCoheCollapsedHeaderListShortAddresses[index]);
 		}
 	}
-  if (prefBranch.getBoolPref("headersize.linkify")) {
+  */
+  
+	if (prefBranch.getBoolPref("headersize.linkify")) {
 	  RSSLinkify.newSubject = document.createElement("label");
-	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkValue");
+	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
 	  RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
 	  RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
 	  RSSLinkify.newSubject.setAttribute("context", "CohecopyUrlPopup");
@@ -318,8 +391,7 @@ function coheInitializeHeaderViewTables()
 	  RSSLinkify.newSubject.setAttribute("readonly", "true");
 	  RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
 	  RSSLinkify.newSubject.setAttribute("flex", "1");
-	
-	  RSSLinkify.oldSubject = document.getElementById("collapsedsubjectValue");
+	  RSSLinkify.oldSubject = document.getElementById("collapsedsubjectBox");
 	  RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
 	}
 
@@ -327,6 +399,7 @@ function coheInitializeHeaderViewTables()
 	
   updateHdrButtons();
   updateHdrIconText();
+  
 }
 
 function coheOnLoadMsgHeaderPane()
@@ -444,8 +517,7 @@ function coheUpdateHeaderView()
 		    RSSLinkify.oldSubject.setAttribute("collapsed", "false");
 		}
   }
-
-  if (prefBranch.getIntPref("headersize.addressstyle") == 2) {
+  if (prefBranch.getBoolPref("headersize.addressstyle")) {
   	selectEmailDisplayed();
   }
   
@@ -462,7 +534,6 @@ function moveMenusToButtonBox(viewMode) {
 		target = "collapsedButtonBox";
 	else
 		target = "otherActionsBox";
-
 	
 	var newParent = document.getElementById(target);
 	if (newParent != null) {
@@ -492,9 +563,10 @@ function coheToggleHeaderView ()
     deck.selectedPanel = document.getElementById("expandedHeaderView");
     ClearHeaderView(gExpandedHeaderView);
     UpdateExpandedMessageHeaders();
+    gDBView.reloadMessage();
 	 	updateMyReplyButtons();
 	  updateHdrButtons();
-  }
+	}
 
 	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
   
@@ -508,6 +580,13 @@ function coheUpdateHeaderValueInTextNode(headerEntry, headerValue)
 {
   headerEntry.textNode.value = headerValue;
 }
+
+function coheUpdateDateValue(headerEntry, headerValue) {
+  //var t = currentHeaderData.date.headerValue;
+	var d = document.getElementById("collapseddateBox");
+	d.textContent = headerValue;
+}
+
 
 // coheUpdateMessageHeaders: Iterate through all the current header data we received from mime for this message
 // for each header entry table, see if we have a corresponding entry for that header. i.e. does the particular
@@ -550,6 +629,38 @@ function coheUpdateMessageHeaders()
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 
+function copyButtonIcons(buttonname, element) {
+	var e0 = document.getElementById("mail-bar3");
+	var iconsize;
+	
+	if (e0) {
+	  iconsize = e0.getAttribute("iconsize");	
+	} else {
+		iconsize = "small";
+	}
+	
+	var e01 = document.getElementById("hiddenIconSpace");
+  if (e01) {
+    e01.setAttribute("iconsize", iconsize); 
+  }	
+	
+  var e1 = document.getElementById(buttonicons[buttonname]);
+  if (!e1) return;
+  
+  var s1 = window.getComputedStyle(e1, null);
+  if (!s1) return;
+  
+  var imageregion = s1.getPropertyValue("-moz-image-region");
+  var imagefile = s1.getPropertyValue("list-style-image");
+
+  if (imagefile && imagefile != "") element.style.listStyleImage = imagefile;
+  if (imageregion && imageregion != "") element.style.MozImageRegion = imageregion;
+  
+  if (buttonname == "hdrTrashButton") {
+  	removeClass(element, "hdrTrashButton");
+  }
+}
+
 function updateHdrButtons() {
 	
 	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
@@ -563,6 +674,7 @@ function updateHdrButtons() {
 		  strViewMode = "view.expanded";
 		for (var j=0; j<buttonslist[buttonname].length; j++){
 	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]) || document.getElementById(buttonslist[buttonname][j]);
+	  	copyButtonIcons(buttonslist[buttonname][j], myElement);
 	  	if (myElement != null) {
 	  		addClass(myElement, "msgHeaderView-flat-button");
 	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {
@@ -619,34 +731,10 @@ function addClass(el, strClass) {
 	}
 }
 
-function MyInitViewHeadersMenu()
-{
-  var headerchoice = 1;
-  try
-  {
-    headerchoice = pref.getIntPref("mail.show_headers");
-  }
-  catch (ex)
-  {
-    dump("failed to get the header pref\n");
-  }
-
-  var id = null;
-  switch (headerchoice)
-  {
-    case 2:
-      id = "my_viewallheaders";
-      break;
-    case 1:
-    default:
-      id = "my_viewnormalheaders";
-      break;
-  }
-
-  var menuitem = document.getElementById(id);
-  if (menuitem)
-    menuitem.setAttribute("checked", "true");
+function removeClass(el, strClass) {
+  el.className = el.className.replace(strClass, '');
 }
+
 
 function CoheCopyWebsiteAddress(websiteAddressNode)
 {
@@ -766,9 +854,6 @@ var myPrefObserverHeaderSize =
     if(aTopic != "nsPref:changed") return;
     // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
     // aData is the name of the pref that's been changed (relative to aSubject)
-
-/*		coheOnLoadMsgHeaderPane();
-		coheInitializeHeaderViewTables(); */  
 
 		var event = document.createEvent('Events');
  		event.initEvent('messagepane-loaded', false, true);

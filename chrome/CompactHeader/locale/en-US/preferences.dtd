@@ -13,7 +13,10 @@
 
 <!ENTITY menu.ShowFullAddress.caption "Show full email address">
 
+<!ENTITY menu.ShowOnlyAddress.caption "Display only address">
+
+<!--
 <!ENTITY AddressStyle.label "Email address style">
 <!ENTITY AddressStyle.Full.label "Name and address">
 <!ENTITY AddressStyle.Short.label "Only Name">
-<!ENTITY AddressStyle.OnlyEmail.label "Only Address">
+<!ENTITY AddressStyle.OnlyEmail.label "Only Address"> -->

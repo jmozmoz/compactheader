@@ -133,6 +133,7 @@
 	<checkbox id="checkbox.Linkify" 
 						label="&menu.Linkify.caption;"/>
 
+<!--
 	<hbox align="center" flex="0">
 		<label control="AddressStyle" flex="0">&AddressStyle.label;:</label>
 		<menulist id="AddressStyle" flex="0">
@@ -142,10 +143,10 @@
 				<menuitem value="2" label="&AddressStyle.OnlyEmail.label;"/>
 			</menupopup>
 		</menulist>
-
 	</hbox>
-<!--
-	<checkbox id="checkbox.ShowFullAddress" 
-						label="&menu.ShowFullAddress.caption;"/>
 -->
+
+	<checkbox id="checkbox.ShowOnlyAddress" 
+						label="&menu.ShowOnlyAddress.caption;"/>
+
 </dialog>

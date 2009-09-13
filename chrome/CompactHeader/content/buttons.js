@@ -48,3 +48,14 @@ buttonslist["Junk"]    = ["hdrJunkButton"];
 buttonslist["Trash"]   = ["hdrTrashButton"];
 buttonslist["OtherAction"] = ["otherActionsButton"];
 buttonslist["Tag"] = ["tagMenuPopup"];
+
+var buttonicons = new Array;
+buttonicons["hdrReplyButton"]     = ["button-reply"];
+buttonicons["hdrReplyAllButton"]  = ["button-replyall"];
+buttonicons["hdrReplyListButton"] = ["button-replylist"];
+buttonicons["hdrForwardButton"]   = ["button-forward"];
+buttonicons["archiveButton"]      = ["button-archive"];
+buttonicons["hdrJunkButton"]      = ["button-isJunk"];
+buttonicons["hdrTrashButton"]     = ["button-mark-deleted"];
+buttonicons["otherActionsButton"] = ["button-other-actions"];
+buttonicons["tagMenuPopup"]       = ["button-tag"];

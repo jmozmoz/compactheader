@@ -14,7 +14,9 @@
 
 <!ENTITY menu.ShowFullAddress.caption "Adresse vollständig anzeigen">
 
-<!ENTITY AddressStyle.label "Adressstil">
+<!ENTITY menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
+
+<!--
 <!ENTITY AddressStyle.Full.label "Name und Adresse">
 <!ENTITY AddressStyle.Short.label "Nur Name">
-<!ENTITY AddressStyle.OnlyEmail.label "Nur Adresse">
+<!ENTITY AddressStyle.OnlyEmail.label "Nur Adresse"> -->

@@ -1,7 +1,7 @@
 pref("extensions.CompactHeader.headersize.twolineview", false);
 pref("extensions.CompactHeader.headersize.linkify", false);
 
-pref("extensions.CompactHeader.headersize.addressstyle", 1);
+pref("extensions.CompactHeader.headersize.addressstyle", false);
 
 pref("extensions.CompactHeader.buttons.showonlyicon", true);
 
