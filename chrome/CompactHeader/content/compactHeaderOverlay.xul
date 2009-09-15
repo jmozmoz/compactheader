@@ -63,7 +63,7 @@
         <toolbarbutton id="button-replylist" class="toolbarbutton-1" hidden="true"/>
         <toolbarbutton id="button-forward" class="toolbarbutton-1" hidden="true"/>
         <toolbarbutton id="button-archive" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-isJunk" class="toolbarbutton-1" hidden="true"/>
+        <toolbarbutton id="button-isJunk" class="toolbarbutton-1 junk-button" hidden="true"/>
         <toolbarbutton id="button-mark-deleted" class="toolbarbutton-1 delete-button" hidden="true"/>
         <toolbarbutton id="button-tag" class="toolbarbutton-1" hidden="true"/>
         <toolbarbutton id="button-other-actions" class="toolbarbutton-1" hidden="true"/>

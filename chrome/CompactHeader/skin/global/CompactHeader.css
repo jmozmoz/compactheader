@@ -56,6 +56,11 @@
 }
 */
 
+#collapsedtoCcBccLabel {
+  -moz-padding-start: 2px;
+  -moz-padding-end: 1px;
+}
+
 #collapsedHeaderView {
   overflow-y: auto;
   overflow-x: hidden;
@@ -221,7 +226,7 @@ toolbar[iconsize="small"] #button-other-actions,
   margin-top: 2px;
 }
 
-#collapsedtoCcBccRow, #collapsedtoCcBccLabel, 
+#collapsedtoCcBccRow,  
 #collapsedsubjectOutBox, collapsedfromOutBox,collapsedButtonBox,
 #collapsedsubjectBox, #collapsedfromBox {
   margin: 0px;
