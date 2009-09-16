@@ -15,7 +15,7 @@
 ]>
 
 <?xml-stylesheet href="chrome://CompactHeader/skin/CompactHeader.css" type="text/css"?>
-
+<?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
 
 
 <overlay id="compactHeaderOverlay"
