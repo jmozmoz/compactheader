@@ -58,11 +58,13 @@ toolbar[iconsize="small"] #button-archive {
 
 .msgHeaderView-flat-button[type="menu"] > .button-box > .button-menu-dropmarker > .dropmarker-icon,
 .msgHeaderView-flat-button[type="menu-button"] > .button-menubutton-dropmarker > .dropmarker-icon {
-  list-style-image: url("chrome://messenger/skin/icons/arrow-dn-grey.png");
+  list-style-image: none;
+  /*list-style-image: url("chrome://messenger/skin/icons/arrow-dn-grey.png");*/
 }
 
 .msgHeaderView-flat-button[type="menu"]:hover > .button-box > .button-menu-dropmarker > .dropmarker-icon,
 .msgHeaderView-flat-button[type="menu-button"]:hover > .button-menubutton-dropmarker > .dropmarker-icon {
-  list-style-image: url("chrome://messenger/skin/icons/arrow-dn-black.png");
+  /*list-style-image: url("chrome://messenger/skin/icons/arrow-dn-black.png");*/
+  list-style-image: none;
 }
 

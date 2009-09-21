@@ -162,6 +162,10 @@
 	</vbox>
 
 	<vbox id="collapsedHeaderView" orient="horizontal" flex="1">
+      <hbox hidden="true">
+        <label id="CoheHideDetailsLabel" value="&hideDetailsButton.label;"/>
+        <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
+      </hbox>
 		<popup id="CohecopyUrlPopup" popupanchor="bottomleft">
 			<menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
 		</popup>

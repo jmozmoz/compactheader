@@ -433,6 +433,7 @@ function coheOnLoadMsgHeaderPane()
 	}
 	
 	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
+  coheToggleMenuLabel();
 }
 
 var coheMessageListener = 
@@ -573,6 +574,22 @@ function coheToggleHeaderView ()
   // Work around a xul deck bug where the height of the deck is determined
 	// by the tallest panel in the deck even if that panel is not selected...
   deck.selectedPanel.collapsed = false;
+  
+  coheToggleMenuLabel();
+}
+
+function coheToggleMenuLabel() {
+	var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
+  var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
+  var strLabel;
+  
+  if (gCoheCollapsedHeaderViewMode) {
+  	strLabel = strShowLabel;
+  } else {
+    strLabel = strHideLabel;
+  }
+  
+  document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
 }
 
 // default method for updating a header value into a header entry
