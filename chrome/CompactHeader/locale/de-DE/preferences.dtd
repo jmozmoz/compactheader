@@ -16,6 +16,12 @@
 
 <!ENTITY menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
 
+<!ENTITY groupbox.Update.caption "CompactHeader aktualisieren">
+<!ENTITY button.checkUpdate.label "Nach Aktualisierungen suchen">
+<!ENTITY link.AMO.value "Von addons.mozilla.org aktualisieren">
+<!ENTITY link.MOZDEV.value "Von mozdev.org aktualisieren">
+
+
 <!--
 <!ENTITY AddressStyle.Full.label "Name und Adresse">
 <!ENTITY AddressStyle.Short.label "Nur Name">
