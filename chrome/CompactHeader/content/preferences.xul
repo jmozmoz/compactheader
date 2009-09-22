@@ -132,6 +132,8 @@
 
 	<checkbox id="checkbox.Linkify" 
 						label="&menu.Linkify.caption;"/>
+  <checkbox id="checkbox.ShowOnlyAddress"
+            label="&menu.ShowOnlyAddress.caption;"/>
 
 <!--
 	<hbox align="center" flex="0">
@@ -146,7 +148,25 @@
 	</hbox>
 -->
 
-	<checkbox id="checkbox.ShowOnlyAddress" 
-						label="&menu.ShowOnlyAddress.caption;"/>
-
+  <groupbox>
+    <caption label="&groupbox.Update.caption;"/>
+  					
+  	<label id="UpdateAMO" 
+  				 disabled="true"
+  				 href="https://addons.mozilla.org/thunderbird/addon/13564" 
+  				 class="text-link" 
+  				 value="&link.AMO.value;"/>
+    <label id="UpdateMOZDEV"
+    			 disabled="true"
+    			 href="http://compactheader.mozdev.org/installation.html" 
+    			 class="text-link" 
+    			 value="&link.MOZDEV.value;" />
+    <hbox align="center" pack="center" flex="1">
+      <button id="checkForUpdates"
+              oncommand="CoheCheckForUpdates();"
+              flex="0"
+              align="center"
+              label="&button.checkUpdate.label;"/>
+    </hbox>
+  </groupbox>
 </dialog>

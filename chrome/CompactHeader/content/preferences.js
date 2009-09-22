@@ -15,7 +15,7 @@
 //
 
 var prefBranch;
-
+var gXMLHttpRequest;
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  onLoad
@@ -23,6 +23,56 @@ var prefBranch;
 //  Called when the preferences dialog has finished loading. Initializes the
 //  controls according to current configuration settings.
 //
+
+function CoheCheckForUpdates() {
+	gXMLHttpRequest = new XMLHttpRequest();
+  gXMLHttpRequest.onload = updateCohe;
+  gXMLHttpRequest.open("GET", "http://compactheader.mozdev.org/availableVersion.xml",true);
+  gXMLHttpRequest.send(null);
+  setTimeout(loadCoheStatus, 60000);
+}
+
+setTimeout(loadCoheStatus, 1000);
+
+function updateCohe()
+{
+  var updateAMO = false;
+  var updateMozdev = false;
+  
+  var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"]
+                            .getService(Components.interfaces.nsIExtensionManager);
+  var strCoheVersion = gExtensionManager.getItemForID("{58D4392A-842E-11DE-B51A-C7B855D89593}").version;
+
+  if (gXMLHttpRequest.readyState == 4) {
+    var data = gXMLHttpRequest.responseXML;
+    var updates = data.getElementsByTagName("update");
+    for (var i = 0; i < updates.length; i++) {
+      var strServer, strVersion;
+      var update = updates[i];
+      for (var j = 0; j < update.childNodes.length; j++) {
+        with (update.childNodes[j]){
+          if (nodeName == "server") {
+            strServer = firstChild.nodeValue;
+          } else if (nodeName == "version") {
+            strVersion = firstChild.nodeValue;
+          }
+      	}
+      }
+      var x = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                        .getService(Components.interfaces.nsIVersionComparator)
+                        .compare(strVersion, strCoheVersion);
+          
+      if ((strServer == "AMO") && (x > 0)) {
+        updateAMO = true;
+        document.getElementById("UpdateAMO").setAttribute("disabled", "false");
+      } else if ((strServer == "mozdev") && (x > 0)) {
+        updateAMO = true;
+        document.getElementById("UpdateMOZDEV").setAttribute("disabled", "false");
+      }
+    }
+	}
+}
+
 
 function onLoad()
 {
