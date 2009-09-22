@@ -15,6 +15,11 @@
 
 <!ENTITY menu.ShowOnlyAddress.caption "Display only address">
 
+<!ENTITY groupbox.Update.caption "Update CompactHeader">
+<!ENTITY button.checkUpdate.label "Check for updates">
+<!ENTITY link.AMO.value "Update from addons.mozilla.org">
+<!ENTITY link.MOZDEV.value "Update from mozdev.org">
+
 <!--
 <!ENTITY AddressStyle.label "Email address style">
 <!ENTITY AddressStyle.Full.label "Name and address">
