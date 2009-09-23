@@ -111,10 +111,12 @@
   display: none;
 }
 
+/*
 #otherActionsButton .button-box .box-inherit,
 #tagMenuPopup .button-box .box-inherit {
   -moz-box-direction: reverse;
 }
+*/
 
 toolbar[iconsize="small"] #button-other-actions,
 #otherActionsButton {
@@ -159,12 +161,14 @@ toolbar[iconsize="small"] #button-other-actions,
 	font-weight: bold;
 }
 
+/*
 #tagMenuPopup,
 #otherActionsButton {
   margin: 0px;
   padding: 0px;
 }
-
+*/
+/*
 #tagMenuPopup .button-box,
 #otherActionsButton .button-box {
   -moz-margin-start: 0px;
@@ -173,7 +177,7 @@ toolbar[iconsize="small"] #button-other-actions,
   -moz-padding-end: 0px;
 	border: 0px;
 }
-
+*/
 #collapseddateBox {
   -moz-box-align: stretch;
   text-align: right;
@@ -226,13 +230,20 @@ toolbar[iconsize="small"] #button-other-actions,
   margin-top: 2px;
 }
 
+#expandedfromBox,
 #collapsedtoCcBccRow,  
-#collapsedsubjectOutBox, collapsedfromOutBox,collapsedButtonBox,
+#collapsedsubjectOutBox, #collapsedfromOutBox,#collapsedButtonBox,
+#expandedButtonBox,
 #collapsedsubjectBox, #collapsedfromBox {
   margin: 0px;
   padding: 0px;
 }
 
+#expandedHeadersTopBox {
+  -moz-box-align: start;
+}
+
+#expandedfromBox, #collapsedfromOutBox, #collapsedtoCcBccOutBox, 
 #collapsedHeaderView[twolineview="true"] #collapsedfromOutBox,  
 #collapsedHeaderView[twolineview="true"] #collapsedtoCcBccOutBox { 
   margin-top: 2px;

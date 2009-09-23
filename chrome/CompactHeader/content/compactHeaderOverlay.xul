@@ -48,6 +48,21 @@
 
   <deck id="msgHeaderViewDeck">
 
+  <toolbarbox id="hiddenIconSpaceBox">
+    <toolbar id="hiddenIconSpace" mode="icon" iconsize="small">
+      <observes element="changeIconSize" attribute="iconsize" onbroadcast="alert('test');"/>
+      <toolbarbutton id="button-reply" class="toolbarbutton-1" hidden="true"/>
+      <toolbarbutton id="button-replyall" class="toolbarbutton-1" hidden="true"/>
+      <toolbarbutton id="button-replylist" class="toolbarbutton-1" hidden="true"/>
+      <toolbarbutton id="button-forward" class="toolbarbutton-1" hidden="true"/>
+      <toolbarbutton id="button-archive" class="toolbarbutton-1" hidden="true"/>
+      <toolbarbutton id="button-isJunk" class="toolbarbutton-1 junk-button" hidden="true"/>
+      <toolbarbutton id="button-mark-deleted" class="toolbarbutton-1 delete-button" hidden="true"/>
+      <toolbarbutton id="button-tag" class="toolbarbutton-1" hidden="true"/>
+      <toolbarbutton id="button-other-actions" class="toolbarbutton-1" hidden="true"/>
+    </toolbar>
+  </toolbarbox>
+
 	<vbox id="expandedHeaderView" orient="horizontal">
 		<vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
 			<button id="hideDetailsButton"  
@@ -55,20 +70,6 @@
 							onclick="coheToggleHeaderView();" 
 							class="msgHeaderView-button msgHeaderView-flat-button"/>
 	  </vbox>
-    <toolbarbox id="hiddenIconSpaceBox">
-      <toolbar id="hiddenIconSpace" mode="icon" iconsize="small">
-      	<observes element="changeIconSize" attribute="iconsize" onbroadcast="alert('test');"/>
-        <toolbarbutton id="button-reply" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-replyall" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-replylist" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-forward" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-archive" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-isJunk" class="toolbarbutton-1 junk-button" hidden="true"/>
-        <toolbarbutton id="button-mark-deleted" class="toolbarbutton-1 delete-button" hidden="true"/>
-        <toolbarbutton id="button-tag" class="toolbarbutton-1" hidden="true"/>
-        <toolbarbutton id="button-other-actions" class="toolbarbutton-1" hidden="true"/>
-      </toolbar>
-    </toolbarbox>
 <!--
 			<popup id="header-toolbar-contextmenu">
 				<menuitem id="CoHe-customize-mitem" label="TEST" oncommand="CoHe_customizeToolbar(this);" />
@@ -158,6 +159,7 @@
 					</button>
 				</vbox>
 			</hbox>
+		  
 		</vbox>
 	</vbox>
 

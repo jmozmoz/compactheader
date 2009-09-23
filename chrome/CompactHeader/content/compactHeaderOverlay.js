@@ -307,8 +307,10 @@ function create1LHeaderXUL() {
 	
 	var xul3   = document.createElement("header-view-button-box");
 	xul3.id    = "collapsedButtonBox";
+  xul3.flex  = "0";
+  xul3.align = "start";
 	xul3.hidden = "true";
-
+	
 	myElement.appendChild(xul3, myElement);
 
 	document.getElementById("collapsedHeaderView").removeAttribute("twolineview");
@@ -534,16 +536,19 @@ function moveMenusToButtonBox(viewMode) {
 	if (viewMode)
 		target = "collapsedButtonBox";
 	else
-		target = "otherActionsBox";
+	 target = "expandedButtonBox";
+	 
+		//target = "otherActionsBox";
 	
-	var newParent = document.getElementById(target);
+	var newParent = document.getElementById(target).boxObject.firstChild;
 	if (newParent != null) {
-		var myElement = document.getElementById("otherActionsButton");
-		newParent.appendChild(myElement);
-		myElement = document.getElementById("tagMenuPopup");
+		var myElement;
+    myElement = document.getElementById("tagMenuPopup");
+    newParent.appendChild(myElement);
+		myElement= document.getElementById("otherActionsButton");
 		newParent.appendChild(myElement);
 	} else {
-		alert ("null");
+		//alert ("null");
 	}
 }
 

@@ -41,3 +41,12 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
+#button-archive {
+  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar.png");
+  -moz-image-region: rect(0px 640px 32px 608px);
+}
+
+toolbar[iconsize="small"] #button-archive {
+  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
+  -moz-image-region: rect(0px 480px 24px 456px);
+}
