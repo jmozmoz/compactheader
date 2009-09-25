@@ -41,14 +41,46 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#button-archive {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar.png");
-  -moz-image-region: rect(0px 336px 24px 312px);
+.cohe-buttons {
+  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
 }
 
-toolbar[iconsize="small"] #button-archive {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
+.cohe-button-other-actions
+{
+  list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
+  -moz-image-region: rect(0px 16px 16px 0px);
+}
+
+.cohe-button-archive {
   -moz-image-region: rect(0px 224px 16px 208px);
+}
+
+.cohe-button-reply {
+  -moz-image-region: rect(0px 64px 16px 48px);
+}
+
+.cohe-button-replyall {
+  -moz-image-region: rect(0px 80px 16px 64px);
+}
+
+.cohe-button-replylist {
+  -moz-image-region: rect(0px 96px 16px 80px);
+}
+
+.cohe-button-forward {
+  -moz-image-region: rect(0px 112px 16px 96px);
+}
+
+.cohe-button-deleted {
+  list-style-image: url("moz-icon://stock/gtk-delete?size=menu");
+}
+
+.cohe-button-junk{
+  -moz-image-region: rect(0px 128px 16px 112px);
+}
+
+.cohe-button-tag {
+  -moz-image-region: rect(0px 192px 16px 176px);
 }
 
 #expandedButtonBox {
