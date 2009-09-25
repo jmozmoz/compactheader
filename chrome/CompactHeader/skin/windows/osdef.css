@@ -41,3 +41,45 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
+
+.cohe-buttons {
+  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
+}
+
+.cohe-button-other-actions
+{
+  list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
+  -moz-image-region: rect(0px 16px 16px 0px);
+}
+
+.cohe-button-archive {
+  -moz-image-region: rect(0px 320px 16px 304px);
+}
+
+.cohe-button-reply {
+  -moz-image-region: rect(0px 64px 16px 48px);
+}
+
+.cohe-button-replyall {
+  -moz-image-region: rect(0px 80px 16px 64px);
+}
+
+.cohe-button-replylist {
+  -moz-image-region: rect(0px 112px 16px 96px);
+}
+
+.cohe-button-forward {
+  -moz-image-region: rect(0px 96px 16px 80px);
+}
+
+.cohe-button-deleted {
+  -moz-image-region: rect(0px 128px 16px 112px);
+}
+
+.cohe-button-junk {
+  -moz-image-region: rect(0px 144px 16px 128px);
+}
+
+.cohe-button-tag {
+  -moz-image-region: rect(0px 256px 16px 240px);
+}

@@ -118,17 +118,19 @@
 }
 */
 
-toolbar[iconsize="small"] #button-other-actions,
+/*
+toolbar[iconsize="small"] #button-other-actions,*/
 #otherActionsButton {
 	list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
 	-moz-image-region: rect(0px 16px 16px 0px);
 }
 
+/*
 #button-other-actions {
   list-style-image: url("chrome://CompactHeader/skin/other-action.png");
   -moz-image-region: rect(0px 24px 24px 0px);
 }
-
+*/
 /*
 #tagMenuPopup {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");

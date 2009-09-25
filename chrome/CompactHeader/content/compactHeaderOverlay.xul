@@ -48,6 +48,7 @@
 
   <deck id="msgHeaderViewDeck">
 
+<!--
   <toolbarbox id="hiddenIconSpaceBox">
     <toolbar id="hiddenIconSpace" mode="icon" iconsize="small">
       <observes element="changeIconSize" attribute="iconsize" onbroadcast="alert('test');"/>
@@ -62,6 +63,7 @@
       <toolbarbutton id="button-other-actions" class="toolbarbutton-1" hidden="true"/>
     </toolbar>
   </toolbarbox>
+-->
 
 	<vbox id="expandedHeaderView" orient="horizontal">
 		<vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
@@ -105,6 +107,21 @@
 				<toolbarset id="HeaderPaneToolbarSet" context="header-toolbar-contextmenu"/>
 			</toolbarbox>
 -->
+    <hbox id="coheStringTransferBox" hidden="true">
+      <label id="CoheHideDetailsLabel" value="&hideDetailsButton.label;"/>
+      <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
+      <label id="CohehdrReplyButton" value="&replyButton.label;"/>
+      <label id="CohehdrReplyAllButton" value="&replyAllButton.label;"/>
+      <label id="CohehdrReplyListButton" value="&replyListButton.label;"/>
+      <label id="CohehdrForwardButton" value="&forwardButton.label;"/>
+      <label id="CohearchiveButton" value="&archiveButton.label;"/>
+      <label id="CohehdrJunkButton" value="&junkButton.label;"/>
+      <label id="CohehdrTrashButton" value="&deleteButton.label;"/>
+      <label id="CoheotherActionsButton" value="&otherActionsButton.label;"/>
+      <label id="CohetagMenuPopup" value="&tagButton.label;"/>
+    </hbox>
+
+
 		<vbox id="expandedHeadersBox">	
 			<hbox id="expandedHeadersBottomBox">
 			
@@ -164,10 +181,6 @@
 	</vbox>
 
 	<vbox id="collapsedHeaderView" orient="horizontal" flex="1">
-      <hbox hidden="true">
-        <label id="CoheHideDetailsLabel" value="&hideDetailsButton.label;"/>
-        <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
-      </hbox>
 		<popup id="CohecopyUrlPopup" popupanchor="bottomleft">
 			<menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
 		</popup>

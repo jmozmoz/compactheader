@@ -41,12 +41,44 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#button-archive {
-  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar.png");
-  -moz-image-region: rect(0px 640px 32px 608px);
+.cohe-buttons {
+  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
 }
 
-toolbar[iconsize="small"] #button-archive {
-  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
+.cohe-button-other-actions
+{
+  list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
+  -moz-image-region: rect(0px 16px 16px 0px);
+}
+
+.cohe-button-archive {
   -moz-image-region: rect(0px 480px 24px 456px);
+}
+
+.cohe-button-reply {
+  -moz-image-region: rect(0px 96px 24px 72px);
+}
+
+.cohe-button-replyall {
+  -moz-image-region: rect(0px 120px 24px 96px);
+}
+
+.cohe-button-replylist {
+  -moz-image-region: rect(0px 144px 24px 120px);
+}
+
+.cohe-button-forward {
+  -moz-image-region: rect(0px 168px 24px 144px);
+}
+
+.cohe-button-deleted {
+  -moz-image-region: rect(0px 192px 24px 168px);
+}
+
+.cohe-button-junk {
+  -moz-image-region: rect(0px 216px 24px 192px);
+}
+
+.cohe-button-tag {
+  -moz-image-region: rect(0px 384px 24px 360px);
 }

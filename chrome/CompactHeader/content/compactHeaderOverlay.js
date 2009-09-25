@@ -651,6 +651,7 @@ function coheUpdateMessageHeaders()
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 
+/* XXX Remove obsolet function
 function copyButtonIcons(buttonname, element) {
 	var e0 = document.getElementById("mail-bar3");
 	var iconsize;
@@ -682,6 +683,7 @@ function copyButtonIcons(buttonname, element) {
   	removeClass(element, "hdrTrashButton");
   }
 }
+*/
 
 function updateHdrButtons() {
 	
@@ -696,9 +698,15 @@ function updateHdrButtons() {
 		  strViewMode = "view.expanded";
 		for (var j=0; j<buttonslist[buttonname].length; j++){
 	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]) || document.getElementById(buttonslist[buttonname][j]);
-	  	copyButtonIcons(buttonslist[buttonname][j], myElement);
+	  	//copyButtonIcons(buttonslist[buttonname][j], myElement);
 	  	if (myElement != null) {
+        addClass(myElement, "cohe-buttons");
+        addClass(myElement, "cohe-" + buttonicons[buttonslist[buttonname][j]]);
 	  		addClass(myElement, "msgHeaderView-flat-button");
+	  		myElement.setAttribute("tooltiptext", document.getElementById("Cohe"+buttonslist[buttonname][j]).value);
+	  		if (buttonslist[buttonname][j] == "hdrTrashButton") {
+	  			removeClass(myElement, "hdrTrashButton");
+	  		}
 	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {
 		  		if (buttonname != "Reply") {
 			  		myElement.hidden =  false; //! prefBranch.getBoolPref("expandedview.display" + buttonname);
