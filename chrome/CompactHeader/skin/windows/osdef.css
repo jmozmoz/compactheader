@@ -41,7 +41,18 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
+toolbar[iconsize="small"] #button-other-actions,
+#otherActionsButton {
+	list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
+	-moz-image-region: rect(0px 16px 16px 0px);
+}
 
+#button-other-actions {
+  list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
+  -moz-image-region: rect(0px 24px 24px 0px);
+}
+
+/*
 .cohe-buttons {
   list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
 }
@@ -83,3 +94,4 @@
 .cohe-button-tag {
   -moz-image-region: rect(0px 256px 16px 240px);
 }
+*/
