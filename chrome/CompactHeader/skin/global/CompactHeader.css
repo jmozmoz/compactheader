@@ -119,19 +119,6 @@
 */
 
 /*
-toolbar[iconsize="small"] #button-other-actions,*/
-#otherActionsButton {
-	list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
-	-moz-image-region: rect(0px 16px 16px 0px);
-}
-
-/*
-#button-other-actions {
-  list-style-image: url("chrome://CompactHeader/skin/other-action.png");
-  -moz-image-region: rect(0px 24px 24px 0px);
-}
-*/
-/*
 #tagMenuPopup {
   list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
 	-moz-image-region: rect(0px 240px 16px 224px);
@@ -140,8 +127,8 @@ toolbar[iconsize="small"] #button-other-actions,*/
 
 #otherActionsButton[OnlyIcon="Text"] .button-text,
 #tagMenuPopup[OnlyIcon="Text"] .button-text {
-  -moz-padding-start: 1px;
-  -moz-padding-end: 5px;
+  -moz-padding-end: 1px;
+  -moz-padding-start: 5px;
 }
 
 #otherActionsButton[OnlyIcon="Icon"] .button-text,

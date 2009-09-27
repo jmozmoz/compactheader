@@ -4,9 +4,10 @@ skin      CompactHeader     global      chrome/CompactHeader/skin/global/
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/common/
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/gnome/   os=Linux
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/windows/ os=WINNT
-skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/common/  os=Darwin
+skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/mac/     os=Darwin
 
 locale    CompactHeader     en-US   chrome/CompactHeader/locale/en-US/
 locale    CompactHeader     de-DE   chrome/CompactHeader/locale/de-DE/
 
-overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul 
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
+overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
