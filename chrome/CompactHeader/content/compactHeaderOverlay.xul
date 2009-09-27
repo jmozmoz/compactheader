@@ -48,7 +48,6 @@
 
   <deck id="msgHeaderViewDeck">
 
-<!--
   <toolbarbox id="hiddenIconSpaceBox">
     <toolbar id="hiddenIconSpace" mode="icon" iconsize="small">
       <observes element="changeIconSize" attribute="iconsize" onbroadcast="alert('test');"/>
@@ -63,7 +62,6 @@
       <toolbarbutton id="button-other-actions" class="toolbarbutton-1" hidden="true"/>
     </toolbar>
   </toolbarbox>
--->
 
 	<vbox id="expandedHeaderView" orient="horizontal">
 		<vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">

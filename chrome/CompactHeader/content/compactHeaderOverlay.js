@@ -295,7 +295,8 @@ function create1LHeaderXUL() {
   
   var xultmp2   = document.createElement("row");
   xultmp2.id    = "collapseddateRow";
-  xultmp2.align = "start";
+//  xultmp2.align = "start";
+  xultmp2.align = "baseline";
   xultmp2.pack  = "end";
   xul1.appendChild(xultmp2,xul1);
 
@@ -316,6 +317,7 @@ function create1LHeaderXUL() {
 	document.getElementById("collapsedHeaderView").removeAttribute("twolineview");
 }
 
+/*
 function createExpandedHeaderXUL() {
 	return;
 	
@@ -338,9 +340,9 @@ function createExpandedHeaderXUL() {
 	} else {
 		alert ("null");
 	}
-	
-	
 }
+*/
+
 // Now, for each view the message pane can generate, we need a global table
 // of headerEntries. These header entry objects are generated dynamically
 // based on the static data in the header lists (see above) and elements
@@ -651,7 +653,6 @@ function coheUpdateMessageHeaders()
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 
-/* XXX Remove obsolet function
 function copyButtonIcons(buttonname, element) {
 	var e0 = document.getElementById("mail-bar3");
 	var iconsize;
@@ -683,10 +684,10 @@ function copyButtonIcons(buttonname, element) {
   	removeClass(element, "hdrTrashButton");
   }
 }
-*/
 
 function updateHdrButtons() {
 	
+	var test = document.getElementById('msgHeaderViewDeck');
 	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
 									.getElementsByTagName("header-view-button-box").item(0);
   for(var buttonname in buttonslist) {
@@ -698,14 +699,15 @@ function updateHdrButtons() {
 		  strViewMode = "view.expanded";
 		for (var j=0; j<buttonslist[buttonname].length; j++){
 	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]) || document.getElementById(buttonslist[buttonname][j]);
-	  	//copyButtonIcons(buttonslist[buttonname][j], myElement);
+	  	copyButtonIcons(buttonslist[buttonname][j], myElement);
 	  	if (myElement != null) {
-        addClass(myElement, "cohe-buttons");
-        addClass(myElement, "cohe-" + buttonicons[buttonslist[buttonname][j]]);
+        //addClass(myElement, "cohe-buttons");
+        //addClass(myElement, "cohe-" + buttonicons[buttonslist[buttonname][j]]);
 	  		addClass(myElement, "msgHeaderView-flat-button");
 	  		myElement.setAttribute("tooltiptext", document.getElementById("Cohe"+buttonslist[buttonname][j]).value);
 	  		if (buttonslist[buttonname][j] == "hdrTrashButton") {
 	  			removeClass(myElement, "hdrTrashButton");
+	  			myElement.setAttribute("label", document.getElementById("Cohe"+buttonslist[buttonname][j]).value);
 	  		}
 	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {
 		  		if (buttonname != "Reply") {
