@@ -46,8 +46,8 @@ buttonslist["Forward"] = ["hdrForwardButton"];
 buttonslist["Archive"] = ["archiveButton"];
 buttonslist["Junk"]    = ["hdrJunkButton"];
 buttonslist["Trash"]   = ["hdrTrashButton"];
-buttonslist["OtherAction"] = ["otherActionsButton"];
-buttonslist["Tag"] = ["tagMenuPopup"];
+buttonslist["OtherAction"] = ["hdrOtherActionsButton"];
+buttonslist["Tag"] = ["hdrTagButton"];
 
 var buttonicons = new Array;
 buttonicons["hdrReplyButton"]     = ["button-reply"];

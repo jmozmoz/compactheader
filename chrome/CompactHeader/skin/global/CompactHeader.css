@@ -56,7 +56,15 @@
 }
 */
 
-#collapsedtoCcBccLabel {
+toolbar[mode="full"] > .msgHeaderView-button,
+toolbar[mode="full"] > .msgHeaderView-button > .toolbarbutton-menubutton-button
+{
+  -moz-box-orient: horizontal !important;
+}
+
+
+
+#collapsed1LtoCcBccLabel {
   -moz-padding-start: 2px;
   -moz-padding-end: 1px;
 }
@@ -67,8 +75,8 @@
   max-height: 30em;
 }
 
-#collapsedHeaderRows > row,
-#collapsedHeader2Rows > row {
+#collapsed1LHeaderRows > row,
+#collapsed1LHeader2Rows > row {
   /* Ensure that the header names and values are aligned with each other. */
   -moz-box-align: baseline;
 }
@@ -79,20 +87,20 @@
   -moz-box-align: end;
 }
 
-#collapsedHeaderViewFirstLine {
+#collapsed1LHeaderViewFirstLine {
   -moz-box-align: baseline;
 }
 
-#collapsedHeaderView[twolineview="true"] #collapsedHeaderViewFirstLine {
+#collapsed2LHeaderViewFirstLine {
   -moz-box-align: start;
 }
 
-#collapsedsubjectBox > .headerValue {
+#collapsed1LsubjectBox > .headerValue {
   font-weight: bold;
 }
 
 #expandedButtonBox .button-menubutton-button,
-#collapsedButtonBox .button-menubutton-button {
+#collapsed1LButtonBox .button-menubutton-button {
   background-color: transparent;
   border: transparent;
 }
@@ -103,11 +111,11 @@
 	margin: 0px;
 }
 
-#collapsedtoCcBccBox .headerNameBox,
-#collapsedfromBox .headerNameBox {
+#collapsed1LtoCcBccBox .headerNameBox,
+#collapsed1LfromBox .headerNameBox {
 	display: none;
 }
-#collapsedfromBox > .headerNameBox {
+#collapsed1LfromBox > .headerNameBox {
   display: none;
 }
 
@@ -146,7 +154,7 @@
   text-align: left;
 }
 
-#collapsedsubjectBox {
+#collapsed1LsubjectBox {
 	font-weight: bold;
 }
 
@@ -167,7 +175,7 @@
 	border: 0px;
 }
 */
-#collapseddateBox {
+#collapsed1LdateBox {
   -moz-box-align: stretch;
   text-align: right;
   -moz-padding-end: 0.5em;
@@ -220,10 +228,10 @@
 }
 
 #expandedfromBox,
-#collapsedtoCcBccRow,  
-#collapsedsubjectOutBox, #collapsedfromOutBox,#collapsedButtonBox,
+#collapsed1LtoCcBccRow,  
+#collapsed1LsubjectOutBox, #collapsed1LfromOutBox,#collapsedButtonBox,
 #expandedButtonBox,
-#collapsedsubjectBox, #collapsedfromBox {
+#collapsed1LsubjectBox, #collapsed1LfromBox {
   margin: 0px;
   padding: 0px;
 }
@@ -232,53 +240,19 @@
   -moz-box-align: start;
 }
 
-#expandedfromBox, #collapsedfromOutBox, #collapsedtoCcBccOutBox, 
-#collapsedHeaderView[twolineview="true"] #collapsedfromOutBox,  
-#collapsedHeaderView[twolineview="true"] #collapsedtoCcBccOutBox { 
+#expandedfromBox, #collapsed1LfromOutBox, #collapsed1LtoCcBccOutBox, 
+#collapsed2LfromOutBox,  
+#collapsed2LtoCcBccOutBox { 
   margin-top: 2px;
 }
 
-#collapsedHeaderView[twolineview="true"] #collapsedsubjectBox {
+#collapsed2LsubjectBox {
   -moz-margin-start: 0px;
 }
 
-#collapsedHeaderView[twolineview="true"] #collapseddateBox {
+#collapsed2LdateBox {
   -moz-margin-end: 2px;
 }
-
-/* ::::: Message Header Pane - Button Icons ::::: */
-
-/*
-.hdrReplyButton[mode="hdrReplyButton"] {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 64px 16px 48px);
-}
-
-.hdrReplyButton[mode="hdrReplyAllButton"] {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 80px 16px 64px);
-}
-
-.hdrReplyButton[mode="hdrReplyListButton"] {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 80px 16px 64px);
-}
-
-.hdrForwardButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 96px 16px 80px);
-}
-
-.hdrArchiveButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 180px 16px 160px);
-}
-
-.hdrJunkButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 128px 16px 112px);
-}
-*/
 
 #collapsedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text,
 #expandedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text {

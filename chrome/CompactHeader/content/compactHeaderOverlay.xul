@@ -48,21 +48,6 @@
 
   <deck id="msgHeaderViewDeck">
 
-  <toolbarbox id="hiddenIconSpaceBox">
-    <toolbar id="hiddenIconSpace" mode="icon" iconsize="small">
-      <observes element="changeIconSize" attribute="iconsize" onbroadcast="alert('test');"/>
-      <toolbarbutton id="button-reply" class="toolbarbutton-1" hidden="true"/>
-      <toolbarbutton id="button-replyall" class="toolbarbutton-1" hidden="true"/>
-      <toolbarbutton id="button-replylist" class="toolbarbutton-1" hidden="true"/>
-      <toolbarbutton id="button-forward" class="toolbarbutton-1" hidden="true"/>
-      <toolbarbutton id="button-archive" class="toolbarbutton-1" hidden="true"/>
-      <toolbarbutton id="button-isJunk" class="toolbarbutton-1 junk-button" hidden="true"/>
-      <toolbarbutton id="button-mark-deleted" class="toolbarbutton-1 delete-button" hidden="true"/>
-      <toolbarbutton id="button-tag" class="toolbarbutton-1" hidden="true"/>
-      <toolbarbutton id="button-other-actions" class="toolbarbutton-1" hidden="true"/>
-    </toolbar>
-  </toolbarbox>
-
 	<vbox id="expandedHeaderView" orient="horizontal">
 		<vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
 			<button id="hideDetailsButton"  
@@ -121,11 +106,44 @@
 
 
 		<vbox id="expandedHeadersBox">	
+      <hbox id="expandedHeadersTopBox" flex="1">
+      	<toolbox id="header-view-toolbox">
+          <toolbarpalette id="header-view-toolbar-palette">
+          	<toolbarbutton id="hdrOtherActionsButton"
+                           insertafter="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrTagButton"
+          								 label="&otherActionsButton.label;"
+          								 tooltiptext="&otherActionsButton.label;"
+          								 class="msgHeaderView-button hdrOtherActionsButton"
+          								 type="menu"/>
+            <toolbarbutton id="hdrTagButton"
+                           insertafter="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrTagButton"
+            							 type="menu" 
+                           label="&tagButton.label;"
+                           class="msgHeaderView-button hdrTagButton">
+              <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
+                <menuitem id="tagMenuPopup-tagRemoveAll" oncommand="RemoveAllMessageTags();"/>
+                  <menuseparator id="tagMenuPopupAfterRemoveSeparator"/>
+                  <menuseparator id="tagMenuPopupBeforeAddSeparator"/>
+                  <menuitem id="PopupaddNewTag" label="&addNewTag.label;" accesskey="&addNewTag.accesskey;"
+                            oncommand="AddTag();"/>
+              </menupopup>
+            </toolbarbutton>    
+          </toolbarpalette>
+<!--
+          <toolbar id="header-view-toolbar" align="start" customizable="true"
+                   mode="full" context="header-toolbar-context-menu"
+                   defaultset="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrTagButton,hdrOtherActionsButton">
+          </toolbar>
+-->                		
+      	</toolbox>
+      </hbox>
+
+
 			<hbox id="expandedHeadersBottomBox">
 			
 				<vbox id="otherActionsBox" flex="0">
 					<hbox id="dateValueBox" flex="0"/>
-					<button type="menu" id="otherActionsButton"
+					<button type="menu" id="otherActionsButton" collapsed="true"
 									label="&otherActionsButton.label;"
 	                class="msgHeaderView-button msgHeaderView-flat-button">
 						<menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
@@ -161,6 +179,7 @@
 							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
 						</menupopup>
 					</button>
+<!--
 					<button type="menu" id="tagMenuPopup"
 									label="&tagMenu.label;"
 	  		          class="msgHeaderView-button msgHeaderView-flat-button">
@@ -172,6 +191,7 @@
 	                        oncommand="AddTag();"/>
 	          </menupopup>
 					</button>
+-->
 				</vbox>
 			</hbox>
 		  
@@ -188,54 +208,84 @@
 		          onclick="coheToggleHeaderView();"
 		          class="msgHeaderView-button msgHeaderView-flat-button"/>
     </vbox>
-		<vbox id="collapsedHeadersBox" flex="1">
-			<hbox id="collapsedHeaderViewFirstLine" flex="0">
-<!--
-        <hbox id="collapsedsubjectOutBox" align="start" flex="99">
-          <row id="collapsedsubjectRow" flex="99">
-            <mail-headerfield id="collapsedsubjectBox" flex="99"/>
+		<vbox id="collapsed1LHeadersBox" flex="1" collapsed="false">
+			<hbox id="collapsed1LHeaderViewFirstLine" flex="0">
+        <hbox id="collapsed1LsubjectOutBox" align="start" flex="99">
+          <row id="collapsed1LsubjectRow" flex="99">
+            <mail-headerfield id="collapsed1LsubjectBox" flex="99"/>
           </row>
         </hbox>
-				<hbox id="collapsedfromOutBox" align="start" flex="0">
+				<hbox id="collapsed1LfromOutBox" align="start" flex="0">
 					<grid flex="1">
 						<columns>
 							<column flex="0"/>
 						</columns>
             <rows>
-              <row id="collapsedfromRow">
-  					    <mail-multi-emailHeaderField id="collapsedfromBox" flex="0"/>
+              <row id="collapsed1LfromRow">
+  					    <mail-multi-emailHeaderField id="collapsed1LfromBox" flex="0"/>
               </row>
             </rows>
           </grid>
 				</hbox>
-        <grid id="collapsedtoCcBccOutBox" flex="1" hidden="true">
-          <row id="collapsedtoCcBccRow" align="baseline">
-   		  		<mail-multi-emailHeaderField id="collapsedtoCcBccBox" flex="1"/>
+        <grid id="collapsed1LtoCcBccOutBox" flex="1" hidden="true">
+          <row id="collapsed1LtoCcBccRow" align="baseline">
+   		  		<mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
           </row>
         </grid>
-        <hbox id="collapseddateOutBox" align="start" pack="end" flex="0">
-          <row id="collapseddateRow">
-            <label id="collapseddateBox" class="dateLabel" flex="1"/>
+        <hbox id="collapsed1LdateOutBox" align="start" pack="end" flex="0">
+          <row id="collapsed1LdateRow">
+            <label id="collapsed1LdateBox" class="dateLabel" flex="1"/>
           </row>
         </hbox>        
-        <header-view-button-box id="collapsedButtonBox" flex="0" align="start" hidden="true"/>
-      -->
+        <header-view-button-box id="collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
 	    </hbox>
-			<hbox id="collapsedHeaderViewSecondLine" align="start" flex="1">
-<!--
-				<hbox id="collapsedsubjectOutBox" align="start" flex="99">
-  				<row id="collapsedsubjectRow" flex="99">
-            <mail-headerfield id="collapsedsubjectBox" flex="99"/>
-          </row>
- 				</hbox>
-				<hbox id="collapseddateOutBox" align="end" pack="end" flex="0">
-					<row id="collapseddateRow" align="end" pack="end">
-            <label id="collapseddateBox" class="dateLabel" flex="1"/>
-				  </row>
-				</hbox>
--->
+			<hbox id="collapsed1LHeaderViewSecondLine" align="start" flex="1" collapsed="true">
 			</hbox>
 		</vbox>
+
+    <vbox id="collapsed2LHeadersBox" flex="1" collapsed="true">
+      <hbox id="collapsed2LHeaderViewFirstLine" flex="0">
+        <hbox id="collapsed2LfromOutBox" align="start" flex="0">
+          <grid flex="1">
+            <columns>
+              <column flex="0"/>
+            </columns>
+            <rows>
+              <row id="collapsed2LfromRow">
+                <mail-multi-emailHeaderField id="collapsed2LfromBox" flex="0"/>
+              </row>
+            </rows>
+          </grid>
+        </hbox>
+        <grid id="collapsed2LtoCcBccOutBox" flex="1">
+          <columns>
+            <column flex="0"/>
+            <column flex="1"/>
+          </columns>
+          <rows>
+            <row id="collapsed2LtoCcBccRow" align="baseline">
+              <label id="collapsed2LtoCcBccLabel" class="headerName" 
+                     value="&toField2.label;" control="collapsed2LtoCcBccBox"/>
+              <mail-multi-emailHeaderField id="collapsed2LtoCcBccBox" flex="1"/>
+            </row>
+          </rows>
+        </grid>
+        <header-view-button-box id="collapsed2LButtonBox" flex="0" align="start"/>
+      </hbox>
+      <hbox id="collapsed2LHeaderViewSecondLine" align="start" flex="1">
+        <hbox id="collapsed2LsubjectOutBox" align="start" flex="99">
+          <row id="collapsed2LsubjectRow" flex="99">
+            <mail-headerfield id="collapsed2LsubjectBox" flex="99"/>
+          </row>
+        </hbox>
+        <hbox id="collapsed2LdateOutBox" align="end" pack="end" flex="0">
+          <row id="collapsed2LdateRow" align="end" pack="end">
+            <label id="collapsed2LdateBox" class="dateLabel" flex="1"/>
+          </row>
+        </hbox>
+      </hbox>
+    </vbox>
+
 	</vbox>
 
 	</deck>
@@ -243,46 +293,4 @@
 </overlay>
 
 <!-- 
-    <vbox id="collapsedHeadersBox" flex="1">
-      <hbox id="collapsedHeaderViewFirstLine" flex="0">
-        <hbox id="collapsedfromOutBox" align="start" flex="0">
-          <grid flex="1">
-            <columns>
-              <column flex="0"/>
-            </columns>
-            <rows>
-              <row id="collapsedfromRow">
-                <mail-multi-emailHeaderField id="collapsedfromBox" flex="0"/>
-              </row>
-            </rows>
-          </grid>
-        </hbox>
-        <grid id="collapsedtoCcBccOutBox" flex="1">
-          <columns>
-            <column flex="0"/>
-            <column flex="1"/>
-          </columns>
-          <rows>
-            <row id="collapsedtoCcBccRow" align="baseline">
-              <label id="collapsedtoCcBccLabel" class="headerName" 
-                     value="&toField2.label;" control="collapsedtoCcBccBox"/>
-              <mail-multi-emailHeaderField id="collapsedtoCcBccBox" flex="1"/>
-            </row>
-          </rows>
-        </grid>
-        <header-view-button-box id="collapsedButtonBox" flex="0" align="start"/>
-      </hbox>
-      <hbox id="collapsedHeaderViewSecondLine" align="start" flex="1">
-        <hbox id="collapsedsubjectOutBox" align="start" flex="99">
-          <row id="collapsedsubjectRow" flex="99">
-            <mail-headerfield id="collapsedsubjectBox" flex="99"/>
-          </row>
-        </hbox>
-        <hbox id="collapseddateOutBox" align="end" pack="end" flex="0">
-          <row id="collapseddateRow" align="end" pack="end">
-            <label id="collapseddateBox" class="dateLabel" flex="1"/>
-          </row>
-        </hbox>
-      </hbox>
-    </vbox>
 -->

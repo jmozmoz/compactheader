@@ -4,30 +4,24 @@
 	<property name="src.dir" value="." />
 	<property name="dist.dir" value="../downloads/"/>
 	<property name="www.dir" value="../www/"/>
-	
+
+  <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+		
+  <xmltask source="./install.rdf">
+    <copy path="//em:version/text()" property="app.version"/>   
+    <copy path="//em:name/text()" property="app.name"/>   
+    <copy path="//em:id/text()" property="app.id"/>   
+  </xmltask>
+  
+  <!--
 	<xmlproperty file="./install.rdf" prefix="installContent"/>
+	
 	<property name="app.version" value="${installContent.RDF.RDF:Description.em:version}"/> 
 	<property name="app.name" value="${installContent.RDF.RDF:Description.em:name}" />
 	<property name="app.id" value="${installContent.RDF.RDF:Description.em:id}" />
-
-  <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
-
-  <!--
-	<property name="ff.dir" value="C:\Users\joachim\comm-central\objdir-tb-release\mozilla\dist\bin" />
-	<condition property="ff.present">
-		<and>
-			<isset property="ff.dir" />
-			<available file="${ff.dir}" type="dir" />
-		</and>
-	</condition>
-    -->
-	<!-- copy to extensions directory -->
-	<!--
-	<target name="test.ext" depends="chrome" if="ff.present">
-		<copy file="${dist.dir}/${app.name}.jar" todir="${ff.dir}/extensions/${app.id}/chrome" overwrite="true" />
-		<copy file="${src.dir}/chrome.manifest" todir="${ff.dir}/extensions/${app.id}" overwrite="true" />
-	</target>
-	-->
+  
+  <echo message="${app.version}"/>
+  -->
 	
 	<target name="dist" depends="spreadVersion">
 	  	
@@ -48,19 +42,23 @@
 	</target>
     
   <target name="spreadVersion">
+  <!--
     <xmltask source="${www.dir}/availableVersion.xml" dest="${www.dir}/availableVersion.xml.new">
       <replace path="/updates/update[1]/version" withXml="&lt;version&gt;${app.version}&lt;/version&gt;"/> 
     </xmltask>
     <move file="${www.dir}/availableVersion.xml.new" tofile="${www.dir}/availableVersion.xml"/>
-    
+    -->
+      
+    <xmltask source="${www.dir}/availVersion.xml" dest="${www.dir}/availVersion.xml.new">
+      <replace path="/updates/update[@server='mozdev']/@version" withText="${app.version}"/> 
+    </xmltask>
+    <move file="${www.dir}/availVersion.xml.new" tofile="${www.dir}/availVersion.xml"/>
+
+    <replaceregexp file="${www.dir}/installation.html" 
+                   byline="true"
+                   match="(.*update the version.*CompactHeader-).*(.xpi&quot;>Version ).*( of Co.*)"
+                   replace="\1${app.version}\2${app.version}\3"/>                   
+
   </target>  
-    
-	<!--
-	<target name="clean.ff"  if="ff.present">
-		<delete dir="${ff.dir}/extensions/${app.id}" failonerror="false" />
-		<delete file="${ff.dir}/chrome/${app.name}.manifest" failonerror="false" />
-		<delete file="${ff.dir}/chrome/chrome/${app.name}.jar" failonerror="false" />
-	</target>
-	-->
 
 </project>

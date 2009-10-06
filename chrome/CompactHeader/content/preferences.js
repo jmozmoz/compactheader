@@ -27,12 +27,9 @@ var gXMLHttpRequest;
 function CoheCheckForUpdates() {
 	gXMLHttpRequest = new XMLHttpRequest();
   gXMLHttpRequest.onload = updateCohe;
-  gXMLHttpRequest.open("GET", "http://compactheader.mozdev.org/availableVersion.xml",true);
+  gXMLHttpRequest.open("GET", "http://compactheader.mozdev.org/availVersion.xml",true);
   gXMLHttpRequest.send(null);
-  setTimeout(loadCoheStatus, 60000);
 }
-
-setTimeout(loadCoheStatus, 1000);
 
 function updateCohe()
 {
@@ -49,15 +46,8 @@ function updateCohe()
     for (var i = 0; i < updates.length; i++) {
       var strServer, strVersion;
       var update = updates[i];
-      for (var j = 0; j < update.childNodes.length; j++) {
-        with (update.childNodes[j]){
-          if (nodeName == "server") {
-            strServer = firstChild.nodeValue;
-          } else if (nodeName == "version") {
-            strVersion = firstChild.nodeValue;
-          }
-      	}
-      }
+    	strServer = update.getAttribute("server");
+    	strVersion = update.getAttribute("version");
       var x = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
                         .getService(Components.interfaces.nsIVersionComparator)
                         .compare(strVersion, strCoheVersion);
