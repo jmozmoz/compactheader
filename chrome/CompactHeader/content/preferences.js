@@ -78,17 +78,9 @@ function onLoad()
   updateTwolineView(prefBranch.getBoolPref("headersize.twolineview")); 
 
   loadPrefCheckbox("buttons.showonlyicon", "checkbox.IconText");
-  
-  for(var buttonname in buttonslist) {
-	  loadPrefCheckbox("view.compact.display" + buttonname,  "checkbox.Compact." + buttonname);
-	  loadPrefCheckbox("view.expanded.display" + buttonname, "checkbox.Expanded." + buttonname);
-  }
 }
 
 function updateTwolineView(boolTwolineview) {
-  for(var buttonname in buttonslist) {
-		document.getElementById("checkbox.Compact." + buttonname).disabled = ! boolTwolineview;
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
