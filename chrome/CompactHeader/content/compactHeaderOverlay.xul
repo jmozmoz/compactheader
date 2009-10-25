@@ -21,19 +21,7 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
-
-<!--
-	<commandset id="mailViewHeaderCommands"
-	              commandupdater="true"
-	              events="create-menu-view-header"
-	              oncommandupdate="alert('test1');goUpdateMailMenuItems(this);">
-	
-	    <command id="cmd_viewAllHeader" oncommand="alert('test2');goDoCommand('cmd_viewAllHeader'); event.stopPropagation()"/>
-	    <command id="cmd_viewNormalHeader" oncommand="alert('test2');goDoCommand('cmd_viewNormalHeader'); event.stopPropagation()"/>
-	</commandset>
--->
 
 	<keyset>
 		<key id="hideDetailsKey" 
@@ -41,10 +29,6 @@
 				 key="&toggleDetails.key;"
 				 oncommand="coheToggleHeaderView();"/>
 	</keyset>
-
-  <broadcasterset>
-  	<broadcaster id="changeIconSize" iconsize="small"/>
-  </broadcasterset>
 
   <deck id="msgHeaderViewDeck">
 
@@ -55,41 +39,7 @@
 							onclick="coheToggleHeaderView();" 
 							class="msgHeaderView-button msgHeaderView-flat-button"/>
 	  </vbox>
-<!--
-			<popup id="header-toolbar-contextmenu">
-				<menuitem id="CoHe-customize-mitem" label="TEST" oncommand="CoHe_customizeToolbar(this);" />
-			</popup>
 
-			<toolbarbox id="HeaderPaneToolbarBox" 
-									iconsize="small" 
-									mode="icons"
-									style="min-width: 29px; max-width: 29px; background-color: red; "
-									class="chromeclass-toolbar">
-				<toolbar id="HeaderPaneToolbar" 
-								 class="chromeclass-toolbar" 
-								 toolbarname="HeaderToolbar"
-								 fullscreentoolbar="true"
-								 mode="icons" 
-								 defaultmode="icons" 
-								 customizable="true" 
-								 context="header-toolbar-contextmenu"
-								 persist="posMode mode iconsize flexbuttons hidden" 
-								 defaultset="button-reply,button-replyall,button-replylist,button-forward,button-tag,button-delete,button-junk,button-print"
-								 currentset="button-reply,button-replyall,button-replylist,button-forward,button-tag,button-delete,button-junk,button-print"
-								 iconsize="small">
-					<toolbarbutton id="button-reply2" 
-												 class="toolbarbutton-1" 
-												 label="Reply" 
-												 tooltiptext="Reply to the message" 
-												 observes="button_reply" 
-												 oncommand="MsgReplyMessage(event)" 
-												 chromedir="ltr"/>
-				</toolbar>
-					 
-								 
-				<toolbarset id="HeaderPaneToolbarSet" context="header-toolbar-contextmenu"/>
-			</toolbarbox>
--->
     <hbox id="coheStringTransferBox" hidden="true">
       <label id="CoheHideDetailsLabel" value="&hideDetailsButton.label;"/>
       <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
@@ -107,34 +57,19 @@
 
 		<vbox id="expandedHeadersBox">	
       <hbox id="expandedHeadersTopBox" flex="1">
-      	<toolbox id="header-view-toolbox">
+        <toolbox id="header-view-toolbox"
+                 defaultmode="icons">
           <toolbarpalette id="header-view-toolbar-palette">
           	<toolbarbutton id="hdrOtherActionsButton"
-                           insertafter="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrTagButton"
           								 label="&otherActionsButton.label;"
           								 tooltiptext="&otherActionsButton.label;"
-          								 class="msgHeaderView-button hdrOtherActionsButton"
+          								 class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
           								 type="menu"/>
-            <toolbarbutton id="hdrTagButton"
-                           insertafter="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrTagButton"
-            							 type="menu" 
-                           label="&tagButton.label;"
-                           class="msgHeaderView-button hdrTagButton">
-              <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
-                <menuitem id="tagMenuPopup-tagRemoveAll" oncommand="RemoveAllMessageTags();"/>
-                  <menuseparator id="tagMenuPopupAfterRemoveSeparator"/>
-                  <menuseparator id="tagMenuPopupBeforeAddSeparator"/>
-                  <menuitem id="PopupaddNewTag" label="&addNewTag.label;" accesskey="&addNewTag.accesskey;"
-                            oncommand="AddTag();"/>
-              </menupopup>
-            </toolbarbutton>    
           </toolbarpalette>
-<!--
-          <toolbar id="header-view-toolbar" align="start" customizable="true"
-                   mode="full" context="header-toolbar-context-menu"
-                   defaultset="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrTagButton,hdrOtherActionsButton">
+          <toolbar id="header-view-toolbar"
+                   mode="icons" defaultmode="icons"
+                   defaultset="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrOtherActionsButton">
           </toolbar>
--->                		
       	</toolbox>
       </hbox>
 
@@ -179,19 +114,6 @@
 							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
 						</menupopup>
 					</button>
-<!--
-					<button type="menu" id="tagMenuPopup"
-									label="&tagMenu.label;"
-	  		          class="msgHeaderView-button msgHeaderView-flat-button">
-	          <menupopup id="tagMenuPopup-tagpopup" onpopupshowing="InitMessageTags(this)">
-	            <menuitem id="tagMenuPopup-tagRemoveAll" oncommand="RemoveAllMessageTags();"/>
-	              <menuseparator id="tagMenuPopupAfterRemoveSeparator"/>
-	              <menuseparator id="tagMenuPopupBeforeAddSeparator"/>
-	              <menuitem id="PopupaddNewTag" label="&addNewTag.label;" accesskey="&addNewTag.accesskey;"
-	                        oncommand="AddTag();"/>
-	          </menupopup>
-					</button>
--->
 				</vbox>
 			</hbox>
 		  

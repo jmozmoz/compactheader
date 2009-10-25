@@ -62,18 +62,17 @@ var gCoheBuiltCollapsedView = false;
  */
 var gCoheCollapsedHeader1LListLongAddresses = [
   {name:"subject"},
-  {name:"from", useToggle:true, outputFunction:OutputEmailAddresses},
-  {name:"toCcBcc", useToggle:true, outputFunction: OutputEmailAddresses},
+  {name:"from", useToggle:true, outputFunction:coheOutputEmailAddresses},
+  {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
   {name:"date", outputFunction:coheUpdateDateValue}
   ];
 
 var gCoheCollapsedHeader2LListLongAddresses = [
   {name:"subject"},
-  {name:"from", useToggle:true, outputFunction:OutputEmailAddresses},
-  {name:"toCcBcc", useToggle:true, outputFunction: OutputEmailAddresses},
+  {name:"from", useToggle:true, outputFunction:coheOutputEmailAddresses},
+  {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
   {name:"date", outputFunction:coheUpdateDateValue}
   ];
-  
   
 var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
   .getService(Components.interfaces.nsIPrefService)
@@ -89,7 +88,11 @@ var RSSLinkify = {
 };
 
 var coheFirstTime = true;
-    
+
+function coheOutputEmailAddresses(headerEntry, emailAddresses) {
+  OutputEmailAddresses(headerEntry, emailAddresses);
+}
+
 // Now, for each view the message pane can generate, we need a global table
 // of headerEntries. These header entry objects are generated dynamically
 // based on the static data in the header lists (see above) and elements
@@ -98,7 +101,7 @@ var gCoheCollapsedHeaderView = {};
 
 function coheInitializeHeaderViewTables()
 {
-	
+  
   gCoheCollapsedHeaderView = {};
   var index;
 
@@ -115,33 +118,27 @@ function coheInitializeHeaderViewTables()
   }
 
   if (prefBranch.getBoolPref("headersize.linkify")) {
-	  RSSLinkify.newSubject = document.createElement("label");
-	  RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
-	  RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
-	  RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
-	  RSSLinkify.newSubject.setAttribute("context", "CohecopyUrlPopup");
-	  RSSLinkify.newSubject.setAttribute("keywordrelated", "true");
-	  RSSLinkify.newSubject.setAttribute("readonly", "true");
-	  RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
-	  RSSLinkify.newSubject.setAttribute("flex", "1");
+    RSSLinkify.newSubject = document.createElement("label");
+    RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
+    RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
+    RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
+    RSSLinkify.newSubject.setAttribute("context", "CohecopyUrlPopup");
+    RSSLinkify.newSubject.setAttribute("keywordrelated", "true");
+    RSSLinkify.newSubject.setAttribute("readonly", "true");
+    RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
+    RSSLinkify.newSubject.setAttribute("flex", "1");
     if (prefBranch.getBoolPref("headersize.twolineview")) {
-	    RSSLinkify.oldSubject = document.getElementById("collapsed2LsubjectBox");
+      RSSLinkify.oldSubject = document.getElementById("collapsed2LsubjectBox");
     } else {
       RSSLinkify.oldSubject = document.getElementById("collapsed1LsubjectBox");
     }
     RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
-	}
-
-//	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
-	
-  //updateHdrButtons(); XXX
-  //updateHdrIconText(); XXX
-  
+  }
 }
 
 function coheOnLoadMsgHeaderPane()
 { 
-	coheInitializeHeaderViewTables();
+  coheInitializeHeaderViewTables();
 
   // Add an address book listener so we can update the header view when things
   // change.
@@ -153,8 +150,8 @@ function coheOnLoadMsgHeaderPane()
   var deckHeaderView = document.getElementById("msgHeaderViewDeck");
 
   gCoheCollapsedHeaderViewMode = 
-	  deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');	  
-	  
+    deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');    
+    
   // work around XUL deck bug where collapsed header view, if it's the persisted
   // default, wouldn't be sized properly because of the larger expanded
   // view "stretches" the deck.
@@ -171,30 +168,30 @@ function coheOnLoadMsgHeaderPane()
     document.getElementById('collapsed2LHeadersBox').collapsed = true;
   }
     
-	if (coheFirstTime)
-	{
-  	gMessageListeners.push(coheMessageListener);
-  	coheFirstTime = false;
-	}
-	
-	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
+  if (coheFirstTime)
+  {
+    coheFirstTime = false;
+    gMessageListeners.push(coheMessageListener);
+    fillToolboxPalette();
+  }
+  
   coheToggleMenuLabel();
 }
 
 var coheMessageListener = 
 {
-	onStartHeaders: 
-	function cML_onStartHeaders () {
-    	gCoheBuiltCollapsedView = false;		
-	},
-	
+  onStartHeaders: 
+  function cML_onStartHeaders () {
+      gCoheBuiltCollapsedView = false;    
+  },
+  
   onEndHeaders: 
-	function cML_onEndHeaders() {
-		ClearHeaderView(gCoheCollapsedHeaderView);	
-   	coheUpdateMessageHeaders();
-	},
-	
-	onEndAttachments: function cML_onEndAttachments(){}
+  function cML_onEndHeaders() {
+    ClearHeaderView(gCoheCollapsedHeaderView);  
+    coheUpdateMessageHeaders();
+  },
+  
+  onEndAttachments: function cML_onEndAttachments(){}
 };
 
 function coheOnUnloadMsgHeaderPane()
@@ -202,7 +199,7 @@ function coheOnUnloadMsgHeaderPane()
   Components.classes["@mozilla.org/abmanager;1"]
             .getService(Components.interfaces.nsIAbManager)
             .removeAddressBookListener(coheAddressBookListener);
-	
+  
   removeEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
   removeEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 }
@@ -219,7 +216,7 @@ var coheAddressBookListener =
                              nsIAbListener.directoryRemoved,
                              aParentDir, aItem);
   },
-	
+  
   onItemPropertyChanged: function(aItem, aProperty, aOldValue, aNewValue) {
     // We only need updates for card changes, address book and mailing list
     // ones don't affect us here.
@@ -246,65 +243,104 @@ function coheOnAddressBookDataChanged(aAction, aParentDir, aItem) {
 // are collapsed or visible...
 function coheUpdateHeaderView()
 {
-	if (gCoheCollapsedHeaderViewMode)
-  		showHeaderView(gCoheCollapsedHeaderView);
+  if (gCoheCollapsedHeaderViewMode)
+    showHeaderView(gCoheCollapsedHeaderView);
 
   if (prefBranch.getBoolPref("headersize.linkify")) {
-		var url = currentHeaderData["content-base"];
-		if(url) {
-		    RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
-		                                         url.headerValue + "');");
-		    RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
-		    RSSLinkify.newSubject.setAttribute("url", url.headerValue);
-		    RSSLinkify.newSubject.setAttribute("collapsed", "false");
-		    RSSLinkify.oldSubject.setAttribute("collapsed", "true");
-		} else {
-		    RSSLinkify.newSubject.setAttribute("collapsed", "true");
-		    RSSLinkify.oldSubject.setAttribute("collapsed", "false");
-		}
+    var url = currentHeaderData["content-base"];
+    if(url) {
+        RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
+                                             url.headerValue + "');");
+        RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
+        RSSLinkify.newSubject.setAttribute("url", url.headerValue);
+        RSSLinkify.newSubject.setAttribute("collapsed", "false");
+        RSSLinkify.oldSubject.setAttribute("collapsed", "true");
+    } else {
+        RSSLinkify.newSubject.setAttribute("collapsed", "true");
+        RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+    }
+  } else {
+    RSSLinkify.newSubject.setAttribute("collapsed", "true");
+    RSSLinkify.oldSubject.setAttribute("collapsed", "false");
   }
   if (prefBranch.getBoolPref("headersize.addressstyle")) {
-  	selectEmailDisplayed();
+    selectEmailDisplayed();
   }
   
-	UpdateJunkButton();
-	//updateMyReplyButtons(); XXX
-	//updateHdrButtons();     XXX
+  //fillToolboxPalette();
+  coheToggleMenuLabel();
+  UpdateReplyButtons();
+  if (document.getElementById("hdrJunkButton")) UpdateJunkButton();
 }
 
+function fillToolboxPalette() {
+  var hdrToolbar = document.getElementById("header-view-toolbar");
+  var hdrToolbox = document.getElementById("header-view-toolbox");
+  var buttons = ["button-reply", "button-replyall", "button-replylist", "button-print", 
+                 "button-tag", "button-forward", "button-archive", "button-mark", "button-file"];
+  var currentSet=hdrToolbar.getAttribute("currentset");
+  hdrToolbar.currentSet = currentSet;
+  for (var i=0; i<buttons.length; i++) {
+    var buttonName = buttons[i];
+    var button = document.getElementById(buttonName) || 
+        document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+    if (button) {
+      var hdrButton = button.cloneNode(true);
+      if (hdrButton) {
+      	if (hdrButton.localName == "toolbaritem") {
+      		var subButtons = hdrButton.querySelectorAll(".toolbarbutton-1");
+      		for (var j=0; j<subButtons.length; j++) {
+      			addClass(subButtons[j], "msgHeaderView-button");
+      		}
+      	} else {
+          addClass(hdrButton, "msgHeaderView-button");
+      	}
+        //hdrButton.id = "hdr" + hdrButton.id;
+        hdrToolbox.palette.appendChild(hdrButton);
+/*        var bStyle = document.defaultView.getComputedStyle(button, null);
+        hdrButton.style.MozImageRegion = bStyle.MozImageRegion;
+        hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
+      }
+      if (currentSet.indexOf(buttonName)>=0) {
+        var result = hdrToolbar.insertItem(hdrButton.id);
+        currentSet = hdrToolbar.getAttribute("currentset");
+        hdrToolbar.currentSet = currentSet;
+      }
+    }
+  }
 
-function moveMenusToButtonBox(viewMode) {
-	var target;
-	
-	if (viewMode)
-		target = "collapsedButtonBox";
-	else
-	 target = "expandedButtonBox";
-	 
-  target = "hdrOtherActionsButton";
-	
-	//var newParent = document.getElementById(target).boxObject.firstChild;
-  var newParent = document.getElementById(target);
-	if (newParent != null) {
-		var myElement;
-    //myElement = document.getElementById("tagMenuPopup");
-    //newParent.appendChild(myElement);
-		myElement= document.getElementById("otherActionsPopup");
-		newParent.appendChild(myElement);
-		//alert("test2")
-	} else {
-		//alert ("null"); /* XXX */
-	}
+  var buttonsRemove = ["hdrForwardButton", "hdrArchiveButton",
+                       "hdrReplyToSenderButton"];
+  for (var i=0; i<buttonsRemove.length; i++) {
+    var buttonName = buttonsRemove[i];
+    var button = document.getElementById(buttonName) || 
+        document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+    if (button) {
+      button.setAttribute("collapsed", "true");
+    }
+  }
+
+  var target = "hdrOtherActionsButton";
+  
+  var newParent = document.getElementById(target) || 
+      document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
+
+  if (newParent != null) {
+    var myElement;
+    myElement= document.getElementById("otherActionsPopup");
+    if (myElement) {
+      newParent.appendChild(myElement);
+    }
+  }
 }
-
 
 function coheToggleHeaderView ()
 {
   gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
-	
-	let deck = document.getElementById('msgHeaderViewDeck');
+  
+  let deck = document.getElementById('msgHeaderViewDeck');
   // Work around a xul deck bug where the height of the deck is determined
-	// by the tallest panel in the deck even if that panel is not selected...
+  // by the tallest panel in the deck even if that panel is not selected...
   deck.selectedPanel.collapsed = true;
 
   if (gCoheCollapsedHeaderViewMode) {
@@ -315,31 +351,55 @@ function coheToggleHeaderView ()
     ClearHeaderView(gExpandedHeaderView);
     UpdateExpandedMessageHeaders();
     gDBView.reloadMessage();
-	 	//updateMyReplyButtons(); XXX
-	  //updateHdrButtons();     XXX
-	}
-
-	moveMenusToButtonBox(gCoheCollapsedHeaderViewMode);
+  }
   
   // Work around a xul deck bug where the height of the deck is determined
-	// by the tallest panel in the deck even if that panel is not selected...
+  // by the tallest panel in the deck even if that panel is not selected...
   deck.selectedPanel.collapsed = false;
   
   coheToggleMenuLabel();
 }
 
 function coheToggleMenuLabel() {
-	var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
+  var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
   var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
   var strLabel;
   
+  var hdrToolbox = document.getElementById("header-view-toolbox");
+  var hdrToolbar = document.getElementById("header-view-toolbar");
+  var firstPermanentChild = hdrToolbar.firstPermanentChild;
+  var lastPermanentChild = hdrToolbar.lastPermanentChild;
   if (gCoheCollapsedHeaderViewMode) {
-  	strLabel = strShowLabel;
+    strLabel = strShowLabel;
+    var cBox = document.getElementById("collapsed2LButtonBox");
+    if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
+      var cloneToolboxPalette = hdrToolbox.palette.cloneNode(true);
+      var cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
+      cBox.parentNode.insertBefore(hdrToolbox, cBox);
+      hdrToolbox.palette = cloneToolboxPalette;
+      hdrToolbox.toolbarset = cloneToolbarset;
+      hdrToolbar = document.getElementById("header-view-toolbar");
+      hdrToolbar.firstPermanentChild = firstPermanentChild;
+      hdrToolbar.lastPermanentChild = lastPermanentChild;
+    }
   } else {
     strLabel = strHideLabel;
+    var cBox = document.getElementById("expandedHeaders");
+    if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
+      var cloneToolboxPalette = hdrToolbox.palette.cloneNode(true);
+      var cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
+      cBox.parentNode.appendChild(hdrToolbox);
+      hdrToolbox.palette = cloneToolboxPalette;
+      hdrToolbox.toolbarset = cloneToolbarset;
+      hdrToolbar = document.getElementById("header-view-toolbar");
+      hdrToolbar.firstPermanentChild = firstPermanentChild;
+      hdrToolbar.lastPermanentChild = lastPermanentChild;
+    }
   }
   
-  document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+  if (document.getElementById("hideDetailsMenu")) {
+    document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+  }
 }
 
 // default method for updating a header value into a header entry
@@ -350,9 +410,9 @@ function coheUpdateHeaderValueInTextNode(headerEntry, headerValue)
 
 function coheUpdateDateValue(headerEntry, headerValue) {
   //var t = currentHeaderData.date.headerValue;
-	var d
-	d = document.getElementById("collapsed1LdateBox");
-	d.textContent = headerValue;
+  var d
+  d = document.getElementById("collapsed1LdateBox");
+  d.textContent = headerValue;
   d = document.getElementById("collapsed2LdateBox");
   d.textContent = headerValue;
 }
@@ -364,12 +424,12 @@ function coheUpdateDateValue(headerEntry, headerValue) {
 function coheUpdateMessageHeaders()
 {
   // Remove the height attr so that it redraws correctly. Works around a
-	// problem that attachment-splitter causes if it's moved high enough to
-	// affect the header box:
+  // problem that attachment-splitter causes if it's moved high enough to
+  // affect the header box:
   document.getElementById('msgHeaderView').removeAttribute('height');
-	
+  
   // iterate over each header we received and see if we have a matching entry
-	// in each header view table...
+  // in each header view table...
   for (var headerName in currentHeaderData)
   {
     var headerField = currentHeaderData[headerName];
@@ -399,120 +459,16 @@ function coheUpdateMessageHeaders()
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
 
-function copyButtonIcons(buttonname, element) {
-	var e0 = document.getElementById("mail-bar3");
-	var iconsize;
-	
-	if (e0) {
-	  iconsize = e0.getAttribute("iconsize");	
-	} else {
-		iconsize = "small";
-	}
-	
-	var e01 = document.getElementById("hiddenIconSpace");
-  if (e01) {
-    e01.setAttribute("iconsize", iconsize); 
-  }	
-	
-  var e1 = document.getElementById(buttonicons[buttonname]);
-  if (!e1) return;
-  
-  var s1 = window.getComputedStyle(e1, null);
-  if (!s1) return;
-  
-  var imageregion = s1.getPropertyValue("-moz-image-region");
-  var imagefile = s1.getPropertyValue("list-style-image");
-
-  if (imagefile && imagefile != "") element.style.listStyleImage = imagefile;
-  if (imageregion && imageregion != "") element.style.MozImageRegion = imageregion;
-  
-  if (buttonname == "hdrTrashButton") {
-  	removeClass(element, "hdrTrashButton");
-  }
-}
-
-function updateHdrButtons() {
-	
-	var test = document.getElementById('msgHeaderViewDeck');
-	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
-									.getElementsByTagName("header-view-button-box").item(0);
-  for(var buttonname in buttonslist) {
-
-		var strViewMode;
-		if (gCoheCollapsedHeaderViewMode)
-			strViewMode = "view.compact";
-		else
-		  strViewMode = "view.expanded";
-		for (var j=0; j<buttonslist[buttonname].length; j++){
-	  	var myElement = buttonBox.getButton(buttonslist[buttonname][j]) || document.getElementById(buttonslist[buttonname][j]);
-	  	copyButtonIcons(buttonslist[buttonname][j], myElement);
-	  	if (myElement != null) {
-        //addClass(myElement, "cohe-buttons");
-        //addClass(myElement, "cohe-" + buttonicons[buttonslist[buttonname][j]]);
-	  		addClass(myElement, "msgHeaderView-flat-button");
-	  		myElement.setAttribute("tooltiptext", document.getElementById("Cohe"+buttonslist[buttonname][j]).value);
-	  		if (buttonslist[buttonname][j] == "hdrTrashButton") {
-	  			removeClass(myElement, "hdrTrashButton");
-	  			myElement.setAttribute("label", document.getElementById("Cohe"+buttonslist[buttonname][j]).value);
-	  		}
-	  		if (prefBranch.getBoolPref(strViewMode + ".display" + buttonname)) {
-		  		if (buttonname != "Reply") {
-			  		myElement.hidden =  false; //! prefBranch.getBoolPref("expandedview.display" + buttonname);
-		  		}
-		  	}
-		  	else {
-		  		myElement.hidden =  true ; //! prefBranch.getBoolPref(strViewMode + "display" + buttonname);
-		  	}
-	  	}
-	  	else {
-	  		alert("myElement null");
-	  	}
-	  }
-  }
-}
-
-function updateHdrIconText() {
-	var myE = [document.getElementById("collapsedButtonBox"),
-						 document.getElementById("expandedButtonBox"),
-						 document.getElementById("tagMenuPopup"),
-						 document.getElementById("otherActionsButton")];
-	if (prefBranch.getBoolPref("buttons.showonlyicon")) {
-		for (var i=0; i<myE.length; i++) {
-			myE[i].removeAttribute("OnlyIcon");
-			myE[i].setAttribute("OnlyIcon", "Icon");
-		}
-	} else {
-		for (var i=0; i<myE.length; i++) {
-			myE[i].removeAttribute("OnlyIcon");
-			myE[i].setAttribute("OnlyIcon", "Text");
-		}
-	}
-}
-
-function updateMyReplyButtons() {
-	UpdateReplyButtons();
-	var buttonBox = document.getElementById('msgHeaderViewDeck').selectedPanel
-									.getElementsByTagName("header-view-button-box").item(0);
-	for (var j=0;j<buttonslist["Reply"].length; j++) {
-		var myElement = buttonBox.getButton(buttonslist["Reply"][j]);
-		addClass(myElement, "msgHeaderView-flat-button");
-		if (!myElement.hidden) {
-			myElement.setAttribute("mode", buttonslist["Reply"][j]);
-		}
-	}
-}
-
 function addClass(el, strClass) {
-	var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);	
-	if (!testnew) {
-		el.className += el.className?' '+strClass:strClass;
-	}
+  var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);  
+  if (!testnew) {
+    el.className += el.className?' '+strClass:strClass;
+  }
 }
 
 function removeClass(el, strClass) {
   el.className = el.className.replace(strClass, '');
 }
-
 
 function CoheCopyWebsiteAddress(websiteAddressNode)
 {
@@ -530,39 +486,39 @@ function CoheCopyWebsiteAddress(websiteAddressNode)
 function selectEmailDisplayed() {
   var xulemail = document.getElementById("collapsedtoCcBccBox");
   if (xulemail != null) {
-	  var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
-	  if (nextbox != null) {
-  		var xuldesc = document.getAnonymousElementByAttribute(xulemail, "containsEmail", "true");
-			if (xuldesc != null) {
-				var children = xuldesc.children;
-				for (var i=0; i<children.length; i++) {
-					if (children[i].localName == "mail-emailaddress") {
-						var rawAddress = children[i].getAttribute("emailAddress");
-						if (rawAddress) {
-							children[i].setAttribute("label", rawAddress);
-						}
-					}
-				}
-			}
-	  }
+    var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
+    if (nextbox != null) {
+      var xuldesc = document.getAnonymousElementByAttribute(xulemail, "containsEmail", "true");
+      if (xuldesc != null) {
+        var children = xuldesc.children;
+        for (var i=0; i<children.length; i++) {
+          if (children[i].localName == "mail-emailaddress") {
+            var rawAddress = children[i].getAttribute("emailAddress");
+            if (rawAddress) {
+              children[i].setAttribute("label", rawAddress);
+            }
+          }
+        }
+      }
+    }
   }
   var xulemail = document.getElementById("collapsedfromBox");
   if (xulemail != null) {
-	  var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
-	  if (nextbox != null) {
-  		var xuldesc = document.getAnonymousElementByAttribute(xulemail, "containsEmail", "true");
-			if (xuldesc != null) {
-				var children = xuldesc.children;
-				for (var i=0; i<children.length; i++) {
-					if (children[i].localName == "mail-emailaddress") {
-						var rawAddress = children[i].getAttribute("emailAddress");
-						if (rawAddress) {
-							children[i].setAttribute("label", rawAddress);
-						}
-					}
-				}
-			}
-	  }
+    var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
+    if (nextbox != null) {
+      var xuldesc = document.getAnonymousElementByAttribute(xulemail, "containsEmail", "true");
+      if (xuldesc != null) {
+        var children = xuldesc.children;
+        for (var i=0; i<children.length; i++) {
+          if (children[i].localName == "mail-emailaddress") {
+            var rawAddress = children[i].getAttribute("emailAddress");
+            if (rawAddress) {
+              children[i].setAttribute("label", rawAddress);
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -597,14 +553,12 @@ var myPrefObserverHeaderSize =
     // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
     // aData is the name of the pref that's been changed (relative to aSubject)
 
-		var event = document.createEvent('Events');
- 		event.initEvent('messagepane-loaded', false, true);
-		var headerViewElement = document.getElementById("msgHeaderView");
-		headerViewElement.dispatchEvent(event);
+    var event = document.createEvent('Events');
+    event.initEvent('messagepane-loaded', false, true);
+    var headerViewElement = document.getElementById("msgHeaderView");
+    headerViewElement.dispatchEvent(event);
 
-		//updateMyReplyButtons(); XXX
-		///*updateHdrButtons();*/ XXX
-	  gDBView.reloadMessage();
+    gDBView.reloadMessage();
   }
 }
 
