@@ -5,14 +5,12 @@
   %customizeToolbarDTD; 
 ]>
 
-
+<?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
 
 <overlay id="customizeToolbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
-
-<checkbox id="smallicons" oncommand="updateIconSize(this.checked);opener.updateHdrButtons();" label="&useSmallIcons.label;"/>
 
 </overlay>
