@@ -1,45 +1,42 @@
 <?xml version="1.0" ?>
 
 <project name="CompactHeader" default="dist">
-	<property name="src.dir" value="." />
-	<property name="dist.dir" value="../downloads/"/>
-	<property name="www.dir" value="../www/"/>
+  <property name="src.dir" value="." />
+  <property name="CHT.dir" value="../../customizeHeaderToolbar/src" />
+  <property name="dist.dir" value="../downloads/"/>
+  <property name="www.dir" value="../www/"/>
 
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
-		
+    
   <xmltask source="./install.rdf">
     <copy path="//em:version/text()" property="app.version"/>   
     <copy path="//em:name/text()" property="app.name"/>   
     <copy path="//em:id/text()" property="app.id"/>   
   </xmltask>
+
+  <target name="dist" depends="spreadVersion,copyCHT">
+      
+    <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
+      <fileset dir="${src.dir}">
+        <include name="chrome.manifest" />
+        <include name="install.rdf" />
+        <include name="defaults/**" />
+        <include name="chrome/**" />        
+        <exclude name="**/.*" />
+        <exclude name="**/CVS/**" />
+      </fileset>
+    </zip>
+  </target>
+
+  <target name="copyCHT">
+    <copy todir="${src.dir}/chrome">
+      <fileset dir="${CHT.dir}/chrome"/>
+    </copy>
+  </target>
   
-  <!--
-	<xmlproperty file="./install.rdf" prefix="installContent"/>
-	
-	<property name="app.version" value="${installContent.RDF.RDF:Description.em:version}"/> 
-	<property name="app.name" value="${installContent.RDF.RDF:Description.em:name}" />
-	<property name="app.id" value="${installContent.RDF.RDF:Description.em:id}" />
-  
-  <echo message="${app.version}"/>
-  -->
-	
-	<target name="dist" depends="spreadVersion">
-	  	
-		<zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
-			<fileset dir="${src.dir}">
-				<include name="chrome.manifest" />
-				<include name="install.rdf" />
-				<include name="defaults/**" />
-				<include name="chrome/**" />				
-				<exclude name="**/.*" />
-				<exclude name="**/CVS/**" />
-			</fileset>
-		</zip>
-	</target>
-	
-	<target name="clean">
-		<delete file="${dist.dir}/${app.name}-${app.version}.xpi" />
-	</target>
+  <target name="clean">
+    <delete file="${dist.dir}/${app.name}-${app.version}.xpi" />
+  </target>
     
   <target name="spreadVersion">
   <!--

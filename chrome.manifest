@@ -1,3 +1,19 @@
+content   CustomizeHeaderToolbar                 chrome/CustomizeHeaderToolbar/content/
+
+skin      CustomizeHeaderToolbar     global      chrome/CustomizeHeaderToolbar/skin/global/
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/global/
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/gnomestripe/  os=Linux
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/qute/         os=WINNT
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/pinstripe/    os=Darwin
+
+locale    CustomizeHeaderToolbar     en-US   chrome/CustomizeHeaderToolbar/locale/en-US/
+
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CustomizeHeaderToolbar/content/CHTPaneOverlay.xul
+overlay chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/content/CHTDialogOverlay.xul
+style   chrome://global/content/customizeToolbar.xul     chrome://messenger/skin/messageHeader.css
+style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/skin/messageHeader.css
+style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar-os/skin/messageHeader.css
+
 content   CompactHeader                 chrome/CompactHeader/content/
 
 skin      CompactHeader     global      chrome/CompactHeader/skin/global/
@@ -11,3 +27,4 @@ locale    CompactHeader     de-DE   chrome/CompactHeader/locale/de-DE/
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
+style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
