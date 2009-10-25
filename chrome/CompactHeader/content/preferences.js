@@ -105,14 +105,6 @@ function onDialogAccept()
   savePrefCheckbox("headersize.linkify", "checkbox.Linkify");
   //savePrefInt("headersize.addressstyle", "AddressStyle");  
   savePrefCheckbox("headersize.addressstyle", "checkbox.ShowOnlyAddress");
-  
-  savePrefCheckbox("buttons.showonlyicon", "checkbox.IconText");
-
-  for(var buttonname in buttonslist) {
-	  savePrefCheckbox("view.compact.display" + buttonname,  "checkbox.Compact." + buttonname);
-	  savePrefCheckbox("view.expanded.display" + buttonname, "checkbox.Expanded." + buttonname);
-  }
-
   return true;
 }
 

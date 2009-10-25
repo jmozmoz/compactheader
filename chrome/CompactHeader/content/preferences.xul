@@ -21,115 +21,11 @@
   onload="onLoad()" ondialogaccept="return onDialogAccept()" persist="screenX screenY">
 
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
-  <script type="application/x-javascript" src="chrome://CompactHeader/content/buttons.js"/>
 
 	<checkbox id="checkbox.Compact.TwolineView" 
 						label="&checkbox.Compact.TwolineView.caption;"
 						oncommand="updateTwolineView(this.checked);"/>
 						
-	<checkbox id="checkbox.IconText" 
-						label="&menu.IconText.caption;"/>
-
-  <groupbox>
-    <caption label="&groupbox.Buttons.caption;"/>
- 							
-    <grid>
-    	<columns>
-    		<column flex="0"/>
-    		<column flex="1"/>
-    		<column flex="1"/>
-    	</columns>
-    	<rows>
-    		<row>
-    			<label value=""/>    			
-    			<hbox pack="center">
-    			<label value="&groupbox.Column.Compact;"/>
-    			</hbox>
-    			<hbox pack="center">
-    			<label value="&groupbox.Column.Expanded;"/>
-    			</hbox>
-				</row>
-    		<row>
-    			<hbox pack="end">
-    			<label value="&replyButton.label;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.Reply"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.Reply"/>    			
-    			</hbox>
-    		</row>
-    		<row>
-    			<hbox align="center" pack="end">
-    			<label value="&forwardButton.label;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.Forward"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.Forward"/>    			
-    			</hbox>
-    		</row>
-    		<row>
-    			<hbox align="center" pack="end">
-    			<label value="&archiveMsgCmd.label;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.Archive"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.Archive"/>    			
-    			</hbox>
-    		</row>
-    		<row>
-    			<hbox align="center" pack="end">
-    			<label value="&junkButton.label;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.Junk"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.Junk"/>    			
-    			</hbox>
-    		</row>
-    		<row>
-    			<hbox align="center" pack="end">
-    			<label value="&checkbox.Compact.Trash.caption;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.Trash"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.Trash"/>    			
-    			</hbox>
-    		</row>
-    		<row>
-    			<hbox align="center" pack="end">
-    			<label value="&otherActionsButton.label;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.OtherAction"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.OtherAction"/>    			
-    			</hbox>
-    		</row>
-    		<row>
-    			<hbox align="center" pack="end">
-    			<label value="&tagButton.label;"/>
-    			</hbox>
-    			<hbox pack="center">
-	    		<checkbox disabled="true" id="checkbox.Compact.Tag"/>
-    			</hbox>
-    			<hbox pack="center">
-  	    	<checkbox id="checkbox.Expanded.Tag"/>    			
-    			</hbox>
-    		</row>
-    	</rows>
-    </grid>
-  </groupbox>
-
 	<checkbox id="checkbox.Linkify" 
 						label="&menu.Linkify.caption;"/>
   <checkbox id="checkbox.ShowOnlyAddress"

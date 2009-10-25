@@ -41,78 +41,20 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-.hdrOtherActionsButton,
-toolbar[iconsize="small"] #button-other-actions,
-#otherActionsButton {
-  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
-  -moz-image-region: rect(0px 16px 16px 0px);
-}
-
-toolbar[mode="full"] > .hdrArchiveButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 320px 16px 304px);
-  padding-top: 3px !important;
-  padding-bottom: 2px !important;
-}
-
-toolbar[mode="full"] > .hdrJunkButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 142px 16px 130px);
-  padding-top: 3px !important;
-  padding-bottom: 2px !important;
-}
-
-#button-other-actions {
+.hdrOtherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
-  -moz-image-region: rect(0px 24px 24px 0px);
+}
+
+toolbar[iconsize="small"] .hdrOtherActionsButton {
+  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
 }
 
 .hdrTagButton {
-	list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar.png");
+  -moz-image-region: rect(0px 384px 24px 360px);
+}
+
+toolbar[iconsize="small"] .hdrTagButton {
+  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
   -moz-image-region: rect(0px 256px 16px 240px);
 }
-
-
-/*
-.cohe-buttons {
-  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
-}
-
-.cohe-button-other-actions
-{
-  list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
-  -moz-image-region: rect(0px 16px 16px 0px);
-}
-
-.cohe-button-archive {
-  -moz-image-region: rect(0px 320px 16px 304px);
-}
-
-.cohe-button-reply {
-  -moz-image-region: rect(0px 64px 16px 48px);
-}
-
-.cohe-button-replyall {
-  -moz-image-region: rect(0px 80px 16px 64px);
-}
-
-.cohe-button-replylist {
-  -moz-image-region: rect(0px 112px 16px 96px);
-}
-
-.cohe-button-forward {
-  -moz-image-region: rect(0px 96px 16px 80px);
-}
-
-.cohe-button-deleted {
-  -moz-image-region: rect(0px 128px 16px 112px);
-}
-
-.cohe-button-junk {
-  -moz-image-region: rect(0px 144px 16px 128px);
-}
-
-.cohe-button-tag {
-  -moz-image-region: rect(0px 256px 16px 240px);
-}
-*/

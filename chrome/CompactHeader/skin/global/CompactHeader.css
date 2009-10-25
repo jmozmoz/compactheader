@@ -46,23 +46,6 @@
   min-width: 1px;
 }
 
-/*
-#HeaderPaneToolbarBox {
-	-moz-binding: url(chrome://CompactHeader/content/cohe.xml#CoHeToolbox);
-}
-
-#HeaderPaneToolbar{
-	-moz-binding: url(chrome://CompactHeader/content/cohe.xml#CoHeToolbar);
-}
-*/
-
-toolbar[mode="full"] > .msgHeaderView-button,
-toolbar[mode="full"] > .msgHeaderView-button > .toolbarbutton-menubutton-button
-{
-  -moz-box-orient: horizontal !important;
-}
-
-
 
 #collapsed1LtoCcBccLabel {
   -moz-padding-start: 2px;
@@ -119,20 +102,6 @@ toolbar[mode="full"] > .msgHeaderView-button > .toolbarbutton-menubutton-button
   display: none;
 }
 
-/*
-#otherActionsButton .button-box .box-inherit,
-#tagMenuPopup .button-box .box-inherit {
-  -moz-box-direction: reverse;
-}
-*/
-
-/*
-#tagMenuPopup {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-	-moz-image-region: rect(0px 240px 16px 224px);
-}
-*/
-
 #otherActionsButton[OnlyIcon="Text"] .button-text,
 #tagMenuPopup[OnlyIcon="Text"] .button-text {
   -moz-padding-end: 1px;
@@ -154,27 +123,12 @@ toolbar[mode="full"] > .msgHeaderView-button > .toolbarbutton-menubutton-button
   text-align: left;
 }
 
-#collapsed1LsubjectBox {
+#collapsedsubjectlinkBox,
+#collapsed1LsubjectBox,
+#collapsed2LsubjectBox {
 	font-weight: bold;
 }
 
-/*
-#tagMenuPopup,
-#otherActionsButton {
-  margin: 0px;
-  padding: 0px;
-}
-*/
-/*
-#tagMenuPopup .button-box,
-#otherActionsButton .button-box {
-  -moz-margin-start: 0px;
-  -moz-margin-end: 0px;
-  -moz-padding-start: 0px;
-  -moz-padding-end: 0px;
-	border: 0px;
-}
-*/
 #collapsed1LdateBox {
   -moz-box-align: stretch;
   text-align: right;
@@ -274,4 +228,15 @@ toolbar[mode="full"] > .msgHeaderView-button > .toolbarbutton-menubutton-button
 
 #otherActionsTopSpacer {
   display: none;
+}
+
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrArchiveButton .toolbarbutton-icon,
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-icon {
+  display: -moz-box;
+  -moz-padding-start: 4px !important;
+}
+
+toolbar[mode="full"] .hdrJunkButton,
+toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
+  padding-top: 3px !important;
 }
