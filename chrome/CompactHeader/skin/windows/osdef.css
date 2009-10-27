@@ -20,6 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ * Joachim Herb <joachim.herb@gmx.de>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -49,12 +50,23 @@ toolbar[iconsize="small"] .hdrOtherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
 }
 
-.hdrTagButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar.png");
-  -moz-image-region: rect(0px 384px 24px 360px);
+
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
+  padding-top: 3px !important;
 }
 
-toolbar[iconsize="small"] .hdrTagButton {
-  list-style-image: url("chrome://messenger/skin/icons/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 256px 16px 240px);
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-icon,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-icon {
+  display: -moz-box;
+}
+
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
+  -moz-padding-start: 4px !important;
+}
+
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-text,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
+  -moz-margin-start: 2px !important;
 }

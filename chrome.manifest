@@ -10,6 +10,7 @@ locale    CustomizeHeaderToolbar     en-US   chrome/CustomizeHeaderToolbar/local
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CustomizeHeaderToolbar/content/CHTPaneOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/content/CHTDialogOverlay.xul
+overlay chrome://messenger/content/messenger.xul         chrome://CustomizeHeaderToolbar/content/CHTMessenger.xul
 style   chrome://global/content/customizeToolbar.xul     chrome://messenger/skin/messageHeader.css
 style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/skin/messageHeader.css
 style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar-os/skin/messageHeader.css

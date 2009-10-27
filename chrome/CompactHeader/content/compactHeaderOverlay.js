@@ -21,9 +21,7 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Contributor(s):
-#   Markus Hossner <markushossner@gmx.de>
-#   Mark Banner <bugzilla@standard8.plus.com>
-#   David Ascher <dascher@mozillamessaging.com>
+#   Joachim Herb <joachim.herb@gmx.de>
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -172,10 +170,19 @@ function coheOnLoadMsgHeaderPane()
   {
     coheFirstTime = false;
     gMessageListeners.push(coheMessageListener);
+    loadToolboxData();
     fillToolboxPalette();
+    saveToolboxData();
+    var toolbox = document.getElementById("header-view-toolbox");
+    toolbox.customizeDone = function(aEvent) {
+      MailToolboxCustomizeDone(aEvent, "CustomizeHeaderToolbar");
+      enableButtons();
+      CHTUpdateReplyButton();
+      saveToolboxData();
+    };
   }
   
-  coheToggleMenuLabel();
+  coheToggleHeaderContent();
 }
 
 var coheMessageListener = 
@@ -268,9 +275,19 @@ function coheUpdateHeaderView()
   }
   
   //fillToolboxPalette();
-  coheToggleMenuLabel();
-  UpdateReplyButtons();
-  if (document.getElementById("hdrJunkButton")) UpdateJunkButton();
+  coheToggleHeaderContent();
+  CHTUpdateReplyButton();
+  CHTUpdateJunkButton();
+}
+
+function enableButtons() {
+  var hdrToolbar = document.getElementById("header-view-toolbar");
+  if (toolbar) {
+    var buttons = hdrToolbar.querySelectorAll("[disabled*='true']");
+    for (var i=0; i<buttons.length; i++) {
+      buttons[i].removeAttribute("disabled");
+    }
+  }
 }
 
 function fillToolboxPalette() {
@@ -357,14 +374,16 @@ function coheToggleHeaderView ()
   // by the tallest panel in the deck even if that panel is not selected...
   deck.selectedPanel.collapsed = false;
   
-  coheToggleMenuLabel();
+  coheToggleHeaderContent();
 }
 
-function coheToggleMenuLabel() {
+function coheToggleHeaderContent() {
   var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
   var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
   var strLabel;
   
+  loadToolboxData();
+
   var hdrToolbox = document.getElementById("header-view-toolbox");
   var hdrToolbar = document.getElementById("header-view-toolbar");
   var firstPermanentChild = hdrToolbar.firstPermanentChild;

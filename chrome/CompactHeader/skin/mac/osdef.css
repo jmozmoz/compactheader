@@ -41,68 +41,32 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-toolbar[iconsize="small"] #button-other-actions,
-#otherActionsButton {
-  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
-  -moz-image-region: rect(0px 24px 24px 0px);
-}
-
-#button-other-actions {
+/* All values copied from gnomestrip theme. Have to be checked */
+.hdrOtherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
-  -moz-image-region: rect(0px 32px 32px 0px);
 }
 
-
-#button-archive {
-  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar.png");
-  -moz-image-region: rect(0px 640px 32px 608px);
+toolbar[iconsize="small"] .hdrOtherActionsButton {
+  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
 }
 
-toolbar[iconsize="small"] #button-archive {
-  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
-  -moz-image-region: rect(0px 480px 24px 456px);
+#expandedButtonBox {
+  margin: 0px;
+  padding: 0px;
 }
 
-/*
-.cohe-buttons {
-  list-style-image: url("chrome://CompactHeader-os/skin/mail-toolbar-small.png");
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-icon,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-icon {
+  display: -moz-box;
 }
 
-.cohe-button-other-actions
-{
-  list-style-image: url("chrome://CompactHeader/skin/other-action-small.png");
-  -moz-image-region: rect(0px 16px 16px 0px);
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-text,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
+  -moz-margin-start: 2px !important;
 }
 
-.cohe-button-archive {
-  -moz-image-region: rect(0px 480px 24px 456px);
+toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
+toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
-
-.cohe-button-reply {
-  -moz-image-region: rect(0px 96px 24px 72px);
-}
-
-.cohe-button-replyall {
-  -moz-image-region: rect(0px 120px 24px 96px);
-}
-
-.cohe-button-replylist {
-  -moz-image-region: rect(0px 144px 24px 120px);
-}
-
-.cohe-button-forward {
-  -moz-image-region: rect(0px 168px 24px 144px);
-}
-
-.cohe-button-deleted {
-  -moz-image-region: rect(0px 192px 24px 168px);
-}
-
-.cohe-button-junk {
-  -moz-image-region: rect(0px 216px 24px 192px);
-}
-
-.cohe-button-tag {
-  -moz-image-region: rect(0px 384px 24px 360px);
-}
-*/

@@ -68,7 +68,7 @@
           </toolbarpalette>
           <toolbar id="header-view-toolbar"
                    mode="icons" defaultmode="icons"
-                   defaultset="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrOtherActionsButton">
+                   defaultset="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrSJunkButton,hdrTrashButton,hdrOtherActionsButton">
           </toolbar>
       	</toolbox>
       </hbox>
