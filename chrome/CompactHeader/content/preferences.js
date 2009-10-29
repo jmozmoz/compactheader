@@ -76,8 +76,6 @@ function onLoad()
   loadPrefCheckbox("headersize.addressstyle", "checkbox.ShowOnlyAddress");
   
   updateTwolineView(prefBranch.getBoolPref("headersize.twolineview")); 
-
-  loadPrefCheckbox("buttons.showonlyicon", "checkbox.IconText");
 }
 
 function updateTwolineView(boolTwolineview) {

@@ -37,7 +37,7 @@
 			<button id="hideDetailsButton"  
 							tooltiptext="&hideDetailsButton.label;"
 							onclick="coheToggleHeaderView();" 
-							class="msgHeaderView-button msgHeaderView-flat-button"/>
+							class="msgHeaderView-flat-button"/>
 	  </vbox>
 
     <hbox id="coheStringTransferBox" hidden="true">
@@ -128,7 +128,7 @@
 	    <button id="showDetailsButton"
 		          tooltiptext="&showDetailsButton.label;"
 		          onclick="coheToggleHeaderView();"
-		          class="msgHeaderView-button msgHeaderView-flat-button"/>
+		          class="msgHeaderView-flat-button"/>
     </vbox>
 		<vbox id="collapsed1LHeadersBox" flex="1" collapsed="false">
 			<hbox id="collapsed1LHeaderViewFirstLine" flex="0">

@@ -79,10 +79,8 @@ var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
 var coheIntegrateRSSLinkify = false;
 
 var RSSLinkify = {
-    oldSubject1L: null,
-    newSubject1L: null,
-    oldSubject2L: null,
-    newSubject2L: null
+    oldSubject: null,
+    newSubject: null
 };
 
 var coheFirstTime = true;
@@ -267,8 +265,12 @@ function coheUpdateHeaderView()
         RSSLinkify.oldSubject.setAttribute("collapsed", "false");
     }
   } else {
-    RSSLinkify.newSubject.setAttribute("collapsed", "true");
-    RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+  	if (RSSLinkify.newSubject) {
+      RSSLinkify.newSubject.setAttribute("collapsed", "true");
+  	}
+  	if (RSSLinkify.oldSubject) {
+      RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+  	}
   }
   if (prefBranch.getBoolPref("headersize.addressstyle")) {
     selectEmailDisplayed();

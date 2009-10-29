@@ -53,7 +53,7 @@ toolbar[iconsize="small"] .hdrOtherActionsButton {
 
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
-  padding-top: 3px !important;
+  /*padding-top: 3px !important; */
 }
 
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-icon,
@@ -68,5 +68,5 @@ toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton
 
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-text,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
-  -moz-margin-start: 2px !important;
+  /*-moz-margin-start: 2px !important; */
 }
