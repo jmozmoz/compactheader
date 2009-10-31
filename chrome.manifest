@@ -29,3 +29,4 @@ locale    CompactHeader     de-DE   chrome/CompactHeader/locale/de-DE/
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
+style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css
