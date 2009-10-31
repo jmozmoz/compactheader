@@ -2,14 +2,14 @@
 
 <!DOCTYPE overlay [
   <!ENTITY % msgHeaderDTD SYSTEM 
-	"chrome://messenger/locale/msgHdrViewOverlay.dtd"> 
-	%msgHeaderDTD;
-	<!ENTITY % compactHeaderDTD SYSTEM
-	"chrome://CompactHeader/locale/CompactHeader.dtd">
-	%compactHeaderDTD;
-	<!ENTITY % preferencesDTD SYSTEM
-	"chrome://CompactHeader/locale/preferences.dtd">
-	%preferencesDTD;
+  "chrome://messenger/locale/msgHdrViewOverlay.dtd"> 
+  %msgHeaderDTD;
+  <!ENTITY % compactHeaderDTD SYSTEM
+  "chrome://CompactHeader/locale/CompactHeader.dtd">
+  %compactHeaderDTD;
+  <!ENTITY % preferencesDTD SYSTEM
+  "chrome://CompactHeader/locale/preferences.dtd">
+  %preferencesDTD;
   <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd">
   %messengerDTD;
 ]>
@@ -23,135 +23,126 @@
 
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
-	<keyset>
-		<key id="hideDetailsKey" 
-				 modifiers="shift" 
-				 key="&toggleDetails.key;"
-				 oncommand="coheToggleHeaderView();"/>
-	</keyset>
+  <keyset>
+    <key id="hideDetailsKey" 
+         modifiers="shift" 
+         key="&toggleDetails.key;"
+         oncommand="coheToggleHeaderView();"/>
+  </keyset>
 
   <deck id="msgHeaderViewDeck">
 
-	<vbox id="expandedHeaderView" orient="horizontal">
-		<vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
-			<button id="hideDetailsButton"  
-							tooltiptext="&hideDetailsButton.label;"
-							onclick="coheToggleHeaderView();" 
-							class="msgHeaderView-flat-button"/>
-	  </vbox>
+  <vbox id="expandedHeaderView" orient="horizontal">
+    <vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
+      <button id="hideDetailsButton"  
+              tooltiptext="&hideDetailsButton.label;"
+              onclick="coheToggleHeaderView();" 
+              class="msgHeaderView-flat-button"/>
+    </vbox>
 
     <hbox id="coheStringTransferBox" hidden="true">
       <label id="CoheHideDetailsLabel" value="&hideDetailsButton.label;"/>
       <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
-      <label id="CohehdrReplyButton" value="&replyButton.label;"/>
-      <label id="CohehdrReplyAllButton" value="&replyAllButton.label;"/>
-      <label id="CohehdrReplyListButton" value="&replyListButton.label;"/>
-      <label id="CohehdrForwardButton" value="&forwardButton.label;"/>
-      <label id="CohearchiveButton" value="&archiveButton.label;"/>
-      <label id="CohehdrJunkButton" value="&junkButton.label;"/>
-      <label id="CohehdrTrashButton" value="&deleteButton.label;"/>
-      <label id="CoheotherActionsButton" value="&otherActionsButton.label;"/>
-      <label id="CohetagMenuPopup" value="&tagButton.label;"/>
     </hbox>
 
-
-		<vbox id="expandedHeadersBox">	
+    <vbox id="expandedHeadersBox">  
       <hbox id="expandedHeadersTopBox" flex="1">
         <toolbox id="header-view-toolbox"
+                 mode="icons"
                  defaultmode="icons">
           <toolbarpalette id="header-view-toolbar-palette">
-          	<toolbarbutton id="hdrOtherActionsButton"
-          								 label="&otherActionsButton.label;"
-          								 tooltiptext="&otherActionsButton.label;"
-          								 class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
-          								 type="menu"/>
+            <toolbarbutton id="hdrOtherActionsButton"
+                           label="&otherActionsButton.label;"
+                           tooltiptext="&otherActionsButton.label;"
+                           class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
+                           type="menu"/>
           </toolbarpalette>
           <toolbar id="header-view-toolbar"
                    mode="icons" defaultmode="icons"
-                   defaultset="hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrSJunkButton,hdrTrashButton,hdrOtherActionsButton">
+                   defaultset="hdrReplyToSenderButton,hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrSJunkButton,hdrTrashButton,hdrOtherActionsButton">
           </toolbar>
-      	</toolbox>
+        </toolbox>
       </hbox>
 
 
-			<hbox id="expandedHeadersBottomBox">
-			
-				<vbox id="otherActionsBox" flex="0">
-					<hbox id="dateValueBox" flex="0"/>
-					<button type="menu" id="otherActionsButton" collapsed="true"
-									label="&otherActionsButton.label;"
-	                class="msgHeaderView-button msgHeaderView-flat-button">
-						<menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
-			        <menuitem id="hdrPlane-markFlagged"
-			                  type="checkbox"
-			                  label="&markStarredCmd.label;"
-			                  accesskey="&markStarredCmd.accesskey;"
-			                  command="cmd_markAsFlagged"
-			                  insertbefore="viewSourceMenuItem"
-			                  key="key_toggleFlagged"/>
-			        <menu id="hdrPlane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
-		            <menupopup id="menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
-		              <menuitem id="hdrPlane-viewallheaders"
-		               type="radio"
-		               name="viewheadergroup"
-		               label="&headersAllCmd.label;"
-		               accesskey="&headersAllCmd.accesskey;"
-		               command="cmd_viewAllHeader"/>
-		              <menuitem id="hdrPlane-viewnormalheaders"
-		               type="radio"
-		               name="viewheadergroup"
-		               label="&headersNormalCmd.label;"
-		               accesskey="&headersNormalCmd.accesskey;"
-		               command="cmd_viewNormalHeader"/>
-		            </menupopup>
-	            </menu>
-							<menuseparator id="otherActionPopupAfterViewSource"/>
-							<menuitem id="hideDetailsMenu" 
-												label="&hideDetailsButton.label;"
-							          oncommand="coheToggleHeaderView();"/>
-							<menuitem id="hidecohePreferencesButton" 
-												label="&dialog.title;"
-							          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
-						</menupopup>
-					</button>
-				</vbox>
-			</hbox>
-		  
-		</vbox>
-	</vbox>
-
-	<vbox id="collapsedHeaderView" orient="horizontal" flex="1">
-		<popup id="CohecopyUrlPopup" popupanchor="bottomleft">
-			<menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
-		</popup>
-    <vbox id="showDetailsButtonBox" align="start" flex="0">
-	    <button id="showDetailsButton"
-		          tooltiptext="&showDetailsButton.label;"
-		          onclick="coheToggleHeaderView();"
-		          class="msgHeaderView-flat-button"/>
+      <hbox id="expandedHeadersBottomBox">
+      
+        <vbox id="otherActionsBox" flex="0">
+          <hbox id="dateValueBox" flex="0"/>
+          <button type="menu" id="otherActionsButton" collapsed="true"
+                  label="&otherActionsButton.label;"
+                  class="msgHeaderView-button msgHeaderView-flat-button">
+            <menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
+              <menuitem id="hdrPlane-markFlagged"
+                        type="checkbox"
+                        label="&markStarredCmd.label;"
+                        accesskey="&markStarredCmd.accesskey;"
+                        command="cmd_markAsFlagged"
+                        insertbefore="viewSourceMenuItem"
+                        key="key_toggleFlagged"/>
+              <menu id="hdrPlane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+                <menupopup id="menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
+                  <menuitem id="hdrPlane-viewallheaders"
+                   type="radio"
+                   name="viewheadergroup"
+                   label="&headersAllCmd.label;"
+                   accesskey="&headersAllCmd.accesskey;"
+                   command="cmd_viewAllHeader"/>
+                  <menuitem id="hdrPlane-viewnormalheaders"
+                   type="radio"
+                   name="viewheadergroup"
+                   label="&headersNormalCmd.label;"
+                   accesskey="&headersNormalCmd.accesskey;"
+                   command="cmd_viewNormalHeader"/>
+                </menupopup>
+              </menu>
+              <menuseparator id="otherActionPopupAfterViewSource"/>
+              <menuitem id="hideDetailsMenu" 
+                        label="&hideDetailsButton.label;"
+                        oncommand="coheToggleHeaderView();"/>
+              <menuitem id="hidecohePreferencesButton" 
+                        label="&dialog.title;"
+                        oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
+            </menupopup>
+          </button>
+        </vbox>
+      </hbox>
+      
     </vbox>
-		<vbox id="collapsed1LHeadersBox" flex="1" collapsed="false">
-			<hbox id="collapsed1LHeaderViewFirstLine" flex="0">
+  </vbox>
+
+  <vbox id="collapsedHeaderView" orient="horizontal" flex="1">
+    <popup id="CohecopyUrlPopup" popupanchor="bottomleft">
+      <menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
+    </popup>
+    <vbox id="showDetailsButtonBox" align="start" flex="0">
+      <button id="showDetailsButton"
+              tooltiptext="&showDetailsButton.label;"
+              onclick="coheToggleHeaderView();"
+              class="msgHeaderView-flat-button"/>
+    </vbox>
+    <vbox id="collapsed1LHeadersBox" flex="1" collapsed="false">
+      <hbox id="collapsed1LHeaderViewFirstLine" flex="0">
         <hbox id="collapsed1LsubjectOutBox" align="start" flex="99">
           <row id="collapsed1LsubjectRow" flex="99">
             <mail-headerfield id="collapsed1LsubjectBox" flex="99"/>
           </row>
         </hbox>
-				<hbox id="collapsed1LfromOutBox" align="start" flex="0">
-					<grid flex="1">
-						<columns>
-							<column flex="0"/>
-						</columns>
+        <hbox id="collapsed1LfromOutBox" align="start" flex="0">
+          <grid flex="1">
+            <columns>
+              <column flex="0"/>
+            </columns>
             <rows>
               <row id="collapsed1LfromRow">
-  					    <mail-multi-emailHeaderField id="collapsed1LfromBox" flex="0"/>
+                <mail-multi-emailHeaderField id="collapsed1LfromBox" flex="0"/>
               </row>
             </rows>
           </grid>
-				</hbox>
+        </hbox>
         <grid id="collapsed1LtoCcBccOutBox" flex="1" hidden="true">
           <row id="collapsed1LtoCcBccRow" align="baseline">
-   		  		<mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
+             <mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
           </row>
         </grid>
         <hbox id="collapsed1LdateOutBox" align="start" pack="end" flex="0">
@@ -160,10 +151,10 @@
           </row>
         </hbox>        
         <header-view-button-box id="collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
-	    </hbox>
-			<hbox id="collapsed1LHeaderViewSecondLine" align="start" flex="1" collapsed="true">
-			</hbox>
-		</vbox>
+      </hbox>
+      <hbox id="collapsed1LHeaderViewSecondLine" align="start" flex="1" collapsed="true">
+      </hbox>
+    </vbox>
 
     <vbox id="collapsed2LHeadersBox" flex="1" collapsed="true">
       <hbox id="collapsed2LHeaderViewFirstLine" flex="0">
@@ -208,9 +199,9 @@
       </hbox>
     </vbox>
 
-	</vbox>
+  </vbox>
 
-	</deck>
+  </deck>
 
 </overlay>
 

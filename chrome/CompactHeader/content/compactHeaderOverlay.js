@@ -51,6 +51,8 @@
 // view in the message header pane.
 ////////////////////////////////////////////////////////////////////////////////////
 
+const COHE_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
+
 var gCoheCollapsedHeaderViewMode = false;
 var gCoheBuiltCollapsedView = false;
 
@@ -72,7 +74,7 @@ var gCoheCollapsedHeader2LListLongAddresses = [
   {name:"date", outputFunction:coheUpdateDateValue}
   ];
   
-var prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
   .getService(Components.interfaces.nsIPrefService)
   .getBranch("extensions.CompactHeader.");
 
@@ -81,6 +83,12 @@ var coheIntegrateRSSLinkify = false;
 var RSSLinkify = {
     oldSubject: null,
     newSubject: null
+};
+
+var cohe={
+  version: -1,
+  firstrun: true,
+  current: -1
 };
 
 var coheFirstTime = true;
@@ -97,11 +105,10 @@ var gCoheCollapsedHeaderView = {};
 
 function coheInitializeHeaderViewTables()
 {
-  
   gCoheCollapsedHeaderView = {};
   var index;
 
-  if (prefBranch.getBoolPref("headersize.twolineview")) {
+  if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
     for (index = 0; index < gCoheCollapsedHeader2LListLongAddresses.length; index++) {
       gCoheCollapsedHeaderView[gCoheCollapsedHeader2LListLongAddresses[index].name] =
         new createHeaderEntry('collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
@@ -113,7 +120,7 @@ function coheInitializeHeaderViewTables()
     }
   }
 
-  if (prefBranch.getBoolPref("headersize.linkify")) {
+  if (cohePrefBranch.getBoolPref("headersize.linkify")) {
     RSSLinkify.newSubject = document.createElement("label");
     RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
     RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
@@ -123,7 +130,7 @@ function coheInitializeHeaderViewTables()
     RSSLinkify.newSubject.setAttribute("readonly", "true");
     RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
     RSSLinkify.newSubject.setAttribute("flex", "1");
-    if (prefBranch.getBoolPref("headersize.twolineview")) {
+    if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
       RSSLinkify.oldSubject = document.getElementById("collapsed2LsubjectBox");
     } else {
       RSSLinkify.oldSubject = document.getElementById("collapsed1LsubjectBox");
@@ -156,7 +163,7 @@ function coheOnLoadMsgHeaderPane()
   else
     document.getElementById('collapsedHeaderView').collapsed = true;
 
-  if (prefBranch.getBoolPref("headersize.twolineview")) {
+  if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
     document.getElementById('collapsed1LHeadersBox').collapsed = true;
     document.getElementById('collapsed2LHeadersBox').collapsed = false;
   } else {
@@ -174,10 +181,20 @@ function coheOnLoadMsgHeaderPane()
     var toolbox = document.getElementById("header-view-toolbox");
     toolbox.customizeDone = function(aEvent) {
       MailToolboxCustomizeDone(aEvent, "CustomizeHeaderToolbar");
+      document.getElementById("header-view-toolbox").removeAttribute("doCustomization");
       enableButtons();
       CHTUpdateReplyButton();
       saveToolboxData();
     };
+  }
+  
+  if (cohe.firstrun) {
+    coheCheckFirstRun();
+  }
+  
+  if (cohe.firstrun) {
+    CHTSetDefaultButtons();
+    cohe.firstrun = false;
   }
   
   coheToggleHeaderContent();
@@ -251,7 +268,7 @@ function coheUpdateHeaderView()
   if (gCoheCollapsedHeaderViewMode)
     showHeaderView(gCoheCollapsedHeaderView);
 
-  if (prefBranch.getBoolPref("headersize.linkify")) {
+  if (cohePrefBranch.getBoolPref("headersize.linkify")) {
     var url = currentHeaderData["content-base"];
     if(url) {
         RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
@@ -272,7 +289,7 @@ function coheUpdateHeaderView()
       RSSLinkify.oldSubject.setAttribute("collapsed", "false");
   	}
   }
-  if (prefBranch.getBoolPref("headersize.addressstyle")) {
+  if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
     selectEmailDisplayed();
   }
   
@@ -328,8 +345,9 @@ function fillToolboxPalette() {
     }
   }
 
-  var buttonsRemove = ["hdrForwardButton", "hdrArchiveButton",
-                       "hdrReplyToSenderButton"];
+  var buttonsRemove = ["hdrJunkButton", "hdrForwardButton", "hdrArchiveButton",
+                       "hdrReplyToSenderButton", "hdrReplyButton",
+                       "hdrReplyAllButton", "hdrReplyListButton"];
   for (var i=0; i<buttonsRemove.length; i++) {
     var buttonName = buttonsRemove[i];
     var button = document.getElementById(buttonName) || 
@@ -338,7 +356,7 @@ function fillToolboxPalette() {
       button.setAttribute("collapsed", "true");
     }
   }
-
+  
   var target = "hdrOtherActionsButton";
   
   var newParent = document.getElementById(target) || 
@@ -479,6 +497,7 @@ function coheUpdateMessageHeaders()
 
 addEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
+addEventListener('load', coheInitializeOverlay, false);
 
 function addClass(el, strClass) {
   var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);  
@@ -585,3 +604,98 @@ var myPrefObserverHeaderSize =
 
 myPrefObserverHeaderSize.register();
 
+function coheCheckFirstRun() {
+  cohe.version = -1;
+  cohe.firstrun = false;
+  cohe.gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+  // check if this is part of CompactHeader
+  if ((cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || (isAddonDisabled(COHE_EXTENSION_UUID))) {
+    return;
+  }
+  
+  cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
+  try{
+    cohe.version = cohePrefBranch.getCharPref("version");
+    cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
+  } catch(e) {
+  } finally {
+    //check for first run
+    if (cohe.firstrun){
+      cohePrefBranch.setBoolPref("firstrun",false);
+      cohePrefBranch.setCharPref("version",cohe.current);
+    }
+    //check for upgrade
+    if (cohe.version!=cohe.current && !cohe.firstrun){
+      cohePrefBranch.setCharPref("version",cohe.current);
+      // XXX
+    }
+  }
+}
+
+function coheInitializeOverlay() {
+  var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+  // check if this is part of CompactHeader
+  if ((gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || isAddonDisabled(COHE_EXTENSION_UUID)) {
+    return;
+  }
+  coheUninstallObserver.register();
+}
+
+var coheUninstallObserver = {
+  _uninstall : false,
+  observe : function(subject, topic, data) {
+    if (topic == "em-action-requested") {
+      subject.QueryInterface(Components.interfaces.nsIUpdateItem);
+  
+      if (subject.id == COHE_EXTENSION_UUID) {
+        if (data == "item-uninstalled") {
+          this._uninstall = true;
+        } else if (data == "item-cancel-action") {
+          this._uninstall = false;
+        }
+      }
+    } else if (topic == "quit-application-granted") {
+      if (this._uninstall) {
+        cohePrefBranch.deleteBranch("");
+        CHTCleanupButtons();
+      }
+      this.unregister();
+    }
+  },
+  register : function() {
+   var observerService =
+     Components.classes["@mozilla.org/observer-service;1"].
+       getService(Components.interfaces.nsIObserverService);
+  
+   observerService.addObserver(this, "em-action-requested", false);
+   observerService.addObserver(this, "quit-application-granted", false);
+  },
+  unregister : function() {
+    var observerService =
+      Components.classes["@mozilla.org/observer-service;1"].
+        getService(Components.interfaces.nsIObserverService);
+  
+    observerService.removeObserver(this,"em-action-requested");
+    observerService.removeObserver(this,"quit-application-granted");
+  }
+}
+
+function isAddonDisabled(uuid) {
+  var rdfService = Components.classes["@mozilla.org/rdf/rdf-service;1"].getService(Components.interfaces.nsIRDFService);
+  var addon = rdfService.GetResource("urn:mozilla:item:" + uuid);
+
+  var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+  var ds = em.datasource;
+
+  var appRes = rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#appDisabled");
+  var appDisabled = ds.GetTarget(addon, appRes, true);
+  if(appDisabled instanceof Components.interfaces.nsIRDFLiteral && appDisabled.Value == "true")
+    return true;
+
+  var userRes = rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#userDisabled");
+  var userDisabled = ds.GetTarget(addon, userRes, true);
+  if(userDisabled instanceof Components.interfaces.nsIRDFLiteral && userDisabled.Value == "true")
+    return true;
+
+  return false;
+}
