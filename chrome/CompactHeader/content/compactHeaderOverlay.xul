@@ -27,7 +27,7 @@
     <key id="hideDetailsKey" 
          modifiers="shift" 
          key="&toggleDetails.key;"
-         oncommand="coheToggleHeaderView();"/>
+         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
   </keyset>
 
   <deck id="msgHeaderViewDeck">
@@ -36,7 +36,7 @@
     <vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
       <button id="hideDetailsButton"  
               tooltiptext="&hideDetailsButton.label;"
-              onclick="coheToggleHeaderView();" 
+              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();" 
               class="msgHeaderView-flat-button"/>
     </vbox>
 
@@ -99,7 +99,7 @@
               <menuseparator id="otherActionPopupAfterViewSource"/>
               <menuitem id="hideDetailsMenu" 
                         label="&hideDetailsButton.label;"
-                        oncommand="coheToggleHeaderView();"/>
+                        oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
               <menuitem id="hidecohePreferencesButton" 
                         label="&dialog.title;"
                         oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
@@ -118,7 +118,7 @@
     <vbox id="showDetailsButtonBox" align="start" flex="0">
       <button id="showDetailsButton"
               tooltiptext="&showDetailsButton.label;"
-              onclick="coheToggleHeaderView();"
+              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
               class="msgHeaderView-flat-button"/>
     </vbox>
     <vbox id="collapsed1LHeadersBox" flex="1" collapsed="false">
@@ -185,7 +185,7 @@
         </grid>
         <header-view-button-box id="collapsed2LButtonBox" flex="0" align="start"/>
       </hbox>
-      <hbox id="collapsed2LHeaderViewSecondLine" align="start" flex="1">
+      <hbox id="collapsed2LHeaderViewSecondLine" align="baseline" flex="1">
         <hbox id="collapsed2LsubjectOutBox" align="start" flex="99">
           <row id="collapsed2LsubjectRow" flex="99">
             <mail-headerfield id="collapsed2LsubjectBox" flex="99"/>
