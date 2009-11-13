@@ -17,14 +17,17 @@
   void(openDialog("chrome://CompactHeader/content/preferences.xul"))
 -->
 
-<dialog id="cohePreferences" title="&dialog.title;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-  onload="onLoad()" ondialogaccept="return onDialogAccept()" persist="screenX screenY">
+<dialog id="cohePreferences" 
+				title="&dialog.title;" 
+				xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        onload="org.mozdev.compactHeader.preferences.onLoad();" 
+        ondialogaccept="return org.mozdev.compactHeader.preferences.onDialogAccept();" 
+        persist="screenX screenY">
 
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
 
 	<checkbox id="checkbox.Compact.TwolineView" 
-						label="&checkbox.Compact.TwolineView.caption;"
-						oncommand="updateTwolineView(this.checked);"/>
+						label="&checkbox.Compact.TwolineView.caption;"/>
 						
 	<checkbox id="checkbox.Linkify" 
 						label="&menu.Linkify.caption;"/>
@@ -59,7 +62,7 @@
     			 value="&link.MOZDEV.value;" />
     <hbox align="center" pack="center" flex="1">
       <button id="checkForUpdates"
-              oncommand="CoheCheckForUpdates();"
+              oncommand="org.mozdev.compactHeader.preferences.CoheCheckForUpdates();"
               flex="0"
               align="center"
               label="&button.checkUpdate.label;"/>
