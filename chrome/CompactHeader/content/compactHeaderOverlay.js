@@ -333,8 +333,8 @@ org.mozdev.compactHeader.pane = function() {
   function fillToolboxPalette() {
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
-    var buttons = ["button-reply", "button-replyall", "button-replylist", "button-print", 
-                   "button-tag", "button-forward", "button-archive", "button-mark", "button-file"];
+    var buttons = ["button-reply", "button-replyall", "button-replylist", 
+                   "button-tag", "button-forward", "button-archive", "button-file"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
@@ -357,6 +357,24 @@ org.mozdev.compactHeader.pane = function() {
   /*        var bStyle = document.defaultView.getComputedStyle(button, null);
           hdrButton.style.MozImageRegion = bStyle.MozImageRegion;
           hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
+        }
+        if (currentSet.indexOf(buttonName)>=0) {
+          var result = hdrToolbar.insertItem(hdrButton.id);
+          currentSet = hdrToolbar.getAttribute("currentset");
+          hdrToolbar.currentSet = currentSet;
+        }
+      }
+    }
+    var buttons = ["button-print", "button-mark"];
+    for (var i=0; i<buttons.length; i++) {
+      var buttonName = buttons[i];
+      var button = document.getElementById(buttonName) || 
+          document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+      if (button) {
+        var hdrButton = button.cloneNode(true);
+        if (hdrButton) {
+          addClass(hdrButton, "msgHeaderView-button-out");
+          hdrToolbox.palette.appendChild(hdrButton);
         }
         if (currentSet.indexOf(buttonName)>=0) {
           var result = hdrToolbar.insertItem(hdrButton.id);
