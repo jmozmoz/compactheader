@@ -303,12 +303,12 @@ org.mozdev.compactHeader.pane = function() {
           RSSLinkify.oldSubject.setAttribute("collapsed", "false");
       }
     } else {
-    	if (RSSLinkify.newSubject) {
+      if (RSSLinkify.newSubject) {
         RSSLinkify.newSubject.setAttribute("collapsed", "true");
-    	}
-    	if (RSSLinkify.oldSubject) {
+      }
+      if (RSSLinkify.oldSubject) {
         RSSLinkify.oldSubject.setAttribute("collapsed", "false");
-    	}
+      }
     }
     if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
       selectEmailDisplayed();
@@ -334,7 +334,8 @@ org.mozdev.compactHeader.pane = function() {
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist", 
-                   "button-tag", "button-forward", "button-archive", "button-file"];
+                   "button-tag", "button-forward", "button-archive", "button-file",
+                   "button-print", "button-mark"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
@@ -344,14 +345,18 @@ org.mozdev.compactHeader.pane = function() {
       if (button) {
         var hdrButton = button.cloneNode(true);
         if (hdrButton) {
-        	if (hdrButton.localName == "toolbaritem") {
-        		var subButtons = hdrButton.querySelectorAll(".toolbarbutton-1");
-        		for (var j=0; j<subButtons.length; j++) {
-        			addClass(subButtons[j], "msgHeaderView-button");
-        		}
-        	} else {
-            addClass(hdrButton, "msgHeaderView-button");
-        	}
+          if (hdrButton.localName == "toolbaritem") {
+            var subButtons = hdrButton.querySelectorAll(".toolbarbutton-1");
+            for (var j=0; j<subButtons.length; j++) {
+              addClass(subButtons[j], "msgHeaderView-button");
+            }
+          } else {
+            if (hdrButton.type != "menu-button") {
+              addClass(hdrButton, "msgHeaderView-button");
+            } else {
+              addClass(hdrButton, "msgHeaderView-button-out");
+            }
+          }
           //hdrButton.id = "hdr" + hdrButton.id;
           hdrToolbox.palette.appendChild(hdrButton);
   /*        var bStyle = document.defaultView.getComputedStyle(button, null);
@@ -365,25 +370,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       }
     }
-    var buttons = ["button-print", "button-mark"];
-    for (var i=0; i<buttons.length; i++) {
-      var buttonName = buttons[i];
-      var button = document.getElementById(buttonName) || 
-          document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
-      if (button) {
-        var hdrButton = button.cloneNode(true);
-        if (hdrButton) {
-          addClass(hdrButton, "msgHeaderView-button-out");
-          hdrToolbox.palette.appendChild(hdrButton);
-        }
-        if (currentSet.indexOf(buttonName)>=0) {
-          var result = hdrToolbar.insertItem(hdrButton.id);
-          currentSet = hdrToolbar.getAttribute("currentset");
-          hdrToolbar.currentSet = currentSet;
-        }
-      }
-    }
-  
+
     var buttonsRemove = ["hdrJunkButton", "hdrForwardButton", "hdrArchiveButton",
                          "hdrReplyToSenderButton", "hdrReplyButton",
                          "hdrReplyAllButton", "hdrReplyListButton"];
