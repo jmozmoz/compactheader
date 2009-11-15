@@ -70,3 +70,39 @@ toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton
   padding-top: 0px !important;
   padding-bottom: 0px !important;
 }
+
+toolbarpaletteitem[place="palette"] .msgHeaderView-button-out {
+  -moz-appearance: button;
+}
+
+.msgHeaderView-button-out {
+}
+
+.msgHeaderView-button-out .toolbarbutton-menubutton-button {
+  -moz-appearance: none;
+  padding: 0;
+  margin: 0;
+  -moz-padding-start: 0px;
+  -moz-padding-end: 0px;
+  -moz-margin-start: 0px;
+  -moz-margin-end: 0px;
+  min-width: 1em;
+  min-height: 1ex;
+}
+
+.msgHeaderView-button-out  > .toolbarbutton-menubutton-dropmarker {
+  -moz-margin-start: 3px;
+  -moz-margin-end: 4px;
+}
+
+/* not sure, if the following is needed? Not used in thunderbird itself */
+/*
+toolbar[mode="text"] .msgHeaderView-button-out .toolbarbutton-text,
+toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-button-out .toolbarbutton-text {
+  margin: 0 !important;
+  padding-top: 2px !important;
+  padding-bottom: 1px !important;
+  -moz-padding-start: 0px !important;
+  -moz-padding-end: 0px !important;
+}
+*/
