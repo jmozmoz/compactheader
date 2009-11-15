@@ -70,3 +70,38 @@ toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-tex
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
   /*-moz-margin-start: 2px !important; */
 }
+
+toolbarpaletteitem[place="palette"] .msgHeaderView-button-out {
+  -moz-appearance: button;
+}
+
+.msgHeaderView-button-out {
+  /*-moz-appearance: button; */
+  margin-top: 1px;
+  margin-bottom: 2px;
+  -moz-margin-start: 2px;
+  -moz-margin-end: 2px;
+  /*border-width: 3px !important;
+  border-style: solid !important; */
+}
+
+.msgHeaderView-button-out .toolbarbutton-menubutton-button {
+  -moz-appearance: button;
+  min-width: 1em;
+  min-height: 1ex;
+  margin: 0px;
+  /* important required to override messenger.css rules */
+  -moz-padding-start: 4px !important;
+  -moz-padding-end: 3px !important;
+  padding-top: 3px !important;
+  padding-bottom: 2px !important;
+}
+
+toolbar[mode="text"] .msgHeaderView-button-out .toolbarbutton-text,
+toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-button-out .toolbarbutton-text {
+  margin: 0 !important;
+  padding-top: 1px !important;
+  padding-bottom: 0px !important;
+  -moz-padding-start: 0px !important;
+  -moz-padding-end: 0px !important;
+}
