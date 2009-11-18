@@ -4,7 +4,9 @@
   <property name="src.dir" value="." />
   <property name="CHT.dir" value="../../customizeHeaderToolbar/src" />
   <property name="dist.dir" value="../downloads/"/>
+  <property name="AMOdist.dir" value="../AMO/"/>
   <property name="www.dir" value="../www/"/>
+  <property name="pref.file" value="${src.dir}/chrome/CompactHeader/content/preferences.js"/>
 
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
     
@@ -14,18 +16,8 @@
     <copy path="//em:id/text()" property="app.id"/>   
   </xmltask>
 
-  <target name="dist" depends="spreadVersion,copyCHT">
+  <target name="dist" depends="spreadVersion,copyCHT,buildAMO,buildMozdev">
       
-    <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
-      <fileset dir="${src.dir}">
-        <include name="chrome.manifest" />
-        <include name="install.rdf" />
-        <include name="defaults/**" />
-        <include name="chrome/**" />        
-        <exclude name="**/.*" />
-        <exclude name="**/CVS/**" />
-      </fileset>
-    </zip>
   </target>
 
   <target name="copyCHT">
@@ -38,6 +30,41 @@
     <delete file="${dist.dir}/${app.name}-${app.version}.xpi" />
   </target>
     
+    
+  <target name="buildAMO">
+    <replaceregexp file="${pref.file}" 
+                   byline="true"
+                   match="(.*)return.*( /\* Patch this line for AMO version \*/)"
+                   replace="\1return true; /* AMO version */\2"/>
+    <zip destfile="${AMOdist.dir}/${app.name}-${app.version}.xpi">
+      <fileset dir="${src.dir}">
+        <include name="chrome.manifest" />
+        <include name="install.rdf" />
+        <include name="defaults/**" />
+        <include name="chrome/**" />        
+        <exclude name="**/.*" />
+        <exclude name="**/CVS/**" />
+      </fileset>
+    </zip>
+  </target>
+
+  <target name="buildMozdev">
+    <replaceregexp file="${pref.file}" 
+                   byline="true"
+                   match="(.*)return .*( /\* Patch this line for AMO version \*/)"
+                   replace="\1return false; /* Mozdev version */\2"/>
+    <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
+      <fileset dir="${src.dir}">
+        <include name="chrome.manifest" />
+        <include name="install.rdf" />
+        <include name="defaults/**" />
+        <include name="chrome/**" />        
+        <exclude name="**/.*" />
+        <exclude name="**/CVS/**" />
+      </fileset>
+    </zip>
+  </target>
+
   <target name="spreadVersion">
   <!--
     <xmltask source="${www.dir}/availableVersion.xml" dest="${www.dir}/availableVersion.xml.new">
