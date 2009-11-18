@@ -31,6 +31,10 @@ org.mozdev.compactHeader.preferences = function() {
   //  controls according to current configuration settings.
   //
   
+  function disableUpdate(){
+    return false; /* Mozdev version */ /* Patch this line for AMO version */
+  }
+  
   pub.CoheCheckForUpdates = function() {
   	gXMLHttpRequest = new XMLHttpRequest();
     gXMLHttpRequest.onload = updateCohe;
@@ -73,6 +77,8 @@ org.mozdev.compactHeader.preferences = function() {
   
   pub.onLoad = function()
   {
+  	document.getElementById("coheSearchUpdates").setAttribute("hidden", disableUpdate());
+  	
     prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
       .getService(Components.interfaces.nsIPrefService)
       .getBranch("extensions.CompactHeader.");

@@ -32,7 +32,8 @@
 	<checkbox id="checkbox.Linkify" 
 						label="&menu.Linkify.caption;"/>
   <checkbox id="checkbox.ShowOnlyAddress"
-            label="&menu.ShowOnlyAddress.caption;"/>
+  					label="&menu.ShowOnlyAddress.caption;"/>
+
 
 <!--
 	<hbox align="center" flex="0">
@@ -47,7 +48,7 @@
 	</hbox>
 -->
 
-  <groupbox>
+  <groupbox id="coheSearchUpdates">
     <caption label="&groupbox.Update.caption;"/>
   					
   	<label id="UpdateAMO" 
