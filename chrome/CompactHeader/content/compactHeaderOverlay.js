@@ -116,7 +116,43 @@ org.mozdev.compactHeader.pane = function() {
   }
   
   function coheOutputEmailAddresses(headerEntry, emailAddresses) {
-    OutputEmailAddresses(headerEntry, emailAddresses);
+    /* function copied from comm-1.9.1/ mail/ base/ content/ msgHdrViewOverlay.js 771135e6aaf5 */
+  	if (!emailAddresses)
+      return;
+  
+    var addresses = {};
+    var fullNames = {};
+    var names = {};
+    var numAddresses =  0;
+  
+    var msgHeaderParser = Components.classes["@mozilla.org/messenger/headerparser;1"]
+                                    .getService(Components.interfaces.nsIMsgHeaderParser);
+    numAddresses = msgHeaderParser.parseHeadersWithArray(emailAddresses, addresses, names, fullNames);
+    var index = 0;
+    while (index < numAddresses)
+    {
+      // if we want to include short/long toggle views and we have a long view, always add it.
+      // if we aren't including a short/long view OR if we are and we haven't parsed enough
+      // addresses to reach the cutoff valve yet then add it to the default (short) div.
+      var address = {};
+      address.emailAddress = addresses.value[index];
+      address.fullAddress = fullNames.value[index];
+      if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
+        address.displayName = address.emailAddress;
+        address.fullAddress = address.emailAddress;
+      } else {
+        address.displayName = names.value[index];
+      }
+      if (headerEntry.useToggle)
+        headerEntry.enclosingBox.addAddressView(address);
+      else
+        updateEmailAddressNode(headerEntry.enclosingBox.emailAddressNode, address);
+      index++;
+    }
+  
+    if (headerEntry.useToggle)
+      headerEntry.enclosingBox.buildViews();
+    //OutputEmailAddresses(headerEntry, emailAddresses);
   }
   
   // Now, for each view the message pane can generate, we need a global table
