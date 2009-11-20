@@ -7,6 +7,7 @@
   <property name="AMOdist.dir" value="../AMO/"/>
   <property name="www.dir" value="../www/"/>
   <property name="pref.file" value="${src.dir}/chrome/CompactHeader/content/preferences.js"/>
+  <property name="mccoy.cmd" value="c:/Program Files/mccoy/mccoy/mccoy.exe"/>
 
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
     
@@ -32,27 +33,36 @@
     
     
   <target name="buildAMO">
+    <!--
     <replaceregexp file="${pref.file}" 
                    byline="true"
                    match="(.*)return.*( /\* Patch this line for AMO version \*/)"
-                   replace="\1return true; /* AMO version */\2"/>
+                   replace="\1return true; /* AMO version */\2"/> -->
+    <copy file="${src.dir}/install.rdf" tofile="${AMOdist.dir}/install.rdf"/>
+    <replaceregexp file="${AMOdist.dir}/install.rdf" 
+                   byline="true"
+                   match=".*update.*"
+                   replace=""/>                   
     <zip destfile="${AMOdist.dir}/${app.name}-${app.version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
-        <include name="install.rdf" />
         <include name="defaults/**" />
         <include name="chrome/**" />        
         <exclude name="**/.*" />
         <exclude name="**/CVS/**" />
       </fileset>
+      <fileset dir="${AMOdist.dir}">
+        <include name="install.rdf" />
+      </fileset>
     </zip>
   </target>
 
   <target name="buildMozdev">
+    <!--
     <replaceregexp file="${pref.file}" 
                    byline="true"
                    match="(.*)return .*( /\* Patch this line for AMO version \*/)"
-                   replace="\1return false; /* Mozdev version */\2"/>
+                   replace="\1return false; /* Mozdev version */\2"/>-->
     <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
@@ -63,6 +73,26 @@
         <exclude name="**/CVS/**" />
       </fileset>
     </zip>
+    <xmltask source="${www.dir}/update.rdf" dest="${www.dir}/update.rdf.new">
+      <replace path="/RDF:RDF/RDF:Description/@em:version" withText="${app.version}"/> 
+    </xmltask>
+    <move file="${www.dir}/update.rdf.new" tofile="${www.dir}/update.rdf"/>
+    <property name="absUpdate" location="${www.dir}/update.rdf"/>
+    <property name="absXPI" location="${dist.dir}/${app.name}-${app.version}.xpi"/>
+    
+    <echo message="absUpdate ${absUpdate}"/>
+    <echo message="absUpdate ${absXPI}"/>
+    
+    <exec executable="${mccoy.cmd}">
+      <arg value="-command"/>
+      <arg value="update"/>
+      <arg value="-updateRDF"/>
+      <arg value="${absUpdate}"/>
+      <arg value="-key"/>
+      <arg value="compactheaderkey"/>
+      <arg value="-xpi"/>
+      <arg value="${absXPI}"/>
+    </exec>
   </target>
 
   <target name="spreadVersion">
@@ -72,12 +102,12 @@
     </xmltask>
     <move file="${www.dir}/availableVersion.xml.new" tofile="${www.dir}/availableVersion.xml"/>
     -->
-      
+    <!--  
     <xmltask source="${www.dir}/availVersion.xml" dest="${www.dir}/availVersion.xml.new">
       <replace path="/updates/update[@server='mozdev']/@version" withText="${app.version}"/> 
     </xmltask>
     <move file="${www.dir}/availVersion.xml.new" tofile="${www.dir}/availVersion.xml"/>
-
+-->
     <replaceregexp file="${www.dir}/installation.html" 
                    byline="true"
                    match="(.*update the version.*CompactHeader-).*(.xpi&quot;>Version ).*( of Co.*)"

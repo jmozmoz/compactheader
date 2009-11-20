@@ -6,13 +6,15 @@
 
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
-		<em:version>0.99.7</em:version>
+		<em:version>0.99.8</em:version>
 		<em:description>Add ability to reduce header size to one or two lines. Linkify subjects in RSS feeds.</em:description>
 		<em:creator>Joachim Herb</em:creator>
 		<em:contributor>Zamula</em:contributor>
 		<em:contributor>Alex Dedul (original author of RSS Linkify Subject</em:contributor>
     <em:optionsURL>chrome://CompactHeader/content/preferences.xul</em:optionsURL>
 		<em:homepageURL>http://compactheader.mozdev.org/</em:homepageURL>
+		<em:updateURL>http://compactheader.mozdev.org/update.rdf</em:updateURL>
+    <em:updateKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+O1ZsY+7zY6A2GUdEx+6yoWhlfMz7qtDWDLEzMDCZ046vWauIwTGsIT4/48InmKSjF8q529U8FHamJI03FQuuE94KdLkQCJfGTUOwf/U1pKcHpF/WweGmRj7SrOt/exNCdUj7EaJ/vICy4TaUZ42Oul2CwP00x4BixiNs+26UbwIDAQAB</em:updateKey>
 		<em:id>{58D4392A-842E-11DE-B51A-C7B855D89593}</em:id>
 		<em:type>2</em:type>
   	<em:iconURL>chrome://CompactHeader/skin/cohe-icon.png</em:iconURL>

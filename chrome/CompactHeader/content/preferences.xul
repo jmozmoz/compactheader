@@ -48,6 +48,7 @@
 	</hbox>
 -->
 
+  <!--
   <groupbox id="coheSearchUpdates">
     <caption label="&groupbox.Update.caption;"/>
   					
@@ -69,4 +70,5 @@
               label="&button.checkUpdate.label;"/>
     </hbox>
   </groupbox>
+  -->
 </dialog>
