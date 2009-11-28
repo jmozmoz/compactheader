@@ -179,7 +179,7 @@ org.mozdev.compactHeader.pane = function() {
     }
   
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
-      RSSLinkify.newSubject = document.createElement("label");
+      RSSLinkify.newSubject = document.getElementById("collapsedsubjectlinkBox") || document.createElement("label");
       RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
       RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
       RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
