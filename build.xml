@@ -7,7 +7,7 @@
   <property name="AMOdist.dir" value="../AMO/"/>
   <property name="www.dir" value="../www/"/>
   <property name="pref.file" value="${src.dir}/chrome/CompactHeader/content/preferences.js"/>
-  <property name="mccoy.cmd" value="c:/Program Files/mccoy/mccoy/mccoy.exe"/>
+  <property name="mccoy.cmd" value='c:/Program Files (x86)/mccoy/mccoy.exe'/>
 
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
     
@@ -75,6 +75,7 @@
     </zip>
     <xmltask source="${www.dir}/update.rdf" dest="${www.dir}/update.rdf.new">
       <replace path="/RDF:RDF/RDF:Description/@em:version" withText="${app.version}"/> 
+      <replace path="/RDF:RDF/RDF:Description/@em:updateLink" withText="http://downloads.mozdev.org/compactheader/CompactHeader-${app.version}.xpi"/> 
     </xmltask>
     <move file="${www.dir}/update.rdf.new" tofile="${www.dir}/update.rdf"/>
     <property name="absUpdate" location="${www.dir}/update.rdf"/>
