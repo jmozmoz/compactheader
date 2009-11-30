@@ -448,12 +448,13 @@ org.mozdev.compactHeader.pane = function() {
       deck.selectedPanel = document.getElementById("expandedHeaderView");
       ClearHeaderView(gExpandedHeaderView);
       UpdateExpandedMessageHeaders();
-      gDBView.reloadMessage();
+      //gDBView.reloadMessage();
     }
     
     // Work around a xul deck bug where the height of the deck is determined
     // by the tallest panel in the deck even if that panel is not selected...
     deck.selectedPanel.collapsed = false;
+    syncGridColumnWidths();
     
     coheToggleHeaderContent();
   }
