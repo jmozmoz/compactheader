@@ -42,39 +42,6 @@ org.mozdev.compactHeader.preferences = function() {
     gXMLHttpRequest.send(null);
   }
   
-  function updateCohe()
-  {
-    var updateAMO = false;
-    var updateMozdev = false;
-    
-    var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"]
-                              .getService(Components.interfaces.nsIExtensionManager);
-    var strCoheVersion = gExtensionManager.getItemForID("{58D4392A-842E-11DE-B51A-C7B855D89593}").version;
-  
-    if (gXMLHttpRequest.readyState == 4) {
-      var data = gXMLHttpRequest.responseXML;
-      var updates = data.getElementsByTagName("update");
-      for (var i = 0; i < updates.length; i++) {
-        var strServer, strVersion;
-        var update = updates[i];
-      	strServer = update.getAttribute("server");
-      	strVersion = update.getAttribute("version");
-        var x = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                          .getService(Components.interfaces.nsIVersionComparator)
-                          .compare(strVersion, strCoheVersion);
-            
-        if ((strServer == "AMO") && (x > 0)) {
-          updateAMO = true;
-          document.getElementById("UpdateAMO").setAttribute("disabled", "false");
-        } else if ((strServer == "mozdev") && (x > 0)) {
-          updateAMO = true;
-          document.getElementById("UpdateMOZDEV").setAttribute("disabled", "false");
-        }
-      }
-  	}
-  }
-  
-  
   pub.onLoad = function()
   {
   	//document.getElementById("coheSearchUpdates").setAttribute("hidden", disableUpdate());
@@ -87,6 +54,7 @@ org.mozdev.compactHeader.preferences = function() {
     loadPrefCheckbox("headersize.linkify", "checkbox.Linkify");
     //loadPrefInt("headersize.addressstyle", "AddressStyle");  
     loadPrefCheckbox("headersize.addressstyle", "checkbox.ShowOnlyAddress");
+    loadPrefCheckbox("headersize.flatButtons", "checkbox.flatButtons");
   }
   
   ///////////////////////////////////////////////////////////////////////////////
@@ -103,6 +71,7 @@ org.mozdev.compactHeader.preferences = function() {
     savePrefCheckbox("headersize.linkify", "checkbox.Linkify");
     //savePrefInt("headersize.addressstyle", "AddressStyle");  
     savePrefCheckbox("headersize.addressstyle", "checkbox.ShowOnlyAddress");
+    savePrefCheckbox("headersize.flatButtons", "checkbox.flatButtons");
     return true;
   }
   

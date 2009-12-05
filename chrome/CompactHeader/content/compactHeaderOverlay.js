@@ -117,7 +117,7 @@ org.mozdev.compactHeader.pane = function() {
   
   function coheOutputEmailAddresses(headerEntry, emailAddresses) {
     /* function copied from comm-1.9.1/ mail/ base/ content/ msgHdrViewOverlay.js 771135e6aaf5 */
-  	if (!emailAddresses)
+    if (!emailAddresses)
       return;
   
     var addresses = {};
@@ -255,6 +255,8 @@ org.mozdev.compactHeader.pane = function() {
     }
     
     coheToggleHeaderContent();
+    setButtonStyle();
+    org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
   }
   
   var coheMessageListener = 
@@ -384,7 +386,7 @@ org.mozdev.compactHeader.pane = function() {
           if (hdrButton.localName == "toolbaritem") {
             var subButtons = hdrButton.querySelectorAll(".toolbarbutton-1");
             for (var j=0; j<subButtons.length; j++) {
-              addClass(subButtons[j], "msgHeaderView-button");
+              addClass(subButtons[j], "msgHeaderView-button-out");
             }
           } else {
             if (hdrButton.type != "menu-button") {
@@ -432,7 +434,99 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
   }
-  
+
+  function setButtonStyle() {
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var buttons = hdrToolbar.querySelectorAll("toolbarbutton");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          if (button.type != "menu-button") {
+            addClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-button-out");
+            addClass(button,    "msgHeaderView-flat-button-out");
+          }
+        } else {
+          if (button.type != "menu-button") {
+            removeClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-flat-button-out");
+            addClass(button,    "msgHeaderView-button-out");
+          }
+        }
+      }
+    }
+
+    var buttons = hdrToolbar.querySelectorAll("toolbaritem");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          removeClass(button, "msgHeaderView-button-out-item");
+          addClass(button,    "msgHeaderView-flat-button-out-item");
+        } else {
+          removeClass(button, "msgHeaderView-flat-button-out-item");
+          addClass(button,    "msgHeaderView-button-out-item");
+        }
+      }
+    }
+    
+    buttons = hdrToolbox.palette.querySelectorAll("toolbarbutton");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          if (button.getAttribute("type") != "menu-button") {
+            addClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-button-out");
+            addClass(button,    "msgHeaderView-flat-button-out");
+          }
+        } else {
+          if (button.getAttribute("type") != "menu-button") {
+            removeClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-flat-button-out");
+            addClass(button,    "msgHeaderView-button-out");
+          }
+        }
+      }
+    }
+
+    buttons = hdrToolbox.palette.querySelectorAll("toolbaritem");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          removeClass(button, "msgHeaderView-button-out-item");
+          addClass(button,    "msgHeaderView-flat-button-out-item");
+        } else {
+          removeClass(button, "msgHeaderView-flat-button-out-item");
+          addClass(button,    "msgHeaderView-button-out-item");
+        }
+      }
+    }
+  }
+
   pub.coheToggleHeaderView = function() {
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
     
@@ -565,7 +659,8 @@ org.mozdev.compactHeader.pane = function() {
   }
   
   function removeClass(el, strClass) {
-    el.className = el.className.replace(strClass, '');
+    var str = new RegExp(strClass, 'g');
+    el.className = el.className.replace(str, '');
   }
   
   function CoheCopyWebsiteAddress(websiteAddressNode)
