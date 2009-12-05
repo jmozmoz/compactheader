@@ -18,57 +18,22 @@
 -->
 
 <dialog id="cohePreferences" 
-				title="&dialog.title;" 
-				xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        title="&dialog.title;" 
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         onload="org.mozdev.compactHeader.preferences.onLoad();" 
         ondialogaccept="return org.mozdev.compactHeader.preferences.onDialogAccept();" 
         persist="screenX screenY">
 
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
 
-	<checkbox id="checkbox.Compact.TwolineView" 
-						label="&checkbox.Compact.TwolineView.caption;"/>
-						
-	<checkbox id="checkbox.Linkify" 
-						label="&menu.Linkify.caption;"/>
+  <checkbox id="checkbox.Compact.TwolineView" 
+            label="&checkbox.Compact.TwolineView.caption;"/>
+            
+  <checkbox id="checkbox.Linkify" 
+            label="&menu.Linkify.caption;"/>
   <checkbox id="checkbox.ShowOnlyAddress"
-  					label="&menu.ShowOnlyAddress.caption;"/>
+            label="&menu.ShowOnlyAddress.caption;"/>
+  <checkbox id="checkbox.flatButtons"
+            label="&menu.flatButtons.caption;"/>
 
-
-<!--
-	<hbox align="center" flex="0">
-		<label control="AddressStyle" flex="0">&AddressStyle.label;:</label>
-		<menulist id="AddressStyle" flex="0">
-			<menupopup flex="0">
-				<menuitem value="0" label="&AddressStyle.Full.label;"/>
-				<menuitem value="1" label="&AddressStyle.Short.label;"/>
-				<menuitem value="2" label="&AddressStyle.OnlyEmail.label;"/>
-			</menupopup>
-		</menulist>
-	</hbox>
--->
-
-  <!--
-  <groupbox id="coheSearchUpdates">
-    <caption label="&groupbox.Update.caption;"/>
-  					
-  	<label id="UpdateAMO" 
-  				 disabled="true"
-  				 href="https://addons.mozilla.org/thunderbird/addon/13564" 
-  				 class="text-link" 
-  				 value="&link.AMO.value;"/>
-    <label id="UpdateMOZDEV"
-    			 disabled="true"
-    			 href="http://compactheader.mozdev.org/installation.html" 
-    			 class="text-link" 
-    			 value="&link.MOZDEV.value;" />
-    <hbox align="center" pack="center" flex="1">
-      <button id="checkForUpdates"
-              oncommand="org.mozdev.compactHeader.preferences.CoheCheckForUpdates();"
-              flex="0"
-              align="center"
-              label="&button.checkUpdate.label;"/>
-    </hbox>
-  </groupbox>
-  -->
 </dialog>
