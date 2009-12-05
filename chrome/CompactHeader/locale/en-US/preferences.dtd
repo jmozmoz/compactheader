@@ -1,27 +1,5 @@
 <!ENTITY dialog.title "CompactHeader Preferences">
-
-<!ENTITY groupbox.Buttons.caption "Select Buttons to Display">
-<!ENTITY groupbox.Column.Compact "Compact">
-<!ENTITY groupbox.Column.Expanded "Expanded">
-
 <!ENTITY checkbox.Compact.TwolineView.caption "Display two lines in compact view">
-<!ENTITY checkbox.Compact.Trash.caption "Trash">
-
-<!ENTITY menu.IconText.caption "Show only icons inside buttons">
-
 <!ENTITY menu.Linkify.caption "Link in subjects of RSS feeds">
-
-<!ENTITY menu.ShowFullAddress.caption "Show full email address">
-
 <!ENTITY menu.ShowOnlyAddress.caption "Display only address">
-
-<!ENTITY groupbox.Update.caption "Update CompactHeader">
-<!ENTITY button.checkUpdate.label "Check for updates">
-<!ENTITY link.AMO.value "Update from addons.mozilla.org">
-<!ENTITY link.MOZDEV.value "Update from mozdev.org">
-
-<!--
-<!ENTITY AddressStyle.label "Email address style">
-<!ENTITY AddressStyle.Full.label "Name and address">
-<!ENTITY AddressStyle.Short.label "Only Name">
-<!ENTITY AddressStyle.OnlyEmail.label "Only Address"> -->
+<!ENTITY menu.flatButtons.caption "Flat buttons">

@@ -1,28 +1,5 @@
 <!ENTITY dialog.title "CompactHeader Einstellungen">
-
-<!ENTITY groupbox.Buttons.caption "Anzuzeigende Schaltflächen">
-<!ENTITY groupbox.Column.Compact "Kompakt">
-<!ENTITY groupbox.Column.Expanded "Erweitert">
-
 <!ENTITY checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
-<!ENTITY checkbox.Compact.Trash.caption "Löschen">
-
-
-<!ENTITY menu.IconText.caption "Nur Icons in Schaltflächen">
-
 <!ENTITY menu.Linkify.caption "Link in Betreff von RSS Feeds">
-
-<!ENTITY menu.ShowFullAddress.caption "Adresse vollständig anzeigen">
-
 <!ENTITY menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
-
-<!ENTITY groupbox.Update.caption "CompactHeader aktualisieren">
-<!ENTITY button.checkUpdate.label "Nach Aktualisierungen suchen">
-<!ENTITY link.AMO.value "Von addons.mozilla.org aktualisieren">
-<!ENTITY link.MOZDEV.value "Von mozdev.org aktualisieren">
-
-
-<!--
-<!ENTITY AddressStyle.Full.label "Name und Adresse">
-<!ENTITY AddressStyle.Short.label "Nur Name">
-<!ENTITY AddressStyle.OnlyEmail.label "Nur Adresse"> -->
+<!ENTITY menu.flatButtons.caption "Flache Schaltflächen">
