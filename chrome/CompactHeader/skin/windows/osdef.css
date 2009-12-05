@@ -75,23 +75,23 @@ toolbarpaletteitem[place="palette"] .msgHeaderView-button-out {
   -moz-appearance: button;
 }
 
+.msgHeaderView-button-out-item .msgHeaderView-button-out,
 .msgHeaderView-button-out {
   /*-moz-appearance: button; */
   margin-top: 1px;
   margin-bottom: 2px;
-  -moz-margin-start: 2px;
-  -moz-margin-end: 2px;
-  /*border-width: 3px !important;
-  border-style: solid !important; */
+  -moz-margin-start: 2px !important;
+  -moz-margin-end: 2px !important;
 }
 
+.msgHeaderView-button-out-item .msgHeaderView-button-out .toolbarbutton-menubutton-button,
 .msgHeaderView-button-out .toolbarbutton-menubutton-button {
   -moz-appearance: button;
   min-width: 1em;
   min-height: 1ex;
   margin: 0px;
   /* important required to override messenger.css rules */
-  -moz-padding-start: 4px !important;
+  -moz-padding-start: 3px !important;
   -moz-padding-end: 3px !important;
   padding-top: 3px !important;
   padding-bottom: 2px !important;
@@ -104,4 +104,71 @@ toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-button-out .toolbarbutton
   padding-bottom: 0px !important;
   -moz-padding-start: 0px !important;
   -moz-padding-end: 0px !important;
+}
+
+toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out,
+toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out,
+toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button {
+  -moz-appearance: button;
+}
+
+.msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out,
+.msgHeaderView-flat-button-out {
+  -moz-appearance: none;
+  margin: 1px 2px !important;
+  padding: 0px !important;
+  border: 1px !important;
+  min-width: 1px;
+  color: ButtonText;
+  -moz-border-radius: 4px;
+  min-height: 1ex;
+}
+
+.msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out:hover,
+.msgHeaderView-flat-button-out:hover {
+  margin: 0px 1px !important;
+  border: 1px solid ButtonShadow !important;
+}
+
+.msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out .toolbarbutton-menubutton-button,
+.msgHeaderView-flat-button-out .toolbarbutton-menubutton-button {
+  -moz-appearance: none;
+  background-color: transparent;
+  margin: 0px 1px;
+  padding-top: 6px !important;
+  padding-bottom: 5px !important;
+  -moz-padding-start: 5px !important;
+  -moz-padding-end: 5px !important;
+  border: 3px !important;
+}
+
+.msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out .toolbarbutton-menubutton-button:hover,
+.msgHeaderView-flat-button-out .toolbarbutton-menubutton-button:hover {
+  -moz-appearance: button;
+  background-color: -moz-buttonhovertext;
+  -moz-padding-start: 3px !important;
+  -moz-padding-end: 3px !important;
+  padding-top: 3px !important;
+  padding-bottom: 2px !important;
+  margin: 0px !important;
+}
+
+
+toolbar[mode="text"] .msgHeaderView-flat-button-out .toolbarbutton-text,
+toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-flat-button-out .toolbarbutton-text {
+  margin: 0 !important;
+  padding-top: 1px !important;
+  padding-bottom: 0px !important;
+  -moz-padding-start: 0px !important;
+  -moz-padding-end: 0px !important;
+}
+
+toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item {
+  -moz-appearance: button;
+}
+
+
+toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-button-out .toolbarbutton-text,
+toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .toolbarbutton-text {
+  -moz-margin-start: 2px !important;
 }
