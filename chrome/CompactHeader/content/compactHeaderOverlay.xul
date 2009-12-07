@@ -30,6 +30,12 @@
          oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
   </keyset>
 
+  <popup id="header-toolbar-context-menu">
+    <menuitem id="hidecohePreferencesButton" 
+              label="&dialog.title;"
+              oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
+  </popup>
+
   <deck id="msgHeaderViewDeck">
 
   <vbox id="expandedHeaderView" orient="horizontal">
@@ -152,7 +158,7 @@
         </hbox>        
         <header-view-button-box id="collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
       </hbox>
-      <hbox id="collapsed1LHeaderViewSecondLine" align="start" flex="1" collapsed="true">
+      <hbox id="collapsed1LHeaderViewSecondLine" align="top" flex="1" collapsed="true">
       </hbox>
     </vbox>
 
@@ -185,14 +191,14 @@
         </grid>
         <header-view-button-box id="collapsed2LButtonBox" flex="0" align="start"/>
       </hbox>
-      <hbox id="collapsed2LHeaderViewSecondLine" align="baseline" flex="1">
-        <hbox id="collapsed2LsubjectOutBox" align="start" flex="99">
+      <hbox id="collapsed2LHeaderViewSecondLine" align="top" flex="1">
+        <hbox id="collapsed2LsubjectOutBox" align="top" flex="99">
           <row id="collapsed2LsubjectRow" flex="99">
             <mail-headerfield id="collapsed2LsubjectBox" flex="99"/>
           </row>
         </hbox>
-        <hbox id="collapsed2LdateOutBox" align="end" pack="end" flex="0">
-          <row id="collapsed2LdateRow" align="end" pack="end">
+        <hbox id="collapsed2LdateOutBox" align="top" pack="end" flex="0">
+          <row id="collapsed2LdateRow" align="top" pack="end">
             <label id="collapsed2LdateBox" class="dateLabel" flex="1"/>
           </row>
         </hbox>
