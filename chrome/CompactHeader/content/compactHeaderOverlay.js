@@ -558,6 +558,25 @@ org.mozdev.compactHeader.pane = function() {
     var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
     var strLabel;
     
+    var smimeBox = document.getElementById("smimeBox");
+    
+    if (smimeBox != null) {
+      if (gCoheCollapsedHeaderViewMode) {
+        var parent = document.getElementById("collapsed2LdateOutBox");
+        var refElement = document.getElementById("collapsed2LdateRow");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(smimeBox, refElement);
+        }
+      }
+      else {
+        var parent = document.getElementById("dateValueBox");
+        var refElement = document.getElementById("dateLabel");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(smimeBox, refElement);
+        }
+      }
+    }    
+    
     org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
   
     var hdrToolbox = document.getElementById("header-view-toolbox");
