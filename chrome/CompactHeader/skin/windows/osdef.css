@@ -172,3 +172,13 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-button-out .toolba
 toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .toolbarbutton-text {
   -moz-margin-start: 2px !important;
 }
+
+#collapsedHeaderView #signedHdrIcon[signed]:not([collapsed="true"]):not([disabled]),
+#collapsedHeaderView #encryptedHdrIcon[encrypted]:not([collapsed="true"]):not([disabled]) {
+height: 16px;
+width: 16px;
+}
+
+#collapsedHeaderView #signedHdrIcon {
+  -moz-margin-end: 3px;
+}
