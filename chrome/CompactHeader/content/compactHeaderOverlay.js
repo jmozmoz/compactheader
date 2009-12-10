@@ -577,6 +577,25 @@ org.mozdev.compactHeader.pane = function() {
       }
     }    
     
+    var dispMUABox = document.getElementById("dispMUA");
+    
+    if (dispMUABox != null) {
+      if (gCoheCollapsedHeaderViewMode) {
+        var parent = document.getElementById("collapsed2LdateOutBox");
+        var refElement = document.getElementById("collapsed2LdateRow");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(dispMUABox, refElement);
+        }
+      }
+      else {
+        var parent = document.getElementById("dateValueBox");
+        var refElement = document.getElementById("dateLabel");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(dispMUABox, refElement);
+        }
+      }
+    }    
+
     org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
   
     var hdrToolbox = document.getElementById("header-view-toolbox");

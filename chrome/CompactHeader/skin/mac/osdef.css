@@ -187,6 +187,11 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .t
 
 #collapsedHeaderView #signedHdrIcon[signed]:not([collapsed="true"]):not([disabled]),
 #collapsedHeaderView #encryptedHdrIcon[encrypted]:not([collapsed="true"]):not([disabled]) {
-height: 16px;
-width: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+#collapsedHeaderView #dispMUAicon {
+  height: 20px !important;
+  width: 20px !important;
 }
