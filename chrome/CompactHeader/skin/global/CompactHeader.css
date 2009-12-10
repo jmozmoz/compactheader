@@ -140,46 +140,49 @@
   -moz-appearance: none;
   border: 2px solid transparent;
   background-color: transparent;
-  width: 1.3em;
-  height: 1.3em;
+  /*width: 1.3em;
+  height: 1.3em;*/
   padding-bottom: 0px;
   margin:0px;
   padding:0px;
   background-image: url("chrome://CompactHeader/skin/twisty-open.png");
   background-repeat: no-repeat;
   background-position: center center;
-  margin-top: 2px;
+  margin-top: 5px;
+  -moz-margin-start: 2px;
 }
 
 #hideDetailsButton:hover {
-  background-color: rgb(230,231,227);
-  border: 2px solid #C0C3C6;
-  margin:0px;
+  /*background-color: rgb(230,231,227);*/
+  /*border: 2px solid #C0C3C6; */
+/*  margin:0px;
   padding:0px;
-  margin-top: 2px;
+  margin-top: 2px;*/
 }
 
 #showDetailsButton {
   -moz-appearance: none;
   border: 2px solid transparent;
   background-color: transparent;
-  width: 1.3em;
-  height: 1.3em;
+  /*width: 1.3em;
+  height: 1.3em; */
   padding-bottom: 0px;
   margin:0px;
   padding:0px;
   background-image: url("chrome://CompactHeader/skin/twisty-clsd.png");
   background-repeat: no-repeat;
   background-position: center center;
-  margin-top: 2px;
+  margin-top: 5px;
+  -moz-margin-start: 2px;
 }
 
+
 #showDetailsButton:hover {
-  background-color: rgb(230,231,227);
-  border: 2px solid #C0C3C6;
-  margin:0px;
+  /*background-color: rgb(230,231,227); */
+  /*border: 2px solid #C0C3C6; */
+  /*margin:0px;
   padding:0px;
-  margin-top: 2px;
+  margin-top: 2px;*/
 }
 
 #expandedfromBox,
