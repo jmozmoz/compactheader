@@ -30,3 +30,6 @@ overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css
+
+overlay chrome://messenger/content/messenger.xul              chrome://CompactHeader/content/buttonsOverlay.xul
+style   chrome://global/content/customizeToolbar.xul          chrome://CompactHeader-os/skin/buttonsOverlay.css
