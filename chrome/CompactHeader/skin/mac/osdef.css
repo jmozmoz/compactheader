@@ -185,10 +185,32 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .t
   -moz-margin-start: 2px !important;
 }
 
-#collapsedHeaderView #signedHdrIcon[signed]:not([collapsed="true"]):not([disabled]),
-#collapsedHeaderView #encryptedHdrIcon[encrypted]:not([collapsed="true"]):not([disabled]) {
-  height: 16px;
-  width: 16px;
+#collapsedHeaderView #signedHdrIcon[signed="ok"] {
+  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignOk.png");
+}
+
+#collapsedHeaderView #signedHdrIcon[signed="unknown"] {
+  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignUnknown.png");
+}
+
+#collapsedHeaderView #signedHdrIcon[signed="mismatch"] {
+  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignUnknown.png");
+}
+
+#collapsedHeaderView #signedHdrIcon[signed="notok"] {
+  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignNotOk.png");
+}
+
+#collapsedHeaderView #encryptedHdrIcon[encrypted="ok"] {
+  list-style-image: url("chrome://messenger/skin/smime/icons/sbCryptoOk.png");
+}
+
+#collapsedHeaderView #encryptedHdrIcon[encrypted="notok"] {
+  list-style-image: url("chrome://messenger/skin/smime/icons/sbCryptoNotOk.png");
+}
+
+#collapsedHeaderView #signedHdrIcon {
+  -moz-margin-end: 3px;
 }
 
 #collapsedHeaderView #dispMUAicon {
