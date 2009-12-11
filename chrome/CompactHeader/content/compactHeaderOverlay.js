@@ -384,7 +384,7 @@ org.mozdev.compactHeader.pane = function() {
           if (hdrButton.localName == "toolbaritem") {
             var subButtons = hdrButton.querySelectorAll(".toolbarbutton-1");
             for (var j=0; j<subButtons.length; j++) {
-              addClass(subButtons[j], "msgHeaderView-button");
+              addClass(subButtons[j], "msgHeaderView-button-out");
             }
           } else {
             if (hdrButton.type != "menu-button") {
@@ -565,7 +565,8 @@ org.mozdev.compactHeader.pane = function() {
   }
   
   function removeClass(el, strClass) {
-    el.className = el.className.replace(strClass, '');
+    var str = new RegExp(strClass, 'g');
+    el.className = el.className.replace(str, '');
   }
   
   function CoheCopyWebsiteAddress(websiteAddressNode)
