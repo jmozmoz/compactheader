@@ -31,5 +31,7 @@ overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css
 
-overlay chrome://messenger/content/messenger.xul              chrome://CompactHeader/content/buttonsOverlay.xul
-style   chrome://global/content/customizeToolbar.xul          chrome://CompactHeader-os/skin/buttonsOverlay.css
+overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader/content/buttonsOverlay.xul
+overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/buttonsOverlay.xul
+style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/buttonsOverlay.css
+
