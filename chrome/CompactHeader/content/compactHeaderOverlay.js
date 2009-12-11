@@ -117,7 +117,7 @@ org.mozdev.compactHeader.pane = function() {
   
   function coheOutputEmailAddresses(headerEntry, emailAddresses) {
     /* function copied from comm-1.9.1/ mail/ base/ content/ msgHdrViewOverlay.js 771135e6aaf5 */
-  	if (!emailAddresses)
+    if (!emailAddresses)
       return;
   
     var addresses = {};
@@ -255,6 +255,8 @@ org.mozdev.compactHeader.pane = function() {
     }
     
     coheToggleHeaderContent();
+    setButtonStyle();
+    org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
   }
   
   var coheMessageListener = 
@@ -371,7 +373,7 @@ org.mozdev.compactHeader.pane = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist", 
                    "button-tag", "button-forward", "button-archive", "button-file",
-                   "button-print", "button-mark"];
+                   "button-print", "button-mark", "button-starMessages"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
@@ -432,7 +434,99 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
   }
-  
+
+  function setButtonStyle() {
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var buttons = hdrToolbar.querySelectorAll("toolbarbutton");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          if (button.type != "menu-button") {
+            addClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-button-out");
+            addClass(button,    "msgHeaderView-flat-button-out");
+          }
+        } else {
+          if (button.type != "menu-button") {
+            removeClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-flat-button-out");
+            addClass(button,    "msgHeaderView-button-out");
+          }
+        }
+      }
+    }
+
+    var buttons = hdrToolbar.querySelectorAll("toolbaritem");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          removeClass(button, "msgHeaderView-button-out-item");
+          addClass(button,    "msgHeaderView-flat-button-out-item");
+        } else {
+          removeClass(button, "msgHeaderView-flat-button-out-item");
+          addClass(button,    "msgHeaderView-button-out-item");
+        }
+      }
+    }
+    
+    buttons = hdrToolbox.palette.querySelectorAll("toolbarbutton");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          if (button.getAttribute("type") != "menu-button") {
+            addClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-button-out");
+            addClass(button,    "msgHeaderView-flat-button-out");
+          }
+        } else {
+          if (button.getAttribute("type") != "menu-button") {
+            removeClass(button, "msgHeaderView-flat-button");
+          } else {
+            removeClass(button, "msgHeaderView-flat-button");
+            removeClass(button, "msgHeaderView-button");
+            removeClass(button, "msgHeaderView-flat-button-out");
+            addClass(button,    "msgHeaderView-button-out");
+          }
+        }
+      }
+    }
+
+    buttons = hdrToolbox.palette.querySelectorAll("toolbaritem");
+    for (var i=0; i<buttons.length; i++) {
+      var button = buttons[i];
+      if (button) {
+        addClass(button, "customize-header-toolbar-button");
+        addClass(button, "customize-header-toolbar-" + button.id)
+        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+          removeClass(button, "msgHeaderView-button-out-item");
+          addClass(button,    "msgHeaderView-flat-button-out-item");
+        } else {
+          removeClass(button, "msgHeaderView-flat-button-out-item");
+          addClass(button,    "msgHeaderView-button-out-item");
+        }
+      }
+    }
+  }
+
   pub.coheToggleHeaderView = function() {
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
     
@@ -464,6 +558,44 @@ org.mozdev.compactHeader.pane = function() {
     var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
     var strLabel;
     
+    var smimeBox = document.getElementById("smimeBox");
+    
+    if (smimeBox != null) {
+      if (gCoheCollapsedHeaderViewMode) {
+        var parent = document.getElementById("collapsed2LdateOutBox");
+        var refElement = document.getElementById("collapsed2LdateRow");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(smimeBox, refElement);
+        }
+      }
+      else {
+        var parent = document.getElementById("dateValueBox");
+        var refElement = document.getElementById("dateLabel");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(smimeBox, refElement);
+        }
+      }
+    }    
+    
+    var dispMUABox = document.getElementById("dispMUA");
+    
+    if (dispMUABox != null) {
+      if (gCoheCollapsedHeaderViewMode) {
+        var parent = document.getElementById("collapsed2LdateOutBox");
+        var refElement = document.getElementById("collapsed2LdateRow");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(dispMUABox, refElement);
+        }
+      }
+      else {
+        var parent = document.getElementById("dateValueBox");
+        var refElement = document.getElementById("dateLabel");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(dispMUABox, refElement);
+        }
+      }
+    }    
+
     org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
   
     var hdrToolbox = document.getElementById("header-view-toolbox");
