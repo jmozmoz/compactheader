@@ -22,7 +22,6 @@ if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 org.mozdev.compactHeader.preferences = function() {
   var pub = {};
   var prefBranch;
-  var gXMLHttpRequest;
   ///////////////////////////////////////////////////////////////////////////////
   //
   //  onLoad
@@ -31,21 +30,8 @@ org.mozdev.compactHeader.preferences = function() {
   //  controls according to current configuration settings.
   //
   
-  //function disableUpdate(){
-  //  return false; /* Mozdev version */ /* Patch this line for AMO version */
-  //}
-  
-  pub.CoheCheckForUpdates = function() {
-  	gXMLHttpRequest = new XMLHttpRequest();
-    gXMLHttpRequest.onload = updateCohe;
-    gXMLHttpRequest.open("GET", "http://compactheader.mozdev.org/availVersion.xml",true);
-    gXMLHttpRequest.send(null);
-  }
-  
   pub.onLoad = function()
-  {
-  	//document.getElementById("coheSearchUpdates").setAttribute("hidden", disableUpdate());
-  	
+  {  	
     prefBranch = Components.classes["@mozilla.org/preferences-service;1"]
       .getService(Components.interfaces.nsIPrefService)
       .getBranch("extensions.CompactHeader.");
