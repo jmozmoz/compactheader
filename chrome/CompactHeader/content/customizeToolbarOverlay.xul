@@ -10,7 +10,6 @@
 <overlay id="customizeToolbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/javascript" src="chrome://CompactHeader/content/buttons.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
 </overlay>
