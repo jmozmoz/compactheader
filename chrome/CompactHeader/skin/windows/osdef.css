@@ -53,7 +53,8 @@ toolbar[iconsize="small"] .hdrOtherActionsButton {
 
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
-  /*padding-top: 3px !important; */
+  padding-top: 3px !important;
+  -moz-padding-start: 4px !important;
 }
 
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-icon,
@@ -61,10 +62,11 @@ toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton
   display: -moz-box;
 }
 
+/*
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
-  -moz-padding-start: 4px !important;
-}
+}*/
+
 
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-text,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
