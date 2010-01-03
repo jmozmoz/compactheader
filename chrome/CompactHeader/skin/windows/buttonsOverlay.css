@@ -39,15 +39,21 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 #button-starMessages{
-  list-style-image: url("chrome://messenger/skin/starred48.png");
+  list-style-image: url("chrome://messenger/skin/icons/flag.png");
+}
+
+#header-view-toolbox #button-starMessages{
+  list-style-image: url("chrome://messenger/skin/icons/flag-empty.png");
+}
+
+#header-view-toolbox #button-starMessages[flagged]{
+  list-style-image: url("chrome://messenger/skin/icons/flag.png");
 }
 
 #button-starMessages .toolbarbutton-icon {
-  height: 24px;
-  width:  24px;
+  -moz-image-region: rect(-6px 18px 18px -6px);
 }
 
 toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
-  height: 16px;
-  width:  16px;
+  -moz-image-region: rect(-2px 14px 14px -2px);
 }
