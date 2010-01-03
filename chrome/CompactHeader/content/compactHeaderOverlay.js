@@ -241,6 +241,7 @@ org.mozdev.compactHeader.pane = function() {
         document.getElementById("header-view-toolbox").removeAttribute("doCustomization");
         enableButtons();
         org.mozdev.customizeHeaderToolbar.pane.CHTUpdateReplyButton();
+        org.mozdev.compactHeader.buttons.coheToggleStar();
         org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       };
     }
@@ -356,6 +357,7 @@ org.mozdev.compactHeader.pane = function() {
     coheToggleHeaderContent();
     org.mozdev.customizeHeaderToolbar.pane.CHTUpdateReplyButton();
     org.mozdev.customizeHeaderToolbar.pane.CHTUpdateJunkButton();
+    org.mozdev.compactHeader.buttons.coheToggleStar();
   }
   
   function enableButtons() {
