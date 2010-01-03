@@ -51,3 +51,19 @@ toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
   height: 16px;
   width:  16px;
 }
+
+#header-view-toolbox #button-starMessages{
+  list-style-image: url("chrome://CompactHeader-os/skin/flag-empty.png");
+}
+
+#header-view-toolbox #button-starMessages[flagged]{
+  list-style-image: url("chrome://CompactHeader-os/skin/flag.png");
+}
+
+#header-view-toolbox #button-starMessages .toolbarbutton-icon {
+  -moz-image-region: rect(-6px 18px 18px -6px);
+}
+
+#header-view-toolbox toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
+  -moz-image-region: rect(-2px 14px 14px -2px);
+}
