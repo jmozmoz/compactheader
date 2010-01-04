@@ -25,6 +25,7 @@ skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/mac/     os=Da
 
 locale    CompactHeader     en-US   chrome/CompactHeader/locale/en-US/
 locale    CompactHeader     de-DE   chrome/CompactHeader/locale/de-DE/
+locale    CompactHeader     it-IT   chrome/CompactHeader/locale/it-IT/
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
