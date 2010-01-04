@@ -38,5 +38,3 @@
 <!ENTITY hideDetailsButton.label "Details verbergen">
 <!ENTITY toggleDetails.key "h">
 <!ENTITY showDetailsButton.label "Details anzeigen">
-
-<!ENTITY archiveButton.label "Archivieren">
