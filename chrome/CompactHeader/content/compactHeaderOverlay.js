@@ -375,7 +375,10 @@ org.mozdev.compactHeader.pane = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist", 
                    "button-tag", "button-forward", "button-archive", "button-file",
-                   "button-print", "button-mark", "button-starMessages"];
+                   "button-print", "button-mark", "button-starMessages",
+                   "button-newmsg", "button-goback", "button-goforward",
+                   "button-previous", "button-next", "button-compact", 
+                   "button-address", "button-stop", "button-getmsg"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
