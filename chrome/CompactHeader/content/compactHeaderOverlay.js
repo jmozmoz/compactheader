@@ -378,7 +378,10 @@ org.mozdev.compactHeader.pane = function() {
                    "button-print", "button-mark", "button-starMessages",
                    "button-newmsg", "button-goback", "button-goforward",
                    "button-previous", "button-next", "button-compact", 
-                   "button-address", "button-stop", "button-getmsg"];
+                   "button-address", "button-stop", "button-getmsg",
+                   "button-getPartialMessages",
+                   "stylish-toolbar-button",
+                   "button-enigmail-decrypt"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
