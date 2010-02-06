@@ -108,7 +108,7 @@
                         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
               <menuitem id="hidecohePreferencesButton" 
                         label="&dialog.title;"
-                        oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
+                        oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"/>
             </menupopup>
           </button>
         </vbox>
