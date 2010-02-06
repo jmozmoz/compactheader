@@ -50,7 +50,7 @@ toolbar[iconsize="small"] .hdrOtherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
 }
 
-
+/*
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
   padding-top: 3px !important;
@@ -61,22 +61,23 @@ toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-ico
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-icon {
   display: -moz-box;
 }
-
+*/
 /*
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
 }*/
 
-
+/*
 toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-text,
 toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
   /*-moz-margin-start: 2px !important; */
-}
+/*}*/
 
+/*
 toolbarpaletteitem[place="palette"] .msgHeaderView-button-out {
   -moz-appearance: button;
 }
-
+*/
 .msgHeaderView-button-out-item .msgHeaderView-button-out,
 .msgHeaderView-button-out {
   /*-moz-appearance: button; */
@@ -108,11 +109,14 @@ toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-button-out .toolbarbutton
   -moz-padding-end: 0px !important;
 }
 
+/*
+toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item,
 toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out,
 toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out,
 toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button {
   -moz-appearance: button;
 }
+*/
 
 .msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out,
 .msgHeaderView-flat-button-out {
@@ -164,11 +168,6 @@ toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-flat-button-out .toolbarb
   -moz-padding-start: 0px !important;
   -moz-padding-end: 0px !important;
 }
-
-toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item {
-  -moz-appearance: button;
-}
-
 
 toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-button-out .toolbarbutton-text,
 toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .toolbarbutton-text {
