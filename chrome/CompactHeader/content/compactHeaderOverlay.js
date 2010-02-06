@@ -60,6 +60,11 @@ org.mozdev.compactHeader.pane = function() {
 
   const COHE_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
   
+//  var regex = {
+//    /* taken from https://bugzilla.mozilla.org/show_bug.cgi?id=57104 */
+//    links : /((\w+):\/\/[^<>()'"\s]+|www(\.[-\w]+){2,})/
+//  };
+//  
   var gCoheCollapsedHeaderViewMode = false;
   var gCoheBuiltCollapsedView = false;
   
@@ -321,6 +326,54 @@ org.mozdev.compactHeader.pane = function() {
       });
   }
   
+  function linkifySubject(subjectValueStr) {
+    var subjectNode = document.getElementById(subjectValueStr);
+    while(subjectNode.childNodes.length > 0) {
+      subjectNode.removeChild(subjectNode.firstChild)
+    }
+    var subject = currentHeaderData['subject'].headerValue;
+
+    if (regex.links.test(subject)) {
+      var text = subject;
+      /* utility function to split text and links */
+      function linkify(text) {
+        var matches = regex.links.exec(text);
+        var pre, post = null;
+        [pre, post] = text.split(matches[1]);
+        var link = document.createElement("a");
+        link.appendChild(document.createTextNode(matches[1]));
+        link.setAttribute("href", matches[1]);
+        link.setAttribute("class","text-link");
+        link.setAttribute("onclick", "org.mozdev.compactHeader.pane.subjectLinkOnClickListenter(event);");
+        return [pre,link,post];
+      }
+      /* loop through multiple possible links in the subject */
+      while(text && regex.links.test(text)) {
+        var pre, link, post = null;
+        [pre,link,post] = linkify(text);
+        /* we can't assume that any pre or post text was given, only a link */
+        if (pre && pre.length > 0)
+          subjectNode.appendChild(document.createTextNode(pre));
+        subjectNode.appendChild(link);
+        text = post;
+      }
+      if (text && text.length > 0)
+        subjectNode.appendChild(document.createTextNode(text));
+    } else {
+      subjectNode.appendChild(document.createTextNode(subject));
+    }
+  }
+
+  /* :::: Subject Link onClick Listener Functions :::: */
+  pub.subjectLinkOnClickListenter = function(event) {
+    if (event.originalTarget && event.originalTarget.getAttribute("href")) {
+      try {
+        messenger.launchExternalURL(event.originalTarget.getAttribute("href"));
+      } catch (e) { Application.console.log(e); }
+    }
+  }
+
+  
   // make sure the appropriate fields within the currently displayed view header mode
   // are collapsed or visible...
   function coheUpdateHeaderView()
@@ -340,6 +393,12 @@ org.mozdev.compactHeader.pane = function() {
       } else {
           RSSLinkify.newSubject.setAttribute("collapsed", "true");
           RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+//          if (gCoheCollapsedHeaderViewMode) {
+//            //linkifySubject('collapsed1LsubjectBox');
+//          }
+//          else {
+//            linkifySubject('expandedsubjectBox');
+//          }
       }
     } else {
       if (RSSLinkify.newSubject) {
