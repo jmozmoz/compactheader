@@ -21,8 +21,7 @@
         title="&dialog.title;" 
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         onload="org.mozdev.compactHeader.preferences.onLoad();" 
-        ondialogaccept="return org.mozdev.compactHeader.preferences.onDialogAccept();" 
-        persist="screenX screenY">
+        ondialogaccept="return org.mozdev.compactHeader.preferences.onDialogAccept();">
 
   <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
 
