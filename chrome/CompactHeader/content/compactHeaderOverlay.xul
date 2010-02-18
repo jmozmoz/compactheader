@@ -33,7 +33,7 @@
   <popup id="header-toolbar-context-menu">
     <menuitem id="hidecohePreferencesButton" 
               label="&dialog.title;"
-              oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no');"/>
+              oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
   </popup>
 
   <deck id="msgHeaderViewDeck">
