@@ -767,8 +767,8 @@ org.mozdev.compactHeader.pane = function() {
   }
   
   function removeClass(el, strClass) {
-    var str = new RegExp(strClass, 'g');
-    el.className = el.className.replace(str, '');
+    var str = new RegExp('(\\s|^)'+strClass+'(\\s|$)', 'g');
+    el.className = el.className.replace(str, ' ');
   }
   
   function CoheCopyWebsiteAddress(websiteAddressNode)
