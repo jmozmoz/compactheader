@@ -1,0 +1,215 @@
+<?xml version="1.0" ?>
+
+<!DOCTYPE overlay [
+  <!ENTITY % msgHeaderDTD SYSTEM 
+  "chrome://messenger/locale/msgHdrViewOverlay.dtd"> 
+  %msgHeaderDTD;
+  <!ENTITY % compactHeaderDTD SYSTEM
+  "chrome://CompactHeader/locale/CompactHeader.dtd">
+  %compactHeaderDTD;
+  <!ENTITY % preferencesDTD SYSTEM
+  "chrome://CompactHeader/locale/preferences.dtd">
+  %preferencesDTD;
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd">
+  %messengerDTD;
+]>
+
+<?xml-stylesheet href="chrome://CompactHeader/skin/CompactHeader.css" type="text/css"?>
+<?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
+
+
+<overlay id="compactHeaderOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
+
+  <keyset>
+    <key id="hideDetailsKey" 
+         modifiers="shift" 
+         key="&toggleDetails.key;"
+         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
+  </keyset>
+
+  <popup id="header-toolbar-context-menu">
+    <menuitem id="hidecohePreferencesButton" 
+              label="&dialog.title;"
+              oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
+  </popup>
+
+  <deck id="msgHeaderViewDeck">
+
+  <vbox id="expandedHeaderView" orient="horizontal">
+    <vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
+      <button id="hideDetailsButton"  
+              tooltiptext="&hideDetailsButton.label;"
+              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();" 
+              class="msgHeaderView-flat-button"/>
+    </vbox>
+
+    <hbox id="coheStringTransferBox" hidden="true">
+      <label id="CoheHideDetailsLabel" value="&hideDetailsButton.label;"/>
+      <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
+    </hbox>
+
+    <vbox id="expandedHeadersBox">  
+      <hbox id="expandedHeadersTopBox" flex="1">
+        <toolbox id="header-view-toolbox"
+                 mode="icons"
+                 defaultmode="icons">
+          <toolbarpalette id="header-view-toolbar-palette">
+            <toolbarbutton id="hdrOtherActionsButton"
+                           label="&otherActionsButton.label;"
+                           tooltiptext="&otherActionsButton.label;"
+                           class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
+                           type="menu"/>
+          </toolbarpalette>
+          <toolbar id="header-view-toolbar"
+                   mode="icons" defaultmode="icons"
+                   defaultset="hdrReplyToSenderButton,hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,hdrOtherActionsButton">
+          </toolbar>
+        </toolbox>
+      </hbox>
+
+
+      <hbox id="expandedHeadersBottomBox">
+      
+        <vbox id="otherActionsBox" flex="0">
+          <hbox id="dateValueBox" flex="0"/>
+          <button type="menu" id="otherActionsButton" collapsed="true"
+                  label="&otherActionsButton.label;"
+                  class="msgHeaderView-button msgHeaderView-flat-button">
+            <menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
+              <menuitem id="hdrPlane-markFlagged"
+                        type="checkbox"
+                        label="&markStarredCmd.label;"
+                        accesskey="&markStarredCmd.accesskey;"
+                        command="cmd_markAsFlagged"
+                        insertbefore="viewSourceMenuItem"
+                        key="key_toggleFlagged"/>
+              <menu id="hdrPlane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+                <menupopup id="menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
+                  <menuitem id="hdrPlane-viewallheaders"
+                   type="radio"
+                   name="viewheadergroup"
+                   label="&headersAllCmd.label;"
+                   accesskey="&headersAllCmd.accesskey;"
+                   command="cmd_viewAllHeader"/>
+                  <menuitem id="hdrPlane-viewnormalheaders"
+                   type="radio"
+                   name="viewheadergroup"
+                   label="&headersNormalCmd.label;"
+                   accesskey="&headersNormalCmd.accesskey;"
+                   command="cmd_viewNormalHeader"/>
+                </menupopup>
+              </menu>
+              <menuseparator id="otherActionPopupAfterViewSource"/>
+              <menuitem id="hideDetailsMenu" 
+                        label="&hideDetailsButton.label;"
+                        oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
+              <menuitem id="hidecohePreferencesButton" 
+                        label="&dialog.title;"
+                        oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"/>
+            </menupopup>
+          </button>
+        </vbox>
+      </hbox>
+      
+    </vbox>
+  </vbox>
+
+  <vbox id="collapsedHeaderView" orient="horizontal" flex="1">
+    <popup id="CohecopyUrlPopup" popupanchor="bottomleft">
+      <menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
+    </popup>
+    <vbox id="showDetailsButtonBox" align="start" flex="0">
+      <button id="showDetailsButton"
+              tooltiptext="&showDetailsButton.label;"
+              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              class="msgHeaderView-flat-button"/>
+    </vbox>
+    <vbox id="collapsed1LHeadersBox" flex="1" collapsed="false">
+      <hbox id="collapsed1LHeaderViewFirstLine" flex="0">
+        <hbox id="collapsed1LsubjectOutBox" align="start" flex="99">
+          <row id="collapsed1LsubjectRow" flex="99">
+            <mail-headerfield id="collapsed1LsubjectBox" flex="99"/>
+          </row>
+        </hbox>
+        <hbox id="collapsed1LfromOutBox" align="start" flex="0">
+          <grid flex="1">
+            <columns>
+              <column flex="0"/>
+            </columns>
+            <rows>
+              <row id="collapsed1LfromRow">
+                <mail-multi-emailHeaderField id="collapsed1LfromBox" flex="0"/>
+              </row>
+            </rows>
+          </grid>
+        </hbox>
+        <grid id="collapsed1LtoCcBccOutBox" flex="1" hidden="true">
+          <row id="collapsed1LtoCcBccRow" align="baseline">
+             <mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
+          </row>
+        </grid>
+        <hbox id="collapsed1LdateOutBox" align="start" pack="end" flex="0">
+          <row id="collapsed1LdateRow">
+            <label id="collapsed1LdateBox" class="dateLabel" flex="1"/>
+          </row>
+        </hbox>        
+        <header-view-button-box id="collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
+      </hbox>
+      <hbox id="collapsed1LHeaderViewSecondLine" align="top" flex="1" collapsed="true">
+      </hbox>
+    </vbox>
+
+    <vbox id="collapsed2LHeadersBox" flex="1" collapsed="true">
+      <hbox id="collapsed2LHeaderViewFirstLine" flex="0">
+        <hbox id="collapsed2LfromOutBox" align="start" flex="0">
+          <grid flex="1">
+            <columns>
+              <column flex="0"/>
+            </columns>
+            <rows>
+              <row id="collapsed2LfromRow">
+                <mail-multi-emailHeaderField id="collapsed2LfromBox" flex="0"/>
+              </row>
+            </rows>
+          </grid>
+        </hbox>
+        <grid id="collapsed2LtoCcBccOutBox" flex="1">
+          <columns>
+            <column flex="0"/>
+            <column flex="1"/>
+          </columns>
+          <rows>
+            <row id="collapsed2LtoCcBccRow" align="baseline">
+              <label id="collapsed2LtoCcBccLabel" class="headerName" 
+                     value="&toField2.label;" control="collapsed2LtoCcBccBox"/>
+              <mail-multi-emailHeaderField id="collapsed2LtoCcBccBox" flex="1"/>
+            </row>
+          </rows>
+        </grid>
+        <header-view-button-box id="collapsed2LButtonBox" flex="0" align="start"/>
+      </hbox>
+      <hbox id="collapsed2LHeaderViewSecondLine" align="top" flex="1">
+        <hbox id="collapsed2LsubjectOutBox" align="top" flex="99">
+          <row id="collapsed2LsubjectRow" flex="99">
+            <mail-headerfield id="collapsed2LsubjectBox" flex="99"/>
+          </row>
+        </hbox>
+        <hbox id="collapsed2LdateOutBox" align="top" pack="end" flex="0">
+          <row id="collapsed2LdateRow" align="top" pack="end">
+            <label id="collapsed2LdateBox" class="dateLabel" flex="1"/>
+          </row>
+        </hbox>
+      </hbox>
+    </vbox>
+
+  </vbox>
+
+  </deck>
+
+</overlay>
+
+<!-- 
+-->

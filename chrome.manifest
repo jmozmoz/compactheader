@@ -1,21 +1,23 @@
-content   CustomizeHeaderToolbar                 chrome/CustomizeHeaderToolbar/content/
+content   CustomizeHeaderToolbar                 chrome/CustomizeHeaderToolbar/content/                                 appversion<3.1a1pre
+content   CustomizeHeaderToolbar                 chrome/CompactHeader/content-31/                                          appversion>=3.1b2
 
-skin      CustomizeHeaderToolbar     global      chrome/CustomizeHeaderToolbar/skin/global/
-skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/global/
-skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/gnomestripe/  os=Linux
-skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/qute/         os=WINNT
-skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/pinstripe/    os=Darwin
+skin      CustomizeHeaderToolbar     global      chrome/CustomizeHeaderToolbar/skin/global/                             appversion<3.1a1pre
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/global/                             appversion<3.1a1pre
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/gnomestripe/  os=Linux              appversion<3.1a1pre
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/qute/         os=WINNT              appversion<3.1a1pre
+skin      CustomizeHeaderToolbar-os  classic/1.0 chrome/CustomizeHeaderToolbar/skin/pinstripe/    os=Darwin             appversion<3.1a1pre
 
-locale    CustomizeHeaderToolbar     en-US   chrome/CustomizeHeaderToolbar/locale/en-US/
+locale    CustomizeHeaderToolbar     en-US   chrome/CustomizeHeaderToolbar/locale/en-US/                                appversion<3.1a1pre
 
-overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CustomizeHeaderToolbar/content/CHTPaneOverlay.xul
-overlay chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/content/CHTDialogOverlay.xul
-overlay chrome://messenger/content/messenger.xul         chrome://CustomizeHeaderToolbar/content/CHTMessenger.xul
-style   chrome://global/content/customizeToolbar.xul     chrome://messenger/skin/messageHeader.css
-style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/skin/messageHeader.css
-style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar-os/skin/messageHeader.css
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CustomizeHeaderToolbar/content/CHTPaneOverlay.xul     appversion<3.1a1pre
+overlay chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/content/CHTDialogOverlay.xul   appversion<3.1a1pre
+overlay chrome://messenger/content/messenger.xul         chrome://CustomizeHeaderToolbar/content/CHTMessenger.xul       
+style   chrome://global/content/customizeToolbar.xul     chrome://messenger/skin/messageHeader.css                      appversion<3.1a1pre
+style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/skin/messageHeader.css         appversion<3.1a1pre
+style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar-os/skin/messageHeader.css      appversion<3.1a1pre
 
-content   CompactHeader                 chrome/CompactHeader/content/
+content   CompactHeader                 chrome/CompactHeader/content/        appversion<3.1a1pre
+content   CompactHeader                 chrome/CompactHeader/content-31/     appversion>=3.1b2
 
 skin      CompactHeader     global      chrome/CompactHeader/skin/global/
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/common/
