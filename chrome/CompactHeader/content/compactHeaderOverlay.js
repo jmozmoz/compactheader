@@ -75,7 +75,7 @@ org.mozdev.compactHeader.pane = function() {
   var gCoheCollapsedHeader1LListLongAddresses = [
     {name:"subject", outputFunction:coheOutputSubject},
     {name:"from", useToggle:true, outputFunction:coheOutputEmailAddresses},
-    {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
+//    {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
     {name:"date", outputFunction:coheUpdateDateValue}
     ];
   
@@ -148,14 +148,15 @@ org.mozdev.compactHeader.pane = function() {
       } else {
         address.displayName = names.value[index];
       }
-      if (headerEntry.useToggle)
+      if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.addAddressView == 'function')) {
         headerEntry.enclosingBox.addAddressView(address);
-      else
+      } else {
         updateEmailAddressNode(headerEntry.enclosingBox.emailAddressNode, address);
+      }
       index++;
     }
   
-    if (headerEntry.useToggle)
+    if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.buildViews == 'function'))
       headerEntry.enclosingBox.buildViews();
     //OutputEmailAddresses(headerEntry, emailAddresses);
   }
