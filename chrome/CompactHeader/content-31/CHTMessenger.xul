@@ -43,7 +43,7 @@
 <overlay id="CHTmessengerWindow"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" 
-          src="chrome://CustomizeHeaderToolbar/content/CHTMessenger.js"/>
+          src="chrome://CompactHeader-d/content/CHTMessenger.js"/>
   <window id="messengerWindow">
     <toolbox id="CHTSaveToolboxData" collapsed="true">
     	<toolbar id="CHTSaveToolbarData" collapsed="true"/>

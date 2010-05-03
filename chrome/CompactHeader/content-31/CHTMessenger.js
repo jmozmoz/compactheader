@@ -44,10 +44,16 @@ if(!org.mozdev.customizeHeaderToolbar) org.mozdev.customizeHeaderToolbar = {};
 
 org.mozdev.customizeHeaderToolbar.messenger = function(){
   var pub = {};
-	pub.CHTOnLoadMessenger = function() {
-    pub.saveToolboxData();
-    //OnLoadMessenger();
-  }
+
+//  pub.init = function () {
+//    var onLoadFkt = document.getElementById("messengerWindow").getAttribute("onload");
+//    if (onLoadFkt) {
+//      var strTest = new RegExp('OnLoadMessenger', 'g');;
+//      onLoadFkt = onLoadFkt.replace(strTest, 
+//        "org.mozdev.customizeHeaderToolbar.messenger.CHTLoadMessenger");
+//      document.getElementById("messengerWindow").setAttribute("onload", onLoadFkt);
+//    }
+//  }
   
   pub.saveToolboxData = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
@@ -102,7 +108,8 @@ org.mozdev.customizeHeaderToolbar.messenger = function(){
       }
     } 
   }
+  
   return pub;
 }();
 
-addEventListener('load', org.mozdev.customizeHeaderToolbar.messenger.CHTOnLoadMessenger, false);
+//org.mozdev.customizeHeaderToolbar.messenger.init();
