@@ -21,7 +21,7 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader-d/content/compactHeaderOverlay.js"/>
 
   <keyset>
     <key id="hideDetailsKey" 
@@ -146,11 +146,13 @@
             </rows>
           </grid>
         </hbox>
+<!--
         <grid id="collapsed1LtoCcBccOutBox" flex="1" hidden="true">
           <row id="collapsed1LtoCcBccRow" align="baseline">
              <mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
           </row>
         </grid>
+-->        
         <hbox id="collapsed1LdateOutBox" align="start" pack="end" flex="0">
           <row id="collapsed1LdateRow">
             <label id="collapsed1LdateBox" class="dateLabel" flex="1"/>
