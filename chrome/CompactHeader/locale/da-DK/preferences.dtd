@@ -1,0 +1,5 @@
+<!ENTITY dialog.title "CompactHeader Indstillinger">
+<!ENTITY checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
+<!ENTITY menu.Linkify.caption "Link i feed-emner">
+<!ENTITY menu.ShowOnlyAddress.caption "Vis kun adresse">
+<!ENTITY menu.flatButtons.caption "Flade knapper">
