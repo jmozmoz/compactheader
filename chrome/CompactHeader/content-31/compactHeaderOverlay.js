@@ -257,7 +257,7 @@ org.mozdev.compactHeader.pane = function() {
       coheCheckFirstRun();
     }
     
-    if (cohe.firstrun || document.getElementById("hdrReplyAllButton") == null) {
+    if (cohe.firstrun) {
       SetDefaultButtons();
       cohe.firstrun = false;
     }
