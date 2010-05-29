@@ -11,7 +11,7 @@ locale    CustomizeHeaderToolbar     en-US   chrome/CustomizeHeaderToolbar/local
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CustomizeHeaderToolbar/content/CHTPaneOverlay.xul     appversion<3.1a1pre
 overlay chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/content/CHTDialogOverlay.xul   appversion<3.1a1pre
-overlay chrome://messenger/content/messenger.xul         chrome://CustomizeHeaderToolbar/content/CHTMessenger.xul       
+overlay chrome://messenger/content/messenger.xul         chrome://CustomizeHeaderToolbar/content/CHTMessenger.xul       appversion<3.1a1pre
 style   chrome://global/content/customizeToolbar.xul     chrome://messenger/skin/messageHeader.css                      appversion<3.1a1pre
 style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar/skin/messageHeader.css         appversion<3.1a1pre
 style   chrome://global/content/customizeToolbar.xul     chrome://CustomizeHeaderToolbar-os/skin/messageHeader.css      appversion<3.1a1pre
@@ -39,4 +39,5 @@ overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader/
 overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/buttonsOverlay.xul
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/buttonsOverlay.css
 
-overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/messengerOverlay.xul appversion<3.1a1pre
+overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader-d/content/CHTMessenger.xul              appversion>=3.1b2
+overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader-d/content/CHTMessenger.xul              appversion>=3.1b2
