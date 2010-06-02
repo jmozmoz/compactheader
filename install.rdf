@@ -6,7 +6,7 @@
 
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
-		<em:version>1.2.2beta1</em:version>
+		<em:version>1.2.2</em:version>
 		<em:description>Add ability to reduce header size to one or two lines. Linkify subjects in RSS feeds.</em:description>
 		<em:creator>Joachim Herb</em:creator>
 		<em:contributor>Zamula</em:contributor>
