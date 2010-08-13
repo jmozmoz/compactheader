@@ -444,7 +444,9 @@ org.mozdev.compactHeader.pane = function() {
                    "button-enigmail-decrypt",
                    "RealPreviousMessage", "RealNextMessage", "SelectSMTP",
                    "ToggleHTML", "ToggleImages", "bDeleteThread",
-                   "mailredirect-toolbarbutton"];
+                   "mailredirect-toolbarbutton",
+                   "lightningbutton-convert-to-task",
+                   "lightningbutton-convert-to-event"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
