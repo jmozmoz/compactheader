@@ -223,3 +223,8 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .t
   height: 24pt;
   width: 24pt;
 }
+#hdrJunkButton toolbar[iconsize="small"] .toolbarbutton-icon,
+#hdrTrashButton toolbar[iconsize="small"] .toolbarbutton-icon {
+  height: 18pt;
+  width: 18pt;
+}
