@@ -218,13 +218,8 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .t
   width: 20px !important;
 }
 
-#hdrJunkButton .toolbarbutton-icon,
-#hdrTrashButton .toolbarbutton-icon {
-  height: 24pt;
-  width: 24pt;
-}
-#hdrJunkButton toolbar[iconsize="small"] .toolbarbutton-icon,
-#hdrTrashButton toolbar[iconsize="small"] .toolbarbutton-icon {
-  height: 18pt;
-  width: 18pt;
+#header-view-toolbar > toolbarbutton > image,
+#header-view-toolbar > toolbarpaletteitem > toolbarbutton > image {
+   height: 18px !important;
+   width: 16px !important;
 }
