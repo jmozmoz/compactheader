@@ -35,4 +35,15 @@
   <checkbox id="checkbox.flatButtons"
             label="&menu.flatButtons.caption;"/>
 
+  <groupbox>
+    <caption label="&radiobox.ToolbarPosition.caption;"/>
+    <radiogroup id="hdrToolbox.pos">
+      <hbox>
+        <radio id="hdrToolbox.pos.left"  label="&radiobox.ToolbarPosition.left;"/>
+        <radio id="hdrToolbox.pos.top"   label="&radiobox.ToolbarPosition.top;"/>
+        <radio id="hdrToolbox.pos.right" label="&radiobox.ToolbarPosition.right;"/>
+        <radio id="hdrToolbox.pos.none"  label="&radiobox.ToolbarPosition.none;"/>
+      </hbox>
+    </radiogroup>
+  </groupbox>
 </dialog>

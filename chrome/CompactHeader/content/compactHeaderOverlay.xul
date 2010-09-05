@@ -21,7 +21,7 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/javascript" src="chrome://CompactHeader-d/content/compactHeaderOverlay.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
   <keyset>
     <key id="hideDetailsKey" 
@@ -35,7 +35,7 @@
               label="&dialog.title;"
               oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
   </popup>
-
+    
   <deck id="msgHeaderViewDeck">
 
   <vbox id="expandedHeaderView" orient="horizontal">
@@ -55,7 +55,9 @@
       <hbox id="expandedHeadersTopBox" flex="1">
         <toolbox id="header-view-toolbox"
                  mode="icons"
-                 defaultmode="icons">
+                 defaultmode="icons"
+                 flex="1"
+                 context="header-toolbar-context-menu">
           <toolbarpalette id="header-view-toolbar-palette">
             <toolbarbutton id="hdrOtherActionsButton"
                            label="&otherActionsButton.label;"
@@ -146,19 +148,6 @@
             </rows>
           </grid>
         </hbox>
-<!--
-        <grid id="collapsed1LtoCcBccOutBox" flex="1" hidden="true">
-          <columns>
-            <column flex="0"/>
-            <column flex="1"/>
-          </columns>
-          <row id="collapsed1LtoCcBccRow" align="baseline">
-            <label id="collapsed1LtoCcBccLabel" class="headerName" 
-                   value="&toField2.label;" control="collapsed1LtoCcBccBox"/>
-             <mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
-          </row>
-        </grid>
--->
         <hbox id="collapsed1LdateOutBox" align="start" pack="end" flex="0">
           <row id="collapsed1LdateRow">
             <label id="collapsed1LdateBox" class="dateLabel" flex="1"/>
