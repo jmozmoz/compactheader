@@ -109,6 +109,75 @@ org.mozdev.customizeHeaderToolbar.messenger = function(){
     } 
   }
   
+
+  return pub;
+}();
+
+org.mozdev.customizeHeaderToolbar.pane = function(){
+  var pub = {};
+  
+  pub.CHTUpdateReplyButton = function () {
+    UpdateReplyButtons();
+  }
+  
+  pub.CHTUpdateJunkButton = function () {
+    UpdateJunkButton();    
+  }
+  
+  pub.CHTSetDefaultButtons = function () {
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+    var hdrBoxDefaultLabelalign = hdrToolbox.getAttribute("defaultlabelalign");
+    var hdrBoxDefaultIconsize = hdrToolbox.getAttribute("defaulticonsize");
+    var hdrBoxDefaultMode = hdrToolbox.getAttribute("defaultmode");
+    var hdrBarDefaultIconsize = hdrToolbar.getAttribute("defaulticonsize");
+    var hdrBarDefaultMode = hdrToolbar.getAttribute("defaultmode");  
+    
+    hdrToolbox.setAttribute("labelalign", hdrBoxDefaultLabelalign);
+    hdrToolbox.setAttribute("iconsize", hdrBoxDefaultIconsize);
+    hdrToolbox.setAttribute("mode", hdrBoxDefaultMode);
+    hdrToolbar.setAttribute("iconsize", hdrBarDefaultIconsize);
+    hdrToolbar.setAttribute("mode", hdrBarDefaultMode);
+    
+    hdrToolbar.currentSet = hdrBarDefaultSet;
+    hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
+    
+    document.persist(hdrToolbox.id,"labelalign");
+    document.persist(hdrToolbox.id,"iconsize");
+    document.persist(hdrToolbox.id,"mode");
+    document.persist(hdrToolbar.id,"iconsize");
+    document.persist(hdrToolbar.id,"mode");
+    document.persist(hdrToolbar.id,"currentset");
+  }
+  
+  pub.CHTCleanupButtons = function() {
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrBarDefaultSet = "hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton";
+    var hdrBoxDefaultLabelalign = hdrToolbox.getAttribute("defaultlabelalign");
+    var hdrBoxDefaultIconsize =   hdrToolbox.getAttribute("defaulticonsize");
+    var hdrBoxDefaultMode =       hdrToolbox.getAttribute("defaultmode");
+    var hdrBarDefaultIconsize = hdrToolbar.getAttribute("defaulticonsize");
+    var hdrBarDefaultMode =     hdrToolbar.getAttirbute("defaultmode");
+    
+    hdrToolbox.setAttribute("labelalign", hdrBoxDefaultLabelalign);
+    hdrToolbox.setAttribute("iconsize", hdrBoxDefaultIconsize);
+    hdrToolbox.setAttribute("mode", hdrBoxDefaultMode);
+    hdrToolbar.setAttribute("iconsize", hdrBarDefaultIconsize);
+    hdrToolbar.setAttribute("mode", hdrBarDefaultMode);
+    
+    hdrToolbar.currentSet = hdrBarDefaultSet;
+    hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
+    
+    document.persist(hdrToolbox.id,"labelalign");
+    document.persist(hdrToolbox.id,"iconsize");
+    document.persist(hdrToolbox.id,"mode");
+    document.persist(hdrToolbar.id,"iconsize");
+    document.persist(hdrToolbar.id,"mode");
+    document.persist(hdrToolbar.id,"currentset");
+  }
+
   return pub;
 }();
 
