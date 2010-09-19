@@ -1104,7 +1104,7 @@ org.mozdev.compactHeader.pane = function() {
 
     var xul11   = document.createElement("hbox");
     xul11.id    = "messagepanehbox";
-    xul11.setAttribute("flex", "1");
+    //xul11.setAttribute("flex", "1");
     xul11.setAttribute("hidden", "false");
     messagepanebox.parentNode.insertBefore(xul11, messagepanebox);
 
