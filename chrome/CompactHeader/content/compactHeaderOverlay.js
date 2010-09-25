@@ -249,6 +249,19 @@ org.mozdev.compactHeader.pane = function() {
     var singleMessage = document.getElementById("singlemessage");
     singleMessage.addEventListener("DOMAttrModified", onHiddenChange, false);
 
+    var messagePaneBox = document.getElementById("messagepanebox");
+    messagePaneBox.addEventListener("DOMAttrModified", onCollapsedChangeMessagePaneBox, false);
+    
+    var dispMUAicon = document.getElementById("dispMUAicon");
+    if (dispMUAicon) {
+      dispMUAicon.addEventListener("DOMAttrModified", onChangeDispMUAicon, false);
+    }
+
+    var headerToolbar = document.getElementById("header-view-toolbar");    
+    if (dispMUAicon) {
+      headerToolbar.addEventListener("DOMAttrModified", onChangeHeaderToolbar, false);
+    }
+    
     gCoheCollapsedHeaderViewMode =
       deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
 
@@ -481,7 +494,28 @@ org.mozdev.compactHeader.pane = function() {
     }
   }
 
+  
+  function removeButtonDispMUA() {
+    if (!document.getElementById("dispMUA")) {
+      var button = document.getElementById("button-dispMUA");
+      if (button) {
+        button.parentNode.removeChild(button);
+      }
+      
+      var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      if (button1) {
+        button1.parentNode.removeChild(button1);
+      }
+
+      var button2 = document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      if (button2) {
+        button2.parentNode.removeChild(button2);
+      }
+    }
+  }
+  
   function fillToolboxPalette() {
+    removeButtonDispMUA();
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist",
@@ -497,7 +531,8 @@ org.mozdev.compactHeader.pane = function() {
                    "ToggleHTML", "ToggleImages", "bDeleteThread",
                    "mailredirect-toolbarbutton",
                    "lightningbutton-convert-to-task",
-                   "lightningbutton-convert-to-event"];
+                   "lightningbutton-convert-to-event",
+                   "button-dispMUA"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
@@ -708,25 +743,6 @@ org.mozdev.compactHeader.pane = function() {
         var refElement = document.getElementById("dateLabel");
         if (parent != null && refElement != null) {
           parent.insertBefore(smimeBox, refElement);
-        }
-      }
-    }
-
-    var dispMUABox = document.getElementById("dispMUA");
-
-    if (dispMUABox != null) {
-      if (gCoheCollapsedHeaderViewMode) {
-        var parent = document.getElementById("collapsed2LdateOutBox");
-        var refElement = document.getElementById("collapsed2LdateRow");
-        if (parent != null && refElement != null) {
-          parent.insertBefore(dispMUABox, refElement);
-        }
-      }
-      else {
-        var parent = document.getElementById("dateValueBox");
-        var refElement = document.getElementById("dateLabel");
-        if (parent != null && refElement != null) {
-          parent.insertBefore(dispMUABox, refElement);
         }
       }
     }
@@ -1104,7 +1120,12 @@ org.mozdev.compactHeader.pane = function() {
 
     var xul11   = document.createElement("hbox");
     xul11.id    = "messagepanehbox";
-    //xul11.setAttribute("flex", "1");
+
+    var displayDeck = document.getElementById("displayDeck");
+    if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
+      xul11.setAttribute("flex", "1");
+    }
+    
     xul11.setAttribute("hidden", "false");
     messagepanebox.parentNode.insertBefore(xul11, messagepanebox);
 
@@ -1127,7 +1148,7 @@ org.mozdev.compactHeader.pane = function() {
     messagePaneHBox.appendChild(xul12);
 
     debugLog("createSidebars stop");
-  }
+  };
 
   function onHiddenChange(event) {
     if (event.attrName == "hidden") {
@@ -1135,6 +1156,42 @@ org.mozdev.compactHeader.pane = function() {
     }
   };
 
+  function onCollapsedChangeMessagePaneBox(event) {
+    if (event.attrName == "collapsed") {
+      if (document.getElementById("messagepanebox").getAttribute("collapsed") == "true") {
+        document.getElementById("messagepanehbox").setAttribute("collapsed", "true");
+      }
+      else {
+        document.getElementById("messagepanehbox").removeAttribute("collapsed");
+      }
+    }
+  };
+  
+  function onChangeDispMUAicon(event) {
+    if (event.attrName == "src") {
+      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
+      var buttonDispMUA = document.getElementById("button-dispMUA");
+      if (buttonDispMUA) {
+        buttonDispMUA.setAttribute("image", imageSrc);
+      }
+    }
+    else if (event.attrName == "tooltiptext") {
+      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
+      var buttonDispMUA = document.getElementById("button-dispMUA");
+      if (buttonDispMUA) {
+        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
+      }
+    }
+  }
+  
+  function onChangeHeaderToolbar(event) {
+    if (event.attrName == "currentset") {
+      if (document.getElementById("button-dispMUA")) {
+        gDBView.reloadMessage();
+      }
+    }
+  }
+  
   function setCurrentToolboxPosition() {
     debugLog("setCurrentToolboxPosition start");
 
