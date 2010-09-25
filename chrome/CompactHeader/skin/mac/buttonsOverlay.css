@@ -67,3 +67,13 @@ toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
 #header-view-toolbox toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
   -moz-image-region: rect(-6px 18px 18px -6px);
 }
+
+#button-dispMUA .toolbarbutton-icon {
+  width:36px; 
+  height:36px;
+}
+
+toolbar[iconsize="small"] #button-dispMUA .toolbarbutton-icon {
+  width:24px; 
+  height:24px;
+}

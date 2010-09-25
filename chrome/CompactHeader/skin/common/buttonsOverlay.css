@@ -51,3 +51,14 @@ toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
   height: 16px;
   width:  16px;
 }
+
+#button-dispMUA .toolbarbutton-icon {
+  width:24px; 
+  height:24px;
+}
+
+toolbar[iconsize="small"] #button-dispMUA .toolbarbutton-icon {
+  width:18px; 
+  height:18px;
+}
+
