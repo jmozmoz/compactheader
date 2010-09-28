@@ -78,3 +78,6 @@ toolbar[iconsize="small"] #button-dispMUA .toolbarbutton-icon {
   height:18px;
 }
 
+#expandedHeadersBox #button-dispMUA {
+  display: none;
+}

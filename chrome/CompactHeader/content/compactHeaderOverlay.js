@@ -65,6 +65,7 @@ org.mozdev.compactHeader.pane = function() {
 //    links : /((\w+):\/\/[^<>()'"\s]+|www(\.[-\w]+){2,})/
 //  };
 //
+
   var gCoheCollapsedHeaderViewMode = false;
   var gCoheBuiltCollapsedView = false;
 
@@ -111,8 +112,12 @@ org.mozdev.compactHeader.pane = function() {
     ];
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
-    .getService(Components.interfaces.nsIPrefService)
-    .getBranch("extensions.CompactHeader.");
+                                          .getService(Components.interfaces.nsIPrefService)
+                                          .getBranch("extensions.CompactHeader.");
+
+  var extraPrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+                                           .getService(Components.interfaces.nsIPrefService)
+                                           .getBranch("general.useragent.extra.");
 
   var timerSwapBrowsers = Components.classes["@mozilla.org/timer;1"]
     .createInstance(Components.interfaces.nsITimer);
@@ -235,6 +240,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   pub.coheOnLoadMsgHeaderPane = function() {
+    debugLog("start coheOnLoadMsgHeaderPane");
     createSidebars();
     coheInitializeHeaderViewTables();
 
@@ -251,6 +257,11 @@ org.mozdev.compactHeader.pane = function() {
 
     var messagePaneBox = document.getElementById("messagepanebox");
     messagePaneBox.addEventListener("DOMAttrModified", onCollapsedChangeMessagePaneBox, false);
+
+    var displayDeck = document.getElementById("displayDeck");
+    if (displayDeck) {
+      displayDeck.addEventListener("DOMAttrModified", onCollapsedChangeDisplayDeck, false);
+    }
     
     var dispMUAicon = document.getElementById("dispMUAicon");
     if (dispMUAicon) {
@@ -258,10 +269,11 @@ org.mozdev.compactHeader.pane = function() {
     }
 
     var headerToolbar = document.getElementById("header-view-toolbar");    
-    if (dispMUAicon) {
+    if (headerToolbar) {
       headerToolbar.addEventListener("DOMAttrModified", onChangeHeaderToolbar, false);
     }
     
+    debugLog("mid coheOnLoadMsgHeaderPane 1");
     gCoheCollapsedHeaderViewMode =
       deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
 
@@ -281,6 +293,7 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById('collapsed2LHeadersBox').collapsed = true;
     }
 
+    debugLog("mid coheOnLoadMsgHeaderPane 2");
     if (coheFirstTime)
     {
       coheFirstTime = false;
@@ -299,6 +312,8 @@ org.mozdev.compactHeader.pane = function() {
         org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       };
     }
+    
+    debugLog("mid coheOnLoadMsgHeaderPane 3");
 
     if (cohe.firstrun) {
       coheCheckFirstRun();
@@ -321,10 +336,12 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
+    debugLog("mid coheOnLoadMsgHeaderPane 4");
     setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
     delayedCurrentToolboxPosition(200);
     //coheToggleHeaderContent();
+    debugLog("stop coheOnLoadMsgHeaderPane");
   }
 
   var coheMessageListener =
@@ -470,8 +487,8 @@ org.mozdev.compactHeader.pane = function() {
       }
       if (RSSLinkify.oldSubject) {
         RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+        RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
       }
-      RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
     }
     if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
       selectEmailDisplayed();
@@ -1003,22 +1020,27 @@ org.mozdev.compactHeader.pane = function() {
         return;
       }
 
+      var debugLevel = gCurrentLogLevel;
       cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
       try{
         cohe.version = cohePrefBranch.getCharPref("version");
         cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
+        debugLevel = cohePrefBranch.getIntPref("debugLevel");
       } catch(e) {
       } finally {
         //check for first run
         if (cohe.firstrun){
           cohePrefBranch.setBoolPref("firstrun",false);
           cohePrefBranch.setCharPref("version",cohe.current);
+          extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
         }
         //check for upgrade
         if (cohe.version!=cohe.current && !cohe.firstrun){
           cohePrefBranch.setCharPref("version",cohe.current);
-          // XXX
+          extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
         }
+        gCurrentLogLevel = debugLevel;
+        cohePrefBranch.setIntPref("debugLevel", gCurrentLogLevel);
       }
     }
     else {
@@ -1039,11 +1061,12 @@ org.mozdev.compactHeader.pane = function() {
             if (cohe.firstrun){
               cohePrefBranch.setBoolPref("firstrun",false);
               cohePrefBranch.setCharPref("version",cohe.current);
+              extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
             }
             //check for upgrade
             if (cohe.version!=cohe.current && !cohe.firstrun){
               cohePrefBranch.setCharPref("version",cohe.current);
-              // XXX
+              extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
             }
           }
         }
@@ -1069,7 +1092,7 @@ org.mozdev.compactHeader.pane = function() {
     //if ((gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || isAddonDisabled(COHE_EXTENSION_UUID)) {
     //  return;
     //}
-
+    
     coheUninstallObserver.register();
   }
 
@@ -1147,6 +1170,8 @@ org.mozdev.compactHeader.pane = function() {
     xul12.id    = "rightToolbox";
     messagePaneHBox.appendChild(xul12);
 
+    messagePaneHBox.addEventListener("DOMAttrModified", onHeightChangeMessagePaneHBox, false);
+
     debugLog("createSidebars stop");
   };
 
@@ -1156,6 +1181,13 @@ org.mozdev.compactHeader.pane = function() {
     }
   };
 
+  function onHeightChangeMessagePaneHBox(event) {
+    if (event.attrName == "height") {
+      var height = document.getElementById("messagepanebox").boxObject.height;
+      document.getElementById("messagepanebox").setAttribute("height", height);
+    }
+  };
+  
   function onCollapsedChangeMessagePaneBox(event) {
     if (event.attrName == "collapsed") {
       if (document.getElementById("messagepanebox").getAttribute("collapsed") == "true") {
@@ -1166,6 +1198,19 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
   };
+  
+  function onCollapsedChangeDisplayDeck(event) {
+    if (event.attrName == "collapsed") {
+      var displayDeck = document.getElementById("displayDeck");
+      if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
+        document.getElementById("messagepanehbox").setAttribute("flex", "1");
+      }
+      else {
+        //alert("no flex!");
+        document.getElementById("messagepanehbox").removeAttribute("flex");
+      }
+    }
+  }
   
   function onChangeDispMUAicon(event) {
     if (event.attrName == "src") {
@@ -1280,6 +1325,7 @@ org.mozdev.compactHeader.pane = function() {
         debugLog("uninstalling COHE 2");
         if (this._uninstall) {
           cohePrefBranch.deleteBranch("");
+          extraPrefBranch.deleteBranch("CompactHeader");
           org.mozdev.customizeHeaderToolbar.pane.CHTCleanupButtons();
         }
         this.unregister();
