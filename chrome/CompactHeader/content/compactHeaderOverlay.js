@@ -115,10 +115,6 @@ org.mozdev.compactHeader.pane = function() {
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
 
-  var extraPrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
-                                           .getService(Components.interfaces.nsIPrefService)
-                                           .getBranch("general.useragent.extra.");
-
   var timerSwapBrowsers = Components.classes["@mozilla.org/timer;1"]
     .createInstance(Components.interfaces.nsITimer);
 
@@ -1032,12 +1028,10 @@ org.mozdev.compactHeader.pane = function() {
         if (cohe.firstrun){
           cohePrefBranch.setBoolPref("firstrun",false);
           cohePrefBranch.setCharPref("version",cohe.current);
-          extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
         }
         //check for upgrade
         if (cohe.version!=cohe.current && !cohe.firstrun){
           cohePrefBranch.setCharPref("version",cohe.current);
-          extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
         }
         gCurrentLogLevel = debugLevel;
         cohePrefBranch.setIntPref("debugLevel", gCurrentLogLevel);
@@ -1061,12 +1055,10 @@ org.mozdev.compactHeader.pane = function() {
             if (cohe.firstrun){
               cohePrefBranch.setBoolPref("firstrun",false);
               cohePrefBranch.setCharPref("version",cohe.current);
-              extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
             }
             //check for upgrade
             if (cohe.version!=cohe.current && !cohe.firstrun){
               cohePrefBranch.setCharPref("version",cohe.current);
-              extraPrefBranch.setCharPref("CompactHeader", "CompcatHeader/" + cohe.current);
             }
           }
         }
@@ -1325,7 +1317,6 @@ org.mozdev.compactHeader.pane = function() {
         debugLog("uninstalling COHE 2");
         if (this._uninstall) {
           cohePrefBranch.deleteBranch("");
-          extraPrefBranch.deleteBranch("CompactHeader");
           org.mozdev.customizeHeaderToolbar.pane.CHTCleanupButtons();
         }
         this.unregister();
