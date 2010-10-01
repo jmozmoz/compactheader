@@ -254,6 +254,16 @@ org.mozdev.compactHeader.pane = function() {
     var messagePaneBox = document.getElementById("messagepanebox");
     messagePaneBox.addEventListener("DOMAttrModified", onCollapsedChangeMessagePaneBox, false);
 
+    var headerViewToolbox = document.getElementById("header-view-toolbox");
+    if (headerViewToolbox) {
+      headerViewToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
+    }
+    
+    var mailToolbox = document.getElementById("mail-toolbox");
+    if (mailToolbox) {
+      mailToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
+    }
+    
     var displayDeck = document.getElementById("displayDeck");
     if (displayDeck) {
       displayDeck.addEventListener("DOMAttrModified", onCollapsedChangeDisplayDeck, false);
@@ -336,6 +346,7 @@ org.mozdev.compactHeader.pane = function() {
     setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
     delayedCurrentToolboxPosition(200);
+    dispMUACheck();
     //coheToggleHeaderContent();
     debugLog("stop coheOnLoadMsgHeaderPane");
   }
@@ -1191,6 +1202,23 @@ org.mozdev.compactHeader.pane = function() {
     }
   };
   
+  function onDoCustomizationHeaderViewToolbox(event) {
+    if (event.attrName == "doCustomization") {
+      dispMUACheck();
+    }
+  }
+
+  function dispMUACheck() {
+    var dispMUAButton = document.getElementById("button-dispMUA");
+    var dispMUABox = document.getElementById("dispMUA"); 
+    if (dispMUAButton && dispMUABox) {
+      dispMUABox.setAttribute("collapsed", "true");
+    }
+    else if (dispMUABox){
+      dispMUABox.removeAttribute("collapsed");
+    }
+  }
+
   function onCollapsedChangeDisplayDeck(event) {
     if (event.attrName == "collapsed") {
       var displayDeck = document.getElementById("displayDeck");
