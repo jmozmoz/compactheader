@@ -145,9 +145,9 @@ org.mozdev.compactHeader.pane = function() {
       subjectBox = document.getElementById("collapsed1LsubjectOutBox")
     }
 
-//    if (subjectBox) {
-//      subjectBox.setAttribute("tooltiptext", headerValue);
-//    }
+    if (subjectBox) {
+      subjectBox.setAttribute("tooltiptext", headerValue);
+    }
     updateHeaderValue(headerEntry, headerValue);
   }
 
