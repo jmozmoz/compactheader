@@ -2,7 +2,6 @@
 
 <project name="CompactHeader" default="dist">
   <property name="src.dir" value="." />
-  <property name="CHT.dir" value="../../customizeHeaderToolbar/src" />
   <property name="dist.dir" value="../downloads/"/>
   <property name="AMOdist.dir" value="../AMO/"/>
   <property name="www.dir" value="../www/"/>
@@ -17,16 +16,10 @@
     <copy path="//em:id/text()" property="app.id"/>   
   </xmltask>
 
-  <target name="dist" depends="spreadVersion,copyCHT,buildAMO,buildMozdev">
+  <target name="dist" depends="spreadVersion,buildAMO,buildMozdev">
       
   </target>
 
-  <target name="copyCHT">
-    <copy todir="${src.dir}/chrome">
-      <fileset dir="${CHT.dir}/chrome"/>
-    </copy>
-  </target>
-  
   <target name="clean">
     <delete file="${dist.dir}/${app.name}-${app.version}.xpi" />
   </target>
