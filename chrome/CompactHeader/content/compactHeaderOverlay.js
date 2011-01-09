@@ -348,6 +348,14 @@ org.mozdev.compactHeader.pane = function() {
     delayedCurrentToolboxPosition(200);
     dispMUACheck();
     //coheToggleHeaderContent();
+    
+    debugLog("mid coheOnLoadMsgHeaderPane 5");
+    var messengerWindow = document.getElementById("messengerWindow");
+    if (messengerWindow) {
+      messengerWindow.addEventListener('messagepane-hide',   onMessagePaneHide, false);
+      messengerWindow.addEventListener('messagepane-unhide', onMessagePaneUnHide, false);
+    }
+    
     debugLog("stop coheOnLoadMsgHeaderPane");
   }
 
@@ -1254,6 +1262,20 @@ org.mozdev.compactHeader.pane = function() {
       if (document.getElementById("button-dispMUA")) {
         gDBView.reloadMessage();
       }
+    }
+  }
+  
+  function onMessagePaneHide(event) {
+    var messagePaneHBox = document.getElementById("messagepanehbox");
+    if (messagePaneHBox) {
+      messagePaneHBox.setAttribute("collapsed", "true");
+    }
+  }
+  
+  function onMessagePaneUnHide(event) {
+    var messagePaneHBox = document.getElementById("messagepanehbox");
+    if (messagePaneHBox) {
+      messagePaneHBox.removeAttribute("collapsed");
     }
   }
   
