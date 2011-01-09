@@ -11,6 +11,7 @@ locale    CompactHeader     de-DE   chrome/CompactHeader/locale/de-DE/
 locale    CompactHeader     it-IT   chrome/CompactHeader/locale/it-IT/
 locale    CompactHeader     da-DK   chrome/CompactHeader/locale/da-DK/
 locale    CompactHeader     fr-FR   chrome/CompactHeader/locale/fr-FR/
+locale    CompactHeader     es-ES   chrome/CompactHeader/locale/es-ES/
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
