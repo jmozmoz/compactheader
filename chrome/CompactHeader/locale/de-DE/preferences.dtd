@@ -40,8 +40,3 @@
 <!ENTITY menu.Linkify.caption "Link in Betreff von RSS Feeds">
 <!ENTITY menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
 <!ENTITY menu.flatButtons.caption "Flache Schaltflächen">
-<!ENTITY radiobox.ToolbarPosition.caption "Position der Kopfzeilenwerkzeugleiste">
-<!ENTITY radiobox.ToolbarPosition.right "rechts">
-<!ENTITY radiobox.ToolbarPosition.top   "oben">
-<!ENTITY radiobox.ToolbarPosition.left  "links">
-<!ENTITY radiobox.ToolbarPosition.none  "unsichtbar">

@@ -41,8 +41,6 @@ org.mozdev.compactHeader.preferences = function() {
     //loadPrefInt("headersize.addressstyle", "AddressStyle");  
     loadPrefCheckbox("headersize.addressstyle", "checkbox.ShowOnlyAddress");
     loadPrefCheckbox("headersize.flatButtons", "checkbox.flatButtons");
-    loadRadio("toolbox.position", "hdrToolbox.pos");
-    
   }
   
   ///////////////////////////////////////////////////////////////////////////////
@@ -60,7 +58,6 @@ org.mozdev.compactHeader.preferences = function() {
     //savePrefInt("headersize.addressstyle", "AddressStyle");  
     savePrefCheckbox("headersize.addressstyle", "checkbox.ShowOnlyAddress");
     savePrefCheckbox("headersize.flatButtons", "checkbox.flatButtons");
-    saveRadio("toolbox.position", "hdrToolbox.pos");
     return true;
   }
   
@@ -83,14 +80,6 @@ org.mozdev.compactHeader.preferences = function() {
     document.getElementById(idCheckbox).value = prefBranch.getIntPref(pref);
   }
   
-  function loadRadio(pref, idRadioGroup)
-  {
-    if (document.getElementById(prefBranch.getCharPref(pref))) {
-      document.getElementById(idRadioGroup).selectedItem = 
-        document.getElementById(prefBranch.getCharPref(pref));
-    }
-  }
-
   ///////////////////////////////////////////////////////////////////////////////
   //
   //  savePrefCheckbox
@@ -106,11 +95,6 @@ org.mozdev.compactHeader.preferences = function() {
   function savePrefInt(pref, idCheckbox)
   {
     prefBranch.setIntPref(pref, document.getElementById(idCheckbox).value);
-  }
-
-  function saveRadio(pref, idRadioGroup)
-  {
-    prefBranch.setCharPref(pref, document.getElementById(idRadioGroup).selectedItem.id);
   }
   return pub;
 }();

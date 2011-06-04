@@ -40,8 +40,3 @@
 <!ENTITY menu.Linkify.caption "Link in subjects of RSS feeds">
 <!ENTITY menu.ShowOnlyAddress.caption "Display only address">
 <!ENTITY menu.flatButtons.caption "Flat buttons">
-<!ENTITY radiobox.ToolbarPosition.caption "Position of Header Toolbar">
-<!ENTITY radiobox.ToolbarPosition.right "right">
-<!ENTITY radiobox.ToolbarPosition.top   "top">
-<!ENTITY radiobox.ToolbarPosition.left  "left">
-<!ENTITY radiobox.ToolbarPosition.none  "invisible">
