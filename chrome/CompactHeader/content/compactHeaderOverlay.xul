@@ -21,7 +21,7 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <script type="application/javascript" src="chrome://CompactHeader-d/content/compactHeaderOverlay.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
 
   <keyset>
     <key id="hideDetailsKey" 

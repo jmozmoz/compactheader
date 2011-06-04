@@ -67,6 +67,9 @@ org.mozdev.compactHeader.pane = function() {
 //  
   var gCoheCollapsedHeaderViewMode = false;
   var gCoheBuiltCollapsedView = false;
+
+  var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
+  var gCurrentLogLevel = LOGLEVEL.debug; // TODO: Set to info
   
   /**
    * The collapsed view: very lightweight. We only show a couple of fields.  See
@@ -204,6 +207,7 @@ org.mozdev.compactHeader.pane = function() {
   }
   
   pub.coheOnLoadMsgHeaderPane = function() { 
+    debugLog("start coheOnLoadMsgHeaderPane");
     coheInitializeHeaderViewTables();
   
     // Add an address book listener so we can update the header view when things
@@ -256,12 +260,7 @@ org.mozdev.compactHeader.pane = function() {
     if (cohe.firstrun) {
       coheCheckFirstRun();
     }
-    
-    if (cohe.firstrun || document.getElementById("hdrReplyAllButton") == null) {
-      org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
-      cohe.firstrun = false;
-    }
-    
+
     coheToggleHeaderContent();
     setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
@@ -902,32 +901,38 @@ org.mozdev.compactHeader.pane = function() {
 //    debugLog("first run 0");
     if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
 //      debugLog("firstrun 1");
-    cohe.version = -1;
-    cohe.firstrun = false;
-    cohe.gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-    // check if this is part of CompactHeader
-    if ((cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || (isAddonDisabled(COHE_EXTENSION_UUID))) {
-      return;
-    }
+      cohe.version = -1;
+      cohe.firstrun = false;
+      cohe.gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+      // check if this is part of CompactHeader
+      if ((cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || (isAddonDisabled(COHE_EXTENSION_UUID))) {
+        return;
+      }
     
-    cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
-    try{
-      cohe.version = cohePrefBranch.getCharPref("version");
-      cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
-    } catch(e) {
-    } finally {
-      //check for first run
-      if (cohe.firstrun){
-        cohePrefBranch.setBoolPref("firstrun",false);
-        cohePrefBranch.setCharPref("version",cohe.current);
-      }
-      //check for upgrade
-      if (cohe.version!=cohe.current && !cohe.firstrun){
-        cohePrefBranch.setCharPref("version",cohe.current);
-        // XXX
+      var debugLevel = gCurrentLogLevel;
+      cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
+      try{
+        cohe.version = cohePrefBranch.getCharPref("version");
+        cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
+        debugLevel = cohePrefBranch.getIntPref("debugLevel");
+      } catch(e) {
+      } finally {
+        //check for first run
+        if (cohe.firstrun){
+          cohePrefBranch.setBoolPref("firstrun",false);
+          cohePrefBranch.setCharPref("version",cohe.current);
+          org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
+        }
+        //check for upgrade
+        if (cohe.version!=cohe.current && !cohe.firstrun){
+          cohePrefBranch.setCharPref("version",cohe.current);
+          // XXX
+        }
+        cohe.firstrun = false;
+        gCurrentLogLevel = debugLevel;
+        cohePrefBranch.setIntPref("debugLevel", gCurrentLogLevel);
       }
     }
-  }
     else {
       //debugLog("firstrun 3");
       Components.utils.import("resource://gre/modules/AddonManager.jsm");
@@ -944,6 +949,8 @@ org.mozdev.compactHeader.pane = function() {
           } finally {
             //check for first run
             if (cohe.firstrun){
+//              debugLog("first run 2c");
+              org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
               cohePrefBranch.setBoolPref("firstrun",false);
               cohePrefBranch.setCharPref("version",cohe.current);
             }
@@ -952,6 +959,8 @@ org.mozdev.compactHeader.pane = function() {
               cohePrefBranch.setCharPref("version",cohe.current);
               // XXX
             }
+            cohe.firstrun = false;
+            debugLog("first run 2d");
           }
         }
       );
@@ -960,8 +969,15 @@ org.mozdev.compactHeader.pane = function() {
   }
 
 
-//  var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
-//                                           .getService(Components.interfaces.nsIConsoleService);
+  var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
+                                           .getService(Components.interfaces.nsIConsoleService);
+
+  function debugLog(str, logLevel) {
+    if (!logLevel) var logLevel = LOGLEVEL.debug;
+    if (logLevel >= gCurrentLogLevel) {
+      aConsoleService.logStringMessage(Date() + " CH: " + str);
+    }
+  }
   
   pub.coheInitializeOverlay = function() {
     // var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
@@ -969,6 +985,8 @@ org.mozdev.compactHeader.pane = function() {
     // if ((gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || isAddonDisabled(COHE_EXTENSION_UUID)) {
     //  return;
     //}
+    
+    debugLog("before register");
     coheUninstallObserver.register();
   }
   
@@ -979,6 +997,7 @@ org.mozdev.compactHeader.pane = function() {
         subject.QueryInterface(Components.interfaces.nsIUpdateItem);
     
         if (subject.id == COHE_EXTENSION_UUID) {
+          debugLog("uninstalling COHE 1");
           if (data == "item-uninstalled") {
             this._uninstall = true;
           } else if (data == "item-cancel-action") {
@@ -986,6 +1005,7 @@ org.mozdev.compactHeader.pane = function() {
           }
         }
       } else if (topic == "quit-application-granted") {
+        debugLog("uninstalling COHE 2");
         if (this._uninstall) {
           cohePrefBranch.deleteBranch("");
           org.mozdev.customizeHeaderToolbar.pane.CHTCleanupButtons();
@@ -993,21 +1013,58 @@ org.mozdev.compactHeader.pane = function() {
         this.unregister();
       }
     },
-    register : function() {
-     var observerService =
-       Components.classes["@mozilla.org/observer-service;1"].
-         getService(Components.interfaces.nsIObserverService);
+    onUninstalling: function(addon) {
+      if (addon.id == COHE_EXTENSION_UUID) {
+        this._uninstall = true;
+      }
+    },
+
+    onOperationCancelled: function(addon) {
+      if (addon.id == COHE_EXTENSION_UUID) {
+        this._uninstall = (addon.pendingOperations & AddonManager.PENDING_UNINSTALL) != 0;
+      }
+    },
     
-     observerService.addObserver(this, "em-action-requested", false);
-     observerService.addObserver(this, "quit-application-granted", false);
+    register : function() {
+      debugLog("register uninstall start");
+      var observerService =
+        Components.classes["@mozilla.org/observer-service;1"].
+        getService(Components.interfaces.nsIObserverService);
+      debugLog("register uninstall start 1");
+    
+      var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+                                       .getService(Components.interfaces.nsIXULAppInfo);
+      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                                              .getService(Components.interfaces.nsIVersionComparator);
+      debugLog("register uninstall start 2");
+
+      if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
+        observerService.addObserver(this, "em-action-requested", false);
+        observerService.addObserver(this, "quit-application-granted", false);
+      }
+      else {
+        debugLog("register uninstall neu 2");
+        observerService.addObserver(this, "quit-application-granted", false);
+        Components.utils.import("resource://gre/modules/AddonManager.jsm");
+        AddonManager.addAddonListener(this);     
+        debugLog("register uninstall neu 2");
+      }
     },
     unregister : function() {
       var observerService =
         Components.classes["@mozilla.org/observer-service;1"].
           getService(Components.interfaces.nsIObserverService);
     
-      observerService.removeObserver(this,"em-action-requested");
-      observerService.removeObserver(this,"quit-application-granted");
+      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                                              .getService(Components.interfaces.nsIVersionComparator);
+      if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
+        observerService.removeObserver(this,"em-action-requested");
+        observerService.removeObserver(this,"quit-application-granted");
+      }
+      else {
+        observerService.removeObserver(this, "quit-application-granted");
+        AddonManager.removeAddonListener(this);      
+      }
     }
   }
   
