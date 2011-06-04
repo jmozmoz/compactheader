@@ -70,7 +70,7 @@ org.mozdev.compactHeader.pane = function() {
   var gCoheBuiltCollapsedView = false;
 
   var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
-  var gCurrentLogLevel = LOGLEVEL.info;
+  var gCurrentLogLevel = LOGLEVEL.debug; // TODO: Set to info
 
   var gToolboxes = [
       {pos:"top",   id:"collapsed2LButtonBox", orient:"horizontal", header:"compact"},
@@ -249,11 +249,17 @@ org.mozdev.compactHeader.pane = function() {
 
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
     var singleMessage = document.getElementById("singlemessage");
-    singleMessage.addEventListener("DOMAttrModified", onHiddenChange, false);
-
+    if (singleMessage) {
+      singleMessage.addEventListener("DOMAttrModified", onHiddenChange, false);
+    }
+    
     var messagePaneBox = document.getElementById("messagepanebox");
-    messagePaneBox.addEventListener("DOMAttrModified", onCollapsedChangeMessagePaneBox, false);
+    if (messagePaneBox) {
+      messagePaneBox.addEventListener("DOMAttrModified", onCollapsedChangeMessagePaneBox, false);
+    }
 
+    debugLog("mid coheOnLoadMsgHeaderPane 0");
+    
     var headerViewToolbox = document.getElementById("header-view-toolbox");
     if (headerViewToolbox) {
       headerViewToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
@@ -323,23 +329,6 @@ org.mozdev.compactHeader.pane = function() {
 
     if (cohe.firstrun) {
       coheCheckFirstRun();
-    }
-
-    var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-                            .getService(Components.interfaces.nsIXULAppInfo);
-    var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                                 .getService(Components.interfaces.nsIVersionComparator);
-    if(versionChecker.compare(appInfo.version, "3.1b2") < 0) {
-      if (cohe.firstrun || document.getElementById("hdrReplyAllButton") == null) {
-        org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
-        cohe.firstrun = false;
-      }
-    }
-    else {
-      if (cohe.firstrun) {
-        org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
-        cohe.firstrun = false;
-      }
     }
 
     debugLog("mid coheOnLoadMsgHeaderPane 4");
@@ -1047,11 +1036,13 @@ org.mozdev.compactHeader.pane = function() {
         if (cohe.firstrun){
           cohePrefBranch.setBoolPref("firstrun",false);
           cohePrefBranch.setCharPref("version",cohe.current);
+          org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
         }
         //check for upgrade
         if (cohe.version!=cohe.current && !cohe.firstrun){
           cohePrefBranch.setCharPref("version",cohe.current);
         }
+        cohe.firstrun = false;
         gCurrentLogLevel = debugLevel;
         cohePrefBranch.setIntPref("debugLevel", gCurrentLogLevel);
       }
@@ -1066,24 +1057,31 @@ org.mozdev.compactHeader.pane = function() {
           cohe.firstrun = false;
           cohe.current = myAddon.version;
           try{
+            debugLog("first run 2a");
             cohe.version = cohePrefBranch.getCharPref("version");
             cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
           } catch(e) {
           } finally {
             //check for first run
+            debugLog("first run 2b");
             if (cohe.firstrun){
+              debugLog("first run 2c");
+              org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
               cohePrefBranch.setBoolPref("firstrun",false);
               cohePrefBranch.setCharPref("version",cohe.current);
             }
             //check for upgrade
             if (cohe.version!=cohe.current && !cohe.firstrun){
+              debugLog("first run 2c");
               cohePrefBranch.setCharPref("version",cohe.current);
             }
+            cohe.firstrun = false;
+            debugLog("first run 2d");
           }
         }
       );
     }
-    debugLog("firstrun 4");
+    debugLog("firstrun stop");
   }
 
 
@@ -1142,46 +1140,59 @@ org.mozdev.compactHeader.pane = function() {
   function createSidebars() {
     debugLog("createSidebars start");
 
-    if (document.getElementById("messagepanehbox") != null) {
-      debugLog("messagepanehbox already exists");
-      return;
-    }
-
     var messagepanebox   = document.getElementById("messagepanebox");
     var messagepane = document.getElementById("messagepane");
+    var createMessagePaneBoxWrapper;
+    createMessagePaneBoxWrapper = false;
+    var messagePaneBoxWrapper = document.getElementById("messagepaneboxwrapper");
+    
+    if (messagePaneBoxWrapper == null) {
+      debugLog("messagepaneboxwrapper does not exist");
+      createMessagePaneBoxWrapper = true;
+      swapBrowsers();
 
-    swapBrowsers();
+      var xul11   = document.createElement("hbox");
+      xul11.id    = "messagepaneboxwrapper";
 
-    var xul11   = document.createElement("hbox");
-    xul11.id    = "messagepanehbox";
-
-    var displayDeck = document.getElementById("displayDeck");
-    if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
-      xul11.setAttribute("flex", "1");
+      var displayDeck = document.getElementById("displayDeck");
+      if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
+        xul11.setAttribute("flex", "1");
+      }
+      
+      xul11.setAttribute("hidden", "false");
+      messagepanebox.parentNode.insertBefore(xul11, messagepanebox);
+    }
+    else {
+      debugLog("messagepaneboxwrapper does exist");
     }
     
-    xul11.setAttribute("hidden", "false");
-    messagepanebox.parentNode.insertBefore(xul11, messagepanebox);
 
-    var messagePaneHBox = document.getElementById("messagepanehbox");
-    org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-    messagePaneHBox.appendChild(messagepanebox);
-    org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
+    if (createMessagePaneBoxWrapper) {
+      org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
+      messagePaneBoxWrapper.appendChild(messagepanebox);
+      org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
 
-    /* for whatever reasons, wait for the messagepanebox to fully
-     * appear before the browser content can be swaped */
-    delayedSwapBrowser(1000);
+      /* for whatever reasons, wait for the messagepanebox to fully
+       * appear before the browser content can be swaped */
+      delayedSwapBrowser(1000);
+      debugLog("messagepaneboxwrapper did not exist");
+    }
 
+    debugLog("createSidebars 1");
     messagepanebox   = document.getElementById("messagepanebox");
+    debugLog("createSidebars 1a");
     var xul13   = document.createElement("vbox");
     xul13.id    = "leftToolbox";
-    messagePaneHBox.insertBefore(xul13, messagepanebox);
+    debugLog("createSidebars 1c");
+    messagePaneBoxWrapper.insertBefore(xul13, messagepanebox);
 
+    debugLog("createSidebars 2");
     var xul12 = document.createElement("vbox");
     xul12.id    = "rightToolbox";
-    messagePaneHBox.appendChild(xul12);
+    messagePaneBoxWrapper.appendChild(xul12);
 
-    messagePaneHBox.addEventListener("DOMAttrModified", onHeightChangeMessagePaneHBox, false);
+    debugLog("createSidebars 3");
+    messagePaneBoxWrapper.addEventListener("DOMAttrModified", onHeightChangeMessagePaneBoxWrapper, false);
 
     debugLog("createSidebars stop");
   };
@@ -1192,7 +1203,7 @@ org.mozdev.compactHeader.pane = function() {
     }
   };
 
-  function onHeightChangeMessagePaneHBox(event) {
+  function onHeightChangeMessagePaneBoxWrapper(event) {
     if (event.attrName == "height") {
       var height = document.getElementById("messagepanebox").boxObject.height;
       document.getElementById("messagepanebox").setAttribute("height", height);
@@ -1202,10 +1213,10 @@ org.mozdev.compactHeader.pane = function() {
   function onCollapsedChangeMessagePaneBox(event) {
     if (event.attrName == "collapsed") {
       if (document.getElementById("messagepanebox").getAttribute("collapsed") == "true") {
-        document.getElementById("messagepanehbox").setAttribute("collapsed", "true");
+        document.getElementById("messagepaneboxwrapper").setAttribute("collapsed", "true");
       }
       else {
-        document.getElementById("messagepanehbox").removeAttribute("collapsed");
+        document.getElementById("messagepaneboxwrapper").removeAttribute("collapsed");
       }
     }
   };
@@ -1231,11 +1242,11 @@ org.mozdev.compactHeader.pane = function() {
     if (event.attrName == "collapsed") {
       var displayDeck = document.getElementById("displayDeck");
       if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
-        document.getElementById("messagepanehbox").setAttribute("flex", "1");
+        document.getElementById("messagepaneboxwrapper").setAttribute("flex", "1");
       }
       else {
         //alert("no flex!");
-        document.getElementById("messagepanehbox").removeAttribute("flex");
+        document.getElementById("messagepaneboxwrapper").removeAttribute("flex");
       }
     }
   }
@@ -1266,16 +1277,16 @@ org.mozdev.compactHeader.pane = function() {
   }
   
   function onMessagePaneHide(event) {
-    var messagePaneHBox = document.getElementById("messagepanehbox");
-    if (messagePaneHBox) {
-      messagePaneHBox.setAttribute("collapsed", "true");
+    var messagePaneBoxWrapper = document.getElementById("messagepaneboxwrapper");
+    if (messagePaneBoxWrapper) {
+      messagePaneBoxWrapper.setAttribute("collapsed", "true");
     }
   }
   
   function onMessagePaneUnHide(event) {
-    var messagePaneHBox = document.getElementById("messagepanehbox");
-    if (messagePaneHBox) {
-      messagePaneHBox.removeAttribute("collapsed");
+    var messagePaneBoxWrapper = document.getElementById("messagepaneboxwrapper");
+    if (messagePaneBoxWrapper) {
+      messagePaneBoxWrapper.removeAttribute("collapsed");
     }
   }
   
@@ -1296,11 +1307,14 @@ org.mozdev.compactHeader.pane = function() {
       return;
     }
 
+    debugLog("setCurrentToolboxPosition mid 1");
+
     if (targetPos == "hdrToolbox.pos.none") {
       hdrViewToolbox.setAttribute("collapsed", "true");
       if (multiBBox) {
         multiBBox.setAttribute("collapsed", "true");
       }
+      debugLog("hdrToolbox.pos.none stop");
       return;
     }
     else {
@@ -1309,6 +1323,8 @@ org.mozdev.compactHeader.pane = function() {
         multiBBox.removeAttribute("collapsed");
       }
     }
+
+    debugLog("setCurrentToolboxPosition mid 2");
 
     if (multiBBox) {
       multiBBox.removeAttribute("collapsed");

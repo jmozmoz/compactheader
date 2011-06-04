@@ -240,3 +240,7 @@ toolbar[orient="vertical"] toolbarpaletteitem[dragover="right"] {
   border-color: transparent;
   border-bottom-color: #000000;
 }
+
+#header-view-toolbar[orient="vertical"] toolbarbutton {
+  -moz-box-orient: vertical !important;
+}
