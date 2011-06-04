@@ -17,9 +17,9 @@
   </xmltask>
 
   <target name="dist" depends="spreadVersion,buildAMO,buildMozdev">
-      
-  </target>
 
+  </target>
+  
   <target name="clean">
     <delete file="${dist.dir}/${app.name}-${app.version}.xpi" />
   </target>

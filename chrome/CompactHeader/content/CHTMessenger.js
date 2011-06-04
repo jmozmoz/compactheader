@@ -152,21 +152,17 @@ org.mozdev.customizeHeaderToolbar.pane = function(){
   }
   
   pub.CHTCleanupButtons = function() {
+    alert("cleanup");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    var hdrBarDefaultSet = "hdrReplyButton,hdrReplyAllButton,hdrReplyListButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton";
-    var hdrBoxDefaultLabelalign = hdrToolbox.getAttribute("defaultlabelalign");
-    var hdrBoxDefaultIconsize =   hdrToolbox.getAttribute("defaulticonsize");
-    var hdrBoxDefaultMode =       hdrToolbox.getAttribute("defaultmode");
-    var hdrBarDefaultIconsize = hdrToolbar.getAttribute("defaulticonsize");
-    var hdrBarDefaultMode =     hdrToolbar.getAttirbute("defaultmode");
+    var hdrBarDefaultSet = "hdrReplyToSenderButton,hdrSmartReplyButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton";
     
-    hdrToolbox.setAttribute("labelalign", hdrBoxDefaultLabelalign);
-    hdrToolbox.setAttribute("iconsize", hdrBoxDefaultIconsize);
-    hdrToolbox.setAttribute("mode", hdrBoxDefaultMode);
-    hdrToolbar.setAttribute("iconsize", hdrBarDefaultIconsize);
-    hdrToolbar.setAttribute("mode", hdrBarDefaultMode);
+    hdrToolbox.setAttribute("labelalign", "end");
+    hdrToolbox.setAttribute("iconsize", "small");
+    hdrToolbox.setAttribute("mode", "full");
     
+    hdrToolbar.setAttribute("iconsize", "small");
+    hdrToolbar.setAttribute("mode", "full");
     hdrToolbar.currentSet = hdrBarDefaultSet;
     hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
     

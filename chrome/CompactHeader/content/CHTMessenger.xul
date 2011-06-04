@@ -46,9 +46,7 @@
           src="chrome://CompactHeader/content/CHTMessenger.js"/>
   <window id="messengerWindow">
     <toolbox id="CHTSaveToolboxData" collapsed="true">
-    	<toolbar id="CHTSaveToolbarData" collapsed="true"/>
+      <toolbar id="CHTSaveToolbarData" collapsed="true"/>
     </toolbox>
-    <browser id="CHTBrowserStore" type="content-primary" disablehistory="true">
-    </browser>
   </window>
 </overlay>

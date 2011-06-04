@@ -59,40 +59,18 @@ org.mozdev.compactHeader.pane = function() {
   var pub = {};
 
   const COHE_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
-
+  
 //  var regex = {
 //    /* taken from https://bugzilla.mozilla.org/show_bug.cgi?id=57104 */
 //    links : /((\w+):\/\/[^<>()'"\s]+|www(\.[-\w]+){2,})/
 //  };
-//
-
+//  
   var gCoheCollapsedHeaderViewMode = false;
   var gCoheBuiltCollapsedView = false;
 
   var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
   var gCurrentLogLevel = LOGLEVEL.debug; // TODO: Set to info
-
-  var gToolboxes = [
-      {pos:"top",   id:"collapsed2LButtonBox", orient:"horizontal", header:"compact"},
-      {pos:"top",   id:"expandedHeadersTopBox", orient:"horizontal", header:"expanded"},
-      {pos:"left",  id:"leftToolbox", orient:"vertical"},
-      {pos:"right", id:"rightToolbox", orient:"vertical"},
-      {pos:"none",  id:"", orient:""},
-    ];
-
-  function getToolbarTarget(targetPos, targetHeader) {
-    targetPos = targetPos.replace('hdrToolbox.pos.', '');
-    for (i=0; i<gToolboxes.length; i++) {
-      if ((targetPos == gToolboxes[i].pos) &&
-          ((gToolboxes[i].header == null) || (targetHeader == gToolboxes[i].header))
-          ) {
-        return gToolboxes[i];
-      }
-    }
-    debugLog("orient failed " + targetPos + " " + targetHeader, LOGLEVEL.warn);
-    return null;
-  }
-
+  
   /**
    * The collapsed view: very lightweight. We only show a couple of fields.  See
    * msgHdrViewOverlay.js for details of the field definition semantics.
@@ -103,64 +81,58 @@ org.mozdev.compactHeader.pane = function() {
 //    {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
     {name:"date", outputFunction:coheUpdateDateValue}
     ];
-
+  
   var gCoheCollapsedHeader2LListLongAddresses = [
     {name:"subject", outputFunction:coheOutputSubject},
     {name:"from", useToggle:true, outputFunction:coheOutputEmailAddresses},
     {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
     {name:"date", outputFunction:coheUpdateDateValue}
     ];
-
+    
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
-                                          .getService(Components.interfaces.nsIPrefService)
-                                          .getBranch("extensions.CompactHeader.");
-
-  var timerSwapBrowsers = Components.classes["@mozilla.org/timer;1"]
-    .createInstance(Components.interfaces.nsITimer);
-
-  var timerSetToolbox = Components.classes["@mozilla.org/timer;1"]
-   .createInstance(Components.interfaces.nsITimer);
+    .getService(Components.interfaces.nsIPrefService)
+    .getBranch("extensions.CompactHeader.");
   
   var coheIntegrateRSSLinkify = false;
-
+  
   var RSSLinkify = {
       oldSubject: null,
       newSubject: null
   };
-
+  
   var cohe={
     version: -1,
     firstrun: true,
     current: -1
   };
-
+  
   var coheFirstTime = true;
-
+  
   function coheOutputSubject(headerEntry, headerValue) {
     var subjectBox;
-
+    
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
       subjectBox = document.getElementById("collapsed2LsubjectOutBox")
     } else {
       subjectBox = document.getElementById("collapsed1LsubjectOutBox")
     }
-
-    if (subjectBox) {
-      subjectBox.setAttribute("tooltiptext", headerValue);
-    }
+    
+//    if (subjectBox) {
+//      subjectBox.setAttribute("tooltiptext", headerValue);
+//    }
     updateHeaderValue(headerEntry, headerValue);
   }
-
+  
   function coheOutputEmailAddresses(headerEntry, emailAddresses) {
     /* function copied from comm-1.9.1/ mail/ base/ content/ msgHdrViewOverlay.js 771135e6aaf5 */
     if (!emailAddresses)
       return;
-
+  
     var addresses = {};
     var fullNames = {};
     var names = {};
     var numAddresses =  0;
-
+  
     var msgHeaderParser = Components.classes["@mozilla.org/messenger/headerparser;1"]
                                     .getService(Components.interfaces.nsIMsgHeaderParser);
     numAddresses = msgHeaderParser.parseHeadersWithArray(emailAddresses, addresses, names, fullNames);
@@ -186,36 +158,35 @@ org.mozdev.compactHeader.pane = function() {
       }
       index++;
     }
-
+  
     if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.buildViews == 'function'))
       headerEntry.enclosingBox.buildViews();
     //OutputEmailAddresses(headerEntry, emailAddresses);
   }
-
+  
   // Now, for each view the message pane can generate, we need a global table
   // of headerEntries. These header entry objects are generated dynamically
   // based on the static data in the header lists (see above) and elements
   // we find in the DOM based on properties in the header lists.
   var gCoheCollapsedHeaderView = {};
-
-
+  
   function coheInitializeHeaderViewTables()
   {
     gCoheCollapsedHeaderView = {};
     var index;
-
+  
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
       for (index = 0; index < gCoheCollapsedHeader2LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader2LListLongAddresses[index].name] =
           new createHeaderEntry('collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
       }
-    } else {
+    } else { 
       for (index = 0; index < gCoheCollapsedHeader1LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader1LListLongAddresses[index].name] =
           new createHeaderEntry('collapsed1L', gCoheCollapsedHeader1LListLongAddresses[index]);
       }
     }
-
+  
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       RSSLinkify.newSubject = document.getElementById("collapsedsubjectlinkBox") || document.createElement("label");
       RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
@@ -234,61 +205,23 @@ org.mozdev.compactHeader.pane = function() {
       RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
     }
   }
-
-  pub.coheOnLoadMsgHeaderPane = function() {
+  
+  pub.coheOnLoadMsgHeaderPane = function() { 
     debugLog("start coheOnLoadMsgHeaderPane");
-    createSidebars();
     coheInitializeHeaderViewTables();
-
+  
     // Add an address book listener so we can update the header view when things
     // change.
     Components.classes["@mozilla.org/abmanager;1"]
               .getService(Components.interfaces.nsIAbManager)
               .addAddressBookListener(coheAddressBookListener,
                                       Components.interfaces.nsIAbListener.all);
-
+  
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
-    var singleMessage = document.getElementById("singlemessage");
-    if (singleMessage) {
-      singleMessage.addEventListener("DOMAttrModified", onHiddenChange, false);
-    }
-    
-    var messagePaneBox = document.getElementById("messagepanebox");
-    if (messagePaneBox) {
-      messagePaneBox.addEventListener("DOMAttrModified", onCollapsedChangeMessagePaneBox, false);
-    }
-
-    debugLog("mid coheOnLoadMsgHeaderPane 0");
-    
-    var headerViewToolbox = document.getElementById("header-view-toolbox");
-    if (headerViewToolbox) {
-      headerViewToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
-    }
-    
-    var mailToolbox = document.getElementById("mail-toolbox");
-    if (mailToolbox) {
-      mailToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
-    }
-    
-    var displayDeck = document.getElementById("displayDeck");
-    if (displayDeck) {
-      displayDeck.addEventListener("DOMAttrModified", onCollapsedChangeDisplayDeck, false);
-    }
-    
-    var dispMUAicon = document.getElementById("dispMUAicon");
-    if (dispMUAicon) {
-      dispMUAicon.addEventListener("DOMAttrModified", onChangeDispMUAicon, false);
-    }
-
-    var headerToolbar = document.getElementById("header-view-toolbar");    
-    if (headerToolbar) {
-      headerToolbar.addEventListener("DOMAttrModified", onChangeHeaderToolbar, false);
-    }
-    
-    debugLog("mid coheOnLoadMsgHeaderPane 1");
-    gCoheCollapsedHeaderViewMode =
-      deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
-
+  
+    gCoheCollapsedHeaderViewMode = 
+      deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');    
+      
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded
     // view "stretches" the deck.
@@ -296,7 +229,7 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById('expandedHeaderView').collapsed = true;
     else
       document.getElementById('collapsedHeaderView').collapsed = true;
-
+  
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
       document.getElementById('collapsed1LHeadersBox').collapsed = true;
       document.getElementById('collapsed2LHeadersBox').collapsed = false;
@@ -304,8 +237,7 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById('collapsed1LHeadersBox').collapsed = false;
       document.getElementById('collapsed2LHeadersBox').collapsed = true;
     }
-
-    debugLog("mid coheOnLoadMsgHeaderPane 2");
+      
     if (coheFirstTime)
     {
       coheFirstTime = false;
@@ -325,55 +257,41 @@ org.mozdev.compactHeader.pane = function() {
       };
     }
     
-    debugLog("mid coheOnLoadMsgHeaderPane 3");
-
     if (cohe.firstrun) {
       coheCheckFirstRun();
     }
 
-    debugLog("mid coheOnLoadMsgHeaderPane 4");
+    coheToggleHeaderContent();
     setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-    delayedCurrentToolboxPosition(200);
-    dispMUACheck();
-    //coheToggleHeaderContent();
-    
-    debugLog("mid coheOnLoadMsgHeaderPane 5");
-    var messengerWindow = document.getElementById("messengerWindow");
-    if (messengerWindow) {
-      messengerWindow.addEventListener('messagepane-hide',   onMessagePaneHide, false);
-      messengerWindow.addEventListener('messagepane-unhide', onMessagePaneUnHide, false);
-    }
-    
-    debugLog("stop coheOnLoadMsgHeaderPane");
   }
-
-  var coheMessageListener =
+  
+  var coheMessageListener = 
   {
-    onStartHeaders:
+    onStartHeaders: 
     function cML_onStartHeaders () {
-        gCoheBuiltCollapsedView = false;
+        gCoheBuiltCollapsedView = false;    
     },
-
-    onEndHeaders:
+    
+    onEndHeaders: 
     function cML_onEndHeaders() {
-      ClearHeaderView(gCoheCollapsedHeaderView);
+      ClearHeaderView(gCoheCollapsedHeaderView);  
       coheUpdateMessageHeaders();
     },
-
+    
     onEndAttachments: function cML_onEndAttachments(){}
   };
-
+  
   pub.coheOnUnloadMsgHeaderPane = function()
   {
     Components.classes["@mozilla.org/abmanager;1"]
               .getService(Components.interfaces.nsIAbManager)
               .removeAddressBookListener(coheAddressBookListener);
-
+    
     removeEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
     removeEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
   }
-
+  
   var coheAddressBookListener =
   {
     onItemAdded: function(aParentDir, aItem) {
@@ -386,7 +304,7 @@ org.mozdev.compactHeader.pane = function() {
                                nsIAbListener.directoryRemoved,
                                aParentDir, aItem);
     },
-
+    
     onItemPropertyChanged: function(aItem, aProperty, aOldValue, aNewValue) {
       // We only need updates for card changes, address book and mailing list
       // ones don't affect us here.
@@ -394,11 +312,11 @@ org.mozdev.compactHeader.pane = function() {
         coheOnAddressBookDataChanged(nsIAbListener.itemChanged, null, aItem);
     }
   }
-
+  
   function coheOnAddressBookDataChanged(aAction, aParentDir, aItem) {
     gEmailAddressHeaderNames.forEach(function (headerName) {
         var headerEntry = null;
-
+  
         if (headerName in gCoheCollapsedHeaderView) {
           headerEntry = gCoheCollapsedHeaderView[headerName];
           if (headerEntry)
@@ -408,7 +326,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       });
   }
-
+  
   function linkifySubject(subjectValueStr) {
     var subjectNode = document.getElementById(subjectValueStr);
     while(subjectNode.childNodes.length > 0) {
@@ -456,18 +374,18 @@ org.mozdev.compactHeader.pane = function() {
     }
   }
 
-
+  
   // make sure the appropriate fields within the currently displayed view header mode
   // are collapsed or visible...
   function coheUpdateHeaderView()
   {
     if (gCoheCollapsedHeaderViewMode)
       showHeaderView(gCoheCollapsedHeaderView);
-
+  
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       var url = currentHeaderData["content-base"];
       if(url) {
-          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" +
+          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
                                                url.headerValue + "');");
           RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
           RSSLinkify.newSubject.setAttribute("url", url.headerValue);
@@ -497,14 +415,14 @@ org.mozdev.compactHeader.pane = function() {
     if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
       selectEmailDisplayed();
     }
-
+    
     //fillToolboxPalette();
     coheToggleHeaderContent();
     org.mozdev.customizeHeaderToolbar.pane.CHTUpdateReplyButton();
     org.mozdev.customizeHeaderToolbar.pane.CHTUpdateJunkButton();
     org.mozdev.compactHeader.buttons.coheToggleStar();
   }
-
+  
   function enableButtons() {
     var hdrToolbar = document.getElementById("header-view-toolbar");
     if (toolbar) {
@@ -514,36 +432,15 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
   }
-
-  
-  function removeButtonDispMUA() {
-    if (!document.getElementById("dispMUA")) {
-      var button = document.getElementById("button-dispMUA");
-      if (button) {
-        button.parentNode.removeChild(button);
-      }
-      
-      var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
-      if (button1) {
-        button1.parentNode.removeChild(button1);
-      }
-
-      var button2 = document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
-      if (button2) {
-        button2.parentNode.removeChild(button2);
-      }
-    }
-  }
   
   function fillToolboxPalette() {
-    removeButtonDispMUA();
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
-    var buttons = ["button-reply", "button-replyall", "button-replylist",
+    var buttons = ["button-reply", "button-replyall", "button-replylist", 
                    "button-tag", "button-forward", "button-archive", "button-file",
                    "button-print", "button-mark", "button-starMessages",
                    "button-newmsg", "button-goback", "button-goforward",
-                   "button-previous", "button-next", "button-compact",
+                   "button-previous", "button-next", "button-compact", 
                    "button-address", "button-stop", "button-getmsg",
                    "button-getPartialMessages",
                    "stylish-toolbar-button",
@@ -552,13 +449,12 @@ org.mozdev.compactHeader.pane = function() {
                    "ToggleHTML", "ToggleImages", "bDeleteThread",
                    "mailredirect-toolbarbutton",
                    "lightningbutton-convert-to-task",
-                   "lightningbutton-convert-to-event",
-                   "button-dispMUA"];
+                   "lightningbutton-convert-to-event"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
       var buttonName = buttons[i];
-      var button = document.getElementById(buttonName) ||
+      var button = document.getElementById(buttonName) || 
           document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         var hdrButton = button.cloneNode(true);
@@ -575,7 +471,11 @@ org.mozdev.compactHeader.pane = function() {
               addClass(hdrButton, "msgHeaderView-button-out");
             }
           }
+          //hdrButton.id = "hdr" + hdrButton.id;
           hdrToolbox.palette.appendChild(hdrButton);
+  /*        var bStyle = document.defaultView.getComputedStyle(button, null);
+          hdrButton.style.MozImageRegion = bStyle.MozImageRegion;
+          hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
         }
         if (currentSet.indexOf(buttonName)>=0) {
           var result = hdrToolbar.insertItem(hdrButton.id);
@@ -585,35 +485,23 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
-    var buttonsRemove;
-    var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-                            .getService(Components.interfaces.nsIXULAppInfo);
-    var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                                 .getService(Components.interfaces.nsIVersionComparator);
-    if(versionChecker.compare(appInfo.version, "3.1b2") < 0) {
-      var buttonsRemove = ["hdrJunkButton", "hdrForwardButton", "hdrArchiveButton",
-                           "hdrReplyToSenderButton", "hdrReplyButton",
-                           "hdrReplyAllButton", "hdrReplyListButton"];
-    }
-    else {
-      var buttonsRemove = ["hdrForwardButton", "hdrArchiveButton",
-                           "hdrReplyToSenderButton"];//, "hdrReplyButton",
-                           //"hdrReplyAllButton", "hdrReplyListButton"];
-    }
+    var buttonsRemove = ["hdrForwardButton", "hdrArchiveButton",
+                         "hdrReplyToSenderButton"];//, "hdrReplyButton",
+                         //"hdrReplyAllButton", "hdrReplyListButton"];
     for (var i=0; i<buttonsRemove.length; i++) {
       var buttonName = buttonsRemove[i];
-      var button = document.getElementById(buttonName) ||
+      var button = document.getElementById(buttonName) || 
           document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         button.setAttribute("collapsed", "true");
       }
     }
-
+    
     var target = "hdrOtherActionsButton";
-
-    var newParent = document.getElementById(target) ||
+    
+    var newParent = document.getElementById(target) || 
         document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
-
+  
     if (newParent != null) {
       var myElement;
       myElement= document.getElementById("otherActionsPopup");
@@ -669,7 +557,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       }
     }
-
+    
     buttons = hdrToolbox.palette.querySelectorAll("toolbarbutton");
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
@@ -716,14 +604,13 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   pub.coheToggleHeaderView = function() {
-    debugLog("coheToggleHeaderView");
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
-
+    
     let deck = document.getElementById('msgHeaderViewDeck');
     // Work around a xul deck bug where the height of the deck is determined
     // by the tallest panel in the deck even if that panel is not selected...
     deck.selectedPanel.collapsed = true;
-
+  
     if (gCoheCollapsedHeaderViewMode) {
       deck.selectedPanel = document.getElementById("collapsedHeaderView")
       coheUpdateMessageHeaders();
@@ -733,24 +620,22 @@ org.mozdev.compactHeader.pane = function() {
       UpdateExpandedMessageHeaders();
       //gDBView.reloadMessage();
     }
-
+    
     // Work around a xul deck bug where the height of the deck is determined
     // by the tallest panel in the deck even if that panel is not selected...
     deck.selectedPanel.collapsed = false;
     syncGridColumnWidths();
-
+    
     coheToggleHeaderContent();
-    setCurrentToolboxPosition();
   }
-
+  
   function coheToggleHeaderContent() {
-    debugLog("coheToggleHeaderContent start");
     var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
     var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
     var strLabel;
-
+    
     var smimeBox = document.getElementById("smimeBox");
-
+    
     if (smimeBox != null) {
       if (gCoheCollapsedHeaderViewMode) {
         var parent = document.getElementById("collapsed2LdateOutBox");
@@ -766,7 +651,26 @@ org.mozdev.compactHeader.pane = function() {
           parent.insertBefore(smimeBox, refElement);
         }
       }
-    }
+    }    
+    
+    var dispMUABox = document.getElementById("dispMUA");
+    
+    if (dispMUABox != null) {
+      if (gCoheCollapsedHeaderViewMode) {
+        var parent = document.getElementById("collapsed2LdateOutBox");
+        var refElement = document.getElementById("collapsed2LdateRow");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(dispMUABox, refElement);
+        }
+      }
+      else {
+        var parent = document.getElementById("dateValueBox");
+        var refElement = document.getElementById("dateLabel");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(dispMUABox, refElement);
+        }
+      }
+    }    
 
     org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
 
@@ -779,44 +683,62 @@ org.mozdev.compactHeader.pane = function() {
     if (document.getElementById("hideDetailsMenu")) {
       document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
     }
-    debugLog("coheToggleHeaderContent stop");
-  }
 
-  function moveToolbox(cBox, orient) {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var firstPermanentChild = hdrToolbar.firstPermanentChild;
     var lastPermanentChild = hdrToolbar.lastPermanentChild;
-
-    if ((hdrToolbox.parentNode == null) || (cBox.id != hdrToolbox.parentNode.id)) {
-      var cloneToolboxPalette;
-      var cloneToolbarset;
-      if (hdrToolbox.palette) {
-        cloneToolboxPalette = hdrToolbox.palette.cloneNode(true);
+    if (gCoheCollapsedHeaderViewMode) {
+      strLabel = strShowLabel;
+      var cBox = document.getElementById("collapsed2LButtonBox");
+      if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
+        var cloneToolboxPalette;
+        var cloneToolbarset;
+        if (hdrToolbox.palette) {
+          cloneToolboxPalette = hdrToolbox.palette.cloneNode(true);
+        }
+        if (hdrToolbox.toolbarset) {
+          cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
+        }
+        cBox.parentNode.insertBefore(hdrToolbox, cBox);
+        hdrToolbox.palette  = cloneToolboxPalette;
+        hdrToolbox.toolbarset = cloneToolbarset;
+        hdrToolbar = document.getElementById("header-view-toolbar");
+        hdrToolbar.firstPermanentChild = firstPermanentChild;
+        hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
-      if (hdrToolbox.toolbarset) {
-        cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
+    } else {
+      strLabel = strHideLabel;
+      var cBox = document.getElementById("expandedHeaders");
+      if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
+        var cloneToolboxPalette;
+        var cloneToolbarset;
+        if (hdrToolbox.palette) {
+          cloneToolboxPalette = hdrToolbox.palette.cloneNode(true);
+        }
+        if (hdrToolbox.toolbarset) {
+          cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
+        }
+        cBox.parentNode.appendChild(hdrToolbox);
+        hdrToolbox.palette = cloneToolboxPalette;
+        hdrToolbox.toolbarset = cloneToolbarset;
+        hdrToolbar = document.getElementById("header-view-toolbar");
+        hdrToolbar.firstPermanentChild = firstPermanentChild;
+        hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
-      else {
-        debugLog("cannot move");
-      }
-      //cBox.parentNode.insertBefore(hdrToolbox, cBox);
-      cBox.appendChild(hdrToolbox);
-      hdrToolbox.palette  = cloneToolboxPalette;
-      hdrToolbox.toolbarset = cloneToolbarset;
-      hdrToolbar = document.getElementById("header-view-toolbar");
-      hdrToolbar.firstPermanentChild = firstPermanentChild;
-      hdrToolbar.lastPermanentChild = lastPermanentChild;
     }
-
-    hdrToolbar.setAttribute("orient", orient);
+    
+    if (document.getElementById("hideDetailsMenu")) {
+      document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+    }
   }
+  
   // default method for updating a header value into a header entry
   function coheUpdateHeaderValueInTextNode(headerEntry, headerValue)
   {
     headerEntry.textNode.value = headerValue;
   }
-
+  
   function coheUpdateDateValue(headerEntry, headerValue) {
     //var t = currentHeaderData.date.headerValue;
     var d
@@ -825,8 +747,8 @@ org.mozdev.compactHeader.pane = function() {
     d = document.getElementById("collapsed2LdateBox");
     d.textContent = headerValue;
   }
-
-
+  
+  
   // coheUpdateMessageHeaders: Iterate through all the current header data we received from mime for this message
   // for each header entry table, see if we have a corresponding entry for that header. i.e. does the particular
   // view care about this header value. if it does then call updateHeaderEntry
@@ -836,14 +758,14 @@ org.mozdev.compactHeader.pane = function() {
     // problem that attachment-splitter causes if it's moved high enough to
     // affect the header box:
     document.getElementById('msgHeaderView').removeAttribute('height');
-
+    
     // iterate over each header we received and see if we have a matching entry
     // in each header view table...
     for (var headerName in currentHeaderData)
     {
       var headerField = currentHeaderData[headerName];
       var headerEntry = null;
-
+  
       if (gCoheCollapsedHeaderViewMode && !gCoheBuiltCollapsedView)
       {
         if (headerName == "cc" || headerName == "to" || headerName == "bcc")
@@ -851,45 +773,45 @@ org.mozdev.compactHeader.pane = function() {
         else if (headerName in gCoheCollapsedHeaderView)
           headerEntry = gCoheCollapsedHeaderView[headerName];
       }
-
+  
       if (headerEntry) {
         headerEntry.outputFunction(headerEntry, headerField.headerValue);
         headerEntry.valid = true;
       }
     }
-
+  
     if (gCoheCollapsedHeaderViewMode)
      gCoheBuiltCollapsedView = true;
-
+  
     // now update the view to make sure the right elements are visible
     coheUpdateHeaderView();
   }
-
+  
   function addClass(el, strClass) {
-    var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);
+    var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);  
     if (!testnew) {
       el.className += el.className?' '+strClass:strClass;
     }
   }
-
+  
   function removeClass(el, strClass) {
     var str = new RegExp('(\\s|^)'+strClass+'(\\s|$)', 'g');
     el.className = el.className.replace(str, ' ');
   }
-
+  
   function CoheCopyWebsiteAddress(websiteAddressNode)
   {
     if (websiteAddressNode)
     {
       var websiteAddress = websiteAddressNode.getAttribute("url");
-
+  
       var contractid = "@mozilla.org/widget/clipboardhelper;1";
       var iid = Components.interfaces.nsIClipboardHelper;
       var clipboard = Components.classes[contractid].getService(iid);
       clipboard.copyString(websiteAddress);
     }
   }
-
+  
   function selectEmailDisplayed() {
     var xulemail = document.getElementById("collapsedtoCcBccBox");
     if (xulemail != null) {
@@ -928,7 +850,7 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
   };
-
+  
   var myPrefObserverHeaderSize =
   {
     register: function()
@@ -936,86 +858,49 @@ org.mozdev.compactHeader.pane = function() {
       // First we'll need the preference services to look for preferences.
       var prefService = Components.classes["@mozilla.org/preferences-service;1"]
                                   .getService(Components.interfaces.nsIPrefService);
-
+  
       // For this._branch we ask that the preferences for extensions.myextension. and children
       this._branch = prefService.getBranch("extensions.CompactHeader.headersize.");
-
-      // Now we queue the interface called nsIPrefBranch2. This interface is described as:
+  
+      // Now we queue the interface called nsIPrefBranch2. This interface is described as:  
       // "nsIPrefBranch2 allows clients to observe changes to pref values."
       this._branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
-
+  
       // Finally add the observer.
       this._branch.addObserver("", this, false);
     },
-
+  
     unregister: function()
     {
       if(!this._branch) return;
       this._branch.removeObserver("", this);
     },
-
+  
     observe: function(aSubject, aTopic, aData)
     {
       if(aTopic != "nsPref:changed") return;
       // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
       // aData is the name of the pref that's been changed (relative to aSubject)
-
+  
       var event = document.createEvent('Events');
       event.initEvent('messagepane-loaded', false, true);
       var headerViewElement = document.getElementById("msgHeaderView");
       headerViewElement.dispatchEvent(event);
-
+  
       gDBView.reloadMessage();
     }
   }
-
+  
   myPrefObserverHeaderSize.register();
-
-  var myPrefObserverToolboxPosition =
-  {
-    register: function()
-    {
-      // First we'll need the preference services to look for preferences.
-      var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                  .getService(Components.interfaces.nsIPrefService);
-
-      // For this._branch we ask that the preferences for extensions.myextension. and children
-      this._branch = prefService.getBranch("extensions.CompactHeader.toolbox.position");
-
-      // Now we queue the interface called nsIPrefBranch2. This interface is described as:
-      // "nsIPrefBranch2 allows clients to observe changes to pref values."
-      this._branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
-
-      // Finally add the observer.
-      this._branch.addObserver("", this, false);
-    },
-
-    unregister: function()
-    {
-      if(!this._branch) return;
-      this._branch.removeObserver("", this);
-    },
-
-    observe: function(aSubject, aTopic, aData)
-    {
-      if(aTopic != "nsPref:changed") return;
-      // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
-      // aData is the name of the pref that's been changed (relative to aSubject)
-
-      setCurrentToolboxPosition();
-    }
-  }
-
-  myPrefObserverToolboxPosition.register();
-
+  
   function coheCheckFirstRun() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
                                      .getService(Components.interfaces.nsIXULAppInfo);
     var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
                                             .getService(Components.interfaces.nsIVersionComparator);
-    debugLog("first run 0");
+//    debugLog("first run 0");
     if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
-      debugLog("firstrun 1");
+//      debugLog("firstrun 1");
       cohe.version = -1;
       cohe.firstrun = false;
       cohe.gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
@@ -1023,7 +908,7 @@ org.mozdev.compactHeader.pane = function() {
       if ((cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || (isAddonDisabled(COHE_EXTENSION_UUID))) {
         return;
       }
-
+    
       var debugLevel = gCurrentLogLevel;
       cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
       try{
@@ -1041,6 +926,7 @@ org.mozdev.compactHeader.pane = function() {
         //check for upgrade
         if (cohe.version!=cohe.current && !cohe.firstrun){
           cohePrefBranch.setCharPref("version",cohe.current);
+          // XXX
         }
         cohe.firstrun = false;
         gCurrentLogLevel = debugLevel;
@@ -1048,32 +934,30 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
     else {
-      debugLog("firstrun 3");
+      //debugLog("firstrun 3");
       Components.utils.import("resource://gre/modules/AddonManager.jsm");
       AddonManager.getAddonByID(COHE_EXTENSION_UUID,
         function(myAddon) {
-          debugLog("first run 2");
+//          debugLog("first run 2");
           cohe.version = -1;
           cohe.firstrun = false;
           cohe.current = myAddon.version;
           try{
-            debugLog("first run 2a");
             cohe.version = cohePrefBranch.getCharPref("version");
             cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
           } catch(e) {
           } finally {
             //check for first run
-            debugLog("first run 2b");
             if (cohe.firstrun){
-              debugLog("first run 2c");
+//              debugLog("first run 2c");
               org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
               cohePrefBranch.setBoolPref("firstrun",false);
               cohePrefBranch.setCharPref("version",cohe.current);
             }
             //check for upgrade
             if (cohe.version!=cohe.current && !cohe.firstrun){
-              debugLog("first run 2c");
               cohePrefBranch.setCharPref("version",cohe.current);
+              // XXX
             }
             cohe.firstrun = false;
             debugLog("first run 2d");
@@ -1081,7 +965,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       );
     }
-    debugLog("firstrun stop");
+//    debugLog("firstrun 4");
   }
 
 
@@ -1094,283 +978,24 @@ org.mozdev.compactHeader.pane = function() {
       aConsoleService.logStringMessage(Date() + " CH: " + str);
     }
   }
-
+  
   pub.coheInitializeOverlay = function() {
-    //var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+    // var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
     // check if this is part of CompactHeader
-    //if ((gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || isAddonDisabled(COHE_EXTENSION_UUID)) {
+    // if ((gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || isAddonDisabled(COHE_EXTENSION_UUID)) {
     //  return;
     //}
     
+    debugLog("before register");
     coheUninstallObserver.register();
   }
-
-  var setCurrentToolboxPositionEvent = {  
-    notify: function(timer) {
-      debugLog("Start delayed setCurrentToolboxPosition");
-      setCurrentToolboxPosition();  
-      debugLog("Stop delayed setCurrentToolboxPosition");
-    }
-  };
-
-  function delayedCurrentToolboxPosition(timeout) {
-    timerSetToolbox.initWithCallback(setCurrentToolboxPositionEvent, timeout, Components.interfaces.nsITimer.TYPE_ONE_SHOT);  
-  }
   
-  var swapBrowsersEvent = {  
-    notify: function(timer) {
-      debugLog("Start delayed swapBrowsers");
-      swapBrowsers();  
-      debugLog("Stop delayed swapBrowsers");
-    }
-  };
-  
-  function swapBrowsers() {
-    debugLog("swapBrowsers start");
-    var messagePaneNew = document.getElementById("CHTBrowserStore");
-    var messagepane = document.getElementById("messagepane");
-    messagepane.swapDocShells(messagePaneNew);
-    debugLog("swapBrowsers stop");
-  }
-  
-  function delayedSwapBrowser(timeout) {
-    timerSwapBrowsers.initWithCallback(swapBrowsersEvent, timeout, Components.interfaces.nsITimer.TYPE_ONE_SHOT);  
-  }
-  
-  function createSidebars() {
-    debugLog("createSidebars start");
-
-    var messagepanebox   = document.getElementById("messagepanebox");
-    var messagepane = document.getElementById("messagepane");
-    var createMessagePaneBoxWrapper;
-    createMessagePaneBoxWrapper = false;
-    var messagePaneBoxWrapper = document.getElementById("messagepaneboxwrapper");
-    
-    if (messagePaneBoxWrapper == null) {
-      debugLog("messagepaneboxwrapper does not exist");
-      createMessagePaneBoxWrapper = true;
-      swapBrowsers();
-
-      var xul11   = document.createElement("hbox");
-      xul11.id    = "messagepaneboxwrapper";
-
-      var displayDeck = document.getElementById("displayDeck");
-      if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
-        xul11.setAttribute("flex", "1");
-      }
-      
-      xul11.setAttribute("hidden", "false");
-      messagepanebox.parentNode.insertBefore(xul11, messagepanebox);
-    }
-    else {
-      debugLog("messagepaneboxwrapper does exist");
-    }
-    
-
-    if (createMessagePaneBoxWrapper) {
-      org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-      messagePaneBoxWrapper.appendChild(messagepanebox);
-      org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
-
-      /* for whatever reasons, wait for the messagepanebox to fully
-       * appear before the browser content can be swaped */
-      delayedSwapBrowser(1000);
-      debugLog("messagepaneboxwrapper did not exist");
-    }
-
-    debugLog("createSidebars 1");
-    messagepanebox   = document.getElementById("messagepanebox");
-    debugLog("createSidebars 1a");
-    var xul13   = document.createElement("vbox");
-    xul13.id    = "leftToolbox";
-    debugLog("createSidebars 1c");
-    messagePaneBoxWrapper.insertBefore(xul13, messagepanebox);
-
-    debugLog("createSidebars 2");
-    var xul12 = document.createElement("vbox");
-    xul12.id    = "rightToolbox";
-    messagePaneBoxWrapper.appendChild(xul12);
-
-    debugLog("createSidebars 3");
-    messagePaneBoxWrapper.addEventListener("DOMAttrModified", onHeightChangeMessagePaneBoxWrapper, false);
-
-    debugLog("createSidebars stop");
-  };
-
-  function onHiddenChange(event) {
-    if (event.attrName == "hidden") {
-      setCurrentToolboxPosition();
-    }
-  };
-
-  function onHeightChangeMessagePaneBoxWrapper(event) {
-    if (event.attrName == "height") {
-      var height = document.getElementById("messagepanebox").boxObject.height;
-      document.getElementById("messagepanebox").setAttribute("height", height);
-    }
-  };
-  
-  function onCollapsedChangeMessagePaneBox(event) {
-    if (event.attrName == "collapsed") {
-      if (document.getElementById("messagepanebox").getAttribute("collapsed") == "true") {
-        document.getElementById("messagepaneboxwrapper").setAttribute("collapsed", "true");
-      }
-      else {
-        document.getElementById("messagepaneboxwrapper").removeAttribute("collapsed");
-      }
-    }
-  };
-  
-  function onDoCustomizationHeaderViewToolbox(event) {
-    if (event.attrName == "doCustomization") {
-      dispMUACheck();
-    }
-  }
-
-  function dispMUACheck() {
-    var dispMUAButton = document.getElementById("button-dispMUA");
-    var dispMUABox = document.getElementById("dispMUA"); 
-    if (dispMUAButton && dispMUABox) {
-      dispMUABox.setAttribute("collapsed", "true");
-    }
-    else if (dispMUABox){
-      dispMUABox.removeAttribute("collapsed");
-    }
-  }
-
-  function onCollapsedChangeDisplayDeck(event) {
-    if (event.attrName == "collapsed") {
-      var displayDeck = document.getElementById("displayDeck");
-      if (!displayDeck || displayDeck.getAttribute("collapsed") == "true") {
-        document.getElementById("messagepaneboxwrapper").setAttribute("flex", "1");
-      }
-      else {
-        //alert("no flex!");
-        document.getElementById("messagepaneboxwrapper").removeAttribute("flex");
-      }
-    }
-  }
-  
-  function onChangeDispMUAicon(event) {
-    if (event.attrName == "src") {
-      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
-      var buttonDispMUA = document.getElementById("button-dispMUA");
-      if (buttonDispMUA) {
-        buttonDispMUA.setAttribute("image", imageSrc);
-      }
-    }
-    else if (event.attrName == "tooltiptext") {
-      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
-      var buttonDispMUA = document.getElementById("button-dispMUA");
-      if (buttonDispMUA) {
-        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-    }
-  }
-  
-  function onChangeHeaderToolbar(event) {
-    if (event.attrName == "currentset") {
-      if (document.getElementById("button-dispMUA")) {
-        gDBView.reloadMessage();
-      }
-    }
-  }
-  
-  function onMessagePaneHide(event) {
-    var messagePaneBoxWrapper = document.getElementById("messagepaneboxwrapper");
-    if (messagePaneBoxWrapper) {
-      messagePaneBoxWrapper.setAttribute("collapsed", "true");
-    }
-  }
-  
-  function onMessagePaneUnHide(event) {
-    var messagePaneBoxWrapper = document.getElementById("messagepaneboxwrapper");
-    if (messagePaneBoxWrapper) {
-      messagePaneBoxWrapper.removeAttribute("collapsed");
-    }
-  }
-  
-  function setCurrentToolboxPosition() {
-    debugLog("setCurrentToolboxPosition start");
-
-    var singleMessage = document.getElementById("singlemessage");
-    var targetPos = cohePrefBranch.getCharPref("toolbox.position");
-    var multiMessage = document.getElementById("multimessage");
-    var multiBBox;
-    if (multiMessage){
-      multiBBox = multiMessage.contentDocument.getElementById("buttonbox");
-    }
-    
-    var hdrViewToolbox = document.getElementById("header-view-toolbox");
-    if (!hdrViewToolbox) {
-      debugLgo("no header-view-toolbox!", LOGLEVEL.warn);
-      return;
-    }
-
-    debugLog("setCurrentToolboxPosition mid 1");
-
-    if (targetPos == "hdrToolbox.pos.none") {
-      hdrViewToolbox.setAttribute("collapsed", "true");
-      if (multiBBox) {
-        multiBBox.setAttribute("collapsed", "true");
-      }
-      debugLog("hdrToolbox.pos.none stop");
-      return;
-    }
-    else {
-      hdrViewToolbox.removeAttribute("collapsed");
-      if (multiBBox) {
-        multiBBox.removeAttribute("collapsed");
-      }
-    }
-
-    debugLog("setCurrentToolboxPosition mid 2");
-
-    if (multiBBox) {
-      multiBBox.removeAttribute("collapsed");
-    }
-
-    if (singleMessage.getAttribute("hidden")) {
-      debugLog("move to multibuttonhbox");
-      var targetToolbox = getToolbarTarget(targetPos, "");
-      debugLog("move to multibuttonhbox 1");
-      if (multiBBox) {
-        if (targetPos != "hdrToolbox.pos.top") {
-          debugLog("x multiBBox: "+multiBBox);
-          multiBBox.setAttribute("collapsed", "true");
-          hdrViewToolbox.removeAttribute("collapsed");
-        } else {
-          debugLog("x multiBBox: "+multiBBox);
-          multiBBox.removeAttribute("collapsed");
-          hdrViewToolbox.setAttribute("collapsed", "true");
-        }
-      }
-      if (targetToolbox) {
-        moveToolbox(document.getElementById(targetToolbox.id), targetToolbox.orient);
-      }
-    }
-    else {
-      debugLog("move to singlemessage");
-      var targetToolbox;
-      if (gCoheCollapsedHeaderViewMode) {
-        targetToolbox = getToolbarTarget(targetPos, "compact");
-      }
-      else {
-        targetToolbox = getToolbarTarget(targetPos, "expanded");
-      }        
-      if (targetToolbox) {
-        moveToolbox(document.getElementById(targetToolbox.id), targetToolbox.orient);
-      }
-    }
-    debugLog("setCurrentToolboxPosition stop");
-  }
-
   var coheUninstallObserver = {
     _uninstall : false,
     observe : function(subject, topic, data) {
       if (topic == "em-action-requested") {
         subject.QueryInterface(Components.interfaces.nsIUpdateItem);
-
+    
         if (subject.id == COHE_EXTENSION_UUID) {
           debugLog("uninstalling COHE 1");
           if (data == "item-uninstalled") {
@@ -1388,41 +1013,78 @@ org.mozdev.compactHeader.pane = function() {
         this.unregister();
       }
     },
-    register : function() {
-     var observerService =
-       Components.classes["@mozilla.org/observer-service;1"].
-         getService(Components.interfaces.nsIObserverService);
+    onUninstalling: function(addon) {
+      if (addon.id == COHE_EXTENSION_UUID) {
+        this._uninstall = true;
+      }
+    },
 
-     observerService.addObserver(this, "em-action-requested", false);
-     observerService.addObserver(this, "quit-application-granted", false);
+    onOperationCancelled: function(addon) {
+      if (addon.id == COHE_EXTENSION_UUID) {
+        this._uninstall = (addon.pendingOperations & AddonManager.PENDING_UNINSTALL) != 0;
+      }
+    },
+    
+    register : function() {
+      debugLog("register uninstall start");
+      var observerService =
+        Components.classes["@mozilla.org/observer-service;1"].
+        getService(Components.interfaces.nsIObserverService);
+      debugLog("register uninstall start 1");
+    
+      var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+                                       .getService(Components.interfaces.nsIXULAppInfo);
+      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                                              .getService(Components.interfaces.nsIVersionComparator);
+      debugLog("register uninstall start 2");
+
+      if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
+        observerService.addObserver(this, "em-action-requested", false);
+        observerService.addObserver(this, "quit-application-granted", false);
+      }
+      else {
+        debugLog("register uninstall neu 2");
+        observerService.addObserver(this, "quit-application-granted", false);
+        Components.utils.import("resource://gre/modules/AddonManager.jsm");
+        AddonManager.addAddonListener(this);     
+        debugLog("register uninstall neu 2");
+      }
     },
     unregister : function() {
       var observerService =
         Components.classes["@mozilla.org/observer-service;1"].
           getService(Components.interfaces.nsIObserverService);
-
-      observerService.removeObserver(this,"em-action-requested");
-      observerService.removeObserver(this,"quit-application-granted");
+    
+      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                                              .getService(Components.interfaces.nsIVersionComparator);
+      if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
+        observerService.removeObserver(this,"em-action-requested");
+        observerService.removeObserver(this,"quit-application-granted");
+      }
+      else {
+        observerService.removeObserver(this, "quit-application-granted");
+        AddonManager.removeAddonListener(this);      
+      }
     }
   }
-
+  
   function isAddonDisabled(uuid) {
     var rdfService = Components.classes["@mozilla.org/rdf/rdf-service;1"].getService(Components.interfaces.nsIRDFService);
     var addon = rdfService.GetResource("urn:mozilla:item:" + uuid);
-
+  
     var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
     var ds = em.datasource;
-
+  
     var appRes = rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#appDisabled");
     var appDisabled = ds.GetTarget(addon, appRes, true);
     if(appDisabled instanceof Components.interfaces.nsIRDFLiteral && appDisabled.Value == "true")
       return true;
-
+  
     var userRes = rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#userDisabled");
     var userDisabled = ds.GetTarget(addon, userRes, true);
     if(userDisabled instanceof Components.interfaces.nsIRDFLiteral && userDisabled.Value == "true")
       return true;
-
+  
     return false;
   }
   return pub;
@@ -1431,4 +1093,4 @@ org.mozdev.compactHeader.pane = function() {
 addEventListener('messagepane-loaded', org.mozdev.compactHeader.pane.coheOnLoadMsgHeaderPane, true);
 addEventListener('messagepane-unloaded', org.mozdev.compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
 addEventListener('load', org.mozdev.compactHeader.pane.coheInitializeOverlay, false);
-
+  
