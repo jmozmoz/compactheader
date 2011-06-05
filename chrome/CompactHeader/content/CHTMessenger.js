@@ -152,7 +152,6 @@ org.mozdev.customizeHeaderToolbar.pane = function(){
   }
   
   pub.CHTCleanupButtons = function() {
-    alert("cleanup");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrBarDefaultSet = "hdrReplyToSenderButton,hdrSmartReplyButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton";
