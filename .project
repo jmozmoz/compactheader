@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>compactheader-moz</name>
+	<comment>Cloned from https://hg.mozilla.org/users/Joachim.Herb_gmx.de/compactheader</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>
