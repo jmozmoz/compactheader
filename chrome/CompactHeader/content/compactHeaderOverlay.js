@@ -222,6 +222,20 @@ org.mozdev.compactHeader.pane = function() {
     gCoheCollapsedHeaderViewMode = 
       deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');    
       
+    var headerViewToolbox = document.getElementById("header-view-toolbox");
+    if (headerViewToolbox) {
+      headerViewToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
+    }
+    
+    var mailToolbox = document.getElementById("mail-toolbox");
+    if (mailToolbox) {
+      mailToolbox.addEventListener("DOMAttrModified", onDoCustomizationHeaderViewToolbox, false);
+    }
+    var dispMUAicon = document.getElementById("dispMUAicon");
+    if (dispMUAicon) {
+      dispMUAicon.addEventListener("DOMAttrModified", onChangeDispMUAicon, false);
+    }
+
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded
     // view "stretches" the deck.
@@ -264,6 +278,7 @@ org.mozdev.compactHeader.pane = function() {
     coheToggleHeaderContent();
     setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
+    dispMUACheck();
   }
   
   var coheMessageListener = 
@@ -432,8 +447,29 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
   }
+
+  
+  function removeButtonDispMUA() {
+    if (!document.getElementById("dispMUA")) {
+      var button = document.getElementById("button-dispMUA");
+      if (button) {
+        button.parentNode.removeChild(button);
+      }
+      
+      var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      if (button1) {
+        button1.parentNode.removeChild(button1);
+      }
+
+      var button2 = document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      if (button2) {
+        button2.parentNode.removeChild(button2);
+      }
+    }
+  }
   
   function fillToolboxPalette() {
+    removeButtonDispMUA();
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist", 
@@ -449,7 +485,8 @@ org.mozdev.compactHeader.pane = function() {
                    "ToggleHTML", "ToggleImages", "bDeleteThread",
                    "mailredirect-toolbarbutton",
                    "lightningbutton-convert-to-task",
-                   "lightningbutton-convert-to-event"];
+                   "lightningbutton-convert-to-event",
+                   "button-dispMUA"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
@@ -653,6 +690,7 @@ org.mozdev.compactHeader.pane = function() {
       }
     }    
     
+
     var dispMUABox = document.getElementById("dispMUA");
     
     if (dispMUABox != null) {
@@ -989,6 +1027,73 @@ org.mozdev.compactHeader.pane = function() {
     debugLog("before register");
     coheUninstallObserver.register();
   }
+  
+  function onDoCustomizationHeaderViewToolbox(event) {
+    if (event.attrName == "doCustomization") {
+      dispMUACheck();
+      org.mozdev.compactHeader.buttons.coheToggleStar();
+      var dispMUAicon = document.getElementById("dispMUAicon");
+      if (dispMUAicon) {
+        var evt1 = document.createEvent("MutationEvents");
+        evt1.initMutationEvent("DOMAttrModified",
+            true, false, dispMUAicon,
+            dispMUAicon.getAttribute("src"),
+            dispMUAicon.getAttribute("src"),
+            "src",
+            evt1.MODIFICATION
+        );
+        dispMUAicon.dispatchEvent(evt1);
+        var evt2 = document.createEvent("MutationEvents");
+        evt2.initMutationEvent("DOMAttrModified",
+            true, false, dispMUAicon,
+            dispMUAicon.getAttribute("tooltiptext"),
+            dispMUAicon.getAttribute("tooltiptext"),
+            "tooltiptext",
+            evt2.MODIFICATION
+        );
+        dispMUAicon.dispatchEvent(evt2);
+      }
+      debugLog("onDoCustomizationHeaderViewToolbox done");
+    }
+  }
+
+  function dispMUACheck() {
+    var dispMUAButton = document.getElementById("button-dispMUA");
+    var dispMUABox = document.getElementById("dispMUA"); 
+    if (dispMUAButton && dispMUABox) {
+      dispMUABox.setAttribute("collapsed", "true");
+    }
+    else if (dispMUABox){
+      dispMUABox.removeAttribute("collapsed");
+    }
+  }
+
+  function onChangeDispMUAicon(event) {
+    if (event.attrName == "src") {
+      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
+      var buttonDispMUA = document.getElementById("button-dispMUA");
+      if (buttonDispMUA) {
+        buttonDispMUA.setAttribute("image", imageSrc);
+      }
+    }
+    else if (event.attrName == "tooltiptext") {
+      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
+      var buttonDispMUA = document.getElementById("button-dispMUA");
+      if (buttonDispMUA) {
+        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
+      }
+    }
+  }
+  
+//  function onChangeHeaderToolbar(event) {
+//    if (event.attrName == "currentset") {
+//      if (document.getElementById("button-dispMUA")) {
+//        gDBView.reloadMessage();
+//      }
+//      dispMUACheck();
+//      org.mozdev.compactHeader.buttons.coheToggleStar();
+//    }
+//  }
   
   var coheUninstallObserver = {
     _uninstall : false,
