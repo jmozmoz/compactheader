@@ -22,6 +22,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
 
   <keyset>
     <key id="hideDetailsKey" 
@@ -115,6 +116,11 @@
       </hbox>
       
     </vbox>
+
+    <vbox id="dispMUAexp" collapsed="false">
+        <image id="dispMUAiconExp" tooltiptext="" style="width:48px; height:48px; margin-left:2px; margin-right:2px;" onclick="dispMUA.infopopup();"/>
+    </vbox>
+
   </vbox>
 
   <vbox id="collapsedHeaderView" orient="horizontal" flex="1">
@@ -211,7 +217,19 @@
           </row>
         </hbox>
       </hbox>
+
+
+
     </vbox>
+
+    <vbox id="dispMUA2line">
+      <image id="dispMUAicon2line" tooltiptext="" style="width:32px; height:32px; margin-left:2px; margin-right:2px;" onclick="dispMUA.infopopup();"/>
+    </vbox>
+
+    <vbox id="dispMUAcompact">
+      <image id="dispMUAiconCompact" tooltiptext="" style="width:24px; height:24px; margin:-2px 2px -2px 2px;" onclick="dispMUA.infopopup();"/>
+    </vbox>
+
 
   </vbox>
 
