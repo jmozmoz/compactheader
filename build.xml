@@ -2,10 +2,10 @@
 
 <project name="CompactHeader" default="dist">
   <property name="src.dir" value="." />
-  <property name="dist.dir" value="../downloads/"/>
-  <property name="AMOdist.dir" value="../AMO/"/>
-  <property name="www.dir" value="../www/"/>
-  <property name="pref.file" value="${src.dir}/chrome/CompactHeader/content/preferences.js"/>
+	<property name="mozdev.dir" value="${src.dir}/../CompactHeader_1_1_5"/>
+  <property name="dist.dir" value="${mozdev.dir}/downloads/"/>
+  <property name="AMOdist.dir" value="${src.dir}/AMO/"/>
+  <property name="www.dir" value="${mozdev.dir}/www/"/>
   <property name="mccoy.cmd" value='c:/Program Files (x86)/mccoy/mccoy.exe'/>
 
   <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
@@ -26,11 +26,6 @@
     
     
   <target name="buildAMO">
-    <!--
-    <replaceregexp file="${pref.file}" 
-                   byline="true"
-                   match="(.*)return.*( /\* Patch this line for AMO version \*/)"
-                   replace="\1return true; /* AMO version */\2"/> -->
     <copy file="${src.dir}/install.rdf" tofile="${AMOdist.dir}/install.rdf"/>
     <replaceregexp file="${AMOdist.dir}/install.rdf" 
                    byline="true"
@@ -51,11 +46,6 @@
   </target>
 
   <target name="buildMozdev">
-    <!--
-    <replaceregexp file="${pref.file}" 
-                   byline="true"
-                   match="(.*)return .*( /\* Patch this line for AMO version \*/)"
-                   replace="\1return false; /* Mozdev version */\2"/>-->
     <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
