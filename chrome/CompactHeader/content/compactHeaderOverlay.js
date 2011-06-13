@@ -445,9 +445,12 @@ org.mozdev.compactHeader.pane = function() {
                    "button-getPartialMessages",
                    "stylish-toolbar-button",
                    "button-enigmail-decrypt",
+                   // support for https://addons.mozilla.org/thunderbird/addon/buttons/
                    "RealPreviousMessage", "RealNextMessage", "SelectSMTP",
                    "ToggleHTML", "ToggleImages", "bDeleteThread",
                    "mailredirect-toolbarbutton",
+                   // support for https://addons.mozilla.org/thunderbird/addon/realprevnextbuttons/
+                   //"realPrevMessageButton", "realNextMessageButton",
                    "lightningbutton-convert-to-task",
                    "lightningbutton-convert-to-event"];
     var currentSet=hdrToolbar.getAttribute("currentset");
