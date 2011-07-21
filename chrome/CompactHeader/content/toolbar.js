@@ -40,7 +40,7 @@
 
 EXPORTED_SYMBOLS = ["org"];
 
-Components.utils.import("chrome://CompactHeader/content/debug.jsm");
+//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
 if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
@@ -54,7 +54,7 @@ org.mozdev.compactHeader.toolbar = function() {
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
 
-  pub.fillToolboxPalette = function (document) {
+  pub.fillToolboxPalette = function () {
     org.mozdev.compactHeader.debug.log("fillToolboxPalette start");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
@@ -137,7 +137,7 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("fillToolboxPalette stop");
   };
 
-  pub.setButtonStyle = function(document) {
+  pub.setButtonStyle = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle start");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
@@ -234,7 +234,7 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle stop");
   };
   
-  pub.toggle = function(document, aHeaderViewMode) {
+  pub.toggle = function(aHeaderViewMode) {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;

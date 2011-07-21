@@ -40,7 +40,7 @@
 
 EXPORTED_SYMBOLS = ["org"];
 
-Components.utils.import("chrome://CompactHeader/content/debug.jsm");
+//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
 if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
@@ -63,6 +63,10 @@ org.mozdev.compactHeader.RSSLinkify = function() {
   
   pub.UpdateHeaderView = function(currentHeaderData) {
     org.mozdev.compactHeader.debug.log("updateheaderview start");
+    if (!currentHeaderData) {
+      org.mozdev.compactHeader.debug.log("updateheaderview: no currentHeaderData!");
+      return;
+    }
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       var url = currentHeaderData["content-base"];
       if(url) {
@@ -96,7 +100,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     org.mozdev.compactHeader.debug.log("updateheaderview stop");
   };
 
-  pub.InitializeHeaderViewTables = function(document) {
+  pub.InitializeHeaderViewTables = function() {
     org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start");
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
