@@ -22,6 +22,8 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
+  <script type="application/x-javascript" 
+          src="chrome://CompactHeader/content/CHTMessenger.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
 
   <keyset>
@@ -31,11 +33,11 @@
          oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
   </keyset>
 
-  <popup id="header-toolbar-context-menu">
+  <menupopup id="header-toolbar-context-menu">
     <menuitem id="hidecohePreferencesButton" 
               label="&dialog.title;"
               oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
-  </popup>
+  </menupopup>
 
   <deck id="msgHeaderViewDeck">
 
@@ -124,9 +126,10 @@
   </vbox>
 
   <vbox id="collapsedHeaderView" orient="horizontal" flex="1">
-    <popup id="CohecopyUrlPopup" popupanchor="bottomleft">
-      <menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;" oncommand="CoheCopyWebsiteAddress(document.popupNode)"/>
-    </popup>
+    <menupopup id="CohecopyUrlPopup" popupanchor="bottomleft">
+      <menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;"
+                oncommand="org.mozdev.compactHeader.RSSLinkify.CoheCopyWebsiteAddress(document.popupNode)"/>
+    </menupopup>
     <vbox id="showDetailsButtonBox" align="start" flex="0">
       <button id="showDetailsButton"
               tooltiptext="&showDetailsButton.label;"
