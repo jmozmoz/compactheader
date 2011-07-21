@@ -365,7 +365,7 @@ org.mozdev.compactHeader.pane = function() {
     if (gCoheCollapsedHeaderViewMode)
       showHeaderView(gCoheCollapsedHeaderView);
 
-    org.mozdev.compactHeader.RSSLinkify.UpdateHeaderView(document, currentHeaderData);
+    org.mozdev.compactHeader.RSSLinkify.UpdateHeaderView(currentHeaderData);
 
     if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
       selectEmailDisplayed();

@@ -56,7 +56,7 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.fillToolboxPalette = function () {
     org.mozdev.compactHeader.debug.log("fillToolboxPalette start");
-    removeButtonDispMUA(doc);
+    removeButtonDispMUA();
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist", 
@@ -283,7 +283,7 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("toolbar toggle stop");
   };
 
-  pub.dispMUACheck = function(doc) {
+  pub.dispMUACheck = function() {
     org.mozdev.compactHeader.debug.log("dispMUACheck start");
     var dispMUAButton = document.getElementById("button-dispMUA");
     var dispMUABox = document.getElementById("dispMUA"); 
@@ -331,11 +331,6 @@ org.mozdev.compactHeader.toolbar = function() {
   pub.onChangeDispMUAicon = function(event) {
     if (event.attrName == "src") {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var doc = event.originalTarget.ownerDocument;
-      if (!doc) {
-        org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: no document!");
-        return;
-      }
       var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
       var IconContainerDispMUA = null;
       /* toolbar button */
@@ -358,11 +353,6 @@ org.mozdev.compactHeader.toolbar = function() {
     }
     else if (event.attrName == "tooltiptext") {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var doc = event.originalTarget.ownerDocument;
-      if (!doc) {
-        org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: no document!");
-        return;
-      }
       var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
       var buttonDispMUA = document.getElementById("button-dispMUA");
       if (buttonDispMUA) {
@@ -394,7 +384,7 @@ org.mozdev.compactHeader.toolbar = function() {
 //    }
 //  }
   
-  removeButtonDispMUA = function(doc) {
+  removeButtonDispMUA = function() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
     if (!document.getElementById("dispMUA")) {
       var button = document.getElementById("button-dispMUA");

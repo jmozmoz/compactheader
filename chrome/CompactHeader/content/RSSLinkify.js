@@ -61,7 +61,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
       newSubject: null
   };
   
-  pub.UpdateHeaderView = function(doc, currentHeaderData) {
+  pub.UpdateHeaderView = function(currentHeaderData) {
     org.mozdev.compactHeader.debug.log("updateheaderview start");
     if (!currentHeaderData) {
       org.mozdev.compactHeader.debug.log("updateheaderview: no currentHeaderData!");
@@ -82,10 +82,10 @@ org.mozdev.compactHeader.RSSLinkify = function() {
           RSSLinkify.oldSubject.setAttribute("collapsed", "false");
           RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
 //          if (gCoheCollapsedHeaderViewMode) {
-//            //linkifySubject(doc, 'collapsed1LsubjectBox');
+//            //linkifySubject('collapsed1LsubjectBox');
 //          }
 //          else {
-//            linkifySubject(doc, 'expandedsubjectBox');
+//            linkifySubject('expandedsubjectBox');
 //          }
       }
     } else {
