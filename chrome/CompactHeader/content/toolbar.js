@@ -40,7 +40,7 @@
 
 EXPORTED_SYMBOLS = ["org"];
 
-Components.utils.import("chrome://CompactHeader/content/debug.jsm");
+//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
 if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
@@ -54,11 +54,11 @@ org.mozdev.compactHeader.toolbar = function() {
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
 
-  pub.fillToolboxPalette = function (doc) {
+  pub.fillToolboxPalette = function () {
     org.mozdev.compactHeader.debug.log("fillToolboxPalette start");
-    var hdrToolbar = doc.getElementById("header-view-toolbar");
-    var hdrToolbox = doc.getElementById("header-view-toolbox");
     removeButtonDispMUA(doc);
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist", 
                    "button-tag", "button-forward", "button-archive", "button-file",
                    "button-print", "button-mark", "button-starMessages",
@@ -81,8 +81,8 @@ org.mozdev.compactHeader.toolbar = function() {
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
       var buttonName = buttons[i];
-      var button = doc.getElementById(buttonName) || 
-          doc.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+      var button = document.getElementById(buttonName) || 
+          document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         var hdrButton = button.cloneNode(true);
         if (hdrButton) {
@@ -100,8 +100,7 @@ org.mozdev.compactHeader.toolbar = function() {
           }
           //hdrButton.id = "hdr" + hdrButton.id;
           hdrToolbox.palette.appendChild(hdrButton);
-  /*        var bStyle = doc.defaultView.getComputedStyle(button, null);
-          hdrButton.style.MozImageRegion = bStyle.MozImageRegion;
+  /*        var bStyle = document.defaultView.getComputedStyle(button, null);
           hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
         }
         if (currentSet.indexOf(buttonName)>=0) {
@@ -117,8 +116,8 @@ org.mozdev.compactHeader.toolbar = function() {
                          //"hdrReplyAllButton", "hdrReplyListButton"];
     for (var i=0; i<buttonsRemove.length; i++) {
       var buttonName = buttonsRemove[i];
-      var button = doc.getElementById(buttonName) || 
-          doc.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+      var button = document.getElementById(buttonName) || 
+          document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         button.setAttribute("collapsed", "true");
       }
@@ -126,12 +125,12 @@ org.mozdev.compactHeader.toolbar = function() {
     
     var target = "hdrOtherActionsButton";
     
-    var newParent = doc.getElementById(target) || 
-        doc.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
+    var newParent = document.getElementById(target) || 
+        document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
   
     if (newParent != null) {
       var myElement;
-      myElement= doc.getElementById("otherActionsPopup");
+      myElement= document.getElementById("otherActionsPopup");
       if (myElement) {
         newParent.appendChild(myElement);
       }
@@ -139,10 +138,10 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("fillToolboxPalette stop");
   };
 
-  pub.setButtonStyle = function(doc) {
+  pub.setButtonStyle = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle start");
-    var hdrToolbar = doc.getElementById("header-view-toolbar");
-    var hdrToolbox = doc.getElementById("header-view-toolbox");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = hdrToolbar.querySelectorAll("toolbarbutton");
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
@@ -236,14 +235,16 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle stop");
   };
   
-  pub.toggle = function(doc, aHeaderViewMode) {
+  pub.toggle = function(aHeaderViewMode) {
     org.mozdev.compactHeader.debug.log("toolbar toggle start");
-    var hdrToolbox = doc.getElementById("header-view-toolbox");
-    var hdrToolbar = doc.getElementById("header-view-toolbar");
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
+    var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
     var firstPermanentChild = hdrToolbar.firstPermanentChild;
     var lastPermanentChild = hdrToolbar.lastPermanentChild;
     if (aHeaderViewMode) {
-      var cBox = doc.getElementById("collapsed2LButtonBox");
+      var cBox = document.getElementById("collapsed2LButtonBox");
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -256,12 +257,12 @@ org.mozdev.compactHeader.toolbar = function() {
         cBox.parentNode.insertBefore(hdrToolbox, cBox);
         hdrToolbox.palette  = cloneToolboxPalette;
         hdrToolbox.toolbarset = cloneToolbarset;
-        hdrToolbar = doc.getElementById("header-view-toolbar");
+        hdrToolbar = document.getElementById("header-view-toolbar");
         hdrToolbar.firstPermanentChild = firstPermanentChild;
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
     } else {
-      var cBox = doc.getElementById("expandedHeaders");
+      var cBox = document.getElementById("expandedHeaders");
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -274,7 +275,7 @@ org.mozdev.compactHeader.toolbar = function() {
         cBox.parentNode.appendChild(hdrToolbox);
         hdrToolbox.palette = cloneToolboxPalette;
         hdrToolbox.toolbarset = cloneToolbarset;
-        hdrToolbar = doc.getElementById("header-view-toolbar");
+        hdrToolbar = document.getElementById("header-view-toolbar");
         hdrToolbar.firstPermanentChild = firstPermanentChild;
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
@@ -284,21 +285,21 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.dispMUACheck = function(doc) {
     org.mozdev.compactHeader.debug.log("dispMUACheck start");
-    var dispMUAButton = doc.getElementById("button-dispMUA");
-    var dispMUABox = doc.getElementById("dispMUA"); 
+    var dispMUAButton = document.getElementById("button-dispMUA");
+    var dispMUABox = document.getElementById("dispMUA"); 
     dispMUABox.setAttribute("collapsed", "true"); // hide original
     var IconContainerDispMUA = null;
     if (dispMUAButton) {
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
 
@@ -306,21 +307,21 @@ org.mozdev.compactHeader.toolbar = function() {
     else if (dispMUABox){
 
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.removeAttribute("collapsed");
       }
       if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
         /* two line view 32 * 32 */
-        if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line"))
+        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
           IconContainerDispMUA.removeAttribute("collapsed");
-        if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact"))
+        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
           IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       else {
         /* compact view 24 * 24 */
-        if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact"))
+        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
           IconContainerDispMUA.removeAttribute("collapsed");
-        if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line"))
+        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
           IconContainerDispMUA.setAttribute("collapsed", "true");
       }
     }
@@ -335,22 +336,22 @@ org.mozdev.compactHeader.toolbar = function() {
         org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: no document!");
         return;
       }
-      var imageSrc = doc.getElementById("dispMUAicon").getAttribute("src");
+      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
       var IconContainerDispMUA = null;
       /* toolbar button */
-      if (IconContainerDispMUA = doc.getElementById("button-dispMUA")) {
+      if (IconContainerDispMUA = document.getElementById("button-dispMUA")) {
         IconContainerDispMUA.setAttribute("image", imageSrc);
       }
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
@@ -362,21 +363,21 @@ org.mozdev.compactHeader.toolbar = function() {
         org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: no document!");
         return;
       }
-      var tooltipText = doc.getElementById("dispMUAicon").getAttribute("tooltiptext");
-      var buttonDispMUA = doc.getElementById("button-dispMUA");
+      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
+      var buttonDispMUA = document.getElementById("button-dispMUA");
       if (buttonDispMUA) {
         buttonDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
@@ -385,7 +386,7 @@ org.mozdev.compactHeader.toolbar = function() {
   
 //  function onChangeHeaderToolbar(event) {
 //    if (event.attrName == "currentset") {
-//      if (doc.getElementById("button-dispMUA")) {
+//      if (document.getElementById("button-dispMUA")) {
 //        gDBView.reloadMessage();
 //      }
 //      dispMUACheck();
@@ -395,18 +396,18 @@ org.mozdev.compactHeader.toolbar = function() {
   
   removeButtonDispMUA = function(doc) {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
-    if (!doc.getElementById("dispMUA")) {
-      var button = doc.getElementById("button-dispMUA");
+    if (!document.getElementById("dispMUA")) {
+      var button = document.getElementById("button-dispMUA");
       if (button) {
         button.parentNode.removeChild(button);
       }
       
-      var button1 = doc.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
       if (button1) {
         button1.parentNode.removeChild(button1);
       }
 
-      var button2 = doc.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      var button2 = document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
       if (button2) {
         button2.parentNode.removeChild(button2);
       }
