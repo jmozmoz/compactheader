@@ -212,11 +212,11 @@ org.mozdev.compactHeader.pane = function() {
       mailToolbox.addEventListener("DOMAttrModified",
         org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
     }
-    var dispMUAicon = document.getElementById("dispMUAicon");
-    if (dispMUAicon) {
-      dispMUAicon.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
-    }
+//    var dispMUAicon = document.getElementById("dispMUAicon");
+//    if (dispMUAicon) {
+//      dispMUAicon.addEventListener("DOMAttrModified",
+//        org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
+//    }
 
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded

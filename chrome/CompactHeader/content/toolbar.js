@@ -243,6 +243,7 @@ org.mozdev.compactHeader.toolbar = function() {
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
     }
+    pub.onChangeDispMUAicon();
     org.mozdev.compactHeader.debug.log("toolbar toggle stop");
   };
 
@@ -306,48 +307,48 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("dispMUACheck stop");
   };
 
-  pub.onChangeDispMUAicon = function(event) {
-    if (event.attrName == "src") {
+  pub.onChangeDispMUAicon = function(attribute) {
+    if (attribute == "src") {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
+      var imageSrc = document.getElementById("button-dispMUA").getAttribute("src");
       var IconContainerDispMUA = null;
       /* toolbar button */
       if (IconContainerDispMUA = document.getElementById("button-dispMUA")) {
         IconContainerDispMUA.setAttribute("image", imageSrc);
       }
-      /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
-        IconContainerDispMUA.setAttribute("src", imageSrc);
-      }
-      /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
-        IconContainerDispMUA.setAttribute("src", imageSrc);
-      }
-      /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
-        IconContainerDispMUA.setAttribute("src", imageSrc);
-      }
-      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
-    }
-    else if (event.attrName == "tooltiptext") {
-      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
-      var buttonDispMUA = document.getElementById("button-dispMUA");
-      if (buttonDispMUA) {
-        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
-        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
-        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
-        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
+//      /* expanded view 48 * 48 */
+//      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+//        IconContainerDispMUA.setAttribute("src", imageSrc);
+//      }
+//      /* two line view 32 * 32 */
+//      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+//        IconContainerDispMUA.setAttribute("src", imageSrc);
+//      }
+//      /* compact view 24 * 24 */
+//      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+//        IconContainerDispMUA.setAttribute("src", imageSrc);
+//      }
+//      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
+//    }
+//    else if (event.attrName == "tooltiptext") {
+//      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
+//      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
+//      var buttonDispMUA = document.getElementById("button-dispMUA");
+//      if (buttonDispMUA) {
+//        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
+//      }
+//      /* expanded view 48 * 48 */
+//      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+//        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
+//      }
+//      /* two line view 32 * 32 */
+//      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+//        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
+//      }
+//      /* compact view 24 * 24 */
+//      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+//        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
+//      }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
     }
   };
