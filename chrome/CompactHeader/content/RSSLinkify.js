@@ -78,9 +78,10 @@ org.mozdev.compactHeader.RSSLinkify = function() {
         RSSLinkify.oldSubject.setAttribute("collapsed", "true");
         RSSLinkify.newSubject.setAttribute("tooltiptext", url.headerValue);
         RSSLinkify.newSubject.addEventListener("click",
-            org.mozdev.compactHeader.RSSLinkify.openBrowser, false);
+          org.mozdev.compactHeader.RSSLinkify.openBrowser, false);
       } else {
-        removeEventListener('click', openBrowser, true);
+        removeEventListener('click',
+            org.mozdev.compactHeader.RSSLinkify.openBrowser, true);
         RSSLinkify.newSubject.setAttribute("collapsed", "true");
         RSSLinkify.oldSubject.setAttribute("collapsed", "false");
         RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
