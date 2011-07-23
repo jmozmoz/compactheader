@@ -59,11 +59,20 @@ toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
 }
 
 #button-dispMUA .toolbarbutton-icon {
-  width:24px; 
+  width:24px;
   height:24px;
 }
 
 toolbar[iconsize="small"] #button-dispMUA .toolbarbutton-icon {
-  width:18px; 
-  height:18px;
+  width:16px;
+  height:16px;
 }
+
+.hdrOtherActionsButton {
+  list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
+}
+
+toolbar[iconsize="small"] .hdrOtherActionsButton {
+  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
+}
+

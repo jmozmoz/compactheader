@@ -59,11 +59,11 @@ org.mozdev.compactHeader.toolbar = function() {
     removeButtonDispMUA();
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
-    var buttons = ["button-reply", "button-replyall", "button-replylist", 
+    var buttons = ["button-reply", "button-replyall", "button-replylist",
                    "button-tag", "button-forward", "button-archive", "button-file",
                    "button-print", "button-mark", "button-starMessages",
                    "button-newmsg", "button-goback", "button-goforward",
-                   "button-previous", "button-next", "button-compact", 
+                   "button-previous", "button-next", "button-compact",
                    "button-address", "button-stop", "button-getmsg",
                    "button-getPartialMessages",
                    "stylish-toolbar-button",
@@ -81,7 +81,7 @@ org.mozdev.compactHeader.toolbar = function() {
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
       var buttonName = buttons[i];
-      var button = document.getElementById(buttonName) || 
+      var button = document.getElementById(buttonName) ||
           document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         var hdrButton = button.cloneNode(true);
@@ -89,13 +89,15 @@ org.mozdev.compactHeader.toolbar = function() {
           if (hdrButton.localName == "toolbaritem") {
             var subButtons = hdrButton.querySelectorAll(".toolbarbutton-1");
             for (var j=0; j<subButtons.length; j++) {
-              addClass(subButtons[j], "msgHeaderView-button-out");
+//              addClass(subButtons[j], "msgHeaderView-button-out");
+              addClass(subButtons[j], "msgHeaderView-button");
             }
           } else {
             if (hdrButton.type != "menu-button") {
               addClass(hdrButton, "msgHeaderView-button");
             } else {
-              addClass(hdrButton, "msgHeaderView-button-out");
+//              addClass(hdrButton, "msgHeaderView-button-out");
+              addClass(hdrButton, "msgHeaderView-button");
             }
           }
           //hdrButton.id = "hdr" + hdrButton.id;
@@ -116,18 +118,18 @@ org.mozdev.compactHeader.toolbar = function() {
                          //"hdrReplyAllButton", "hdrReplyListButton"];
     for (var i=0; i<buttonsRemove.length; i++) {
       var buttonName = buttonsRemove[i];
-      var button = document.getElementById(buttonName) || 
+      var button = document.getElementById(buttonName) ||
           document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         button.setAttribute("collapsed", "true");
       }
     }
-    
+
     var target = "hdrOtherActionsButton";
-    
-    var newParent = document.getElementById(target) || 
+
+    var newParent = document.getElementById(target) ||
         document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
-  
+
     if (newParent != null) {
       var myElement;
       myElement= document.getElementById("otherActionsPopup");
@@ -142,13 +144,15 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle start");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
-    var buttons = hdrToolbar.querySelectorAll("toolbarbutton");
+    var buttons1 = Array.prototype.slice.call(hdrToolbar.querySelectorAll("toolbarbutton"));
+    var buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbarbutton"));
+    var buttons = buttons1.concat(buttons2);
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
       if (button) {
         addClass(button, "customize-header-toolbar-button");
         addClass(button, "customize-header-toolbar-" + button.id)
-        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+        if (flatButtons()) {
           if (button.type != "menu-button") {
             addClass(button, "msgHeaderView-flat-button");
           } else {
@@ -164,7 +168,8 @@ org.mozdev.compactHeader.toolbar = function() {
             removeClass(button, "msgHeaderView-flat-button");
             removeClass(button, "msgHeaderView-button");
             removeClass(button, "msgHeaderView-flat-button-out");
-            addClass(button,    "msgHeaderView-button-out");
+//            addClass(button,    "msgHeaderView-button-out");
+            addClass(button,    "msgHeaderView-button");
           }
         }
       }
@@ -172,13 +177,15 @@ org.mozdev.compactHeader.toolbar = function() {
 
     org.mozdev.compactHeader.debug.log("setButtonStyle start 1");
 
-    var buttons = hdrToolbar.querySelectorAll("toolbaritem");
+    var buttons1 = Array.prototype.slice.call(hdrToolbar.querySelectorAll("toolbaritem"));
+    var buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbaritem"));
+    var buttons = buttons1.concat(buttons2);
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
       if (button) {
         addClass(button, "customize-header-toolbar-button");
         addClass(button, "customize-header-toolbar-" + button.id)
-        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
+        if (flatButtons()) {
           removeClass(button, "msgHeaderView-button-out-item");
           addClass(button,    "msgHeaderView-flat-button-out-item");
         } else {
@@ -187,54 +194,10 @@ org.mozdev.compactHeader.toolbar = function() {
         }
       }
     }
-    
-    buttons = hdrToolbox.palette.querySelectorAll("toolbarbutton");
-    for (var i=0; i<buttons.length; i++) {
-      var button = buttons[i];
-      if (button) {
-        addClass(button, "customize-header-toolbar-button");
-        addClass(button, "customize-header-toolbar-" + button.id)
-        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
-          if (button.getAttribute("type") != "menu-button") {
-            addClass(button, "msgHeaderView-flat-button");
-          } else {
-            removeClass(button, "msgHeaderView-flat-button");
-            removeClass(button, "msgHeaderView-button");
-            removeClass(button, "msgHeaderView-button-out");
-            addClass(button,    "msgHeaderView-flat-button-out");
-          }
-        } else {
-          if (button.getAttribute("type") != "menu-button") {
-            removeClass(button, "msgHeaderView-flat-button");
-          } else {
-            removeClass(button, "msgHeaderView-flat-button");
-            removeClass(button, "msgHeaderView-button");
-            removeClass(button, "msgHeaderView-flat-button-out");
-            addClass(button,    "msgHeaderView-button-out");
-          }
-        }
-      }
-    }
-    org.mozdev.compactHeader.debug.log("setButtonStyle start 2");
 
-    buttons = hdrToolbox.palette.querySelectorAll("toolbaritem");
-    for (var i=0; i<buttons.length; i++) {
-      var button = buttons[i];
-      if (button) {
-        addClass(button, "customize-header-toolbar-button");
-        addClass(button, "customize-header-toolbar-" + button.id)
-        if (cohePrefBranch.getBoolPref("headersize.flatButtons")) {
-          removeClass(button, "msgHeaderView-button-out-item");
-          addClass(button,    "msgHeaderView-flat-button-out-item");
-        } else {
-          removeClass(button, "msgHeaderView-flat-button-out-item");
-          addClass(button,    "msgHeaderView-button-out-item");
-        }
-      }
-    }
     org.mozdev.compactHeader.debug.log("setButtonStyle stop");
   };
-  
+
   pub.toggle = function(aHeaderViewMode) {
     org.mozdev.compactHeader.debug.log("toolbar toggle start");
     var hdrToolbox = document.getElementById("header-view-toolbox");
@@ -286,10 +249,47 @@ org.mozdev.compactHeader.toolbar = function() {
   pub.dispMUACheck = function() {
     org.mozdev.compactHeader.debug.log("dispMUACheck start");
     var dispMUAButton = document.getElementById("button-dispMUA");
-    var dispMUABox = document.getElementById("dispMUA"); 
-    dispMUABox.setAttribute("collapsed", "true"); // hide original
-    var IconContainerDispMUA = null;
-    if (dispMUAButton) {
+    var dispMUABox = document.getElementById("dispMUA");
+    if (dispMUABox) {
+      dispMUABox.setAttribute("collapsed", "true"); // hide original
+      var IconContainerDispMUA = null;
+      if (dispMUAButton) {
+        /* expanded view 48 * 48 */
+        if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+          IconContainerDispMUA.setAttribute("collapsed", "true");
+        }
+        /* two line view 32 * 32 */
+        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+          IconContainerDispMUA.setAttribute("collapsed", "true");
+        }
+        /* compact view 24 * 24 */
+        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+          IconContainerDispMUA.setAttribute("collapsed", "true");
+        }
+      }
+      else if (dispMUABox){
+        /* expanded view 48 * 48 */
+        if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+          IconContainerDispMUA.removeAttribute("collapsed");
+        }
+        if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
+          /* two line view 32 * 32 */
+          if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
+            IconContainerDispMUA.removeAttribute("collapsed");
+          if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
+            IconContainerDispMUA.setAttribute("collapsed", "true");
+        }
+        else {
+          /* compact view 24 * 24 */
+          if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
+            IconContainerDispMUA.removeAttribute("collapsed");
+          if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
+            IconContainerDispMUA.setAttribute("collapsed", "true");
+        }
+      }
+    }
+    else {
+      var IconContainerDispMUA = null;
       /* expanded view 48 * 48 */
       if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
@@ -301,28 +301,6 @@ org.mozdev.compactHeader.toolbar = function() {
       /* compact view 24 * 24 */
       if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
-      }
-
-    }
-    else if (dispMUABox){
-
-      /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
-        IconContainerDispMUA.removeAttribute("collapsed");
-      }
-      if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-        /* two line view 32 * 32 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
-          IconContainerDispMUA.removeAttribute("collapsed");
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
-          IconContainerDispMUA.setAttribute("collapsed", "true");
-      }
-      else {
-        /* compact view 24 * 24 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
-          IconContainerDispMUA.removeAttribute("collapsed");
-        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
-          IconContainerDispMUA.setAttribute("collapsed", "true");
       }
     }
     org.mozdev.compactHeader.debug.log("dispMUACheck stop");
@@ -373,7 +351,7 @@ org.mozdev.compactHeader.toolbar = function() {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
     }
   };
-  
+
 //  function onChangeHeaderToolbar(event) {
 //    if (event.attrName == "currentset") {
 //      if (document.getElementById("button-dispMUA")) {
@@ -383,7 +361,7 @@ org.mozdev.compactHeader.toolbar = function() {
 //      org.mozdev.compactHeader.buttons.coheToggleStar();
 //    }
 //  }
-  
+
   removeButtonDispMUA = function() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
     if (!document.getElementById("dispMUA")) {
@@ -391,7 +369,7 @@ org.mozdev.compactHeader.toolbar = function() {
       if (button) {
         button.parentNode.removeChild(button);
       }
-      
+
       var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
       if (button1) {
         button1.parentNode.removeChild(button1);
@@ -404,19 +382,26 @@ org.mozdev.compactHeader.toolbar = function() {
     }
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA stop");
   };
-  
+
   function addClass(el, strClass) {
-    var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);  
+    var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);
     if (!testnew) {
       el.className += el.className?' '+strClass:strClass;
     }
   }
-  
+
   function removeClass(el, strClass) {
     var str = new RegExp('(\\s|^)'+strClass+'(\\s|$)', 'g');
     el.className = el.className.replace(str, ' ');
   }
-  
+
+  function flatButtons() {
+    var result = cohePrefBranch.getBoolPref("headersize.flatButtons");
+    if (navigator.appVersion.indexOf("Win")!=-1) {
+      result = false;
+    }
+    return result;
+  }
 
   return pub;
 }();

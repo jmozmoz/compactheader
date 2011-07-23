@@ -203,18 +203,18 @@ org.mozdev.compactHeader.pane = function() {
 
     var headerViewToolbox = document.getElementById("header-view-toolbox");
     if (headerViewToolbox) {
-      headerViewToolbox.addEventListener("DOMAttrModified", 
+      headerViewToolbox.addEventListener("DOMAttrModified",
           onDoCustomizationHeaderViewToolbox, false);
     }
-    
+
     var mailToolbox = document.getElementById("mail-toolbox");
     if (mailToolbox) {
-      mailToolbox.addEventListener("DOMAttrModified", 
+      mailToolbox.addEventListener("DOMAttrModified",
           onDoCustomizationHeaderViewToolbox, false);
     }
     var dispMUAicon = document.getElementById("dispMUAicon");
     if (dispMUAicon) {
-      dispMUAicon.addEventListener("DOMAttrModified", 
+      dispMUAicon.addEventListener("DOMAttrModified",
           org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
     }
 
@@ -265,6 +265,7 @@ org.mozdev.compactHeader.pane = function() {
     org.mozdev.compactHeader.toolbar.setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
     org.mozdev.compactHeader.toolbar.dispMUACheck();
+    org.mozdev.compactHeader.debug.log("stop coheOnLoadMsgHeaderPane");
   }
 
   var coheMessageListener =
