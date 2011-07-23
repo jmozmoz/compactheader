@@ -55,12 +55,12 @@ org.mozdev.compactHeader.RSSLinkify = function() {
                                           .getBranch("extensions.CompactHeader.");
 
   var coheIntegrateRSSLinkify = false;
-  
+
   var RSSLinkify = {
       oldSubject: null,
       newSubject: null
   };
-  
+
   pub.UpdateHeaderView = function(currentHeaderData) {
     org.mozdev.compactHeader.debug.log("updateheaderview start");
     if (!currentHeaderData) {
@@ -70,17 +70,20 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       var url = currentHeaderData["content-base"];
       if(url) {
-          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
-                                               url.headerValue + "');");
-          RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
-          RSSLinkify.newSubject.setAttribute("url", url.headerValue);
-          RSSLinkify.newSubject.setAttribute("collapsed", "false");
-          RSSLinkify.oldSubject.setAttribute("collapsed", "true");
-          RSSLinkify.newSubject.setAttribute("tooltiptext", url.headerValue);
+//          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" +
+//                                               url.headerValue + "');");
+        RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
+        RSSLinkify.newSubject.setAttribute("url", url.headerValue);
+        RSSLinkify.newSubject.setAttribute("collapsed", "false");
+        RSSLinkify.oldSubject.setAttribute("collapsed", "true");
+        RSSLinkify.newSubject.setAttribute("tooltiptext", url.headerValue);
+        RSSLinkify.newSubject.addEventListener("click",
+            org.mozdev.compactHeader.RSSLinkify.openBrowser, false);
       } else {
-          RSSLinkify.newSubject.setAttribute("collapsed", "true");
-          RSSLinkify.oldSubject.setAttribute("collapsed", "false");
-          RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
+        removeEventListener('click', openBrowser, true);
+        RSSLinkify.newSubject.setAttribute("collapsed", "true");
+        RSSLinkify.oldSubject.setAttribute("collapsed", "false");
+        RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
 //          if (gCoheCollapsedHeaderViewMode) {
 //            //linkifySubject('collapsed1LsubjectBox');
 //          }
@@ -98,6 +101,15 @@ org.mozdev.compactHeader.RSSLinkify = function() {
       }
     }
     org.mozdev.compactHeader.debug.log("updateheaderview stop");
+  };
+
+  pub.openBrowser = function(event) {
+    org.mozdev.compactHeader.debug.log("open browser 0" + event.attrName);
+    if (!event.button) {
+      url = RSSLinkify.newSubject.getAttribute("url");
+      org.mozdev.compactHeader.debug.log("open browser 2" + url);
+      messenger.launchExternalURL(url);
+    }
   };
 
   pub.InitializeHeaderViewTables = function() {
@@ -145,7 +157,8 @@ org.mozdev.compactHeader.RSSLinkify = function() {
         link.appendChild(document.createTextNode(matches[1]));
         link.setAttribute("href", matches[1]);
         link.setAttribute("class","text-link");
-        link.setAttribute("onclick", "org.mozdev.compactHeader.pane.subjectLinkOnClickListenter(event);");
+        link.addEventListener("onclick",
+          pub.subjectLinkOnClickListenter, false);
         return [pre,link,post];
       }
       /* loop through multiple possible links in the subject */
@@ -179,7 +192,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     if (websiteAddressNode)
     {
       var websiteAddress = websiteAddressNode.getAttribute("url");
-  
+
       var contractid = "@mozilla.org/widget/clipboardhelper;1";
       var iid = Components.interfaces.nsIClipboardHelper;
       var clipboard = Components.classes[contractid].getService(iid);

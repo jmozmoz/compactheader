@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-	 xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	 xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	 xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
-		<em:version>1.4.2beta2</em:version>
+		<em:version>1.4.2beta3</em:version>
 		<em:description>Add ability to reduce header size to one or two lines. Linkify subjects in RSS feeds.</em:description>
 		<em:creator>Joachim Herb</em:creator>
 		<em:contributor>Zamula</em:contributor>

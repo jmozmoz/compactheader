@@ -361,6 +361,36 @@ org.mozdev.compactHeader.toolbar = function() {
 //      org.mozdev.compactHeader.buttons.coheToggleStar();
 //    }
 //  }
+  pub.onDoCustomizationHeaderViewToolbox = function(event) {
+    if (event.attrName == "doCustomization") {
+      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox start" + event);
+      org.mozdev.compactHeader.toolbar.dispMUACheck(document);
+      org.mozdev.compactHeader.buttons.coheToggleStar();
+      var dispMUAicon = document.getElementById("dispMUAicon");
+      if (dispMUAicon) {
+        var evt1 = document.createEvent("MutationEvents");
+        evt1.initMutationEvent("DOMAttrModified",
+            true, false, dispMUAicon,
+            dispMUAicon.getAttribute("src"),
+            dispMUAicon.getAttribute("src"),
+            "src",
+            evt1.MODIFICATION
+        );
+        dispMUAicon.dispatchEvent(evt1);
+        var evt2 = document.createEvent("MutationEvents");
+        evt2.initMutationEvent("DOMAttrModified",
+            true, false, dispMUAicon,
+            dispMUAicon.getAttribute("tooltiptext"),
+            dispMUAicon.getAttribute("tooltiptext"),
+            "tooltiptext",
+            evt2.MODIFICATION
+        );
+        dispMUAicon.dispatchEvent(evt2);
+      }
+      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
+    }
+  };
+
 
   removeButtonDispMUA = function() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
