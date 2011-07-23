@@ -38,31 +38,29 @@
 # ***** END LICENSE BLOCK *****
 */
 
-EXPORTED_SYMBOLS = ["RSSLinkify"];
+EXPORTED_SYMBOLS = ["org"];
+
+//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
 if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
-Components.utils.import("chrome://CompactHeader/content/debug.jsm", org.mozdev.compactHeader);
 
-RSSLinkify = function() {
+org.mozdev.compactHeader.RSSLinkify = function() {
   var pub = {};
-  var doc;
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
 
-  var doc;
-
   var coheIntegrateRSSLinkify = false;
-
+  
   var RSSLinkify = {
       oldSubject: null,
       newSubject: null
   };
-
+  
   pub.UpdateHeaderView = function(currentHeaderData) {
     org.mozdev.compactHeader.debug.log("updateheaderview start");
     if (!currentHeaderData) {
@@ -72,7 +70,7 @@ RSSLinkify = function() {
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       var url = currentHeaderData["content-base"];
       if(url) {
-          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" +
+          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" + 
                                                url.headerValue + "');");
           RSSLinkify.newSubject.setAttribute("value", currentHeaderData["subject"].headerValue);
           RSSLinkify.newSubject.setAttribute("url", url.headerValue);
@@ -102,12 +100,11 @@ RSSLinkify = function() {
     org.mozdev.compactHeader.debug.log("updateheaderview stop");
   };
 
-  pub.InitializeHeaderViewTables = function(aDocument) {
-    doc = aDocument;
+  pub.InitializeHeaderViewTables = function() {
     org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start");
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
-      RSSLinkify.newSubject = doc.getElementById("collapsedsubjectlinkBox") || doc.createElement("label");
+      RSSLinkify.newSubject = document.getElementById("collapsedsubjectlinkBox") || document.createElement("label");
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
       RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
       RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
@@ -119,9 +116,9 @@ RSSLinkify = function() {
       RSSLinkify.newSubject.setAttribute("flex", "1");
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
       if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-        RSSLinkify.oldSubject = doc.getElementById("collapsed2LsubjectBox");
+        RSSLinkify.oldSubject = document.getElementById("collapsed2LsubjectBox");
       } else {
-        RSSLinkify.oldSubject = doc.getElementById("collapsed1LsubjectBox");
+        RSSLinkify.oldSubject = document.getElementById("collapsed1LsubjectBox");
       }
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
       RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
@@ -131,7 +128,7 @@ RSSLinkify = function() {
   };
 
   function linkifySubject(subjectValueStr) {
-    var subjectNode = doc.getElementById(subjectValueStr);
+    var subjectNode = document.getElementById(subjectValueStr);
     while(subjectNode.childNodes.length > 0) {
       subjectNode.removeChild(subjectNode.firstChild)
     }
@@ -144,8 +141,8 @@ RSSLinkify = function() {
         var matches = regex.links.exec(text);
         var pre, post = null;
         [pre, post] = text.split(matches[1]);
-        var link = doc.createElement("a");
-        link.appendChild(doc.createTextNode(matches[1]));
+        var link = document.createElement("a");
+        link.appendChild(document.createTextNode(matches[1]));
         link.setAttribute("href", matches[1]);
         link.setAttribute("class","text-link");
         link.setAttribute("onclick", "org.mozdev.compactHeader.pane.subjectLinkOnClickListenter(event);");
@@ -157,14 +154,14 @@ RSSLinkify = function() {
         [pre,link,post] = linkify(text);
         /* we can't assume that any pre or post text was given, only a link */
         if (pre && pre.length > 0)
-          subjectNode.appendChild(doc.createTextNode(pre));
+          subjectNode.appendChild(document.createTextNode(pre));
         subjectNode.appendChild(link);
         text = post;
       }
       if (text && text.length > 0)
-        subjectNode.appendChild(doc.createTextNode(text));
+        subjectNode.appendChild(document.createTextNode(text));
     } else {
-      subjectNode.appendChild(doc.createTextNode(subject));
+      subjectNode.appendChild(document.createTextNode(subject));
     }
   }
 
@@ -182,7 +179,7 @@ RSSLinkify = function() {
     if (websiteAddressNode)
     {
       var websiteAddress = websiteAddressNode.getAttribute("url");
-
+  
       var contractid = "@mozilla.org/widget/clipboardhelper;1";
       var iid = Components.interfaces.nsIClipboardHelper;
       var clipboard = Components.classes[contractid].getService(iid);
