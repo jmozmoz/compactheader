@@ -55,9 +55,9 @@ if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
-//Components.utils.import("chrome://CompactHeader/content/RSSLinkify.jsm");
-//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
-//Components.utils.import("chrome://CompactHeader/content/toolbar.jsm");
+Components.utils.import("chrome://CompactHeader/content/RSSLinkify.jsm", org.mozdev.compactHeader);
+Components.utils.import("chrome://CompactHeader/content/debug.jsm", org.mozdev.compactHeader);
+Components.utils.import("chrome://CompactHeader/content/toolbar.jsm", org.mozdev.compactHeader);
 
 org.mozdev.compactHeader.pane = function() {
   var pub = {};
@@ -181,7 +181,7 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
-    org.mozdev.compactHeader.RSSLinkify.InitializeHeaderViewTables();
+    org.mozdev.compactHeader.RSSLinkify.InitializeHeaderViewTables(document);
   }
 
   pub.coheOnLoadMsgHeaderPane = function() {
@@ -203,19 +203,19 @@ org.mozdev.compactHeader.pane = function() {
 
     var headerViewToolbox = document.getElementById("header-view-toolbox");
     if (headerViewToolbox) {
-      headerViewToolbox.addEventListener("DOMAttrModified", 
-          onDoCustomizationHeaderViewToolbox, false);
+      headerViewToolbox.addEventListener("DOMAttrModified",
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
     }
-    
+
     var mailToolbox = document.getElementById("mail-toolbox");
     if (mailToolbox) {
-      mailToolbox.addEventListener("DOMAttrModified", 
-          onDoCustomizationHeaderViewToolbox, false);
+      mailToolbox.addEventListener("DOMAttrModified",
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
     }
     var dispMUAicon = document.getElementById("dispMUAicon");
     if (dispMUAicon) {
-      dispMUAicon.addEventListener("DOMAttrModified", 
-          org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
+      dispMUAicon.addEventListener("DOMAttrModified",
+        org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
     }
 
     // work around XUL deck bug where collapsed header view, if it's the persisted
@@ -239,7 +239,7 @@ org.mozdev.compactHeader.pane = function() {
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
       org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
-      org.mozdev.compactHeader.toolbar.fillToolboxPalette();
+      org.mozdev.compactHeader.toolbar.fillToolboxPalette(document);
       org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       var toolbox = document.getElementById("header-view-toolbox");
       toolbox.customizeDone = function(aEvent) {
@@ -327,36 +327,6 @@ org.mozdev.compactHeader.pane = function() {
         }
       });
   }
-
-  onDoCustomizationHeaderViewToolbox = function(event) {
-    if (event.attrName == "doCustomization") {
-      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox start");
-      org.mozdev.compactHeader.toolbar.dispMUACheck(document);
-      org.mozdev.compactHeader.buttons.coheToggleStar();
-      var dispMUAicon = document.getElementById("dispMUAicon");
-      if (dispMUAicon) {
-        var evt1 = document.createEvent("MutationEvents");
-        evt1.initMutationEvent("DOMAttrModified",
-            true, false, dispMUAicon,
-            dispMUAicon.getAttribute("src"),
-            dispMUAicon.getAttribute("src"),
-            "src",
-            evt1.MODIFICATION
-        );
-        dispMUAicon.dispatchEvent(evt1);
-        var evt2 = document.createEvent("MutationEvents");
-        evt2.initMutationEvent("DOMAttrModified",
-            true, false, dispMUAicon,
-            dispMUAicon.getAttribute("tooltiptext"),
-            dispMUAicon.getAttribute("tooltiptext"),
-            "tooltiptext",
-            evt2.MODIFICATION
-        );
-        dispMUAicon.dispatchEvent(evt2);
-      }
-      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
-    }
-  };
 
   // make sure the appropriate fields within the currently displayed view header mode
   // are collapsed or visible...

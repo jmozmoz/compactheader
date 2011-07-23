@@ -38,32 +38,34 @@
 # ***** END LICENSE BLOCK *****
 */
 
-EXPORTED_SYMBOLS = ["org"];
-
-//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
+EXPORTED_SYMBOLS = ["toolbar"];
 
 if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
+Components.utils.import("chrome://CompactHeader/content/debug.jsm", org.mozdev.compactHeader);
 
-org.mozdev.compactHeader.toolbar = function() {
+
+toolbar = function() {
   var pub = {};
+  var doc;
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
 
-  pub.fillToolboxPalette = function () {
+  pub.fillToolboxPalette = function (aDocument) {
+    doc = aDocument;
     org.mozdev.compactHeader.debug.log("fillToolboxPalette start");
     removeButtonDispMUA();
-    var hdrToolbar = document.getElementById("header-view-toolbar");
-    var hdrToolbox = document.getElementById("header-view-toolbox");
-    var buttons = ["button-reply", "button-replyall", "button-replylist", 
+    var hdrToolbar = doc.getElementById("header-view-toolbar");
+    var hdrToolbox = doc.getElementById("header-view-toolbox");
+    var buttons = ["button-reply", "button-replyall", "button-replylist",
                    "button-tag", "button-forward", "button-archive", "button-file",
                    "button-print", "button-mark", "button-starMessages",
                    "button-newmsg", "button-goback", "button-goforward",
-                   "button-previous", "button-next", "button-compact", 
+                   "button-previous", "button-next", "button-compact",
                    "button-address", "button-stop", "button-getmsg",
                    "button-getPartialMessages",
                    "stylish-toolbar-button",
@@ -81,8 +83,8 @@ org.mozdev.compactHeader.toolbar = function() {
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
       var buttonName = buttons[i];
-      var button = document.getElementById(buttonName) || 
-          document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+      var button = doc.getElementById(buttonName) ||
+          doc.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         var hdrButton = button.cloneNode(true);
         if (hdrButton) {
@@ -100,7 +102,7 @@ org.mozdev.compactHeader.toolbar = function() {
           }
           //hdrButton.id = "hdr" + hdrButton.id;
           hdrToolbox.palette.appendChild(hdrButton);
-  /*        var bStyle = document.defaultView.getComputedStyle(button, null);
+  /*        var bStyle = doc.defaultView.getComputedStyle(button, null);
           hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
         }
         if (currentSet.indexOf(buttonName)>=0) {
@@ -116,21 +118,21 @@ org.mozdev.compactHeader.toolbar = function() {
                          //"hdrReplyAllButton", "hdrReplyListButton"];
     for (var i=0; i<buttonsRemove.length; i++) {
       var buttonName = buttonsRemove[i];
-      var button = document.getElementById(buttonName) || 
-          document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+      var button = doc.getElementById(buttonName) ||
+          doc.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
       if (button) {
         button.setAttribute("collapsed", "true");
       }
     }
-    
+
     var target = "hdrOtherActionsButton";
-    
-    var newParent = document.getElementById(target) || 
-        document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
-  
+
+    var newParent = doc.getElementById(target) ||
+        doc.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
+
     if (newParent != null) {
       var myElement;
-      myElement= document.getElementById("otherActionsPopup");
+      myElement= doc.getElementById("otherActionsPopup");
       if (myElement) {
         newParent.appendChild(myElement);
       }
@@ -140,8 +142,8 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.setButtonStyle = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle start");
-    var hdrToolbar = document.getElementById("header-view-toolbar");
-    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var hdrToolbar = doc.getElementById("header-view-toolbar");
+    var hdrToolbox = doc.getElementById("header-view-toolbox");
     var buttons = hdrToolbar.querySelectorAll("toolbarbutton");
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
@@ -187,7 +189,7 @@ org.mozdev.compactHeader.toolbar = function() {
         }
       }
     }
-    
+
     buttons = hdrToolbox.palette.querySelectorAll("toolbarbutton");
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
@@ -234,17 +236,17 @@ org.mozdev.compactHeader.toolbar = function() {
     }
     org.mozdev.compactHeader.debug.log("setButtonStyle stop");
   };
-  
+
   pub.toggle = function(aHeaderViewMode) {
     org.mozdev.compactHeader.debug.log("toolbar toggle start");
-    var hdrToolbox = document.getElementById("header-view-toolbox");
-    var hdrToolbar = document.getElementById("header-view-toolbar");
-    var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
-    var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
+    var hdrToolbox = doc.getElementById("header-view-toolbox");
+    var hdrToolbar = doc.getElementById("header-view-toolbar");
+    var strHideLabel = doc.getElementById("CoheHideDetailsLabel").value;
+    var strShowLabel = doc.getElementById("CoheShowDetailsLabel").value;
     var firstPermanentChild = hdrToolbar.firstPermanentChild;
     var lastPermanentChild = hdrToolbar.lastPermanentChild;
     if (aHeaderViewMode) {
-      var cBox = document.getElementById("collapsed2LButtonBox");
+      var cBox = doc.getElementById("collapsed2LButtonBox");
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -257,12 +259,12 @@ org.mozdev.compactHeader.toolbar = function() {
         cBox.parentNode.insertBefore(hdrToolbox, cBox);
         hdrToolbox.palette  = cloneToolboxPalette;
         hdrToolbox.toolbarset = cloneToolbarset;
-        hdrToolbar = document.getElementById("header-view-toolbar");
+        hdrToolbar = doc.getElementById("header-view-toolbar");
         hdrToolbar.firstPermanentChild = firstPermanentChild;
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
     } else {
-      var cBox = document.getElementById("expandedHeaders");
+      var cBox = doc.getElementById("expandedHeaders");
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -275,7 +277,7 @@ org.mozdev.compactHeader.toolbar = function() {
         cBox.parentNode.appendChild(hdrToolbox);
         hdrToolbox.palette = cloneToolboxPalette;
         hdrToolbox.toolbarset = cloneToolbarset;
-        hdrToolbar = document.getElementById("header-view-toolbar");
+        hdrToolbar = doc.getElementById("header-view-toolbar");
         hdrToolbar.firstPermanentChild = firstPermanentChild;
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
@@ -285,21 +287,21 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.dispMUACheck = function() {
     org.mozdev.compactHeader.debug.log("dispMUACheck start");
-    var dispMUAButton = document.getElementById("button-dispMUA");
-    var dispMUABox = document.getElementById("dispMUA"); 
+    var dispMUAButton = doc.getElementById("button-dispMUA");
+    var dispMUABox = doc.getElementById("dispMUA");
     dispMUABox.setAttribute("collapsed", "true"); // hide original
     var IconContainerDispMUA = null;
     if (dispMUAButton) {
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
 
@@ -307,21 +309,21 @@ org.mozdev.compactHeader.toolbar = function() {
     else if (dispMUABox){
 
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.removeAttribute("collapsed");
       }
       if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
         /* two line view 32 * 32 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
+        if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line"))
           IconContainerDispMUA.removeAttribute("collapsed");
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
+        if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact"))
           IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       else {
         /* compact view 24 * 24 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
+        if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact"))
           IconContainerDispMUA.removeAttribute("collapsed");
-        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
+        if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line"))
           IconContainerDispMUA.setAttribute("collapsed", "true");
       }
     }
@@ -331,92 +333,122 @@ org.mozdev.compactHeader.toolbar = function() {
   pub.onChangeDispMUAicon = function(event) {
     if (event.attrName == "src") {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
+      var imageSrc = doc.getElementById("dispMUAicon").getAttribute("src");
       var IconContainerDispMUA = null;
       /* toolbar button */
-      if (IconContainerDispMUA = document.getElementById("button-dispMUA")) {
+      if (IconContainerDispMUA = doc.getElementById("button-dispMUA")) {
         IconContainerDispMUA.setAttribute("image", imageSrc);
       }
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
     }
     else if (event.attrName == "tooltiptext") {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
-      var buttonDispMUA = document.getElementById("button-dispMUA");
+      var tooltipText = doc.getElementById("dispMUAicon").getAttribute("tooltiptext");
+      var buttonDispMUA = doc.getElementById("button-dispMUA");
       if (buttonDispMUA) {
         buttonDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = doc.getElementById("dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
     }
   };
-  
+
 //  function onChangeHeaderToolbar(event) {
 //    if (event.attrName == "currentset") {
-//      if (document.getElementById("button-dispMUA")) {
+//      if (doc.getElementById("button-dispMUA")) {
 //        gDBView.reloadMessage();
 //      }
 //      dispMUACheck();
 //      org.mozdev.compactHeader.buttons.coheToggleStar();
 //    }
 //  }
-  
+
   removeButtonDispMUA = function() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
-    if (!document.getElementById("dispMUA")) {
-      var button = document.getElementById("button-dispMUA");
+    if (!doc.getElementById("dispMUA")) {
+      var button = doc.getElementById("button-dispMUA");
       if (button) {
         button.parentNode.removeChild(button);
       }
-      
-      var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+
+      var button1 = doc.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
       if (button1) {
         button1.parentNode.removeChild(button1);
       }
 
-      var button2 = document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      var button2 = doc.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
       if (button2) {
         button2.parentNode.removeChild(button2);
       }
     }
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA stop");
   };
-  
+
+  pub.onDoCustomizationHeaderViewToolbox = function(event) {
+    if (event.attrName == "doCustomization") {
+      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox start");
+      org.mozdev.compactHeader.toolbar.dispMUACheck(document);
+      org.mozdev.compactHeader.buttons.coheToggleStar();
+      var dispMUAicon = document.getElementById("dispMUAicon");
+      if (dispMUAicon) {
+        var evt1 = document.createEvent("MutationEvents");
+        evt1.initMutationEvent("DOMAttrModified",
+            true, false, dispMUAicon,
+            dispMUAicon.getAttribute("src"),
+            dispMUAicon.getAttribute("src"),
+            "src",
+            evt1.MODIFICATION
+        );
+        dispMUAicon.dispatchEvent(evt1);
+        var evt2 = document.createEvent("MutationEvents");
+        evt2.initMutationEvent("DOMAttrModified",
+            true, false, dispMUAicon,
+            dispMUAicon.getAttribute("tooltiptext"),
+            dispMUAicon.getAttribute("tooltiptext"),
+            "tooltiptext",
+            evt2.MODIFICATION
+        );
+        dispMUAicon.dispatchEvent(evt2);
+      }
+      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
+    }
+  };
+
   function addClass(el, strClass) {
-    var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);  
+    var testnew = new RegExp('\\b'+strClass+'\\b').test(el.className);
     if (!testnew) {
       el.className += el.className?' '+strClass:strClass;
     }
   }
-  
+
   function removeClass(el, strClass) {
     var str = new RegExp('(\\s|^)'+strClass+'(\\s|$)', 'g');
     el.className = el.className.replace(str, ' ');
   }
-  
+
 
   return pub;
 }();
