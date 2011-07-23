@@ -55,9 +55,9 @@ if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
-//Components.utils.import("chrome://CompactHeader/content/RSSLinkify.jsm");
-//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
-//Components.utils.import("chrome://CompactHeader/content/toolbar.jsm");
+Components.utils.import("chrome://CompactHeader/content/RSSLinkify.jsm", org.mozdev.compactHeader);
+Components.utils.import("chrome://CompactHeader/content/debug.jsm", org.mozdev.compactHeader);
+Components.utils.import("chrome://CompactHeader/content/toolbar.jsm", org.mozdev.compactHeader);
 
 org.mozdev.compactHeader.pane = function() {
   var pub = {};
@@ -181,7 +181,7 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
-    org.mozdev.compactHeader.RSSLinkify.InitializeHeaderViewTables();
+    org.mozdev.compactHeader.RSSLinkify.InitializeHeaderViewTables(document);
   }
 
   pub.coheOnLoadMsgHeaderPane = function() {
@@ -200,6 +200,23 @@ org.mozdev.compactHeader.pane = function() {
 
     gCoheCollapsedHeaderViewMode =
       deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
+
+    var headerViewToolbox = document.getElementById("header-view-toolbox");
+    if (headerViewToolbox) {
+      headerViewToolbox.addEventListener("DOMAttrModified",
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
+    }
+
+    var mailToolbox = document.getElementById("mail-toolbox");
+    if (mailToolbox) {
+      mailToolbox.addEventListener("DOMAttrModified",
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
+    }
+    var dispMUAicon = document.getElementById("dispMUAicon");
+    if (dispMUAicon) {
+      dispMUAicon.addEventListener("DOMAttrModified",
+        org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
+    }
 
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded
@@ -222,7 +239,7 @@ org.mozdev.compactHeader.pane = function() {
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
       org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
-      org.mozdev.compactHeader.toolbar.fillToolboxPalette();
+      org.mozdev.compactHeader.toolbar.fillToolboxPalette(document);
       org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       var toolbox = document.getElementById("header-view-toolbox");
       toolbox.customizeDone = function(aEvent) {
@@ -241,8 +258,13 @@ org.mozdev.compactHeader.pane = function() {
     }
 
     coheToggleHeaderContent();
+    var dispMUA = document.getElementById('dispMUA');
+    if (dispMUA) {
+      dispMUA.collapsed = true;
+    }
     org.mozdev.compactHeader.toolbar.setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
+    org.mozdev.compactHeader.toolbar.dispMUACheck();
   }
 
   var coheMessageListener =
@@ -319,7 +341,7 @@ org.mozdev.compactHeader.pane = function() {
       selectEmailDisplayed();
     }
 
-    //org.mozdev.compactHeader.toolbar.fillToolboxPalette();
+    //org.mozdev.compactHeader.toolbar.fillToolboxPalette(document);
     coheToggleHeaderContent();
     org.mozdev.customizeHeaderToolbar.pane.CHTUpdateReplyButton();
     org.mozdev.customizeHeaderToolbar.pane.CHTUpdateJunkButton();
@@ -385,6 +407,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       }
     }
+
 
     var dispMUABox = document.getElementById("dispMUA");
 

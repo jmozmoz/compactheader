@@ -24,6 +24,13 @@
 	label="&markStarredCmd.label;"
 	tooltiptext="&markStarredCmd.label;"
 	oncommand="goDoCommand('cmd_markAsFlagged');" />
+<toolbarbutton
+  class="toolbarbutton-1"
+  id="button-dispMUA"
+  image="chrome://dispmua/content/48x48/thunderbird-windows.png"
+  label="display MUA"
+  oncommand="dispMUA.infopopup();">
+</toolbarbutton>
 </toolbarpalette>
 	
 </overlay>
