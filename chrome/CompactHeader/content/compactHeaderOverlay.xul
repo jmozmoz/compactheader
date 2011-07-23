@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 
 <!DOCTYPE overlay [
-  <!ENTITY % msgHeaderDTD SYSTEM
-  "chrome://messenger/locale/msgHdrViewOverlay.dtd">
+  <!ENTITY % msgHeaderDTD SYSTEM 
+  "chrome://messenger/locale/msgHdrViewOverlay.dtd"> 
   %msgHeaderDTD;
   <!ENTITY % compactHeaderDTD SYSTEM
   "chrome://CompactHeader/locale/CompactHeader.dtd">
@@ -21,20 +21,23 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <script type="application/javascript" src="chrome://CompactHeader/content/debug.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
-  <script type="application/x-javascript"
+  <script type="application/javascript" src="chrome://CompactHeader/content/RSSLinkify.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/toolbar.js"/>
+  <script type="application/x-javascript" 
           src="chrome://CompactHeader/content/CHTMessenger.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
 
   <keyset>
-    <key id="hideDetailsKey"
-         modifiers="shift"
+    <key id="hideDetailsKey" 
+         modifiers="shift" 
          key="&toggleDetails.key;"
          oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
   </keyset>
 
   <menupopup id="header-toolbar-context-menu">
-    <menuitem id="hidecohePreferencesButton"
+    <menuitem id="hidecohePreferencesButton" 
               label="&dialog.title;"
               oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
   </menupopup>
@@ -43,9 +46,9 @@
 
   <vbox id="expandedHeaderView" orient="horizontal">
     <vbox id="hideDetailsButtonBox" insertbefore="expandedHeadersBox">
-      <button id="hideDetailsButton"
+      <button id="hideDetailsButton"  
               tooltiptext="&hideDetailsButton.label;"
-              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();" 
               class="msgHeaderView-flat-button"/>
     </vbox>
 
@@ -54,7 +57,7 @@
       <label id="CoheShowDetailsLabel" value="&showDetailsButton.label;"/>
     </hbox>
 
-    <vbox id="expandedHeadersBox">
+    <vbox id="expandedHeadersBox">  
       <hbox id="expandedHeadersTopBox" flex="1">
         <toolbox id="header-view-toolbox"
                  mode="icons"
@@ -75,7 +78,7 @@
 
 
       <hbox id="expandedHeadersBottomBox">
-
+      
         <vbox id="otherActionsBox" flex="0">
           <hbox id="dateValueBox" flex="0"/>
           <button type="menu" id="otherActionsButton" collapsed="true"
@@ -106,17 +109,17 @@
                 </menupopup>
               </menu>
               <menuseparator id="otherActionPopupAfterViewSource"/>
-              <menuitem id="hideDetailsMenu"
+              <menuitem id="hideDetailsMenu" 
                         label="&hideDetailsButton.label;"
                         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
-              <menuitem id="hidecohePreferencesButton"
+              <menuitem id="hidecohePreferencesButton" 
                         label="&dialog.title;"
                         oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"/>
             </menupopup>
           </button>
         </vbox>
       </hbox>
-
+      
     </vbox>
 
     <vbox id="dispMUAexp" collapsed="false">
@@ -162,7 +165,7 @@
             <column flex="1"/>
           </columns>
           <row id="collapsed1LtoCcBccRow" align="baseline">
-            <label id="collapsed1LtoCcBccLabel" class="headerName"
+            <label id="collapsed1LtoCcBccLabel" class="headerName" 
                    value="&toField2.label;" control="collapsed1LtoCcBccBox"/>
              <mail-multi-emailHeaderField id="collapsed1LtoCcBccBox" flex="1"/>
           </row>
@@ -172,7 +175,7 @@
           <row id="collapsed1LdateRow">
             <label id="collapsed1LdateBox" class="dateLabel" flex="1"/>
           </row>
-        </hbox>
+        </hbox>        
         <header-view-button-box id="collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
       </hbox>
       <hbox id="collapsed1LHeaderViewSecondLine" align="top" flex="1" collapsed="true">
@@ -200,7 +203,7 @@
           </columns>
           <rows>
             <row id="collapsed2LtoCcBccRow" align="baseline">
-              <label id="collapsed2LtoCcBccLabel" class="headerName"
+              <label id="collapsed2LtoCcBccLabel" class="headerName" 
                      value="&toField2.label;" control="collapsed2LtoCcBccBox"/>
               <mail-multi-emailHeaderField id="collapsed2LtoCcBccBox" flex="1"/>
             </row>
@@ -240,5 +243,5 @@
 
 </overlay>
 
-<!--
+<!-- 
 -->

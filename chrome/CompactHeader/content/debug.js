@@ -38,9 +38,13 @@
 # ***** END LICENSE BLOCK *****
 */
 
-EXPORTED_SYMBOLS = ["debug"];
+EXPORTED_SYMBOLS = ["org"];
 
-debug = function() {
+if(!org) var org={};
+if(!org.mozdev) org.mozdev={};
+if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
+
+org.mozdev.compactHeader.debug = function() {
   var pub = {};
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]

@@ -41,41 +41,11 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-.hdrOtherActionsButton {
-  list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
-}
-
-toolbar[iconsize="small"] .hdrOtherActionsButton {
-  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
-}
-
 #expandedButtonBox {
   margin: 0px;
   padding: 0px;
 }
 
-/*
-toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-icon,
-toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-icon {
-  display: -moz-box;
-}
-
-toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton .toolbarbutton-text,
-toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton .toolbarbutton-text {
-  -moz-margin-start: 2px !important;
-}
-
-toolbox[labelalign="end"] toolbar[mode="full"] .hdrJunkButton,
-toolbox[labelalign="end"] toolbar[mode="full"] toolbarpaletteitem .hdrJunkButton {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
-*/
-/*
-toolbarpaletteitem[place="palette"] .msgHeaderView-button-out {
-  -moz-appearance: button;
-}
-*/
 .msgHeaderView-button-out-item .msgHeaderView-button-out,
 .msgHeaderView-button-out {
   -moz-appearance: none;
@@ -107,15 +77,6 @@ toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-button .toolbarbutton-tex
   -moz-padding-start: 0px !important;
   -moz-padding-end: 0px !important;
 }
-
-/*
-toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item,
-toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out,
-toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button-out,
-toolbarpaletteitem[place="palette"] .msgHeaderView-flat-button {
-  -moz-appearance: button;
-}
-*/
 
 .msgHeaderView-flat-button-out-item .msgHeaderView-flat-button-out,
 .msgHeaderView-flat-button-out {
@@ -176,34 +137,6 @@ toolbar[mode="text"] toolbarpaletteitem .msgHeaderView-flat-button-out .toolbarb
 toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-button-out .toolbarbutton-text,
 toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .toolbarbutton-text {
   -moz-margin-start: 2px !important;
-}
-
-#collapsedHeaderView #signedHdrIcon[signed="ok"] {
-  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignOk.png");
-}
-
-#collapsedHeaderView #signedHdrIcon[signed="unknown"] {
-  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignUnknown.png");
-}
-
-#collapsedHeaderView #signedHdrIcon[signed="mismatch"] {
-  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignUnknown.png");
-}
-
-#collapsedHeaderView #signedHdrIcon[signed="notok"] {
-  list-style-image: url("chrome://messenger/skin/smime/icons/sbSignNotOk.png");
-}
-
-#collapsedHeaderView #encryptedHdrIcon[encrypted="ok"] {
-  list-style-image: url("chrome://messenger/skin/smime/icons/sbCryptoOk.png");
-}
-
-#collapsedHeaderView #encryptedHdrIcon[encrypted="notok"] {
-  list-style-image: url("chrome://messenger/skin/smime/icons/sbCryptoNotOk.png");
-}
-
-#collapsedHeaderView #signedHdrIcon {
-  -moz-margin-end: 3px;
 }
 
 #collapsedHeaderView #dispMUAicon {

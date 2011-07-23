@@ -2,7 +2,7 @@
 
 <!DOCTYPE overlay [
 <!ENTITY % customizeToolbarDTD SYSTEM "chrome://global/locale/customizeToolbar.dtd">
-  %customizeToolbarDTD;
+  %customizeToolbarDTD; 
 ]>
 
 <?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
@@ -10,6 +10,9 @@
 <overlay id="customizeToolbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <script type="application/javascript" src="chrome://CompactHeader/content/debug.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/compactHeaderOverlay.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/RSSLinkify.js"/>
+  <script type="application/javascript" src="chrome://CompactHeader/content/toolbar.js"/>
 
 </overlay>
