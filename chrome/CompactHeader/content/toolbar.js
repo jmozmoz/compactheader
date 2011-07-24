@@ -252,7 +252,7 @@ org.mozdev.compactHeader.toolbar = function() {
     var dispMUAButton = document.getElementById("button-dispMUA");
     var dispMUABox = document.getElementById("dispMUA");
     if (dispMUABox) {
-      dispMUABox.setAttribute("collapsed", "true"); // hide original
+      hideDispMUABox(dispMUABox);
       var IconContainerDispMUA = null;
       if (dispMUAButton) {
         /* expanded view 48 * 48 */
@@ -316,52 +316,10 @@ org.mozdev.compactHeader.toolbar = function() {
       if (IconContainerDispMUA = document.getElementById("button-dispMUA")) {
         IconContainerDispMUA.setAttribute("image", imageSrc);
       }
-//      /* expanded view 48 * 48 */
-//      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
-//        IconContainerDispMUA.setAttribute("src", imageSrc);
-//      }
-//      /* two line view 32 * 32 */
-//      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
-//        IconContainerDispMUA.setAttribute("src", imageSrc);
-//      }
-//      /* compact view 24 * 24 */
-//      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
-//        IconContainerDispMUA.setAttribute("src", imageSrc);
-//      }
-//      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
-//    }
-//    else if (event.attrName == "tooltiptext") {
-//      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-//      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
-//      var buttonDispMUA = document.getElementById("button-dispMUA");
-//      if (buttonDispMUA) {
-//        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
-//      }
-//      /* expanded view 48 * 48 */
-//      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
-//        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-//      }
-//      /* two line view 32 * 32 */
-//      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
-//        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-//      }
-//      /* compact view 24 * 24 */
-//      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
-//        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-//      }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
     }
   };
 
-//  function onChangeHeaderToolbar(event) {
-//    if (event.attrName == "currentset") {
-//      if (document.getElementById("button-dispMUA")) {
-//        gDBView.reloadMessage();
-//      }
-//      dispMUACheck();
-//      org.mozdev.compactHeader.buttons.coheToggleStar();
-//    }
-//  }
   pub.onDoCustomizationHeaderViewToolbox = function(event) {
     if (event.attrName == "doCustomization") {
       org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox start" + event);
@@ -392,6 +350,29 @@ org.mozdev.compactHeader.toolbar = function() {
     }
   };
 
+  hideDispMUABox = function(dispMUABox) {
+    org.mozdev.compactHeader.debug.log("hideDispMUABox start");
+    dispMUABox.setAttribute("collapsed", "true"); // hide original
+    var dispMUAicon = document.getElementById("dispMUAicon");
+    var messengerWindow = document.getElementById("messengerWindow");
+    if (dispMUAicon && messengerWindow && dispMUAicon.localName == "image") {
+      org.mozdev.compactHeader.debug.log("hideDispMUABox 1");
+      var broadcasterset = document.createElement("broadcasterset");
+      messengerWindow.appendChild(broadcasterset);
+      org.mozdev.compactHeader.debug.log("hideDispMUABox 2");
+      dispMUAicon.parentNode.removeChild(dispMUAicon);
+      org.mozdev.compactHeader.debug.log("hideDispMUABox 3");
+      var dispMUAbroadcast = document.createElement("broadcaster");
+      org.mozdev.compactHeader.debug.log("hideDispMUABox 4");
+      dispMUAbroadcast.id = "dispMUAicon";
+      //dispMUAbroadcast.setAttribute("src", "");
+      dispMUAbroadcast.setAttribute("tooltiptext", "");
+      org.mozdev.compactHeader.debug.log("hideDispMUABox 5");
+      broadcasterset.appendChild(dispMUAbroadcast);
+      org.mozdev.compactHeader.debug.log("hideDispMUABox 6");
+    }
+    org.mozdev.compactHeader.debug.log("hideDispMUABox stop");
+  };
 
   removeButtonDispMUA = function() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");

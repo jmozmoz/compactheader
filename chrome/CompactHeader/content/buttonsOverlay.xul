@@ -31,9 +31,9 @@
   image="chrome://dispmua/content/48x48/thunderbird-windows.png"
   label="display MUA"
   oncommand="dispMUA.infopopup();">
-  <observes element="dispMUAbroadcast" attribute="src"
+  <observes element="dispMUAicon" attribute="src"
             onbroadcast="org.mozdev.compactHeader.toolbar.onChangeDispMUAicon('src');"/>
-  <observes element="dispMUAbroadcast" attribute="tooltiptext"/>
+  <observes element="dispMUAicon" attribute="tooltiptext"/>
 </toolbarbutton>
 </toolbarpalette>
 
