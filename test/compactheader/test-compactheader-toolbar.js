@@ -96,35 +96,35 @@ function setupModule(module) {
  *  Make sure that opening the header toolbar customization dialog
  *  does not break the get messages button in main toolbar
  */
-//function test_get_msg_button_customize_header_toolbar(){
-//  select_message_in_folder(0);
-//
-//  // It is necessary to press the Get Message Button to get the popup menu populated
-//  mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
-//  mc.ewait("button-getAllNewMsgSeparator");
-//
-//  var getMailButtonPopup = mc.eid("button-getMsgPopup").node;
-//  var originalServerCount = getMailButtonPopup.childElementCount;
-//
-//  // Open customization dialog, because it broke the Get Message Button popup menu
-//  // see https://bugzilla.mozilla.org/show_bug.cgi?id=565045
-//  let ctc = open_header_pane_toolbar_customization(mc);
-//  close_header_pane_toolbar_customization(ctc);
-//
-//  // Press the Get Message Button to populate popup menu again
-//  mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
-//  mc.ewait("button-getAllNewMsgSeparator");
-//
-//  getMailButtonPopup = mc.eid("button-getMsgPopup").node;
-//  var finalServerCount = getMailButtonPopup.childElementCount;
-//
-//  if (originalServerCount != finalServerCount) {
-//    throw new Error("number of entries in Get Message Button popup menu after " +
-//                    "header toolbar customization " +
-//                    finalServerCount + " <> as before: " +
-//                    originalServerCount);
-//  }
-//}
+function test_get_msg_button_customize_header_toolbar(){
+  select_message_in_folder(0);
+
+  // It is necessary to press the Get Message Button to get the popup menu populated
+  mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
+  mc.ewait("button-getAllNewMsgSeparator");
+
+  var getMailButtonPopup = mc.eid("button-getMsgPopup").node;
+  var originalServerCount = getMailButtonPopup.childElementCount;
+
+  // Open customization dialog, because it broke the Get Message Button popup menu
+  // see https://bugzilla.mozilla.org/show_bug.cgi?id=565045
+  let ctc = open_header_pane_toolbar_customization(mc);
+  close_header_pane_toolbar_customization(ctc);
+
+  // Press the Get Message Button to populate popup menu again
+  mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
+  mc.ewait("button-getAllNewMsgSeparator");
+
+  getMailButtonPopup = mc.eid("button-getMsgPopup").node;
+  var finalServerCount = getMailButtonPopup.childElementCount;
+
+  if (originalServerCount != finalServerCount) {
+    throw new Error("number of entries in Get Message Button popup menu after " +
+                    "header toolbar customization " +
+                    finalServerCount + " <> as before: " +
+                    originalServerCount);
+  }
+}
 
 /**
  *  Test header pane toolbar customization: Check for default button sets
