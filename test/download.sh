@@ -11,7 +11,8 @@ if [ $OSTYPE == msys ] ; then
   export UNPACKTARGETOPT="-d"
   export APPBIN="thunderbird.exe"
 elif [[ $OSTYPE == *linux* ]] ; then 
-  export FTP_DIR=https://ftp.mozilla.org/pub/mozilla.org/thunderbird/nightly/5.0-candidates/build1/linux-i686/en-US/
+#  export FTP_DIR=https://ftp.mozilla.org/pub/mozilla.org/thunderbird/nightly/5.0-candidates/build1/linux-i686/en-US/
+  export FTP_DIR=https://ftp.mozilla.org/pub/mozilla.org/thunderbird/nightly/5.0-candidates/build1/linux-x86_64/en-US/
   export APP=thunderbird-5.0.tar.bz2
   export TESTS=thunderbird-5.0.tests.zip
   export XPI=../../../AMO/CompactHeader-1.4.2beta3.xpi
