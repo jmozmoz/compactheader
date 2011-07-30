@@ -246,8 +246,8 @@ org.mozdev.compactHeader.pane = function() {
         MailToolboxCustomizeDone(aEvent, "CustomizeHeaderToolbar");
         document.getElementById("header-view-toolbox").removeAttribute("doCustomization");
         enableButtons();
-        org.mozdev.customizeHeaderToolbar.pane.CHTUpdateReplyButton();
-        org.mozdev.customizeHeaderToolbar.pane.CHTUpdateJunkButton();
+        org.mozdev.compactHeader.toolbar.CHTUpdateReplyButton();
+        org.mozdev.compactHeader.toolbar.CHTUpdateJunkButton();
         org.mozdev.compactHeader.buttons.coheToggleStar();
         org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       };
@@ -344,8 +344,8 @@ org.mozdev.compactHeader.pane = function() {
 
     //org.mozdev.compactHeader.toolbar.fillToolboxPalette(document);
     coheToggleHeaderContent();
-    org.mozdev.customizeHeaderToolbar.pane.CHTUpdateReplyButton();
-    org.mozdev.customizeHeaderToolbar.pane.CHTUpdateJunkButton();
+    org.mozdev.compactHeader.toolbar.CHTUpdateReplyButton();
+    org.mozdev.compactHeader.toolbar.CHTUpdateJunkButton();
     org.mozdev.compactHeader.buttons.coheToggleStar();
   }
 
@@ -590,7 +590,8 @@ org.mozdev.compactHeader.pane = function() {
                                             .getService(Components.interfaces.nsIVersionComparator);
 //    org.mozdev.compactHeader.debug.log("first run 0");
     if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
-//      org.mozdev.compactHeader.debug.log("firstrun 1");
+      org.mozdev.compactHeader.debug.log("firstrun 1");
+      org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
       cohe.version = -1;
       cohe.firstrun = false;
       cohe.gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
@@ -611,7 +612,7 @@ org.mozdev.compactHeader.pane = function() {
         if (cohe.firstrun){
           cohePrefBranch.setBoolPref("firstrun",false);
           cohePrefBranch.setCharPref("version",cohe.current);
-          org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
+          org.mozdev.compactHeader.toolbar.CHTSetDefaultButtons();
         }
         //check for upgrade
         if (cohe.version!=cohe.current && !cohe.firstrun){
@@ -624,12 +625,13 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
     else {
-      //org.mozdev.compactHeader.debug.log("firstrun 3");
+      org.mozdev.compactHeader.debug.log("firstrun 3");
+      org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
       Components.utils.import("resource://gre/modules/AddonManager.jsm");
       AddonManager.getAddonByID(COHE_EXTENSION_UUID,
         function(myAddon) {
-//          org.mozdev.compactHeader.debug.log("first run 2");
-          cohe.version = -1;
+          org.mozdev.compactHeader.debug.log("first run 2");
+          cohe.version = "";
           cohe.firstrun = false;
           cohe.current = myAddon.version;
           try{
@@ -639,14 +641,16 @@ org.mozdev.compactHeader.pane = function() {
           } finally {
             //check for first run
             if (cohe.firstrun){
-//              org.mozdev.compactHeader.debug.log("first run 2c");
-              org.mozdev.customizeHeaderToolbar.pane.CHTSetDefaultButtons();
+              org.mozdev.compactHeader.debug.log("first run 2c");
+              org.mozdev.compactHeader.toolbar.CHTSetDefaultButtons();
               cohePrefBranch.setBoolPref("firstrun",false);
               cohePrefBranch.setCharPref("version",cohe.current);
+              org.mozdev.compactHeader.debug.log("first run 2cc");
             }
             //check for upgrade
             if (cohe.version!=cohe.current && !cohe.firstrun){
               cohePrefBranch.setCharPref("version",cohe.current);
+              org.mozdev.compactHeader.debug.log("found version change");
               // XXX
             }
             cohe.firstrun = false;
@@ -655,7 +659,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       );
     }
-//    org.mozdev.compactHeader.debug.log("firstrun 4");
+    org.mozdev.compactHeader.debug.log("firstrun 4");
   }
 
 
@@ -688,7 +692,7 @@ org.mozdev.compactHeader.pane = function() {
         org.mozdev.compactHeader.debug.log("uninstalling COHE 2");
         if (this._uninstall) {
           cohePrefBranch.deleteBranch("");
-          org.mozdev.customizeHeaderToolbar.pane.CHTCleanupButtons();
+          org.mozdev.compactHeader.toolbar.CHTCleanupButtons();
         }
         this.unregister();
       }
