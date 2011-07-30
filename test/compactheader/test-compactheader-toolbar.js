@@ -37,9 +37,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/*
- * Test that we can add a tag to a message without messing up the header.
- */
 var MODULE_NAME = 'test-header-toolbar';
 
 var RELATIVE_ROOT = '../shared-modules';
@@ -96,7 +93,7 @@ function setupModule(module) {
  *  Make sure that opening the header toolbar customization dialog
  *  does not break the get messages button in main toolbar
  */
-function test_get_msg_button_customize_header_toolbar(){
+function disable_test_get_msg_button_customize_header_toolbar(){
   select_message_in_folder(0);
 
   // It is necessary to press the Get Message Button to get the popup menu populated
@@ -129,7 +126,7 @@ function test_get_msg_button_customize_header_toolbar(){
 /**
  *  Test header pane toolbar customization: Check for default button sets
  */
-function test_customize_header_toolbar_check_default()
+function disable_test_customize_header_toolbar_check_default()
 {
   let curMessage = select_message_in_folder(0);
   let hdrToolbar = mc.eid("header-view-toolbar").node;
@@ -168,7 +165,7 @@ function test_customize_header_toolbar_check_default()
 ///**
 // *  Test header pane toolbar customization: Reorder buttons
 // */
-function test_customize_header_toolbar_reorder_buttons()
+function disable_test_customize_header_toolbar_reorder_buttons()
 {
   let curMessage = select_message_in_folder(0);
 
@@ -217,7 +214,7 @@ function test_customize_header_toolbar_reorder_buttons()
 // *  Test header pane toolbar customization: Change buttons in
 // *  separate mail window
 // */
-function test_customize_header_toolbar_separate_window()
+function disable_test_customize_header_toolbar_separate_window()
 {
   let curMessage = select_message_in_folder(0);
 
@@ -289,7 +286,7 @@ function test_customize_header_toolbar_separate_window()
 /**
  *  Test header pane toolbar customization: Remove buttons
  */
-function test_customize_header_toolbar_remove_buttons(){
+function disable_test_customize_header_toolbar_remove_buttons(){
   // Save currentset of toolbar for adding the buttons back
   // at the end.
   var lCurrentset;
@@ -369,9 +366,130 @@ function test_customize_header_toolbar_remove_buttons(){
 }
 
 /**
+ *  Test header pane toolbar customization: Add all buttons to toolbar
+ */
+function test_customize_header_toolbar_add_all_buttons(){
+
+  select_message_in_folder(0);
+
+  // Restore the default buttons to get defined starting conditions.
+  restore_and_check_default_buttons(mc);
+
+  let toolbar = mc.eid("header-view-toolbar").node;
+  let lCurrentset = filterInvisibleButtons(mc, toolbar.currentSet).split(",");
+
+  // Get all buttons in the palette and move them to toolbar
+  let ctc = open_header_pane_toolbar_customization(mc);
+  let palette = ctc.e("palette-box");
+  let tmp = ctc.window.document.getElementById("palette-box").
+    getElementsByTagName("toolbarpaletteitem");
+
+  let wrappedButtons = new Array;
+  let buttons = new Array;
+  for (let i=0; i<tmp.length; i++) {
+    let type = tmp[i].getAttribute("type");
+    if ((type != "separator") &&
+        (type != "spring") &&
+        (type != "spacer")
+        ) {
+      wrappedButtons.push(tmp[i].id)
+      buttons.push(tmp[i].id.replace(new RegExp("wrapper-"), ""));
+    }
+  }
+
+  for (let i=0; i<wrappedButtons.length; i++) {
+    let button = ctc.e(wrappedButtons[i]);
+    // Drop each button to the right end of the toolbar.
+    drag_n_drop_element(button, ctc.window, toolbar, mc.window, 0.99, 0.5, palette);
+  }
+  close_header_pane_toolbar_customization(ctc);
+
+
+  // All buttons have shown up in the toolbar
+  let fullButtonSet = lCurrentset.concat(buttons).join(",");
+  assert_equals(filterInvisibleButtons(mc, toolbar.currentSet),
+      fullButtonSet);
+
+  // No buttons are left in the palette
+  // Get all buttons in the palette and move them to toolbar
+  let ctc = open_header_pane_toolbar_customization(mc);
+  let palette = ctc.e("palette-box");
+  let tmp = ctc.window.document.getElementById("palette-box").
+    getElementsByTagName("toolbarpaletteitem");
+
+  let leftButtons = new Array;
+  for (let i=0; i<tmp.length; i++) {
+    let type = tmp[i].getAttribute("type");
+    if ((type != "separator") &&
+        (type != "spring") &&
+        (type != "spacer")
+        ) {
+      leftButtons.push(tmp[i].id)
+    }
+  }
+  assert_equals(leftButtons.length, 0);
+  close_header_pane_toolbar_customization(ctc);
+
+  // Move the buttons back to palette
+  let ctc = open_header_pane_toolbar_customization(mc);
+  let target = ctc.e("palette-box");
+  for (let i=0; i<wrappedButtons.length; i++) {
+    let button = mc.e(wrappedButtons[i]);
+    drag_n_drop_element(button, mc.window, target, ctc.window, 0.5, 0.5, toolbar);
+  }
+  close_header_pane_toolbar_customization(ctc);
+
+  // Only defaults button are left in the toolbar
+  let hdrBarDefaultSet = toolbar.getAttribute("defaultset");
+  assert_equals(filterInvisibleButtons(mc, toolbar.currentSet),
+      filterInvisibleButtons(mc, hdrBarDefaultSet));
+  assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
+      filterInvisibleButtons(mc, hdrBarDefaultSet));
+
+  // All buttons have shown up in the palette
+  let ctc = open_header_pane_toolbar_customization(mc);
+  let backButtons = new Array;
+  let tmp = ctc.window.document.getElementById("palette-box").
+    getElementsByTagName("toolbarpaletteitem");
+  for (let i=0; i<tmp.length; i++) {
+    let type = tmp[i].getAttribute("type");
+    if ((type != "separator") &&
+        (type != "spring") &&
+        (type != "spacer")
+        ) {
+      backButtons.push(tmp[i].id)
+    }
+  }
+  assert_equals(backButtons.join(","), wrappedButtons.join(","));
+  close_header_pane_toolbar_customization(ctc);
+
+  // Reopen customization dialog and
+  // all buttons are still in the palette
+  let ctc = open_header_pane_toolbar_customization(mc);
+
+  let backButtons = new Array;
+  let tmp = ctc.window.document.getElementById("palette-box").
+    getElementsByTagName("toolbarpaletteitem");
+  for (let i=0; i<tmp.length; i++) {
+    let type = tmp[i].getAttribute("type");
+    if ((type != "separator") &&
+        (type != "spring") &&
+        (type != "spacer")
+        ) {
+      backButtons.push(tmp[i].id)
+    }
+  }
+  assert_equals(backButtons.join(","), wrappedButtons.join(","));
+
+  close_header_pane_toolbar_customization(ctc);
+
+}
+
+
+/**
  *  Test header pane toolbar customization dialog layout
  */
-function test_customize_header_toolbar_dialog_style(){
+function disable_test_customize_header_toolbar_dialog_style(){
   select_message_in_folder(0);
 
   // Restore the default buttons to get defined starting conditions.
@@ -408,7 +526,7 @@ function test_customize_header_toolbar_dialog_style(){
 /**
  *  Test header pane toolbar customization dialog for button style changes
  */
-function test_customize_header_toolbar_change_button_style(){
+function disable_test_customize_header_toolbar_change_button_style(){
   select_message_in_folder(0);
 
   // Restore the default buttons to get defined starting conditions.
