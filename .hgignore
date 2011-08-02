@@ -5,3 +5,5 @@ syntax: regexp
 ^test/ftp$
 syntax: regexp
 ^test/test-.*
+syntax: regexp
+log-.*.txt
