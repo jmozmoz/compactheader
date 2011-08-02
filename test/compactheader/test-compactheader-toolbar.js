@@ -93,7 +93,7 @@ function setupModule(module) {
  *  Make sure that opening the header toolbar customization dialog
  *  does not break the get messages button in main toolbar
  */
-function disable_test_get_msg_button_customize_header_toolbar(){
+function test_get_msg_button_customize_header_toolbar(){
   select_message_in_folder(0);
 
   // It is necessary to press the Get Message Button to get the popup menu populated
@@ -126,7 +126,7 @@ function disable_test_get_msg_button_customize_header_toolbar(){
 /**
  *  Test header pane toolbar customization: Check for default button sets
  */
-function disable_test_customize_header_toolbar_check_default()
+function test_customize_header_toolbar_check_default()
 {
   let curMessage = select_message_in_folder(0);
   let hdrToolbar = mc.eid("header-view-toolbar").node;
@@ -165,7 +165,7 @@ function disable_test_customize_header_toolbar_check_default()
 ///**
 // *  Test header pane toolbar customization: Reorder buttons
 // */
-function disable_test_customize_header_toolbar_reorder_buttons()
+function test_customize_header_toolbar_reorder_buttons()
 {
   let curMessage = select_message_in_folder(0);
 
@@ -214,7 +214,7 @@ function disable_test_customize_header_toolbar_reorder_buttons()
 // *  Test header pane toolbar customization: Change buttons in
 // *  separate mail window
 // */
-function disable_test_customize_header_toolbar_separate_window()
+function test_customize_header_toolbar_separate_window()
 {
   let curMessage = select_message_in_folder(0);
 
@@ -286,7 +286,7 @@ function disable_test_customize_header_toolbar_separate_window()
 /**
  *  Test header pane toolbar customization: Remove buttons
  */
-function disable_test_customize_header_toolbar_remove_buttons(){
+function test_customize_header_toolbar_remove_buttons(){
   // Save currentset of toolbar for adding the buttons back
   // at the end.
   var lCurrentset;
@@ -489,7 +489,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 /**
  *  Test header pane toolbar customization dialog layout
  */
-function disable_test_customize_header_toolbar_dialog_style(){
+function test_customize_header_toolbar_dialog_style(){
   select_message_in_folder(0);
 
   // Restore the default buttons to get defined starting conditions.
@@ -526,7 +526,7 @@ function disable_test_customize_header_toolbar_dialog_style(){
 /**
  *  Test header pane toolbar customization dialog for button style changes
  */
-function disable_test_customize_header_toolbar_change_button_style(){
+function test_customize_header_toolbar_change_button_style(){
   select_message_in_folder(0);
 
   // Restore the default buttons to get defined starting conditions.
