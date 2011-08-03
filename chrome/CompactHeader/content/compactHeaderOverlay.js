@@ -568,6 +568,7 @@ org.mozdev.compactHeader.pane = function() {
 
     observe: function(aSubject, aTopic, aData)
     {
+      org.mozdev.compactHeader.debug.log("hit prefObserver");
       if(aTopic != "nsPref:changed") return;
       // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
       // aData is the name of the pref that's been changed (relative to aSubject)
@@ -581,14 +582,13 @@ org.mozdev.compactHeader.pane = function() {
     }
   }
 
-  myPrefObserverHeaderSize.register();
-
   function coheCheckFirstRun() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
                                      .getService(Components.interfaces.nsIXULAppInfo);
     var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
                                             .getService(Components.interfaces.nsIVersionComparator);
 //    org.mozdev.compactHeader.debug.log("first run 0");
+    var debugLevel = org.mozdev.compactHeader.debug.getLogLevel();
     if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
       org.mozdev.compactHeader.debug.log("firstrun 1");
       org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
@@ -600,12 +600,10 @@ org.mozdev.compactHeader.pane = function() {
         return;
       }
 
-      var debugLevel = org.mozdev.compactHeader.debug.getLogLevel();
       cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
       try{
         cohe.version = cohePrefBranch.getCharPref("version");
         cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
-        debugLevel = cohePrefBranch.getIntPref("debugLevel");
       } catch(e) {
       } finally {
         //check for first run
@@ -620,7 +618,6 @@ org.mozdev.compactHeader.pane = function() {
           // XXX
         }
         cohe.firstrun = false;
-        org.mozdev.compactHeader.debug.setLogLevel(debugLevel);
         cohePrefBranch.setIntPref("debugLevel", debugLevel);
       }
     }
@@ -671,6 +668,8 @@ org.mozdev.compactHeader.pane = function() {
     //}
     org.mozdev.compactHeader.debug.log("before register");
     coheUninstallObserver.register();
+    myPrefObserverHeaderSize.register();
+    org.mozdev.compactHeader.debug.log("register PrefObserver");
     org.mozdev.compactHeader.debug.log("after register");
   }
 
