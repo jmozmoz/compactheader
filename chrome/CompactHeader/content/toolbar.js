@@ -418,12 +418,12 @@ org.mozdev.compactHeader.toolbar = function() {
     if (!testnew) {
       el.className += el.className?' '+strClass:strClass;
     }
-  }
+  };
 
   function removeClass(el, strClass) {
     var str = new RegExp('(\\s|^)'+strClass+'(\\s|$)', 'g');
     el.className = el.className.replace(str, ' ');
-  }
+  };
 
   function flatButtons() {
     var result = cohePrefBranch.getBoolPref("headersize.flatButtons");
@@ -431,7 +431,78 @@ org.mozdev.compactHeader.toolbar = function() {
       result = false;
     }
     return result;
-  }
+  };
+
+  pub.CHTUpdateReplyButton = function () {
+    UpdateReplyButtons();
+  };
+
+  pub.CHTUpdateJunkButton = function () {
+    UpdateJunkButton();
+  };
+
+  pub.CHTSetDefaultButtons = function () {
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+    var hdrBoxDefaultLabelalign = hdrToolbox.getAttribute("defaultlabelalign");
+    var hdrBoxDefaultIconsize = hdrToolbox.getAttribute("defaulticonsize");
+    var hdrBoxDefaultMode = hdrToolbox.getAttribute("defaultmode");
+    var hdrBarDefaultIconsize = hdrToolbar.getAttribute("defaulticonsize");
+    var hdrBarDefaultMode = hdrToolbar.getAttribute("defaultmode");
+
+    hdrToolbox.setAttribute("labelalign", hdrBoxDefaultLabelalign);
+    hdrToolbox.setAttribute("iconsize", hdrBoxDefaultIconsize);
+    hdrToolbox.setAttribute("mode", hdrBoxDefaultMode);
+    hdrToolbar.setAttribute("iconsize", hdrBarDefaultIconsize);
+    hdrToolbar.setAttribute("mode", hdrBarDefaultMode);
+
+    hdrToolbar.currentSet = hdrBarDefaultSet;
+    hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
+
+    document.persist(hdrToolbox.id,"labelalign");
+    document.persist(hdrToolbox.id,"iconsize");
+    document.persist(hdrToolbox.id,"mode");
+    document.persist(hdrToolbar.id,"iconsize");
+    document.persist(hdrToolbar.id,"mode");
+    document.persist(hdrToolbar.id,"currentset");
+  };
+
+  pub.CHTCleanupButtons = function() {
+    var hdrToolbox = document.getElementById("header-view-toolbox");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    var hdrBarDefaultSet = "hdrReplyToSenderButton,hdrSmartReplyButton,hdrForwardButton,hdrArchiveButton,hdrJunkButton,hdrTrashButton";
+
+    hdrToolbox.setAttribute("labelalign", "end");
+    hdrToolbox.setAttribute("iconsize", "small");
+    hdrToolbox.setAttribute("mode", "full");
+
+    hdrToolbar.setAttribute("iconsize", "small");
+    hdrToolbar.setAttribute("mode", "full");
+    hdrToolbar.currentSet = hdrBarDefaultSet;
+    hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
+
+    document.persist(hdrToolbox.id,"labelalign");
+    document.persist(hdrToolbox.id,"iconsize");
+    document.persist(hdrToolbox.id,"mode");
+    document.persist(hdrToolbar.id,"iconsize");
+    document.persist(hdrToolbar.id,"mode");
+    document.persist(hdrToolbar.id,"currentset");
+  };
+
+  pub.populateEmptyToolbar = function() {
+    org.mozdev.compactHeader.debug.log("start populateEmptyToolbar");
+    var hdrToolbar = document.getElementById("header-view-toolbar");
+    if (hdrToolbar) {
+      org.mozdev.compactHeader.debug.log("populateEmptyToolbar 1");
+      if (hdrToolbar.currentSet == "__empty") {
+        org.mozdev.compactHeader.debug.log("populateEmptyToolbar 2");
+        pub.CHTSetDefaultButtons();
+      }
+    }
+    org.mozdev.compactHeader.debug.log("stop populateEmptyToolbar");
+  };
+
 
   return pub;
 }();
