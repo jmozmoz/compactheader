@@ -1,8 +1,10 @@
-#! perl -w
+#! /usr/bin/env perl 
 
 use strict;
 use warnings;
 use File::Copy;
+use POSIX;
+use Cwd;
 
 my $file = 'testapps.csv';
 my $xpi = "../../../AMO/CompactHeader-1.4.2beta3.xpi";
@@ -10,22 +12,23 @@ my $ftpdir = "ftp";
 
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin);
+my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
 open (F, $file) || die ("Could not open $file!");
 
 mkdir "$ftpdir";
 
-if ($ENV{"OSTYPE"} eq "msys") {
+if ($^O eq "msys") {
   $unpack ="unzip";
   $unpackargs="-o";
   $unpacktargetargs="-d";
   $appbin="thunderbird.exe";
 }
-elsif ($ENV{"OSTYPE"} eq "linux-gnu") {
-  $unpack ="unzip";
-  $unpackargs="-o";
-  $unpacktargetargs="-d";
-  $appbin="thunderbird.exe";
+elsif ($^O eq "linux") {
+  $unpack ="tar";
+  $unpackargs="xjvf";
+  $unpacktargetargs="-C";
+  $appbin="thunderbird";
 }
 
 
@@ -33,10 +36,12 @@ while (my $line = <F>)
 {
   ($ostype,$hosttype,$version,$ftppath,$app,$tests) =
     parse_csv($line);
-  #print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n"
 
-  if (($ostype eq $ENV{'OSTYPE'})
-      && ($hosttype eq $ENV{'HOSTTYPE'})
+  next if (not defined($ostype));
+  print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n";
+
+  if (($ostype eq $^O)
+      && ($hosttype eq $machine)
       ) {
     print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n";
 
@@ -49,12 +54,14 @@ while (my $line = <F>)
     system $unpack, $unpackargs, "$ftpdir/$app", $unpacktargetargs, $testdir;
     system "unzip", "-o", "$ftpdir/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
 
-    if ($ENV{"OSTYPE"} eq "msys") {
+    my $currentdir = getcwd;
+
+    if ($^O eq "msys") {
       system "junction", "-d", "$testdir/mozmill/compactheader";
       system "junction", "$testdir/mozmill/compactheader", "compactheader";
     }
     else {
-      system "ln", "-sfn", qq[$ENV{"PWD"}/compactheader $testdir/mozmill/compactheader];
+      system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
     }
 
     # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
@@ -63,15 +70,17 @@ while (my $line = <F>)
       copy("$_","$testdir/mozmill/shared-modules");
     }
 
-    my $currentdir = $ENV{"PWD"};
-
     chdir "$testdir/mozmill";
     system "pwd";
 
-    my $log = `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader 2>&1`;
+#    my $log = `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader 2>&1`;
+    my $log = `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader/test-compactheader-toolbar.js 2>&1`;
 
     chdir "$currentdir";
-    open (LOG, ">log-$version-$ostype-$hosttype.txt");
+    my @timeData = localtime(time);
+    my $datestr = sprintf "%04d%02d%02d%02d%02d", 1900+@timeData[5],
+      1+@timeData[4], @timeData[3], @timeData[2], @timeData[1]; 
+    open (LOG, ">log-$version-$ostype-$hosttype-$datestr.txt");
     print LOG "$log";
     close(LOG);
   }
