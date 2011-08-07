@@ -615,77 +615,41 @@ org.mozdev.compactHeader.pane = function() {
   function coheCheckFirstRun() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
                                      .getService(Components.interfaces.nsIXULAppInfo);
-    var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                                            .getService(Components.interfaces.nsIVersionComparator);
 //    org.mozdev.compactHeader.debug.log("first run 0");
     var debugLevel = org.mozdev.compactHeader.debug.getLogLevel();
-    if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
-      org.mozdev.compactHeader.debug.log("firstrun 1");
-      org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
-      cohe.version = -1;
-      cohe.firstrun = false;
-      cohe.gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-      // check if this is part of CompactHeader
-      if ((cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || (isAddonDisabled(COHE_EXTENSION_UUID))) {
-        return;
-      }
-
-      cohe.current = cohe.gExtensionManager.getItemForID(COHE_EXTENSION_UUID).version;
-      try{
-        cohe.version = cohePrefBranch.getCharPref("version");
-        cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
-      } catch(e) {
-      } finally {
-        //check for first run
-        if (cohe.firstrun){
-          cohePrefBranch.setBoolPref("firstrun",false);
-          cohePrefBranch.setCharPref("version",cohe.current);
-          org.mozdev.compactHeader.toolbar.CHTSetDefaultButtons();
-        }
-        //check for upgrade
-        if (cohe.version!=cohe.current && !cohe.firstrun){
-          cohePrefBranch.setCharPref("version",cohe.current);
-          // XXX
-        }
+    org.mozdev.compactHeader.debug.log("firstrun 3");
+    org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
+    Components.utils.import("resource://gre/modules/AddonManager.jsm");
+    AddonManager.getAddonByID(COHE_EXTENSION_UUID,
+      function(myAddon) {
+        org.mozdev.compactHeader.debug.log("first run 2");
+        cohe.version = "";
         cohe.firstrun = false;
-        cohePrefBranch.setIntPref("debugLevel", debugLevel);
-      }
-    }
-    else {
-      org.mozdev.compactHeader.debug.log("firstrun 3");
-      org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
-      Components.utils.import("resource://gre/modules/AddonManager.jsm");
-      AddonManager.getAddonByID(COHE_EXTENSION_UUID,
-        function(myAddon) {
-          org.mozdev.compactHeader.debug.log("first run 2");
-          cohe.version = "";
-          cohe.firstrun = false;
-          cohe.current = myAddon.version;
-          try{
-            cohe.version = cohePrefBranch.getCharPref("version");
-            cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
-          } catch(e) {
-          } finally {
-            //check for first run
-            if (cohe.firstrun){
-              org.mozdev.compactHeader.debug.log("first run 2c");
-              org.mozdev.compactHeader.toolbar.CHTSetDefaultButtons();
-              cohePrefBranch.setBoolPref("firstrun",false);
-              cohePrefBranch.setCharPref("version",cohe.current);
-              org.mozdev.compactHeader.debug.log("first run 2cc");
-            }
-            //check for upgrade
-            if (cohe.version!=cohe.current && !cohe.firstrun){
-              cohePrefBranch.setCharPref("version",cohe.current);
-              org.mozdev.compactHeader.debug.log("found version change");
-              // XXX
-            }
-            cohe.firstrun = false;
-            org.mozdev.compactHeader.debug.log("first run 2d");
+        cohe.current = myAddon.version;
+        try{
+          cohe.version = cohePrefBranch.getCharPref("version");
+          cohe.firstrun = cohePrefBranch.getBoolPref("firstrun");
+        } catch(e) {
+        } finally {
+          //check for first run
+          if (cohe.firstrun){
+            org.mozdev.compactHeader.debug.log("first run 2c");
+            org.mozdev.compactHeader.toolbar.CHTSetDefaultButtons();
+            cohePrefBranch.setBoolPref("firstrun",false);
+            cohePrefBranch.setCharPref("version",cohe.current);
+            org.mozdev.compactHeader.debug.log("first run 2cc");
           }
+          //check for upgrade
+          if (cohe.version!=cohe.current && !cohe.firstrun){
+            cohePrefBranch.setCharPref("version",cohe.current);
+            org.mozdev.compactHeader.debug.log("found version change");
+            // XXX
+          }
+          cohe.firstrun = false;
+          org.mozdev.compactHeader.debug.log("first run 2d");
         }
-      );
-    }
+      }
+    );
     org.mozdev.compactHeader.debug.log("firstrun 4");
   }
 
@@ -745,39 +709,21 @@ org.mozdev.compactHeader.pane = function() {
         getService(Components.interfaces.nsIObserverService);
       org.mozdev.compactHeader.debug.log("register uninstall start 1");
 
-      var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-                                       .getService(Components.interfaces.nsIXULAppInfo);
-      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                                              .getService(Components.interfaces.nsIVersionComparator);
       org.mozdev.compactHeader.debug.log("register uninstall start 2");
 
-      if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
-        observerService.addObserver(this, "em-action-requested", false);
-        observerService.addObserver(this, "quit-application-granted", false);
-      }
-      else {
-        org.mozdev.compactHeader.debug.log("register uninstall neu 2");
-        observerService.addObserver(this, "quit-application-granted", false);
-        Components.utils.import("resource://gre/modules/AddonManager.jsm");
-        AddonManager.addAddonListener(this);
-        org.mozdev.compactHeader.debug.log("register uninstall neu 2");
-      }
+      org.mozdev.compactHeader.debug.log("register uninstall neu 2");
+      observerService.addObserver(this, "quit-application-granted", false);
+      Components.utils.import("resource://gre/modules/AddonManager.jsm");
+      AddonManager.addAddonListener(this);
+      org.mozdev.compactHeader.debug.log("register uninstall neu 2");
     },
     unregister : function() {
       var observerService =
         Components.classes["@mozilla.org/observer-service;1"].
           getService(Components.interfaces.nsIObserverService);
 
-      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                                              .getService(Components.interfaces.nsIVersionComparator);
-      if(versionChecker.compare(appInfo.version, "3.2a1pre") < 0) {
-        observerService.removeObserver(this,"em-action-requested");
-        observerService.removeObserver(this,"quit-application-granted");
-      }
-      else {
-        observerService.removeObserver(this, "quit-application-granted");
-        AddonManager.removeAddonListener(this);
-      }
+      observerService.removeObserver(this, "quit-application-granted");
+      AddonManager.removeAddonListener(this);
     }
   }
 
