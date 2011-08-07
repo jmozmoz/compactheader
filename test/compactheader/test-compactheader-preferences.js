@@ -57,6 +57,10 @@ const PREF = "browser.preferences.instantApply";
 var prefBranch = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService).getBranch(null);
 
+var browserPreferences = Components.classes["@mozilla.org/preferences-service;1"]
+    .getService(Components.interfaces.nsIPrefService)
+    .getBranch("browser.preferences.");
+
 var messageBodyISO8859_1 = "ae: " + String.fromCharCode(228) +
   ", oe: " + String.fromCharCode(246) +
   ", ue: " + String.fromCharCode(252) +
@@ -175,9 +179,15 @@ function open_preferences_dialog(aController, aSubtest) {
 }
 
 function close_preferences_dialog(aController) {
-  let okButton = aController.window.document.documentElement.getButton('accept');
   plan_for_window_close(aController);
-  aController.click(new elib.Elem(okButton));
+  if (browserPreferences.getBoolPref("instantApply")) {
+    let cancelButton = aController.window.document.documentElement.getButton('cancel');
+    aController.click(new elib.Elem(cancelButton));
+  }
+  else {
+    let okButton = aController.window.document.documentElement.getButton('accept');
+    aController.click(new elib.Elem(okButton));
+  }
   wait_for_window_close();
   //assert_true(aController.window.closed, "The preferences dialog is not closed.");
 }
