@@ -37,7 +37,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var MODULE_NAME = 'test-header-toolbar';
+var MODULE_NAME = 'test-compactheader-toolbar';
 
 var RELATIVE_ROOT = '../shared-modules';
 var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',

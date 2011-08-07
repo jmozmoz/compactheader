@@ -94,6 +94,10 @@ org.mozdev.compactHeader.pane = function() {
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
 
+  var browserPreferences = Components.classes["@mozilla.org/preferences-service;1"]
+    .getService(Components.interfaces.nsIPrefService)
+    .getBranch("browser.preferences.");
+
   var cohe={
     version: -1,
     firstrun: true,
@@ -568,18 +572,44 @@ org.mozdev.compactHeader.pane = function() {
 
     observe: function(aSubject, aTopic, aData)
     {
-      org.mozdev.compactHeader.debug.log("hit prefObserver");
+      org.mozdev.compactHeader.debug.log("prefObserver start");
       if(aTopic != "nsPref:changed") return;
       // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
       // aData is the name of the pref that's been changed (relative to aSubject)
+      org.mozdev.compactHeader.debug.log("prefObserver 1: " + aData);
 
-      var event = document.createEvent('Events');
-      event.initEvent('messagepane-loaded', false, true);
-      var headerViewElement = document.getElementById("msgHeaderView");
-      headerViewElement.dispatchEvent(event);
+      if (  (aData == "addressstyle")
+          ||(aData == "twolineview")
+          ||(aData == "linkify")
+          ) {
+        preferencesUpdate();
+      }
 
-      gDBView.reloadMessage();
+      org.mozdev.compactHeader.debug.log("prefObserver stop");
     }
+  }
+
+  var wasHere = false;
+
+  function preferencesUpdate() {
+    org.mozdev.compactHeader.debug.log("preferencesUpdate " + wasHere);
+    if (!browserPreferences.getBoolPref("instantApply")
+        && wasHere)
+      return;
+    org.mozdev.compactHeader.debug.log("preferencesUpdate 2");
+    wasHere = true;
+    ReloadMessage();
+    var event = document.createEvent('Events');
+    event.initEvent('messagepane-loaded', false, true);
+    var headerViewElement = document.getElementById("msgHeaderView");
+    headerViewElement.dispatchEvent(event);
+    setTimeout(clearReloadTimeout, 250);
+    org.mozdev.compactHeader.debug.log("preferencesUpdate stop");
+  }
+
+  function clearReloadTimeout() {
+    wasHere = false;
+    org.mozdev.compactHeader.debug.log("wasHere cleared");
   }
 
   function coheCheckFirstRun() {
