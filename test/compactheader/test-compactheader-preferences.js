@@ -83,7 +83,7 @@ function setupModule(module) {
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
 
-  folder = create_folder("MessageWindowB");
+  folder = create_folder("MessageWindowC");
 
   // create a message that has the interesting headers that commonly
   // show up in the message header pane for testing
