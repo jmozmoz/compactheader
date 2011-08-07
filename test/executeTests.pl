@@ -78,8 +78,8 @@ while (my $line = <F>)
 
     chdir "$currentdir";
     my @timeData = localtime(time);
-    my $datestr = sprintf "%04d%02d%02d%02d%02d", 1900+@timeData[5],
-      1+@timeData[4], @timeData[3], @timeData[2], @timeData[1]; 
+    my $datestr = sprintf "%04d%02d%02d%02d%02d", 1900+$timeData[5],
+      1+$timeData[4], $timeData[3], $timeData[2], $timeData[1];
     open (LOG, ">log-$version-$ostype-$hosttype-$datestr.txt");
     print LOG "$log";
     close(LOG);

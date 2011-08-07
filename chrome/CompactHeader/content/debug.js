@@ -54,7 +54,7 @@ org.mozdev.compactHeader.debug = function() {
                                            .getService(Components.interfaces.nsIConsoleService);
 
   var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
-  var gCurrentLogLevel = LOGLEVEL.debug; // TODO: Set to info
+  var gCurrentLogLevel = LOGLEVEL.info; // TODO: Set to info
 
   pub.log = function(str, logLevel) {
     if (!logLevel) var logLevel = LOGLEVEL.debug;
@@ -62,12 +62,19 @@ org.mozdev.compactHeader.debug = function() {
       aConsoleService.logStringMessage(Date() + " CH: " + str);
     }
   };
-  
+
   pub.setLogLevel = function(logLevel) {
     gCurrentLogLevel = logLevel;
+    cohePrefBranch.setIntPref("debugLevel", debugLevel);
   };
 
   pub.getLogLevel = function() {
+    try{
+      gCurrentLogLevel = cohePrefBranch.getIntPref("debugLevel");
+    } catch(e) {
+    } finally {
+    }
+    pub.log("Current logLevel: " + gCurrentLogLevel, LOGLEVEL.error)
     return gCurrentLogLevel;
   };
 

@@ -18,21 +18,33 @@
   void(openDialog("chrome://CompactHeader/content/preferences.xul"))
 -->
 
-<dialog id="cohePreferences"
-        title="&dialog.title;"
-        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-        onload="org.mozdev.compactHeader.preferences.onLoad();"
-        ondialogaccept="return org.mozdev.compactHeader.preferences.onDialogAccept();">
+<prefwindow id="cohePreferences"
+            title="&dialog.title;"
+            windowtype="ext:options"
+            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <prefpane id="cohePreferences-pane">
+    <preferences>
+      <preference id="cohetwolineview"
+                  name="extensions.CompactHeader.headersize.twolineview" type="bool"/>
+      <preference id="cohelinkify"
+                  name="extensions.CompactHeader.headersize.linkify" type="bool"/>
+      <preference id="coheaddressstyle"
+                  name="extensions.CompactHeader.headersize.addressstyle" type="bool"/>
+      <preference id="coheflatButtons"
+                  name="extensions.CompactHeader.headersize.flatButtons" type="bool"/>
+    </preferences>
 
-  <script type="application/x-javascript" src="chrome://CompactHeader/content/preferences.js"/>
-
-  <checkbox id="checkboxCompactTwolineView"
-            label="&checkbox.Compact.TwolineView.caption;"/>
-  <checkbox id="checkboxLinkify"
-            label="&menu.Linkify.caption;"/>
-  <checkbox id="checkboxShowOnlyAddress"
-            label="&menu.ShowOnlyAddress.caption;"/>
-  <checkbox id="checkboxflatButtons"
-            label="&menu.flatButtons.caption;"/>
-
-</dialog>
+    <checkbox id="checkboxCompactTwolineView"
+              preference="cohetwolineview"
+              label="&checkbox.Compact.TwolineView.caption;"/>
+    <checkbox id="checkboxLinkify"
+              preference="cohelinkify"
+              label="&menu.Linkify.caption;"/>
+    <checkbox id="checkboxShowOnlyAddress"
+              preference="coheaddressstyle"
+              label="&menu.ShowOnlyAddress.caption;"/>
+    <checkbox id="checkboxflatButtons"
+              preference="coheflatButtons"
+              label="&menu.flatButtons.caption;"/>
+  </prefpane>
+</prefwindow>
