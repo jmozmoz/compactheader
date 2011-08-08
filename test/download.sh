@@ -20,7 +20,7 @@ else
   return 1;
 fi
 export TESTS=thunderbird-5.0.tests.zip
-export XPI=../../../AMO/CompactHeader-1.4.2beta3.xpi
+export XPI=../../../AMO/CompactHeader-1.4.2beta4.xpi
 export TESTDIR=test-5.0
 
 wget -P ftp -N $FTP_DIR/$APP

@@ -7,10 +7,10 @@ use POSIX;
 use Cwd;
 
 my $file = 'testapps.csv';
-my $xpi = "../../../AMO/CompactHeader-1.4.2beta3.xpi";
+my $xpi = "../../../AMO/CompactHeader-1.4.2beta4.xpi";
 my $ftpdir = "ftp";
 
-my ($ostype,$hosttype,$version,$ftppath,$app,$tests);
+my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
@@ -34,7 +34,7 @@ elsif ($^O eq "linux") {
 
 while (my $line = <F>)
 {
-  ($ostype,$hosttype,$version,$ftppath,$app,$tests) =
+  ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning) =
     parse_csv($line);
 
   next if (not defined($ostype));
@@ -48,11 +48,13 @@ while (my $line = <F>)
     my $testdir = "test-$version";
 
     mkdir "$testdir";
-    system "wget", "-P", "$ftpdir", "-N", "$ftppath/$app";
-    system "wget", "-P", "$ftpdir", "-N", "$ftppath/$tests";
+    system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+    system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+    system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
-    system $unpack, $unpackargs, "$ftpdir/$app", $unpacktargetargs, $testdir;
-    system "unzip", "-o", "$ftpdir/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
+
+    system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
+    system "unzip", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
 
     my $currentdir = getcwd;
 
@@ -73,8 +75,10 @@ while (my $line = <F>)
     chdir "$testdir/mozmill";
     system "pwd";
 
-#    my $log = `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader 2>&1`;
-    my $log = `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader/test-compactheader-toolbar.js 2>&1`;
+    my $log;
+#   $log = `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader 2>&1`;
+    $log = $log . `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader/test-compactheader-toolbar.js 2>&1`;
+    $log = $log . `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi,../../ftp//$ostype-$hosttype-$version/lightning.xpi -t compactheader/test-compactheader-preferences.js 2>&1`;
 
     chdir "$currentdir";
     my @timeData = localtime(time);
