@@ -599,10 +599,11 @@ org.mozdev.compactHeader.pane = function() {
     org.mozdev.compactHeader.debug.log("preferencesUpdate 2");
     wasHere = true;
     ReloadMessage();
-    var event = document.createEvent('Events');
-    event.initEvent('messagepane-loaded', false, true);
-    var headerViewElement = document.getElementById("msgHeaderView");
-    headerViewElement.dispatchEvent(event);
+    pub.coheOnLoadMsgHeaderPane();
+//    var event = document.createEvent('Events');
+//    event.initEvent('messagepane-loaded', false, true);
+//    var headerViewElement = document.getElementById("msgHeaderView");
+//    headerViewElement.dispatchEvent(event);
     setTimeout(clearReloadTimeout, 250);
     org.mozdev.compactHeader.debug.log("preferencesUpdate stop");
   }

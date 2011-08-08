@@ -102,6 +102,10 @@
                    byline="true"
                    match="(export XPI=.*CompactHeader-).*(.xpi)"
                    replace="\1${app.version}\2"/>
+    <replaceregexp file="${test.dir}/executeTests.pl"
+                   byline="true"
+                   match="(xpi =.*CompactHeader-).*(.xpi)"
+                   replace="\1${app.version}\2"/>
   </target>
 
 </project>

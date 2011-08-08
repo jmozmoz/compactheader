@@ -51,7 +51,8 @@ Cu.import('resource://mozmill/modules/controller.js', controller);
 // The WindowHelper module
 var WindowHelper;
 
-var folder;
+var folder1;
+var folder2;
 
 const PREF = "browser.preferences.instantApply";
 var prefBranch = Cc["@mozilla.org/preferences-service;1"]
@@ -83,7 +84,8 @@ function setupModule(module) {
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
 
-  folder = create_folder("MessageWindowC");
+  folder1 = create_folder("MessageWindowC");
+  folder2 = create_folder("MessageWindowD");
 
   // create a message that has the interesting headers that commonly
   // show up in the message header pane for testing
@@ -96,16 +98,17 @@ function setupModule(module) {
                               "Bcc": "Richard Roe <richard.roe@momo.invalid>"
                             }});
 
-  add_message_to_folder(folder, msg);
+  add_message_to_folder(folder1, msg);
 
-  // create a message that has
-
-  addToFolder("test encoded ISO-8859-1", messageBodyISO8859_1, folder, "iso-8859-1");
-  addToFolder("test encoded UTF-8", messageBodyUTF8, folder, "utf-8");
+  // create a message that has umlauts
+  addToFolder("test encoded ISO-8859-1", messageBodyISO8859_1, folder1, "iso-8859-1");
+  addToFolder("test encoded UTF-8", messageBodyUTF8, folder1, "utf-8");
 
   let msg = create_message();
-  add_message_to_folder(folder, msg);
+  add_message_to_folder(folder1, msg);
 
+  let msg = create_message();
+  add_message_to_folder(folder2, msg);
 }
 
 
@@ -114,27 +117,37 @@ function setupModule(module) {
  *  does not break the get messages button in main toolbar
  */
 function test_double_preference_change_ISO(){
-  select_message_in_folder(2);
+  select_message_in_folder(folder1, 2);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
-  open_preferences_dialog(mc, subtest_p1);
+  open_preferences_dialog(mc, subtest_change_twoline_linkify);
   mc.sleep(10);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
 }
 
 function test_double_preference_change_UTF(){
-  select_message_in_folder(3);
+  select_message_in_folder(folder1, 3);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
-  open_preferences_dialog(mc, subtest_p1);
+  open_preferences_dialog(mc, subtest_change_twoline_linkify);
   mc.sleep(10);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
 }
 
-function subtest_p1(aController) {
+function subtest_change_twoline_linkify(aController) {
   aController.click(aController.eid("checkboxCompactTwolineView"));
   aController.click(aController.eid("checkboxLinkify"));
   close_preferences_dialog(aController);
 }
 
+function test_single_preference_change_folder(){
+  select_message_in_folder(folder1, 3);
+  open_preferences_dialog(mc, subtest_change_twoline);
+  select_message_in_folder(folder2, 0);
+}
+
+function subtest_change_twoline(aController) {
+  aController.click(aController.eid("checkboxCompactTwolineView"));
+  close_preferences_dialog(aController);
+}
 
 /**
  *  Helper function to open an extra window, so that the 3pane
@@ -193,11 +206,11 @@ function close_preferences_dialog(aController) {
 }
 
 /**
- * Select message in current (global) folder.
+ * Select message in current (global) folder1.
  */
-function select_message_in_folder(aMessageNum)
+function select_message_in_folder(aFolder, aMessageNum)
 {
-  be_in_folder(folder);
+  be_in_folder(aFolder);
 
   // select and open the first message
   let curMessage = select_click_row(aMessageNum);
