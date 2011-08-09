@@ -7,7 +7,7 @@ use POSIX;
 use Cwd;
 
 my $file = 'testapps.csv';
-my $xpi = "../../../AMO/CompactHeader-1.4.2beta4.xpi";
+my $xpi = "../../../AMO/CompactHeader-1.4.2beta5.xpi";
 my $ftpdir = "ftp";
 
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning);

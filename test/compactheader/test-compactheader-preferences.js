@@ -41,7 +41,8 @@ var MODULE_NAME = 'test-compactheader-preferences';
 
 var RELATIVE_ROOT = '../shared-modules';
 var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
-                       'address-book-helpers', 'mouse-event-helpers'];
+                       'address-book-helpers', 'mouse-event-helpers',
+                       'compactheader-helpers'];
 
 var elib = {};
 Cu.import('resource://mozmill/modules/elementslib.js', elib);
@@ -57,10 +58,6 @@ var folder2;
 const PREF = "browser.preferences.instantApply";
 var prefBranch = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService).getBranch(null);
-
-var browserPreferences = Components.classes["@mozilla.org/preferences-service;1"]
-    .getService(Components.interfaces.nsIPrefService)
-    .getBranch("browser.preferences.");
 
 var messageBodyISO8859_1 = "ae: " + String.fromCharCode(228) +
   ", oe: " + String.fromCharCode(246) +
@@ -83,6 +80,8 @@ function setupModule(module) {
   meh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
+  let chh = collector.getModule('compactheader-helpers');
+  chh.installInto(module);
 
   folder1 = create_folder("MessageWindowC");
   folder2 = create_folder("MessageWindowD");
@@ -117,7 +116,7 @@ function setupModule(module) {
  *  does not break the get messages button in main toolbar
  */
 function test_double_preference_change_ISO(){
-  select_message_in_folder(folder1, 2);
+  select_message_in_folder(folder1, 2, mc);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
   open_preferences_dialog(mc, subtest_change_twoline_linkify);
   mc.sleep(10);
@@ -125,7 +124,7 @@ function test_double_preference_change_ISO(){
 }
 
 function test_double_preference_change_UTF(){
-  select_message_in_folder(folder1, 3);
+  select_message_in_folder(folder1, 3, mc);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
   open_preferences_dialog(mc, subtest_change_twoline_linkify);
   mc.sleep(10);
@@ -139,87 +138,14 @@ function subtest_change_twoline_linkify(aController) {
 }
 
 function test_single_preference_change_folder(){
-  select_message_in_folder(folder1, 3);
+  select_message_in_folder(folder1, 3, mc);
   open_preferences_dialog(mc, subtest_change_twoline);
-  select_message_in_folder(folder2, 0);
+  select_message_in_folder(folder2, 0, mc);
 }
 
 function subtest_change_twoline(aController) {
   aController.click(aController.eid("checkboxCompactTwolineView"));
   close_preferences_dialog(aController);
-}
-
-/**
- *  Helper function to open an extra window, so that the 3pane
- *  window can be closed and opend again for persistancy checks.
- *  They are copied from the test-session-store.js.
- */
-function close3PaneWindow() {
-  let windowMediator = Cc["@mozilla.org/appshell/window-mediator;1"].
-    getService(Ci.nsIWindowMediator);
-  let mail3PaneWindow = windowMediator.getMostRecentWindow("mail:3pane");
-  // close the 3pane window
-  mail3PaneWindow.close();
-}
-
-function open3PaneWindow() {
-  let windowWatcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].
-    getService(Ci.nsIWindowWatcher);
-  WindowHelper.plan_for_new_window("mail:3pane");
-  windowWatcher.openWindow(null,
-                           "chrome://messenger/content/messenger.xul", "",
-                           "all,chrome,dialog=no,status,toolbar",
-                           null);
-  return WindowHelper.wait_for_new_window("mail:3pane");
-}
-
-function openAddressBook() {
-  let windowWatcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].
-    getService(Ci.nsIWindowWatcher);
-  WindowHelper.plan_for_new_window("mail:addressbook");
-  windowWatcher.openWindow(
-                      null,
-                      "chrome://messenger/content/addressbook/addressbook.xul", "",
-                      "all,chrome,dialog=no,status,toolbar",
-                      null);
-  return WindowHelper.wait_for_new_window("mail:addressbook");
-}
-
-function open_preferences_dialog(aController, aSubtest) {
-  plan_for_modal_dialog("ext:options", aSubtest);
-  aController.click(aController.eid("hidecohePreferencesButton"));
-  wait_for_modal_dialog("ext:options", 1);
-}
-
-function close_preferences_dialog(aController) {
-  plan_for_window_close(aController);
-  if (browserPreferences.getBoolPref("instantApply")) {
-    let cancelButton = aController.window.document.documentElement.getButton('cancel');
-    aController.click(new elib.Elem(cancelButton));
-  }
-  else {
-    let okButton = aController.window.document.documentElement.getButton('accept');
-    aController.click(new elib.Elem(okButton));
-  }
-  wait_for_window_close();
-  //assert_true(aController.window.closed, "The preferences dialog is not closed.");
-}
-
-/**
- * Select message in current (global) folder1.
- */
-function select_message_in_folder(aFolder, aMessageNum)
-{
-  be_in_folder(aFolder);
-
-  // select and open the first message
-  let curMessage = select_click_row(aMessageNum);
-
-  // make sure it loads
-  wait_for_message_display_completion(mc);
-  assert_selected_and_displayed(mc, curMessage);
-
-  return curMessage;
 }
 
 function addToFolder(aSubject, aBody, aFolder, aCharset) {
