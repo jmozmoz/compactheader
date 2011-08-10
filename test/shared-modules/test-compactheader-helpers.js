@@ -70,6 +70,8 @@ function installInto(module) {
   module.open_preferences_dialog = open_preferences_dialog;
   module.close_preferences_dialog = close_preferences_dialog;
   module.select_message_in_folder = select_message_in_folder;
+  module.collapse_and_assert_header = collapse_and_assert_header;
+  module.expand_and_assert_header = expand_and_assert_header;
 }
 
 
@@ -143,4 +145,25 @@ function select_message_in_folder(aFolder, aMessageNum, aController)
   folderDisplayHelper.assert_selected_and_displayed(aController, curMessage);
 
   return curMessage;
+}
+
+function collapse_and_assert_header(aController) {
+  let collapsedHeaderView = aController.e("collapsedHeaderView");
+  let expandedHeaderView = aController.e("expandedHeaderView");
+  if (collapsedHeaderView.getAttribute("collapsed")) {
+    aController.click(aController.eid("hideDetailsButton"));
+  }
+  folderDisplayHelper.assert_true(!collapsedHeaderView.hasAttribute("collapsed"));
+  folderDisplayHelper.assert_true(expandedHeaderView.getAttribute("collapsed"));
+}
+
+function expand_and_assert_header(aController) {
+  let collapsedHeaderView = aController.e("collapsedHeaderView");
+  let expandedHeaderView = aController.e("expandedHeaderView");
+  if (!collapsedHeaderView.hasAttribute("collapsed") ||
+      !collapsedHeaderView.getAttribute("collapsed")) {
+    aController.click(aController.eid("showDetailsButton"));
+  }
+  folderDisplayHelper.assert_true(collapsedHeaderView.getAttribute("collapsed"));
+  folderDisplayHelper.assert_true(!expandedHeaderView.hasAttribute("collapsed"));
 }

@@ -19,8 +19,6 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Blake Winton <bwinton@latte.ca>
- *   Dan Mosedale <dmose@mozillamessaging.com>
  *   Joachim Herb <Joachim.Herb@gmx.de>
  *
  * Alternatively, the contents of this file may be used under the terms of
@@ -98,6 +96,7 @@ function setupModule(module) {
  */
 function test_get_msg_button_customize_header_toolbar(){
   select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // It is necessary to press the Get Message Button to get the popup menu populated
   mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
@@ -134,6 +133,7 @@ function test_customize_header_toolbar_check_default()
   let curMessage = select_message_in_folder(folder, 0, mc);
   let hdrToolbar = mc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+  expand_and_assert_header(mc);
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   // In a fresh profile the currentset attribute does not
   // exist, i.e. it returns empty. So check for both valid
@@ -149,6 +149,7 @@ function test_customize_header_toolbar_check_default()
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -174,6 +175,7 @@ function test_customize_header_toolbar_reorder_buttons()
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
+  expand_and_assert_header(mc);
 
   // Save the currentSet of the toolbar before opening the
   // customization dialog, to get out of the way of the
@@ -203,6 +205,7 @@ function test_customize_header_toolbar_reorder_buttons()
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -220,6 +223,7 @@ function test_customize_header_toolbar_reorder_buttons()
 function test_customize_header_toolbar_separate_window()
 {
   let curMessage = select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -228,6 +232,7 @@ function test_customize_header_toolbar_separate_window()
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -295,6 +300,7 @@ function test_customize_header_toolbar_remove_buttons(){
   var lCurrentset;
 
   select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -325,6 +331,8 @@ function test_customize_header_toolbar_remove_buttons(){
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
+
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -374,6 +382,7 @@ function test_customize_header_toolbar_remove_buttons(){
 function test_customize_header_toolbar_add_all_buttons(){
 
   select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -494,6 +503,7 @@ function test_customize_header_toolbar_add_all_buttons(){
  */
 function test_customize_header_toolbar_dialog_style(){
   select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -531,6 +541,7 @@ function test_customize_header_toolbar_dialog_style(){
  */
 function test_customize_header_toolbar_change_button_style(){
   select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
