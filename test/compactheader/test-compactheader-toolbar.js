@@ -19,8 +19,6 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Blake Winton <bwinton@latte.ca>
- *   Dan Mosedale <dmose@mozillamessaging.com>
  *   Joachim Herb <Joachim.Herb@gmx.de>
  *
  * Alternatively, the contents of this file may be used under the terms of
@@ -41,7 +39,8 @@ var MODULE_NAME = 'test-compactheader-toolbar';
 
 var RELATIVE_ROOT = '../shared-modules';
 var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
-                       'address-book-helpers', 'mouse-event-helpers'];
+                       'address-book-helpers', 'mouse-event-helpers',
+                       'compactheader-helpers'];
 
 var elib = {};
 Cu.import('resource://mozmill/modules/elementslib.js', elib);
@@ -66,6 +65,8 @@ function setupModule(module) {
   abh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
+  let chh = collector.getModule('compactheader-helpers');
+  chh.installInto(module);
 
   folder = create_folder("MessageWindowB");
 
@@ -94,7 +95,8 @@ function setupModule(module) {
  *  does not break the get messages button in main toolbar
  */
 function test_get_msg_button_customize_header_toolbar(){
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // It is necessary to press the Get Message Button to get the popup menu populated
   mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
@@ -128,9 +130,10 @@ function test_get_msg_button_customize_header_toolbar(){
  */
 function test_customize_header_toolbar_check_default()
 {
-  let curMessage = select_message_in_folder(0);
+  let curMessage = select_message_in_folder(folder, 0, mc);
   let hdrToolbar = mc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+  expand_and_assert_header(mc);
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   // In a fresh profile the currentset attribute does not
   // exist, i.e. it returns empty. So check for both valid
@@ -146,6 +149,7 @@ function test_customize_header_toolbar_check_default()
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -167,10 +171,11 @@ function test_customize_header_toolbar_check_default()
 // */
 function test_customize_header_toolbar_reorder_buttons()
 {
-  let curMessage = select_message_in_folder(0);
+  let curMessage = select_message_in_folder(folder, 0, mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
+  expand_and_assert_header(mc);
 
   // Save the currentSet of the toolbar before opening the
   // customization dialog, to get out of the way of the
@@ -200,6 +205,7 @@ function test_customize_header_toolbar_reorder_buttons()
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -216,7 +222,8 @@ function test_customize_header_toolbar_reorder_buttons()
 // */
 function test_customize_header_toolbar_separate_window()
 {
-  let curMessage = select_message_in_folder(0);
+  let curMessage = select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -225,6 +232,7 @@ function test_customize_header_toolbar_separate_window()
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -262,7 +270,7 @@ function test_customize_header_toolbar_separate_window()
 
   mc = open3PaneWindow();
   abwc.window.close();
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
 
   // Check, if the buttons in the mail3pane window are the correct ones.
   let hdrToolbar = mc.eid("header-view-toolbar").node;
@@ -291,7 +299,8 @@ function test_customize_header_toolbar_remove_buttons(){
   // at the end.
   var lCurrentset;
 
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -313,7 +322,7 @@ function test_customize_header_toolbar_remove_buttons(){
       "__empty");
 
   // Move to the next message and check again.
-  let curMessage = select_message_in_folder(1);
+  let curMessage = select_message_in_folder(folder, 1, mc);
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet), "__empty");
   assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
       "__empty");
@@ -322,6 +331,8 @@ function test_customize_header_toolbar_remove_buttons(){
   // buttons are shown there.
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
+
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -337,7 +348,7 @@ function test_customize_header_toolbar_remove_buttons(){
   close3PaneWindow();
   mc = open3PaneWindow();
   abwc.window.close();
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
 
   let toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet), "__empty");
@@ -370,7 +381,8 @@ function test_customize_header_toolbar_remove_buttons(){
  */
 function test_customize_header_toolbar_add_all_buttons(){
 
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -490,7 +502,8 @@ function test_customize_header_toolbar_add_all_buttons(){
  *  Test header pane toolbar customization dialog layout
  */
 function test_customize_header_toolbar_dialog_style(){
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -527,7 +540,8 @@ function test_customize_header_toolbar_dialog_style(){
  *  Test header pane toolbar customization dialog for button style changes
  */
 function test_customize_header_toolbar_change_button_style(){
-  select_message_in_folder(0);
+  select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -564,23 +578,6 @@ function test_customize_header_toolbar_change_button_style(){
   // The default mode is icon visible only.
   restore_and_check_default_buttons(mc);
   subtest_buttons_style("-moz-box", "none");
-}
-
-/**
- * Select message in current (global) folder.
- */
-function select_message_in_folder(aMessageNum)
-{
-  be_in_folder(folder);
-
-  // select and open the first message
-  let curMessage = select_click_row(aMessageNum);
-
-  // make sure it loads
-  wait_for_message_display_completion(mc);
-  assert_selected_and_displayed(mc, curMessage);
-
-  return curMessage;
 }
 
 /**
@@ -658,42 +655,6 @@ function close_header_pane_toolbar_customization(aCtc)
   }
 }
 
-/**
- *  Helper function to open an extra window, so that the 3pane
- *  window can be closed and opend again for persistancy checks.
- *  They are copied from the test-session-store.js.
- */
-function close3PaneWindow() {
-  let windowMediator = Cc["@mozilla.org/appshell/window-mediator;1"].
-    getService(Ci.nsIWindowMediator);
-  let mail3PaneWindow = windowMediator.getMostRecentWindow("mail:3pane");
-  // close the 3pane window
-  mail3PaneWindow.close();
-}
-
-function open3PaneWindow() {
-  let windowWatcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].
-    getService(Ci.nsIWindowWatcher);
-  WindowHelper.plan_for_new_window("mail:3pane");
-  windowWatcher.openWindow(null,
-                           "chrome://messenger/content/messenger.xul", "",
-                           "all,chrome,dialog=no,status,toolbar",
-                           null);
-  return WindowHelper.wait_for_new_window("mail:3pane");
-}
-
-function openAddressBook() {
-  let windowWatcher = Cc["@mozilla.org/embedcomp/window-watcher;1"].
-    getService(Ci.nsIWindowWatcher);
-  WindowHelper.plan_for_new_window("mail:addressbook");
-  windowWatcher.openWindow(
-                      null,
-                      "chrome://messenger/content/addressbook/addressbook.xul", "",
-                      "all,chrome,dialog=no,status,toolbar",
-                      null);
-  return WindowHelper.wait_for_new_window("mail:addressbook");
-}
-
 /*
  * Remove invsible buttons from (comma separated) buttons list
  */
@@ -720,3 +681,4 @@ function filterInvisibleButtons(aController, aButtons) {
 
   return strResult;
 }
+

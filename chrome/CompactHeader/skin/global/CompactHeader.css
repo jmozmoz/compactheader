@@ -247,3 +247,12 @@
 #collapsedHeaderView #signedHdrIcon {
   -moz-margin-end: 3px;
 }
+
+#collapsed2LtoCcBccBox mail-emailaddress[addressType="cc"] {
+  font-style:italic;
+}
+
+#collapsed2LtoCcBccBox mail-emailaddress[addressType="bcc"] {
+  font-style:oblique;
+  text-decoration:underline;
+}

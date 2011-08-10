@@ -121,7 +121,7 @@ org.mozdev.compactHeader.pane = function() {
     updateHeaderValue(headerEntry, headerValue);
   }
 
-  function coheOutputEmailAddresses(headerEntry, emailAddresses) {
+  function coheOutputEmailAddresses(headerEntry, emailAddresses, addressType) {
     /* function copied from comm-1.9.1/ mail/ base/ content/ msgHdrViewOverlay.js 771135e6aaf5 */
     if (!emailAddresses)
       return;
@@ -143,6 +143,7 @@ org.mozdev.compactHeader.pane = function() {
       var address = {};
       address.emailAddress = addresses.value[index];
       address.fullAddress = fullNames.value[index];
+      address.addressType = addressType;
       if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
         address.displayName = address.emailAddress;
         address.fullAddress = address.emailAddress;
@@ -255,6 +256,16 @@ org.mozdev.compactHeader.pane = function() {
         org.mozdev.compactHeader.buttons.coheToggleStar();
         org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       };
+
+      let collapsed2LtoCcBccBox = document.getElementById("collapsed2LtoCcBccBox");
+      if (collapsed2LtoCcBccBox) {
+        let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox.updateEmailAddressNode;
+        function updateEmailAddressNodeNew(aEmailNode, aAddress) {
+          updateEmailAddressNode(aEmailNode, aAddress)
+          aEmailNode.setAttribute("addressType", aAddress.addressType);
+        }
+        collapsed2LtoCcBccBox.updateEmailAddressNode = updateEmailAddressNodeNew;
+      }
     }
 
     if (cohe.firstrun) {
@@ -494,7 +505,7 @@ org.mozdev.compactHeader.pane = function() {
       }
 
       if (headerEntry) {
-        headerEntry.outputFunction(headerEntry, headerField.headerValue);
+        headerEntry.outputFunction(headerEntry, headerField.headerValue, headerName);
         headerEntry.valid = true;
       }
     }

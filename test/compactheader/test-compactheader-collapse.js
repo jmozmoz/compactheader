@@ -81,8 +81,7 @@ function setupModule(module) {
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
-  folder1 = create_folder("MessageWindowC");
-  folder2 = create_folder("MessageWindowD");
+  folder1 = create_folder("MessageWindowE");
 
   // create a message that has the interesting headers that commonly
   // show up in the message header pane for testing
@@ -97,90 +96,94 @@ function setupModule(module) {
 
   add_message_to_folder(folder1, msg);
 
-  // create a message that has umlauts
-  addToFolder("test encoded ISO-8859-1", messageBodyISO8859_1, folder1, "iso-8859-1");
-  addToFolder("test encoded UTF-8", messageBodyUTF8, folder1, "utf-8");
+  let msg = create_message({cc: msgGen.makeNamesAndAddresses(2), // YYY
+    subject: "This is a really, really, really, really, really, really, really, really, long subject.",
+    clobberHeaders: {
+      "Newsgroups": "alt.test",
+      "Reply-To": "J. Doe <j.doe@momo.invalid>",
+      "Content-Base": "http://example.com/",
+      "Bcc": "Richard Roe <richard.roe@momo.invalid>"
+    }});
 
-  let msg = create_message();
   add_message_to_folder(folder1, msg);
-
-  let msg = create_message();
-  add_message_to_folder(folder2, msg);
 }
 
-
-/**
- *  Make sure that opening the header toolbar customization dialog
- *  does not break the get messages button in main toolbar
- */
-function test_double_preference_change_ISO(){
-  select_message_in_folder(folder1, 2, mc);
-  assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
-  open_preferences_dialog(mc, subtest_change_twoline_linkify);
+function test_toggle_header_view_twoline(){
+  select_message_in_folder(folder1, 0, mc);
+  open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
-  assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
-}
-
-function test_double_preference_change_UTF(){
-  select_message_in_folder(folder1, 3, mc);
-  assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
-  open_preferences_dialog(mc, subtest_change_twoline_linkify);
+  open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
-  assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
+  collapse_and_assert_header(mc);
+  collapse_and_assert_header(mc);
+  expand_and_assert_header(mc);
+  expand_and_assert_header(mc);
+  collapse_and_assert_header(mc);
 }
 
-function subtest_change_twoline_linkify(aController) {
-  aController.click(aController.eid("checkboxCompactTwolineView"));
-  aController.click(aController.eid("checkboxLinkify"));
-  close_preferences_dialog(aController);
+function test_toggle_header_view_oneline(){
+  select_message_in_folder(folder1, 0, mc);
+  open_preferences_dialog(mc, set_preferences_oneline);
+  mc.sleep(10);
+  open_preferences_dialog(mc, set_preferences_oneline);
+  mc.sleep(10);
+  collapse_and_assert_header(mc);
+  collapse_and_assert_header(mc);
+  expand_and_assert_header(mc);
+  expand_and_assert_header(mc);
+  collapse_and_assert_header(mc);
 }
 
-function test_single_preference_change_folder(){
-  select_message_in_folder(folder1, 3, mc);
-  open_preferences_dialog(mc, subtest_change_twoline);
-  select_message_in_folder(folder2, 0, mc);
-}
 
-function subtest_change_twoline(aController) {
-  aController.click(aController.eid("checkboxCompactTwolineView"));
-  close_preferences_dialog(aController);
-}
+function test_address_type_format(){
+  select_message_in_folder(folder1, 1, mc);
+  open_preferences_dialog(mc, set_preferences_twoline);
+  mc.sleep(10);
+  collapse_and_assert_header(mc);
+  collapse_and_assert_header(mc);
 
-function addToFolder(aSubject, aBody, aFolder, aCharset) {
+  // Check the mode of the header.
+  let headerBox = mc.eid("collapsedHeaderView");
+  let previousHeaderMode = headerBox.node.getAttribute("show_header_mode");
 
-  let msgId = Components.classes["@mozilla.org/uuid-generator;1"]
-                          .getService(Components.interfaces.nsIUUIDGenerator)
-                          .generateUUID() +"@mozillamessaging.invalid";
+  // Click the "more" button.
+  let moreIndicator = mc.eid("collapsed2LtoCcBccBox");
+  moreIndicator = mc.window.document.getAnonymousElementByAttribute(
+                    moreIndicator.node, "anonid", "more");
+  moreIndicator = new elementslib.Elem(moreIndicator);
+  if (moreIndicator) {
+    mc.click(moreIndicator);
+  }
 
-  let source = "From - Sat Nov  1 12:39:54 2008\n" +
-               "X-Mozilla-Status: 0001\n" +
-               "X-Mozilla-Status2: 00000000\n" +
-               "Message-ID: <" + msgId + ">\n" +
-               "Date: Wed, 11 Jun 2008 20:32:02 -0400\n" +
-               "From: Tester <tests@mozillamessaging.invalid>\n" +
-               "User-Agent: Thunderbird 3.0a2pre (Macintosh/2008052122)\n" +
-               "MIME-Version: 1.0\n" +
-               "To: recipient@mozillamessaging.invalid\n" +
-               "Subject: " + aSubject + "\n" +
-               "Content-Type: text/html; charset=" + aCharset + "\n" +
-               "Content-Transfer-Encoding: 8bit\n" +
-               "\n" + aBody + "\n";
+  // Check the new mode of the header.
+  // FIXME: In the expanded header mode pressing the more button
+  // makes the header scrollable.
+//  if (headerBox.node.getAttribute("show_header_mode") != "all")
+//    throw new Error("Header Mode didn't change to 'all'!  " + "old=" +
+//                    previousHeaderMode + ", new=" +
+//                    headerBox.node.getAttribute("show_header_mode"));
 
-  aFolder.QueryInterface(Components.interfaces.nsIMsgLocalMailFolder);
-  aFolder.gettingNewMessages = true;
 
-  aFolder.addMessage(source);
-  aFolder.gettingNewMessages = false;
-
-  return aFolder.msgDatabase.getMsgHdrForMessageID(msgId);
-}
-
-/**
- * Asserts that the given text is present on the message pane.
- */
-function assert_browser_text_present(aBrowser, aText) {
-  let html = aBrowser.contentDocument.documentElement.innerHTML;
-  if (html.indexOf(aText) == -1) {
-    throw new Error("Unable to find string \"" + escape(aText) + "\" on the message pane");
+  let toDescription = mc.a('collapsed2LtoCcBccBox', {class: "headerValue"});
+  let addrs = toDescription.getElementsByTagName('mail-emailaddress');
+  for (let i=0; i<addrs.length; i++) {
+    assert_true(addrs[i].hasAttribute("addressType"));
   }
 }
+
+function set_preferences_twoline(aController) {
+  let checkboxCompactTwolineView = aController.eid("checkboxCompactTwolineView");
+  if (!checkboxCompactTwolineView.node.getAttribute("checked")) {
+    aController.click(checkboxCompactTwolineView);
+  }
+  close_preferences_dialog(aController);
+}
+
+function set_preferences_oneline(aController) {
+  let checkboxCompactTwolineView = aController.eid("checkboxCompactTwolineView");
+  if (checkboxCompactTwolineView.node.getAttribute("checked")) {
+    aController.click(checkboxCompactTwolineView);
+  }
+  close_preferences_dialog(aController);
+}
+
