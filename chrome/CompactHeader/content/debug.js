@@ -38,8 +38,6 @@
 # ***** END LICENSE BLOCK *****
 */
 
-EXPORTED_SYMBOLS = ["org"];
-
 if(!org) var org={};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};

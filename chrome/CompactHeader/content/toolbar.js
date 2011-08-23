@@ -392,7 +392,7 @@ org.mozdev.compactHeader.toolbar = function() {
   };
 
 
-  removeButtonDispMUA = function() {
+  function removeButtonDispMUA() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
     if (!document.getElementById("dispMUA")) {
       var button = document.getElementById("button-dispMUA");

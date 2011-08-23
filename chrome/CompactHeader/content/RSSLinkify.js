@@ -107,7 +107,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
   pub.openBrowser = function(event) {
     org.mozdev.compactHeader.debug.log("open browser 0" + event.attrName);
     if (!event.button) {
-      url = RSSLinkify.newSubject.getAttribute("url");
+      let url = RSSLinkify.newSubject.getAttribute("url");
       org.mozdev.compactHeader.debug.log("open browser 2" + url);
       messenger.launchExternalURL(url);
     }
