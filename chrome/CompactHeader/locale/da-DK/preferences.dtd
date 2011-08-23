@@ -35,8 +35,8 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY dialog.title "CompactHeader Indstillinger">
-<!ENTITY checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
-<!ENTITY menu.Linkify.caption "Link i feed-emner">
-<!ENTITY menu.ShowOnlyAddress.caption "Vis kun adresse">
-<!ENTITY menu.flatButtons.caption "Flade knapper">
+<!ENTITY cohe_dialog.title "CompactHeader Indstillinger">
+<!ENTITY cohe_checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
+<!ENTITY cohe_menu.Linkify.caption "Link i feed-emner">
+<!ENTITY cohe_menu.ShowOnlyAddress.caption "Vis kun adresse">
+<!ENTITY cohe_menu.flatButtons.caption "Flade knapper">

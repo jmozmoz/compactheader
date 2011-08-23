@@ -54,7 +54,8 @@ org.mozdev.compactHeader.buttons = function() {
   }
 
   pub.coheToggleStar = function () {
-    var starButton = document.getElementById("header-view-toolbox").getElementsByAttribute("id", "button-starMessages")[0];
+    var starButton = document.getElementById("header-view-toolbox").
+                              getElementsByAttribute("id", "cohe_button-starMessages")[0];
 
     if (starButton) {
       //alert("test2");
@@ -71,7 +72,7 @@ org.mozdev.compactHeader.buttons = function() {
   var folderListener = {
     OnItemPropertyFlagChanged: function(item, property, oldFlag, newFlag) {
       var changedFlag = oldFlag ^ newFlag;
-      
+
       if (changedFlag & MSG_FLAG_FLAGGED) {
         pub.coheToggleStar();
       }

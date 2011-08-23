@@ -143,11 +143,11 @@ function test_address_type_format(){
   collapse_and_assert_header(mc);
 
   // Check the mode of the header.
-  let headerBox = mc.eid("collapsedHeaderView");
+  let headerBox = mc.eid("cohe_collapsedHeaderView");
   let previousHeaderMode = headerBox.node.getAttribute("show_header_mode");
 
   // Click the "more" button.
-  let moreIndicator = mc.eid("collapsed2LtoCcBccBox");
+  let moreIndicator = mc.eid("cohe_collapsed2LtoCcBccBox");
   moreIndicator = mc.window.document.getAnonymousElementByAttribute(
                     moreIndicator.node, "anonid", "more");
   moreIndicator = new elementslib.Elem(moreIndicator);
@@ -164,7 +164,7 @@ function test_address_type_format(){
 //                    headerBox.node.getAttribute("show_header_mode"));
 
 
-  let toDescription = mc.a('collapsed2LtoCcBccBox', {class: "headerValue"});
+  let toDescription = mc.a('cohe_collapsed2LtoCcBccBox', {class: "headerValue"});
   let addrs = toDescription.getElementsByTagName('mail-emailaddress');
   for (let i=0; i<addrs.length; i++) {
     assert_true(addrs[i].hasAttribute("addressType"));
@@ -172,7 +172,7 @@ function test_address_type_format(){
 }
 
 function set_preferences_twoline(aController) {
-  let checkboxCompactTwolineView = aController.eid("checkboxCompactTwolineView");
+  let checkboxCompactTwolineView = aController.eid("cohe_checkboxCompactTwolineView");
   if (!checkboxCompactTwolineView.node.getAttribute("checked")) {
     aController.click(checkboxCompactTwolineView);
   }
@@ -180,7 +180,7 @@ function set_preferences_twoline(aController) {
 }
 
 function set_preferences_oneline(aController) {
-  let checkboxCompactTwolineView = aController.eid("checkboxCompactTwolineView");
+  let checkboxCompactTwolineView = aController.eid("cohe_checkboxCompactTwolineView");
   if (checkboxCompactTwolineView.node.getAttribute("checked")) {
     aController.click(checkboxCompactTwolineView);
   }

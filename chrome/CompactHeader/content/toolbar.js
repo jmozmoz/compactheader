@@ -61,7 +61,7 @@ org.mozdev.compactHeader.toolbar = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons = ["button-reply", "button-replyall", "button-replylist",
                    "button-tag", "button-forward", "button-archive", "button-file",
-                   "button-print", "button-mark", "button-starMessages",
+                   "button-print", "button-mark", "cohe_button-starMessages",
                    "button-newmsg", "button-goback", "button-goforward",
                    "button-previous", "button-next", "button-compact",
                    "button-address", "button-stop", "button-getmsg",
@@ -76,7 +76,7 @@ org.mozdev.compactHeader.toolbar = function() {
                    //"realPrevMessageButton", "realNextMessageButton",
                    "lightningbutton-convert-to-task",
                    "lightningbutton-convert-to-event",
-                   "button-dispMUA"];
+                   "cohe_button-dispMUA"];
     var currentSet=hdrToolbar.getAttribute("currentset");
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
@@ -125,7 +125,7 @@ org.mozdev.compactHeader.toolbar = function() {
       }
     }
 
-    var target = "hdrOtherActionsButton";
+    var target = "cohe_hdrOtherActionsButton";
 
     var newParent = document.getElementById(target) ||
         document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
@@ -202,12 +202,12 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("toolbar toggle start");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
-    var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
+    var strHideLabel = document.getElementById("cohe_CoheHideDetailsLabel").value;
+    var strShowLabel = document.getElementById("cohe_CoheShowDetailsLabel").value;
     var firstPermanentChild = hdrToolbar.firstPermanentChild;
     var lastPermanentChild = hdrToolbar.lastPermanentChild;
     if (aHeaderViewMode) {
-      var cBox = document.getElementById("collapsed2LButtonBox");
+      var cBox = document.getElementById("cohe_collapsed2LButtonBox");
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -248,42 +248,42 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.dispMUACheck = function() {
     org.mozdev.compactHeader.debug.log("dispMUACheck start");
-    var dispMUAButton = document.getElementById("button-dispMUA");
+    var dispMUAButton = document.getElementById("cohe_button-dispMUA");
     var dispMUABox = document.getElementById("dispMUA");
     if (dispMUABox) {
       dispMUABox.setAttribute("collapsed", "true"); // hide original
       var IconContainerDispMUA = null;
       if (dispMUAButton) {
         /* expanded view 48 * 48 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+        if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
           IconContainerDispMUA.setAttribute("collapsed", "true");
         }
         /* two line view 32 * 32 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+        if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
           IconContainerDispMUA.setAttribute("collapsed", "true");
         }
         /* compact view 24 * 24 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+        if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
           IconContainerDispMUA.setAttribute("collapsed", "true");
         }
       }
       else if (dispMUABox){
         /* expanded view 48 * 48 */
-        if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+        if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
           IconContainerDispMUA.removeAttribute("collapsed");
         }
         if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
           /* two line view 32 * 32 */
-          if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
+          if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line"))
             IconContainerDispMUA.removeAttribute("collapsed");
-          if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
+          if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact"))
             IconContainerDispMUA.setAttribute("collapsed", "true");
         }
         else {
           /* compact view 24 * 24 */
-          if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact"))
+          if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact"))
             IconContainerDispMUA.removeAttribute("collapsed");
-          if (IconContainerDispMUA = document.getElementById("dispMUAicon2line"))
+          if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line"))
             IconContainerDispMUA.setAttribute("collapsed", "true");
         }
       }
@@ -291,15 +291,15 @@ org.mozdev.compactHeader.toolbar = function() {
     else {
       var IconContainerDispMUA = null;
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
     }
@@ -312,19 +312,19 @@ org.mozdev.compactHeader.toolbar = function() {
       var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
       var IconContainerDispMUA = null;
       /* toolbar button */
-      if (IconContainerDispMUA = document.getElementById("button-dispMUA")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_button-dispMUA")) {
         IconContainerDispMUA.setAttribute("image", imageSrc);
       }
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("src", imageSrc);
       }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
@@ -332,20 +332,20 @@ org.mozdev.compactHeader.toolbar = function() {
     else if (event.attrName == "tooltiptext") {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
       var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
-      var buttonDispMUA = document.getElementById("button-dispMUA");
+      var buttonDispMUA = document.getElementById("cohe_button-dispMUA");
       if (buttonDispMUA) {
         buttonDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconExp")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAicon2line")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("dispMUAiconCompact")) {
+      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
         IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
       }
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
@@ -395,17 +395,19 @@ org.mozdev.compactHeader.toolbar = function() {
   function removeButtonDispMUA() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
     if (!document.getElementById("dispMUA")) {
-      var button = document.getElementById("button-dispMUA");
+      var button = document.getElementById("cohe_button-dispMUA");
       if (button) {
         button.parentNode.removeChild(button);
       }
 
-      var button1 = document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      var button1 = document.getElementById("mail-toolbox").palette.
+                             getElementsByAttribute("id", "cohe_button-dispMUA")[0];
       if (button1) {
         button1.parentNode.removeChild(button1);
       }
 
-      var button2 = document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", "button-dispMUA")[0];
+      var button2 = document.getElementById("header-view-toolbox").palette.
+                             getElementsByAttribute("id", "cohe_button-dispMUA")[0];
       if (button2) {
         button2.parentNode.removeChild(button2);
       }

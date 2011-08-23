@@ -18,33 +18,33 @@
   void(openDialog("chrome://CompactHeader/content/preferences.xul"))
 -->
 
-<prefwindow id="cohePreferences"
-            title="&dialog.title;"
+<prefwindow id="cohe_Preferences"
+            title="&cohe_dialog.title;"
             windowtype="ext:options"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <prefpane id="cohePreferences-pane">
     <preferences>
-      <preference id="cohetwolineview"
+      <preference id="cohe_twolineview"
                   name="extensions.CompactHeader.headersize.twolineview" type="bool"/>
-      <preference id="cohelinkify"
+      <preference id="cohe_linkify"
                   name="extensions.CompactHeader.headersize.linkify" type="bool"/>
-      <preference id="coheaddressstyle"
+      <preference id="cohe_addressstyle"
                   name="extensions.CompactHeader.headersize.addressstyle" type="bool"/>
-      <preference id="coheflatButtons"
+      <preference id="cohe_flatButtons"
                   name="extensions.CompactHeader.headersize.flatButtons" type="bool"/>
     </preferences>
 
-    <checkbox id="checkboxCompactTwolineView"
-              preference="cohetwolineview"
-              label="&checkbox.Compact.TwolineView.caption;"/>
-    <checkbox id="checkboxLinkify"
-              preference="cohelinkify"
-              label="&menu.Linkify.caption;"/>
-    <checkbox id="checkboxShowOnlyAddress"
-              preference="coheaddressstyle"
-              label="&menu.ShowOnlyAddress.caption;"/>
-    <checkbox id="checkboxflatButtons"
-              preference="coheflatButtons"
-              label="&menu.flatButtons.caption;"/>
+    <checkbox id="cohe_checkboxCompactTwolineView"
+              preference="cohe_twolineview"
+              label="&cohe_checkbox.Compact.TwolineView.caption;"/>
+    <checkbox id="cohe_checkboxLinkify"
+              preference="cohe_linkify"
+              label="&cohe_menu.Linkify.caption;"/>
+    <checkbox id="cohe_checkboxShowOnlyAddress"
+              preference="cohe_addressstyle"
+              label="&cohe_menu.ShowOnlyAddress.caption;"/>
+    <checkbox id="cohe_checkboxflatButtons"
+              preference="cohe_flatButtons"
+              label="&cohe_menu.flatButtons.caption;"/>
   </prefpane>
 </prefwindow>

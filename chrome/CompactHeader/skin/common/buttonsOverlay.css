@@ -38,26 +38,26 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#button-starMessages{
+#cohe_button-starMessages{
   list-style-image: url("chrome://messenger/skin/starred48.png");
 }
 
-#button-starMessages .toolbarbutton-icon {
+#cohe_button-starMessages .toolbarbutton-icon {
   height: 24px;
   width:  24px;
 }
 
-toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
+toolbar[iconsize="small"] #cohe_button-starMessages .toolbarbutton-icon {
   height: 16px;
   width:  16px;
 }
 
-#button-dispMUA .toolbarbutton-icon {
-  width:24px; 
+#cohe_button-dispMUA .toolbarbutton-icon {
+  width:24px;
   height:24px;
 }
 
-toolbar[iconsize="small"] #button-dispMUA .toolbarbutton-icon {
-  width:18px; 
+toolbar[iconsize="small"] #cohe_button-dispMUA .toolbarbutton-icon {
+  width:18px;
   height:18px;
 }

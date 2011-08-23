@@ -113,7 +113,7 @@ function openAddressBook() {
 
 function open_preferences_dialog(aController, aSubtest) {
   windowHelper.plan_for_modal_dialog("ext:options", aSubtest);
-  aController.click(aController.eid("hidecohePreferencesButton"));
+  aController.click(aController.eid("cohe_hidecohePreferencesButton"));
   windowHelper.wait_for_modal_dialog("ext:options", 1);
 }
 
@@ -148,21 +148,21 @@ function select_message_in_folder(aFolder, aMessageNum, aController)
 }
 
 function collapse_and_assert_header(aController) {
-  let collapsedHeaderView = aController.e("collapsedHeaderView");
+  let collapsedHeaderView = aController.e("cohe_collapsedHeaderView");
   let expandedHeaderView = aController.e("expandedHeaderView");
   if (collapsedHeaderView.getAttribute("collapsed")) {
-    aController.click(aController.eid("hideDetailsButton"));
+    aController.click(aController.eid("cohe_hideDetailsButton"));
   }
   folderDisplayHelper.assert_true(!collapsedHeaderView.hasAttribute("collapsed"));
   folderDisplayHelper.assert_true(expandedHeaderView.getAttribute("collapsed"));
 }
 
 function expand_and_assert_header(aController) {
-  let collapsedHeaderView = aController.e("collapsedHeaderView");
+  let collapsedHeaderView = aController.e("cohe_collapsedHeaderView");
   let expandedHeaderView = aController.e("expandedHeaderView");
   if (!collapsedHeaderView.hasAttribute("collapsed") ||
       !collapsedHeaderView.getAttribute("collapsed")) {
-    aController.click(aController.eid("showDetailsButton"));
+    aController.click(aController.eid("cohe_showDetailsButton"));
   }
   folderDisplayHelper.assert_true(collapsedHeaderView.getAttribute("collapsed"));
   folderDisplayHelper.assert_true(!expandedHeaderView.hasAttribute("collapsed"));

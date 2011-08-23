@@ -38,42 +38,42 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#button-starMessages{
+#cohe_button-starMessages{
   list-style-image: url("chrome://messenger/skin/starred48.png");
 }
 
-#button-starMessages .toolbarbutton-icon {
+#cohe_button-starMessages .toolbarbutton-icon {
   height: 32px;
   width:  32px;
 }
 
-toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
+toolbar[iconsize="small"] #cohe_button-starMessages .toolbarbutton-icon {
   height: 24px;
   width:  24px;
 }
 
-#header-view-toolbox #button-starMessages{
+#header-view-toolbox #cohe_button-starMessages{
   list-style-image: url("chrome://CompactHeader-os/skin/flag-empty.png");
 }
 
-#header-view-toolbox #button-starMessages[flagged]{
+#header-view-toolbox #cohe_button-starMessages[flagged]{
   list-style-image: url("chrome://CompactHeader-os/skin/flag.png");
 }
 
-#header-view-toolbox #button-starMessages .toolbarbutton-icon {
+#header-view-toolbox #cohe_button-starMessages .toolbarbutton-icon {
   -moz-image-region: rect(-10px 22px 22px -10px);
 }
 
-#header-view-toolbox toolbar[iconsize="small"] #button-starMessages .toolbarbutton-icon {
+#header-view-toolbox toolbar[iconsize="small"] #cohe_button-starMessages .toolbarbutton-icon {
   -moz-image-region: rect(-6px 18px 18px -6px);
 }
 
-#button-dispMUA .toolbarbutton-icon {
-  width:36px; 
+#cohe_button-dispMUA .toolbarbutton-icon {
+  width:36px;
   height:36px;
 }
 
-toolbar[iconsize="small"] #button-dispMUA .toolbarbutton-icon {
-  width:24px; 
+toolbar[iconsize="small"] #cohe_button-dispMUA .toolbarbutton-icon {
+  width:24px;
   height:24px;
 }

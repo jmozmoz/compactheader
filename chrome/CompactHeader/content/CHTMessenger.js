@@ -58,8 +58,8 @@ org.mozdev.customizeHeaderToolbar.messenger = function(){
   pub.saveToolboxData = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    var saveToolbox = document.getElementById("CHTSaveToolboxData");
-    var saveToolbar = document.getElementById("CHTSaveToolbarData");
+    var saveToolbox = document.getElementById("cohe_CHTSaveToolboxData");
+    var saveToolbar = document.getElementById("cohe_CHTSaveToolbarData");
     if (hdrToolbox && hdrToolbar && saveToolbox && saveToolbar) {
       saveToolbar.firstPermanentChild = hdrToolbar.firstPermanentChild;
       saveToolbar.lastPermanentChild  = hdrToolbar.lastPermanentChild;
@@ -93,8 +93,8 @@ org.mozdev.customizeHeaderToolbar.messenger = function(){
   pub.loadToolboxData = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    var saveToolbox = document.getElementById("CHTSaveToolboxData");
-    var saveToolbar = document.getElementById("CHTSaveToolbarData");
+    var saveToolbox = document.getElementById("cohe_CHTSaveToolboxData");
+    var saveToolbar = document.getElementById("cohe_CHTSaveToolbarData");
     if (hdrToolbox && hdrToolbar && saveToolbox && saveToolbar && saveToolbox.getAttribute("gotData") == "true") {
       hdrToolbar.firstPermanentChild = saveToolbar.firstPermanentChild;
       hdrToolbar.lastPermanentChild = saveToolbar.lastPermanentChild;

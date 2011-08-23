@@ -637,7 +637,7 @@ function open_header_pane_toolbar_customization(aController)
     ctc = WindowHelper.augment_controller(new controller.MozMillController(contentWindow));
   }
   else {
-    ctc = WindowHelper.wait_for_existing_window("mail:customizetoolbar");
+    ctc = WindowHelper.wait_for_existing_window("CustomizeToolbarWindow");
   }
   return ctc;
 }

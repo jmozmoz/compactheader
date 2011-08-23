@@ -110,9 +110,9 @@ org.mozdev.compactHeader.pane = function() {
     var subjectBox;
 
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-      subjectBox = document.getElementById("collapsed2LsubjectOutBox")
+      subjectBox = document.getElementById("cohe_collapsed2LsubjectOutBox")
     } else {
-      subjectBox = document.getElementById("collapsed1LsubjectOutBox")
+      subjectBox = document.getElementById("cohe_collapsed1LsubjectOutBox")
     }
 
 //    if (subjectBox) {
@@ -177,12 +177,12 @@ org.mozdev.compactHeader.pane = function() {
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
       for (index = 0; index < gCoheCollapsedHeader2LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader2LListLongAddresses[index].name] =
-          new createHeaderEntry('collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
+          new createHeaderEntry('cohe_collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
       }
     } else {
       for (index = 0; index < gCoheCollapsedHeader1LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader1LListLongAddresses[index].name] =
-          new createHeaderEntry('collapsed1L', gCoheCollapsedHeader1LListLongAddresses[index]);
+          new createHeaderEntry('cohe_collapsed1L', gCoheCollapsedHeader1LListLongAddresses[index]);
       }
     }
 
@@ -204,7 +204,7 @@ org.mozdev.compactHeader.pane = function() {
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
 
     gCoheCollapsedHeaderViewMode =
-      deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
+      deckHeaderView.selectedPanel == document.getElementById('cohe_collapsedHeaderView');
 
     var headerViewToolbox = document.getElementById("header-view-toolbox");
     if (headerViewToolbox) {
@@ -229,14 +229,14 @@ org.mozdev.compactHeader.pane = function() {
     if (gCoheCollapsedHeaderViewMode)
       document.getElementById('expandedHeaderView').collapsed = true;
     else
-      document.getElementById('collapsedHeaderView').collapsed = true;
+      document.getElementById('cohe_collapsedHeaderView').collapsed = true;
 
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-      document.getElementById('collapsed1LHeadersBox').collapsed = true;
-      document.getElementById('collapsed2LHeadersBox').collapsed = false;
+      document.getElementById('cohe_collapsed1LHeadersBox').collapsed = true;
+      document.getElementById('cohe_collapsed2LHeadersBox').collapsed = false;
     } else {
-      document.getElementById('collapsed1LHeadersBox').collapsed = false;
-      document.getElementById('collapsed2LHeadersBox').collapsed = true;
+      document.getElementById('cohe_collapsed1LHeadersBox').collapsed = false;
+      document.getElementById('cohe_collapsed2LHeadersBox').collapsed = true;
     }
 
     if (coheFirstTime)
@@ -257,7 +257,7 @@ org.mozdev.compactHeader.pane = function() {
         org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
       };
 
-      let collapsed2LtoCcBccBox = document.getElementById("collapsed2LtoCcBccBox");
+      let collapsed2LtoCcBccBox = document.getElementById("cohe_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
         let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox.updateEmailAddressNode;
         function updateEmailAddressNodeNew(aEmailNode, aAddress) {
@@ -383,7 +383,7 @@ org.mozdev.compactHeader.pane = function() {
     deck.selectedPanel.collapsed = true;
 
     if (gCoheCollapsedHeaderViewMode) {
-      deck.selectedPanel = document.getElementById("collapsedHeaderView")
+      deck.selectedPanel = document.getElementById("cohe_collapsedHeaderView")
       coheUpdateMessageHeaders();
     } else {
       deck.selectedPanel = document.getElementById("expandedHeaderView");
@@ -401,16 +401,16 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   function coheToggleHeaderContent() {
-    var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
-    var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
+    var strHideLabel = document.getElementById("cohe_CoheHideDetailsLabel").value;
+    var strShowLabel = document.getElementById("cohe_CoheShowDetailsLabel").value;
     var strLabel;
 
     var smimeBox = document.getElementById("smimeBox");
 
     if (smimeBox != null) {
       if (gCoheCollapsedHeaderViewMode) {
-        var parent = document.getElementById("collapsed2LdateOutBox");
-        var refElement = document.getElementById("collapsed2LdateRow");
+        var parent = document.getElementById("cohe_collapsed2LdateOutBox");
+        var refElement = document.getElementById("cohe_collapsed2LdateRow");
         if (parent != null && refElement != null) {
           parent.insertBefore(smimeBox, refElement);
         }
@@ -429,8 +429,8 @@ org.mozdev.compactHeader.pane = function() {
 
     if (dispMUABox != null) {
       if (gCoheCollapsedHeaderViewMode) {
-        var parent = document.getElementById("collapsed2LdateOutBox");
-        var refElement = document.getElementById("collapsed2LdateRow");
+        var parent = document.getElementById("cohe_collapsed2LdateOutBox");
+        var refElement = document.getElementById("cohe_collapsed2LdateRow");
         if (parent != null && refElement != null) {
           parent.insertBefore(dispMUABox, refElement);
         }
@@ -452,14 +452,14 @@ org.mozdev.compactHeader.pane = function() {
       strLabel = strHideLabel;
     }
 
-    if (document.getElementById("hideDetailsMenu")) {
-      document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+    if (document.getElementById("cohe_hideDetailsMenu")) {
+      document.getElementById("cohe_hideDetailsMenu").setAttribute("label", strLabel);
     }
 
     org.mozdev.compactHeader.toolbar.toggle(gCoheCollapsedHeaderViewMode);
 
-    if (document.getElementById("hideDetailsMenu")) {
-      document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+    if (document.getElementById("cohe_hideDetailsMenu")) {
+      document.getElementById("cohe_hideDetailsMenu").setAttribute("label", strLabel);
     }
   }
 
@@ -472,9 +472,9 @@ org.mozdev.compactHeader.pane = function() {
   function coheUpdateDateValue(headerEntry, headerValue) {
     //var t = currentHeaderData.date.headerValue;
     var d
-    d = document.getElementById("collapsed1LdateBox");
+    d = document.getElementById("cohe_collapsed1LdateBox");
     d.textContent = headerValue;
-    d = document.getElementById("collapsed2LdateBox");
+    d = document.getElementById("cohe_collapsed2LdateBox");
     d.textContent = headerValue;
   }
 
@@ -518,7 +518,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   function selectEmailDisplayed() {
-    var xulemail = document.getElementById("collapsedtoCcBccBox");
+    var xulemail = document.getElementById("cohe_collapsedtoCcBccBox");
     if (xulemail != null) {
       var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
       if (nextbox != null) {
@@ -536,7 +536,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       }
     }
-    var xulemail = document.getElementById("collapsedfromBox");
+    var xulemail = document.getElementById("cohe_collapsedfromBox");
     if (xulemail != null) {
       var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
       if (nextbox != null) {

@@ -35,8 +35,8 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY dialog.title "CompactHeader Einstellungen">
-<!ENTITY checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
-<!ENTITY menu.Linkify.caption "Link in Betreff von RSS Feeds">
-<!ENTITY menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
-<!ENTITY menu.flatButtons.caption "Flache Schaltflächen">
+<!ENTITY cohe_dialog.title "CompactHeader Einstellungen">
+<!ENTITY cohe_checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
+<!ENTITY cohe_menu.Linkify.caption "Link in Betreff von RSS Feeds">
+<!ENTITY cohe_menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
+<!ENTITY cohe_menu.flatButtons.caption "Flache Schaltflächen">

@@ -35,6 +35,6 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY hideDetailsButton.label "Vue compacte">
-<!ENTITY toggleDetails.key "h">
-<!ENTITY showDetailsButton.label "Vue détaillée">
+<!ENTITY cohe_hideDetailsButton.label "Vue compacte">
+<!ENTITY cohe_toggleDetails.key "h">
+<!ENTITY cohe_showDetailsButton.label "Vue détaillée">
