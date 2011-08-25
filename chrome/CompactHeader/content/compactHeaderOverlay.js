@@ -105,6 +105,7 @@ org.mozdev.compactHeader.pane = function() {
   };
 
   var coheFirstTime = true;
+  var headerFirstTime = true;
 
   function coheOutputSubject(headerEntry, headerValue) {
     var subjectBox;
@@ -190,7 +191,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   pub.coheOnLoadMsgHeaderPane = function() {
-    org.mozdev.compactHeader.debug.log("start coheOnLoadMsgHeaderPane");
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
 
     coheInitializeHeaderViewTables();
 
@@ -206,22 +207,7 @@ org.mozdev.compactHeader.pane = function() {
     gCoheCollapsedHeaderViewMode =
       deckHeaderView.selectedPanel == document.getElementById('cohe_collapsedHeaderView');
 
-    var headerViewToolbox = document.getElementById("header-view-toolbox");
-    if (headerViewToolbox) {
-      headerViewToolbox.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
-    }
-
-    var mailToolbox = document.getElementById("mail-toolbox");
-    if (mailToolbox) {
-      mailToolbox.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
-    }
-    var dispMUAicon = document.getElementById("dispMUAicon");
-    if (dispMUAicon) {
-      dispMUAicon.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
-    }
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 1");
 
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded
@@ -239,23 +225,16 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById('cohe_collapsed2LHeadersBox').collapsed = true;
     }
 
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 2");
+
     if (coheFirstTime)
     {
+      org.mozdev.compactHeader.debug.log("coheFirstTime");
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
       org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
       org.mozdev.compactHeader.toolbar.fillToolboxPalette();
       org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-      var toolbox = document.getElementById("header-view-toolbox");
-      toolbox.customizeDone = function(aEvent) {
-        MailToolboxCustomizeDone(aEvent, "CustomizeHeaderToolbar");
-        document.getElementById("header-view-toolbox").removeAttribute("doCustomization");
-        enableButtons();
-        org.mozdev.compactHeader.toolbar.CHTUpdateReplyButton();
-        org.mozdev.compactHeader.toolbar.CHTUpdateJunkButton();
-        org.mozdev.compactHeader.buttons.coheToggleStar();
-        org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-      };
 
       let collapsed2LtoCcBccBox = document.getElementById("cohe_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
@@ -268,26 +247,29 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 2a");
+
     if (cohe.firstrun) {
       coheCheckFirstRun();
     }
 
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 3");
+
     coheToggleHeaderContent();
-    var dispMUA = document.getElementById('dispMUA');
-    if (dispMUA) {
-      dispMUA.collapsed = true;
-    }
+
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 4");
+
     org.mozdev.compactHeader.toolbar.setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
     org.mozdev.compactHeader.toolbar.dispMUACheck();
-    org.mozdev.compactHeader.debug.log("stop coheOnLoadMsgHeaderPane");
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane stop");
   }
 
   var coheMessageListener =
   {
     onStartHeaders:
     function cML_onStartHeaders () {
-        gCoheBuiltCollapsedView = false;
+      gCoheBuiltCollapsedView = false;
     },
 
     onEndHeaders:
@@ -296,7 +278,9 @@ org.mozdev.compactHeader.pane = function() {
       coheUpdateMessageHeaders();
     },
 
-    onEndAttachments: function cML_onEndAttachments(){}
+    onEndAttachments: function cML_onEndAttachments() {
+      setTimeout(org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, 50);
+    }
   };
 
   pub.coheOnUnloadMsgHeaderPane = function()
@@ -366,7 +350,7 @@ org.mozdev.compactHeader.pane = function() {
 
   function enableButtons() {
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    if (toolbar) {
+    if (hdrToolbar) {
       var buttons = hdrToolbar.querySelectorAll("[disabled*='true']");
       for (var i=0; i<buttons.length; i++) {
         buttons[i].removeAttribute("disabled");
@@ -508,6 +492,29 @@ org.mozdev.compactHeader.pane = function() {
         headerEntry.outputFunction(headerEntry, headerField.headerValue, headerName);
         headerEntry.valid = true;
       }
+    }
+
+    if (headerFirstTime) {
+      org.mozdev.compactHeader.debug.log("headerFirstTime");
+      headerFirstTime = false;
+      var toolbox = document.getElementById("header-view-toolbox");
+      var mailToolbox = document.getElementById("mail-toolbox");
+      var oldCustomizeDone = toolbox.customizeDone;
+      var oldCustomizeDoneMailToolbox = mailToolbox.customizeDone;
+      toolbox.customizeDone = function(aEvent) {
+        org.mozdev.compactHeader.debug.log("customizeDone start");
+        oldCustomizeDone(aEvent);
+        org.mozdev.compactHeader.debug.log("customizeDone 0");
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
+        org.mozdev.compactHeader.debug.log("customizeDone stop");
+      };
+      mailToolbox.customizeDone = function(aEvent) {
+        org.mozdev.compactHeader.debug.log("customizeDone start");
+        oldCustomizeDoneMailToolbox(aEvent);
+        org.mozdev.compactHeader.debug.log("customizeDone 0");
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
+        org.mozdev.compactHeader.debug.log("customizeDone stop");
+      };
     }
 
     if (gCoheCollapsedHeaderViewMode)

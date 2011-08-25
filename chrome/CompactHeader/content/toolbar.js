@@ -306,91 +306,46 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("dispMUACheck stop");
   };
 
-  pub.onChangeDispMUAicon = function(event) {
-    if (event.attrName == "src") {
-      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
-      var IconContainerDispMUA = null;
-      /* toolbar button */
-      if (IconContainerDispMUA = document.getElementById("cohe_button-dispMUA")) {
-        IconContainerDispMUA.setAttribute("image", imageSrc);
-      }
-      /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
-        IconContainerDispMUA.setAttribute("src", imageSrc);
-      }
-      /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
-        IconContainerDispMUA.setAttribute("src", imageSrc);
-      }
-      /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
-        IconContainerDispMUA.setAttribute("src", imageSrc);
-      }
-      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
+  pub.onChangeDispMUAicon = function() {
+    org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
+    var imageSrc = document.getElementById("dispMUAicon").getAttribute("src");
+    var IconContainerDispMUA = null;
+    /* toolbar button */
+    if (IconContainerDispMUA = document.getElementById("cohe_button-dispMUA")) {
+      IconContainerDispMUA.setAttribute("image", imageSrc);
     }
-    else if (event.attrName == "tooltiptext") {
-      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-      var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
-      var buttonDispMUA = document.getElementById("cohe_button-dispMUA");
-      if (buttonDispMUA) {
-        buttonDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
-        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
-        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
-        IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
-      }
-      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
+    /* expanded view 48 * 48 */
+    if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
+      IconContainerDispMUA.setAttribute("src", imageSrc);
     }
+    /* two line view 32 * 32 */
+    if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
+      IconContainerDispMUA.setAttribute("src", imageSrc);
+    }
+    /* compact view 24 * 24 */
+    if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
+      IconContainerDispMUA.setAttribute("src", imageSrc);
+    }
+    org.mozdev.compactHeader.debug.log("onChangeDispMUAicon 1");
+    var tooltipText = document.getElementById("dispMUAicon").getAttribute("tooltiptext");
+    var buttonDispMUA = document.getElementById("cohe_button-dispMUA");
+    if (buttonDispMUA) {
+      buttonDispMUA.setAttribute("tooltiptext", tooltipText);
+    }
+    /* expanded view 48 * 48 */
+    if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconExp")) {
+      IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
+    }
+    /* two line view 32 * 32 */
+    if (IconContainerDispMUA = document.getElementById("cohe_dispMUAicon2line")) {
+      IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
+    }
+    /* compact view 24 * 24 */
+    if (IconContainerDispMUA = document.getElementById("cohe_dispMUAiconCompact")) {
+      IconContainerDispMUA.setAttribute("tooltiptext", tooltipText);
+    }
+    org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
   };
-
-//  function onChangeHeaderToolbar(event) {
-//    if (event.attrName == "currentset") {
-//      if (document.getElementById("button-dispMUA")) {
-//        gDBView.reloadMessage();
-//      }
-//      dispMUACheck();
-//      org.mozdev.compactHeader.buttons.coheToggleStar();
-//    }
-//  }
-  pub.onDoCustomizationHeaderViewToolbox = function(event) {
-    if (event.attrName == "doCustomization") {
-      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox start" + event);
-      org.mozdev.compactHeader.toolbar.dispMUACheck(document);
-      org.mozdev.compactHeader.buttons.coheToggleStar();
-      var dispMUAicon = document.getElementById("dispMUAicon");
-      if (dispMUAicon) {
-        var evt1 = document.createEvent("MutationEvents");
-        evt1.initMutationEvent("DOMAttrModified",
-            true, false, dispMUAicon,
-            dispMUAicon.getAttribute("src"),
-            dispMUAicon.getAttribute("src"),
-            "src",
-            evt1.MODIFICATION
-        );
-        dispMUAicon.dispatchEvent(evt1);
-        var evt2 = document.createEvent("MutationEvents");
-        evt2.initMutationEvent("DOMAttrModified",
-            true, false, dispMUAicon,
-            dispMUAicon.getAttribute("tooltiptext"),
-            dispMUAicon.getAttribute("tooltiptext"),
-            "tooltiptext",
-            evt2.MODIFICATION
-        );
-        dispMUAicon.dispatchEvent(evt2);
-      }
-      org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
-    }
-  };
-
 
   function removeButtonDispMUA() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
@@ -505,6 +460,19 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("stop populateEmptyToolbar");
   };
 
+  pub.onDoCustomizationHeaderViewToolbox = function(event) {
+    org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox start" + event);
+    org.mozdev.compactHeader.toolbar.CHTUpdateReplyButton();
+    org.mozdev.compactHeader.toolbar.CHTUpdateJunkButton();
+    org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
+    org.mozdev.compactHeader.toolbar.dispMUACheck();
+    org.mozdev.compactHeader.buttons.coheToggleStar();
+    var dispMUAicon = document.getElementById("dispMUAicon");
+    if (dispMUAicon) {
+      org.mozdev.compactHeader.toolbar.onChangeDispMUAicon();
+    }
+    org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
+  };
 
   return pub;
 }();

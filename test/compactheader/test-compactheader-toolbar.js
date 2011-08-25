@@ -477,6 +477,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 
   // Reopen customization dialog and
   // all buttons are still in the palette
+  select_message_in_folder(folder, 1, mc);
   let ctc = open_header_pane_toolbar_customization(mc);
 
   let backButtons = new Array;
