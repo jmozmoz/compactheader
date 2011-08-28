@@ -35,13 +35,13 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY cohe_dialog.title "Préférences de CompactHeader">
-<!ENTITY cohe_checkbox.Compact.TwolineView.caption "Afficher la vue compacte sur deux lignes">
-<!ENTITY cohe_menu.Linkify.caption "Transformer en lien les sujets des fils RSS">
-<!ENTITY cohe_menu.ShowOnlyAddress.caption "Afficher seulement les adresses des courriels">
-<!ENTITY cohe_menu.flatButtons.caption "Boutons plats">
-<!ENTITY cohe_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
-<!ENTITY cohe_radiobox.ToolbarPosition.right "droite">
-<!ENTITY cohe_radiobox.ToolbarPosition.top   "haut">
-<!ENTITY cohe_radiobox.ToolbarPosition.left  "gauche">
-<!ENTITY cohe_radiobox.ToolbarPosition.none  "invisible">
+<!ENTITY CompactHeader_dialog.title "Préférences de CompactHeader">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Afficher la vue compacte sur deux lignes">
+<!ENTITY CompactHeader_menu.Linkify.caption "Transformer en lien les sujets des fils RSS">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Afficher seulement les adresses des courriels">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Boutons plats">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "haut">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "gauche">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">

@@ -28,31 +28,31 @@
   <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
 
   <keyset>
-    <key id="cohe_hideDetailsKey"
+    <key id="CompactHeader_hideDetailsKey"
          modifiers="shift"
-         key="&cohe_toggleDetails.key;"
+         key="&CompactHeader_toggleDetails.key;"
          oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
   </keyset>
 
   <menupopup id="header-toolbar-context-menu">
-    <menuitem id="cohe_hidecohePreferencesButton"
-              label="&cohe_dialog.title;"
+    <menuitem id="CompactHeader_hidecohePreferencesButton"
+              label="&CompactHeader_dialog.title;"
               oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
   </menupopup>
 
   <deck id="msgHeaderViewDeck">
 
   <vbox id="expandedHeaderView" orient="horizontal">
-    <vbox id="cohe_hideDetailsButtonBox" insertbefore="expandedHeadersBox">
-      <button id="cohe_hideDetailsButton"
-              tooltiptext="&cohe_hideDetailsButton.label;"
+    <vbox id="CompactHeader_hideDetailsButtonBox" insertbefore="expandedHeadersBox">
+      <button id="CompactHeader_hideDetailsButton"
+              tooltiptext="&CompactHeader_hideDetailsButton.label;"
               onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
               class="msgHeaderView-flat-button"/>
     </vbox>
 
-    <hbox id="cohe_coheStringTransferBox" hidden="true">
-      <label id="cohe_CoheHideDetailsLabel" value="&cohe_hideDetailsButton.label;"/>
-      <label id="cohe_CoheShowDetailsLabel" value="&cohe_showDetailsButton.label;"/>
+    <hbox id="CompactHeader_coheStringTransferBox" hidden="true">
+      <label id="CompactHeader_CoheHideDetailsLabel" value="&CompactHeader_hideDetailsButton.label;"/>
+      <label id="CompactHeader_CoheShowDetailsLabel" value="&CompactHeader_showDetailsButton.label;"/>
     </hbox>
 
     <vbox id="expandedHeadersBox">
@@ -61,7 +61,7 @@
                  mode="icons"
                  defaultmode="icons">
           <toolbarpalette id="header-view-toolbar-palette">
-            <toolbarbutton id="cohe_hdrOtherActionsButton"
+            <toolbarbutton id="CompactHeader_hdrOtherActionsButton"
                            label="&otherActionsButton.label;"
                            tooltiptext="&otherActionsButton.label;"
                            class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
@@ -69,7 +69,7 @@
           </toolbarpalette>
           <toolbar id="header-view-toolbar"
                    mode="icons" defaultmode="icons"
-                   defaultset="hdrReplyToSenderButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,cohe_hdrOtherActionsButton">
+                   defaultset="hdrReplyToSenderButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,CompactHeader_hdrOtherActionsButton">
           </toolbar>
         </toolbox>
       </hbox>
@@ -83,22 +83,22 @@
                   label="&otherActionsButton.label;"
                   class="msgHeaderView-button msgHeaderView-flat-button">
             <menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
-              <menuitem id="cohe_hdrPane-markFlagged"
+              <menuitem id="CompactHeader_hdrPane-markFlagged"
                         type="checkbox"
                         label="&markStarredCmd.label;"
                         accesskey="&markStarredCmd.accesskey;"
                         command="cmd_markAsFlagged"
                         insertbefore="viewSourceMenuItem"
                         key="key_toggleFlagged"/>
-              <menu id="cohe_hdrPane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+              <menu id="CompactHeader_hdrPane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
                 <menupopup id="menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
-                  <menuitem id="cohe_hdrPane-viewallheaders"
+                  <menuitem id="CompactHeader_hdrPane-viewallheaders"
                    type="radio"
                    name="viewheadergroup"
                    label="&headersAllCmd.label;"
                    accesskey="&headersAllCmd.accesskey;"
                    command="cmd_viewAllHeader"/>
-                  <menuitem id="cohe_hdrPane-viewnormalheaders"
+                  <menuitem id="CompactHeader_hdrPane-viewnormalheaders"
                    type="radio"
                    name="viewheadergroup"
                    label="&headersNormalCmd.label;"
@@ -107,11 +107,11 @@
                 </menupopup>
               </menu>
               <menuseparator id="otherActionPopupAfterViewSource"/>
-              <menuitem id="cohe_hideDetailsMenu"
-                        label="&cohe_hideDetailsButton.label;"
+              <menuitem id="CompactHeader_hideDetailsMenu"
+                        label="&CompactHeader_hideDetailsButton.label;"
                         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
-              <menuitem id="cohe_hidecohePreferencesButton"
-                        label="&cohe_dialog.title;"
+              <menuitem id="CompactHeader_hidecohePreferencesButton"
+                        label="&CompactHeader_dialog.title;"
                         oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"/>
             </menupopup>
           </button>
@@ -120,93 +120,93 @@
 
     </vbox>
 
-    <vbox id="cohe_dispMUAexp" collapsed="false">
-        <image id="cohe_dispMUAiconExp" tooltiptext=""
+    <vbox id="CompactHeader_dispMUAexp" collapsed="false">
+        <image id="CompactHeader_dispMUAiconExp" tooltiptext=""
                style="width:48px; height:48px; margin-left:2px; margin-right:2px;"
                onclick="dispMUA.infopopup();"/>
     </vbox>
 
   </vbox>
 
-  <vbox id="cohe_collapsedHeaderView" orient="horizontal" flex="1">
-    <menupopup id="cohe_CohecopyUrlPopup" popupanchor="bottomleft">
+  <vbox id="CompactHeader_collapsedHeaderView" orient="horizontal" flex="1">
+    <menupopup id="CompactHeader_CohecopyUrlPopup" popupanchor="bottomleft">
       <menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;"
                 oncommand="org.mozdev.compactHeader.RSSLinkify.CoheCopyWebsiteAddress(document.popupNode)"/>
     </menupopup>
-    <vbox id="cohe_showDetailsButtonBox" align="start" flex="0">
-      <button id="cohe_showDetailsButton"
-              tooltiptext="&cohe_showDetailsButton.label;"
+    <vbox id="CompactHeader_showDetailsButtonBox" align="start" flex="0">
+      <button id="CompactHeader_showDetailsButton"
+              tooltiptext="&CompactHeader_showDetailsButton.label;"
               onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
               class="msgHeaderView-flat-button"/>
     </vbox>
-    <vbox id="cohe_collapsed1LHeadersBox" flex="1" collapsed="false">
-      <hbox id="cohe_collapsed1LHeaderViewFirstLine" flex="0">
-        <hbox id="cohe_collapsed1LsubjectOutBox" align="start" flex="99">
-          <row id="cohe_collapsed1LsubjectRow" flex="99">
-            <mail-headerfield id="cohe_collapsed1LsubjectBox" flex="99"/>
+    <vbox id="CompactHeader_collapsed1LHeadersBox" flex="1" collapsed="false">
+      <hbox id="CompactHeader_collapsed1LHeaderViewFirstLine" flex="0">
+        <hbox id="CompactHeader_collapsed1LsubjectOutBox" align="start" flex="99">
+          <row id="CompactHeader_collapsed1LsubjectRow" flex="99">
+            <mail-headerfield id="CompactHeader_collapsed1LsubjectBox" flex="99"/>
           </row>
         </hbox>
-        <hbox id="cohe_collapsed1LfromOutBox" align="start" flex="0">
+        <hbox id="CompactHeader_collapsed1LfromOutBox" align="start" flex="0">
           <grid flex="1">
             <columns>
               <column flex="0"/>
             </columns>
             <rows>
-              <row id="cohe_collapsed1LfromRow">
-                <mail-multi-emailHeaderField id="cohe_collapsed1LfromBox" flex="0"/>
+              <row id="CompactHeader_collapsed1LfromRow">
+                <mail-multi-emailHeaderField id="CompactHeader_collapsed1LfromBox" flex="0"/>
               </row>
             </rows>
           </grid>
         </hbox>
-        <hbox id="cohe_collapsed1LdateOutBox" align="start" pack="end" flex="0">
-          <row id="cohe_collapsed1LdateRow">
-            <label id="cohe_collapsed1LdateBox" class="dateLabel" flex="1"/>
+        <hbox id="CompactHeader_collapsed1LdateOutBox" align="start" pack="end" flex="0">
+          <row id="CompactHeader_collapsed1LdateRow">
+            <label id="CompactHeader_collapsed1LdateBox" class="dateLabel" flex="1"/>
           </row>
         </hbox>
-        <header-view-button-box id="cohe_collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
+        <header-view-button-box id="CompactHeader_collapsed1LButtonBox" flex="0" align="start" hidden="true"/>
       </hbox>
-      <hbox id="cohe_collapsed1LHeaderViewSecondLine" align="top" flex="1" collapsed="true">
+      <hbox id="CompactHeader_collapsed1LHeaderViewSecondLine" align="top" flex="1" collapsed="true">
       </hbox>
     </vbox>
 
-    <vbox id="cohe_collapsed2LHeadersBox" flex="1" collapsed="true">
-      <hbox id="cohe_collapsed2LHeaderViewFirstLine" flex="0">
-        <hbox id="cohe_collapsed2LfromOutBox" align="start" flex="0">
+    <vbox id="CompactHeader_collapsed2LHeadersBox" flex="1" collapsed="true">
+      <hbox id="CompactHeader_collapsed2LHeaderViewFirstLine" flex="0">
+        <hbox id="CompactHeader_collapsed2LfromOutBox" align="start" flex="0">
           <grid flex="1">
             <columns>
               <column flex="0"/>
             </columns>
             <rows>
-              <row id="cohe_collapsed2LfromRow">
-                <mail-multi-emailHeaderField id="cohe_collapsed2LfromBox" flex="0"/>
+              <row id="CompactHeader_collapsed2LfromRow">
+                <mail-multi-emailHeaderField id="CompactHeader_collapsed2LfromBox" flex="0"/>
               </row>
             </rows>
           </grid>
         </hbox>
-        <grid id="cohe_collapsed2LtoCcBccOutBox" flex="1">
+        <grid id="CompactHeader_collapsed2LtoCcBccOutBox" flex="1">
           <columns>
             <column flex="0"/>
             <column flex="1"/>
           </columns>
           <rows>
-            <row id="cohe_collapsed2LtoCcBccRow" align="baseline">
-              <label id="cohe_collapsed2LtoCcBccLabel" class="headerName"
-                     value="&toField2.label;" control="cohe_collapsed2LtoCcBccBox"/>
-              <mail-multi-emailHeaderField id="cohe_collapsed2LtoCcBccBox" flex="1"/>
+            <row id="CompactHeader_collapsed2LtoCcBccRow" align="baseline">
+              <label id="CompactHeader_collapsed2LtoCcBccLabel" class="headerName"
+                     value="&toField2.label;" control="CompactHeader_collapsed2LtoCcBccBox"/>
+              <mail-multi-emailHeaderField id="CompactHeader_collapsed2LtoCcBccBox" flex="1"/>
             </row>
           </rows>
         </grid>
-        <header-view-button-box id="cohe_collapsed2LButtonBox" flex="0" align="start"/>
+        <header-view-button-box id="CompactHeader_collapsed2LButtonBox" flex="0" align="start"/>
       </hbox>
-      <hbox id="cohe_collapsed2LHeaderViewSecondLine" align="top" flex="1">
-        <hbox id="cohe_collapsed2LsubjectOutBox" align="top" flex="99">
-          <row id="cohe_collapsed2LsubjectRow" flex="99">
-            <mail-headerfield id="cohe_collapsed2LsubjectBox" flex="99"/>
+      <hbox id="CompactHeader_collapsed2LHeaderViewSecondLine" align="top" flex="1">
+        <hbox id="CompactHeader_collapsed2LsubjectOutBox" align="top" flex="99">
+          <row id="CompactHeader_collapsed2LsubjectRow" flex="99">
+            <mail-headerfield id="CompactHeader_collapsed2LsubjectBox" flex="99"/>
           </row>
         </hbox>
-        <hbox id="cohe_collapsed2LdateOutBox" align="top" pack="end" flex="0">
-          <row id="cohe_collapsed2LdateRow" align="top" pack="end">
-            <label id="cohe_collapsed2LdateBox" class="dateLabel" flex="1"/>
+        <hbox id="CompactHeader_collapsed2LdateOutBox" align="top" pack="end" flex="0">
+          <row id="CompactHeader_collapsed2LdateRow" align="top" pack="end">
+            <label id="CompactHeader_collapsed2LdateBox" class="dateLabel" flex="1"/>
           </row>
         </hbox>
       </hbox>
@@ -215,15 +215,15 @@
 
     </vbox>
 
-    <vbox id="cohe_dispMUA2line">
-      <image id="cohe_dispMUAicon2line"
+    <vbox id="CompactHeader_dispMUA2line">
+      <image id="CompactHeader_dispMUAicon2line"
              tooltiptext=""
              style="width:32px; height:32px; margin-left:2px; margin-right:2px;"
              onclick="dispMUA.infopopup();"/>
     </vbox>
 
-    <vbox id="cohe_dispMUAcompact">
-      <image id="cohe_dispMUAiconCompact"
+    <vbox id="CompactHeader_dispMUAcompact">
+      <image id="CompactHeader_dispMUAiconCompact"
              tooltiptext=""
              style="width:24px; height:24px; margin:-2px 2px -2px 2px;"
              onclick="dispMUA.infopopup();"/>

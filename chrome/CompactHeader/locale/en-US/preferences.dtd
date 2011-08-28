@@ -35,8 +35,8 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY cohe_dialog.title "CompactHeader Preferences">
-<!ENTITY cohe_checkbox.Compact.TwolineView.caption "Display two lines in compact view">
-<!ENTITY cohe_menu.Linkify.caption "Link in subjects of RSS feeds">
-<!ENTITY cohe_menu.ShowOnlyAddress.caption "Display only address">
-<!ENTITY cohe_menu.flatButtons.caption "Flat buttons">
+<!ENTITY CompactHeader_dialog.title "CompactHeader Preferences">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Display two lines in compact view">
+<!ENTITY CompactHeader_menu.Linkify.caption "Link in subjects of RSS feeds">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Display only address">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Flat buttons">

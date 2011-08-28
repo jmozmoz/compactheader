@@ -42,6 +42,6 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#cohe_checkboxflatButtons {
+#CompactHeader_checkboxflatButtons {
   display: none;
 }

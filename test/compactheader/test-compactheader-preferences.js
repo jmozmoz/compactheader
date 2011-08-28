@@ -130,8 +130,8 @@ function test_double_preference_change_UTF(){
 }
 
 function subtest_change_twoline_linkify(aController) {
-  aController.click(aController.eid("cohe_checkboxCompactTwolineView"));
-  aController.click(aController.eid("cohe_checkboxLinkify"));
+  aController.click(aController.eid("CompactHeader_checkboxCompactTwolineView"));
+  aController.click(aController.eid("CompactHeader_checkboxLinkify"));
   close_preferences_dialog(aController);
 }
 
@@ -142,7 +142,7 @@ function test_single_preference_change_folder(){
 }
 
 function subtest_change_twoline(aController) {
-  aController.click(aController.eid("cohe_checkboxCompactTwolineView"));
+  aController.click(aController.eid("CompactHeader_checkboxCompactTwolineView"));
   close_preferences_dialog(aController);
 }
 

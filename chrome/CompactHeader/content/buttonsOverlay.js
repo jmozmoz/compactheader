@@ -55,7 +55,7 @@ org.mozdev.compactHeader.buttons = function() {
 
   pub.coheToggleStar = function () {
     var starButton = document.getElementById("header-view-toolbox").
-                              getElementsByAttribute("id", "cohe_button-starMessages")[0];
+                              getElementsByAttribute("id", "CompactHeader_button-starMessages")[0];
 
     if (starButton) {
       //alert("test2");

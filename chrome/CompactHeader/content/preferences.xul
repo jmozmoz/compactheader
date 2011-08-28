@@ -18,33 +18,33 @@
   void(openDialog("chrome://CompactHeader/content/preferences.xul"))
 -->
 
-<prefwindow id="cohe_Preferences"
-            title="&cohe_dialog.title;"
+<prefwindow id="CompactHeader_Preferences"
+            title="&CompactHeader_dialog.title;"
             windowtype="ext:options"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <prefpane id="cohePreferences-pane">
     <preferences>
-      <preference id="cohe_twolineview"
+      <preference id="CompactHeader_twolineview"
                   name="extensions.CompactHeader.headersize.twolineview" type="bool"/>
-      <preference id="cohe_linkify"
+      <preference id="CompactHeader_linkify"
                   name="extensions.CompactHeader.headersize.linkify" type="bool"/>
-      <preference id="cohe_addressstyle"
+      <preference id="CompactHeader_addressstyle"
                   name="extensions.CompactHeader.headersize.addressstyle" type="bool"/>
-      <preference id="cohe_flatButtons"
+      <preference id="CompactHeader_flatButtons"
                   name="extensions.CompactHeader.headersize.flatButtons" type="bool"/>
     </preferences>
 
-    <checkbox id="cohe_checkboxCompactTwolineView"
-              preference="cohe_twolineview"
-              label="&cohe_checkbox.Compact.TwolineView.caption;"/>
-    <checkbox id="cohe_checkboxLinkify"
-              preference="cohe_linkify"
-              label="&cohe_menu.Linkify.caption;"/>
-    <checkbox id="cohe_checkboxShowOnlyAddress"
-              preference="cohe_addressstyle"
-              label="&cohe_menu.ShowOnlyAddress.caption;"/>
-    <checkbox id="cohe_checkboxflatButtons"
-              preference="cohe_flatButtons"
-              label="&cohe_menu.flatButtons.caption;"/>
+    <checkbox id="CompactHeader_checkboxCompactTwolineView"
+              preference="CompactHeader_twolineview"
+              label="&CompactHeader_checkbox.Compact.TwolineView.caption;"/>
+    <checkbox id="CompactHeader_checkboxLinkify"
+              preference="CompactHeader_linkify"
+              label="&CompactHeader_menu.Linkify.caption;"/>
+    <checkbox id="CompactHeader_checkboxShowOnlyAddress"
+              preference="CompactHeader_addressstyle"
+              label="&CompactHeader_menu.ShowOnlyAddress.caption;"/>
+    <checkbox id="CompactHeader_checkboxflatButtons"
+              preference="CompactHeader_flatButtons"
+              label="&CompactHeader_menu.flatButtons.caption;"/>
   </prefpane>
 </prefwindow>

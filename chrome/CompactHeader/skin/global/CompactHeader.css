@@ -43,43 +43,43 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 /* ::::: msg header toolbars ::::: */
-#cohe_collapsedHeaderView {
+#CompactHeader_collapsedHeaderView {
   min-width: 1px;
 }
 
 
-#cohe_collapsed1LtoCcBccLabel {
+#CompactHeader_collapsed1LtoCcBccLabel {
   -moz-padding-start: 2px;
   -moz-padding-end: 1px;
 }
 
-#cohe_collapsedHeaderView {
+#CompactHeader_collapsedHeaderView {
   overflow-y: hidden;
   overflow-x: hidden;
   max-height: 30em;
 }
 
-#cohe_collapsed1LHeaderRows > row,
-#cohe_collapsed1LHeader2Rows > row {
+#CompactHeader_collapsed1LHeaderRows > row,
+#CompactHeader_collapsed1LHeader2Rows > row {
   /* Ensure that the header names and values are aligned with each other. */
   -moz-box-align: baseline;
 }
 
-#cohe_collapsedHeadersTopBox {
+#CompactHeader_collapsedHeadersTopBox {
   /* Ensure that the space between the from row and the one after is
      identical to the spacing between the subsequent header lines. */
   -moz-box-align: end;
 }
 
-#cohe_collapsed1LHeaderViewFirstLine {
+#CompactHeader_collapsed1LHeaderViewFirstLine {
   -moz-box-align: baseline;
 }
 
-#cohe_collapsed2LHeaderViewFirstLine {
+#CompactHeader_collapsed2LHeaderViewFirstLine {
   -moz-box-align: start;
 }
 
-#cohe_collapsed1LsubjectBox > .headerValue {
+#CompactHeader_collapsed1LsubjectBox > .headerValue {
   font-weight: bold;
 }
 
@@ -96,50 +96,50 @@
 	margin: 0px;
 }
 
-#cohe_collapsed1LtoCcBccBox .headerNameBox,
-#cohe_collapsed1LfromBox .headerNameBox {
+#CompactHeader_collapsed1LtoCcBccBox .headerNameBox,
+#CompactHeader_collapsed1LfromBox .headerNameBox {
 	display: none;
 }
 
-#cohe_collapsed1LfromBox > .headerNameBox {
+#CompactHeader_collapsed1LfromBox > .headerNameBox {
   display: none;
 }
 
-#cohe_otherActionsButton[OnlyIcon="Text"] .button-text,
+#CompactHeader_otherActionsButton[OnlyIcon="Text"] .button-text,
 #tagMenuPopup[OnlyIcon="Text"] .button-text {
   -moz-padding-end: 1px;
   -moz-padding-start: 5px;
 }
 
-#cohe_otherActionsButton[OnlyIcon="Icon"] .button-text,
+#CompactHeader_otherActionsButton[OnlyIcon="Icon"] .button-text,
 #tagMenuPopup[OnlyIcon="Icon"] .button-text {
 	display: none;
 }
 
-#cohe_otherActionsButton .button-icon,
-#cohe_tagMenuPopup .button-icon {
+#CompactHeader_otherActionsButton .button-icon,
+#CompactHeader_tagMenuPopup .button-icon {
   -moz-margin-start: 1px;
   -moz-margin-end: 1px;
 }
 
-#cohe_collapsedHeaderDisplayName {
+#CompactHeader_collapsedHeaderDisplayName {
   text-align: left;
 }
 
-#cohe_collapsedsubjectlinkBox,
-#cohe_collapsed1LsubjectBox,
-#cohe_collapsed2LsubjectBox {
+#CompactHeader_collapsedsubjectlinkBox,
+#CompactHeader_collapsed1LsubjectBox,
+#CompactHeader_collapsed2LsubjectBox {
 	font-weight: bold;
 }
 
-#cohe_collapsed1LdateBox {
+#CompactHeader_collapsed1LdateBox {
   -moz-box-align: stretch;
   text-align: right;
   -moz-padding-end: 0.5em;
 }
 
-#cohe_hideDetailsButton:hover,
-#cohe_hideDetailsButton {
+#CompactHeader_hideDetailsButton:hover,
+#CompactHeader_hideDetailsButton {
   -moz-appearance: none;
   border: 2px solid transparent;
   background-color: transparent;
@@ -155,8 +155,8 @@
   -moz-margin-start: 2px;
 }
 
-#cohe_showDetailsButton:hover,
-#cohe_showDetailsButton {
+#CompactHeader_showDetailsButton:hover,
+#CompactHeader_showDetailsButton {
   -moz-appearance: none;
   border: 2px solid transparent;
   background-color: transparent;
@@ -173,13 +173,13 @@
 }
 
 #expandedfromBox,
-#cohe_collapsed1LtoCcBccRow,
-#cohe_collapsed1LsubjectOutBox,
-#cohe_collapsed1LfromOutBox,
-#cohe_collapsedButtonBox,
+#CompactHeader_collapsed1LtoCcBccRow,
+#CompactHeader_collapsed1LsubjectOutBox,
+#CompactHeader_collapsed1LfromOutBox,
+#CompactHeader_collapsedButtonBox,
 #expandedButtonBox,
-#cohe_collapsed1LsubjectBox,
-#cohe_collapsed1LfromBox {
+#CompactHeader_collapsed1LsubjectBox,
+#CompactHeader_collapsed1LfromBox {
   margin: 0px;
   padding: 0px;
 }
@@ -189,23 +189,23 @@
 }
 
 #expandedfromBox,
-#cohe_collapsed1LfromOutBox,
-#cohe_collapsed1LtoCcBccOutBox,
-#cohe_collapsed2LfromOutBox,
-#cohe_collapsed2LtoCcBccOutBox {
+#CompactHeader_collapsed1LfromOutBox,
+#CompactHeader_collapsed1LtoCcBccOutBox,
+#CompactHeader_collapsed2LfromOutBox,
+#CompactHeader_collapsed2LtoCcBccOutBox {
   margin-top: 2px;
 }
 
-#cohe_collapsed2LsubjectBox {
+#CompactHeader_collapsed2LsubjectBox {
   -moz-margin-start: 0px;
 }
 
-#cohe_collapsed2LdateBox {
+#CompactHeader_collapsed2LdateBox {
   -moz-margin-end: 5px;
 }
 
-#cohe_collapsedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text,
-#cohe_expandedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text {
+#CompactHeader_collapsedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text,
+#CompactHeader_expandedButtonBox[OnlyIcon="Icon"] .msgHeaderView-button .button-text {
   display: none;
 }
 
@@ -228,39 +228,39 @@
   display: none;
 }
 
-#cohe_collapsedHeaderView #signedHdrIcon[signed="ok"] {
+#CompactHeader_collapsedHeaderView #signedHdrIcon[signed="ok"] {
   list-style-image: url("chrome://messenger/skin/smime/icons/sbSignOk.png");
 }
 
-#cohe_collapsedHeaderView #signedHdrIcon[signed="unknown"] {
+#CompactHeader_collapsedHeaderView #signedHdrIcon[signed="unknown"] {
   list-style-image: url("chrome://messenger/skin/smime/icons/sbSignUnknown.png");
 }
 
-#cohe_collapsedHeaderView #signedHdrIcon[signed="mismatch"] {
+#CompactHeader_collapsedHeaderView #signedHdrIcon[signed="mismatch"] {
   list-style-image: url("chrome://messenger/skin/smime/icons/sbSignUnknown.png");
 }
 
-#cohe_collapsedHeaderView #signedHdrIcon[signed="notok"] {
+#CompactHeader_collapsedHeaderView #signedHdrIcon[signed="notok"] {
   list-style-image: url("chrome://messenger/skin/smime/icons/sbSignNotOk.png");
 }
 
-#cohe_collapsedHeaderView #encryptedHdrIcon[encrypted="ok"] {
+#CompactHeader_collapsedHeaderView #encryptedHdrIcon[encrypted="ok"] {
   list-style-image: url("chrome://messenger/skin/smime/icons/sbCryptoOk.png");
 }
 
-#cohe_collapsedHeaderView #encryptedHdrIcon[encrypted="notok"] {
+#CompactHeader_collapsedHeaderView #encryptedHdrIcon[encrypted="notok"] {
   list-style-image: url("chrome://messenger/skin/smime/icons/sbCryptoNotOk.png");
 }
 
-#cohe_collapsedHeaderView #signedHdrIcon {
+#CompactHeader_collapsedHeaderView #signedHdrIcon {
   -moz-margin-end: 3px;
 }
 
-#cohe_collapsed2LtoCcBccBox mail-emailaddress[addressType="cc"] {
+#CompactHeader_collapsed2LtoCcBccBox mail-emailaddress[addressType="cc"] {
   font-style:italic;
 }
 
-#cohe_collapsed2LtoCcBccBox mail-emailaddress[addressType="bcc"] {
+#CompactHeader_collapsed2LtoCcBccBox mail-emailaddress[addressType="bcc"] {
   font-style:oblique;
   text-decoration:underline;
 }

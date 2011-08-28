@@ -38,32 +38,32 @@
 
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
-#cohe_button-starMessages{
+#CompactHeader_button-starMessages{
   list-style-image: url("chrome://messenger/skin/icons/flag.png");
 }
 
-#header-view-toolbox #cohe_button-starMessages{
+#header-view-toolbox #CompactHeader_button-starMessages{
   list-style-image: url("chrome://messenger/skin/icons/flag-empty.png");
 }
 
-#header-view-toolbox #cohe_button-starMessages[flagged]{
+#header-view-toolbox #CompactHeader_button-starMessages[flagged]{
   list-style-image: url("chrome://messenger/skin/icons/flag.png");
 }
 
-#cohe_button-starMessages .toolbarbutton-icon {
+#CompactHeader_button-starMessages .toolbarbutton-icon {
   -moz-image-region: rect(-6px 18px 18px -6px);
 }
 
-toolbar[iconsize="small"] #cohe_button-starMessages .toolbarbutton-icon {
+toolbar[iconsize="small"] #CompactHeader_button-starMessages .toolbarbutton-icon {
   -moz-image-region: rect(-2px 14px 14px -2px);
 }
 
-#cohe_button-dispMUA .toolbarbutton-icon {
+#CompactHeader_button-dispMUA .toolbarbutton-icon {
   width:24px;
   height:24px;
 }
 
-toolbar[iconsize="small"] #cohe_button-dispMUA .toolbarbutton-icon {
+toolbar[iconsize="small"] #CompactHeader_button-dispMUA .toolbarbutton-icon {
   width:16px;
   height:16px;
 }

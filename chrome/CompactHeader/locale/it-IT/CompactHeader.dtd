@@ -35,6 +35,6 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY cohe_hideDetailsButton.label "Nascondi dettagli">
-<!ENTITY cohe_toggleDetails.key "h">
-<!ENTITY cohe_showDetailsButton.label "Mostra dettagli">
+<!ENTITY CompactHeader_hideDetailsButton.label "Nascondi dettagli">
+<!ENTITY CompactHeader_toggleDetails.key "h">
+<!ENTITY CompactHeader_showDetailsButton.label "Mostra dettagli">
