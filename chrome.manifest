@@ -13,7 +13,8 @@ locale    CompactHeader     da-DK   chrome/CompactHeader/locale/da-DK/
 locale    CompactHeader     fr-FR   chrome/CompactHeader/locale/fr-FR/
 locale    CompactHeader     es-ES   chrome/CompactHeader/locale/es-ES/
 
-overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul   appversion<9.0a1
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-9.xul appversion>=9.0a1
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css

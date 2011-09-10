@@ -74,7 +74,6 @@ elsif ($^O eq "linux") {
   $virtualpython = "../mozmill-virtualenv/bin/python";
 }
 
-
 while (my $line = <F>)
 {
   ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning) =
@@ -100,7 +99,6 @@ while (my $line = <F>)
     system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
     system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
     system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
-
 
     system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
     system "unzip", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
