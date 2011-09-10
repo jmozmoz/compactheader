@@ -141,7 +141,7 @@ function select_message_in_folder(aFolder, aMessageNum, aController)
   let curMessage = folderDisplayHelper.select_click_row(aMessageNum);
 
   // make sure it loads
-  folderDisplayHelper.wait_for_message_display_completion(aController);
+  folderDisplayHelper.wait_for_message_display_completion(aController, true);
   folderDisplayHelper.assert_selected_and_displayed(aController, curMessage);
 
   return curMessage;
