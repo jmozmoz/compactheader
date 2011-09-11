@@ -35,13 +35,13 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY dialog.title "Préférences de CompactHeader">
-<!ENTITY checkbox.Compact.TwolineView.caption "Afficher la vue compacte sur deux lignes">
-<!ENTITY menu.Linkify.caption "Transformer en lien les sujets des fils RSS">
-<!ENTITY menu.ShowOnlyAddress.caption "Afficher seulement les adresses des courriels">
-<!ENTITY menu.flatButtons.caption "Boutons plats">
-<!ENTITY radiobox.ToolbarPosition.caption "Position de la barre d'outil">
-<!ENTITY radiobox.ToolbarPosition.right "droite">
-<!ENTITY radiobox.ToolbarPosition.top   "haut">
-<!ENTITY radiobox.ToolbarPosition.left  "gauche">
-<!ENTITY radiobox.ToolbarPosition.none  "invisible">
+<!ENTITY CompactHeader_dialog.title "Préférences de CompactHeader">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Afficher la vue compacte sur deux lignes">
+<!ENTITY CompactHeader_menu.Linkify.caption "Transformer en lien les sujets des fils RSS">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Afficher seulement les adresses des courriels">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Boutons plats">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "haut">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "gauche">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">

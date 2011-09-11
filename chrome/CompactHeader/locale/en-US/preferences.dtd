@@ -35,8 +35,8 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY dialog.title "CompactHeader Preferences">
-<!ENTITY checkbox.Compact.TwolineView.caption "Display two lines in compact view">
-<!ENTITY menu.Linkify.caption "Link in subjects of RSS feeds">
-<!ENTITY menu.ShowOnlyAddress.caption "Display only address">
-<!ENTITY menu.flatButtons.caption "Flat buttons">
+<!ENTITY CompactHeader_dialog.title "CompactHeader Preferences">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Display two lines in compact view">
+<!ENTITY CompactHeader_menu.Linkify.caption "Link in subjects of RSS feeds">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Display only address">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Flat buttons">

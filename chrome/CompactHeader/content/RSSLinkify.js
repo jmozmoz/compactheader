@@ -38,8 +38,6 @@
 # ***** END LICENSE BLOCK *****
 */
 
-EXPORTED_SYMBOLS = ["org"];
-
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
 if(!org) var org={};
@@ -107,7 +105,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
   pub.openBrowser = function(event) {
     org.mozdev.compactHeader.debug.log("open browser 0" + event.attrName);
     if (!event.button) {
-      url = RSSLinkify.newSubject.getAttribute("url");
+      let url = RSSLinkify.newSubject.getAttribute("url");
       org.mozdev.compactHeader.debug.log("open browser 2" + url);
       messenger.launchExternalURL(url);
     }
@@ -117,9 +115,9 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start");
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
-      RSSLinkify.newSubject = document.getElementById("collapsedsubjectlinkBox") || document.createElement("label");
+      RSSLinkify.newSubject = document.getElementById("CompactHeader_collapsedsubjectlinkBox") || document.createElement("label");
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
-      RSSLinkify.newSubject.setAttribute("id", "collapsedsubjectlinkBox");
+      RSSLinkify.newSubject.setAttribute("id", "CompactHeader_collapsedsubjectlinkBox");
       RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
       RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
       RSSLinkify.newSubject.setAttribute("context", "CohecopyUrlPopup");
@@ -129,9 +127,9 @@ org.mozdev.compactHeader.RSSLinkify = function() {
       RSSLinkify.newSubject.setAttribute("flex", "1");
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
       if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-        RSSLinkify.oldSubject = document.getElementById("collapsed2LsubjectBox");
+        RSSLinkify.oldSubject = document.getElementById("CompactHeader_collapsed2LsubjectBox");
       } else {
-        RSSLinkify.oldSubject = document.getElementById("collapsed1LsubjectBox");
+        RSSLinkify.oldSubject = document.getElementById("CompactHeader_collapsed1LsubjectBox");
       }
       org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
       RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);

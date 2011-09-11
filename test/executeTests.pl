@@ -52,7 +52,7 @@ print "xpi: $xpi\n";
 my $ftpdir = "ftp";
 
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning);
-my ($unpack, $unpackargs, $unpacktargetargs, $appbin);
+my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
 open (F, $file) || die ("Could not open $file!");
@@ -60,26 +60,33 @@ open (F, $file) || die ("Could not open $file!");
 mkdir "$ftpdir";
 
 if ($^O eq "msys") {
-  $unpack ="unzip";
-  $unpackargs="-o";
-  $unpacktargetargs="-d";
-  $appbin="thunderbird.exe";
+  $unpack = "unzip";
+  $unpackargs = "-o";
+  $unpacktargetargs = "-d";
+  $appbin = "thunderbird.exe";
+  $virtualpython = "../mozmill-virtualenv/Scripts/python";
 }
 elsif ($^O eq "linux") {
-  $unpack ="tar";
-  $unpackargs="xjvf";
-  $unpacktargetargs="-C";
-  $appbin="thunderbird";
+  $unpack = "tar";
+  $unpackargs = "xjvf";
+  $unpacktargetargs = "-C";
+  $appbin = "thunderbird";
+  $virtualpython = "../mozmill-virtualenv/bin/python";
 }
-
 
 while (my $line = <F>)
 {
   ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning) =
     parse_csv($line);
 
+  $ftppath =~ s/_VER_/${version}/g;
+  $app =~ s/_VER_/${version}/g;
+  $tests =~ s/_VER_/${version}/g;
+
   next if (not defined($ostype));
   print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n";
+
+#  next if ($version lt "9.0");
 
   if (($ostype eq $^O)
       && ($hosttype eq $machine)
@@ -92,7 +99,6 @@ while (my $line = <F>)
     system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
     system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
     system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
-
 
     system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
     system "unzip", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
@@ -117,9 +123,20 @@ while (my $line = <F>)
     system "pwd";
 
     my $log;
-   $log = $log . `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader 2>&1`;
-#    $log = $log . `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi -t compactheader/test-compactheader-toolbar.js 2>&1`;
-    $log = $log . `python runtest.py --binary=../thunderbird/$appbin --showall --show-errors -a $xpi,../../ftp//$ostype-$hosttype-$version/lightning.xpi -t compactheader/test-compactheader-preferences.js 2>&1`;
+    my $python;
+
+    if ($version ge "9.0") {
+      system "python resources/installmozmill.py ../mozmill-virtualenv";
+      $python = "$virtualpython";
+    }
+    else {
+      $python = "python"
+    }
+
+    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
+   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
+#    $log = $log . `python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader/test-compactheader-toolbar.js 2>&1`;
+    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,../../ftp//$ostype-$hosttype-$version/lightning.xpi -t compactheader/test-compactheader-preferences.js 2>&1`;
 
     chdir "$currentdir";
     my @timeData = localtime(time);

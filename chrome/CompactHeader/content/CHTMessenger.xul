@@ -40,13 +40,13 @@
 ]>
 
 
-<overlay id="CHTmessengerWindow"
+<overlay id="CompactHeader_CHTmessengerWindow"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script type="application/x-javascript" 
+  <script type="application/x-javascript"
           src="chrome://CompactHeader/content/CHTMessenger.js"/>
   <window id="messengerWindow">
-    <toolbox id="CHTSaveToolboxData" collapsed="true">
-      <toolbar id="CHTSaveToolbarData" collapsed="true"/>
+    <toolbox id="CompactHeader_CHTSaveToolboxData" collapsed="true">
+      <toolbar id="CompactHeader_CHTSaveToolbarData" collapsed="true"/>
     </toolbox>
   </window>
 </overlay>

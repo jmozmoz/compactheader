@@ -62,8 +62,8 @@
                  defaultmode="icons">
           <toolbarpalette id="header-view-toolbar-palette">
             <toolbarbutton id="CompactHeader_hdrOtherActionsButton"
-                           label="&otherActionsButton.label;"
-                           tooltiptext="&otherActionsButton.label;"
+                           label="&otherActionsButton1.label;"
+                           tooltiptext="&otherActionsButton1.label;"
                            class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
                            type="menu"/>
           </toolbarpalette>
@@ -80,7 +80,7 @@
         <vbox id="otherActionsBox" flex="0">
           <hbox id="dateValueBox" flex="0"/>
           <button type="menu" id="otherActionsButton" collapsed="true"
-                  label="&otherActionsButton.label;"
+                  label="&otherActionsButton1.label;"
                   class="msgHeaderView-button msgHeaderView-flat-button">
             <menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
               <menuitem id="CompactHeader_hdrPane-markFlagged"
@@ -191,7 +191,7 @@
           <rows>
             <row id="CompactHeader_collapsed2LtoCcBccRow" align="baseline">
               <label id="CompactHeader_collapsed2LtoCcBccLabel" class="headerName"
-                     value="&toField2.label;" control="CompactHeader_collapsed2LtoCcBccBox"/>
+                     value="&toField3.label;" control="CompactHeader_collapsed2LtoCcBccBox"/>
               <mail-multi-emailHeaderField id="CompactHeader_collapsed2LtoCcBccBox" flex="1"/>
             </row>
           </rows>

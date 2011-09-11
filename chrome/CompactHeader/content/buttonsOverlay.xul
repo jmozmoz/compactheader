@@ -7,7 +7,7 @@
   %messengerDTD;
 ]>
 
-<overlay id="CompactHeaderButtonsOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay id="CompactHeader_ButtonsOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
 <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
 
@@ -20,17 +20,17 @@
 
 <toolbarbutton
 	class="toolbarbutton-1"
-	id="button-starMessages"
+	id="CompactHeader_button-starMessages"
 	label="&markStarredCmd.label;"
 	tooltiptext="&markStarredCmd.label;"
 	oncommand="goDoCommand('cmd_markAsFlagged');" />
 <toolbarbutton
   class="toolbarbutton-1"
-  id="button-dispMUA"
+  id="CompactHeader_button-dispMUA"
   image="chrome://dispmua/content/48x48/thunderbird-windows.png"
   label="display MUA"
   oncommand="dispMUA.infopopup();">
 </toolbarbutton>
 </toolbarpalette>
-	
+
 </overlay>

@@ -139,7 +139,7 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .t
   -moz-margin-start: 2px !important;
 }
 
-#collapsedHeaderView #dispMUAicon {
+#CompactHeader_collapsedHeaderView #CompactHeader_dispMUAicon {
   height: 20px !important;
   width: 20px !important;
 }

@@ -7,7 +7,7 @@
 
 <?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
 
-<overlay id="customizeToolbarOverlay"
+<overlay id="CompactHeader_customizeToolbarOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <script type="application/javascript" src="chrome://CompactHeader/content/debug.js"/>
@@ -15,6 +15,4 @@
   <script type="application/javascript" src="chrome://CompactHeader/content/RSSLinkify.js"/>
   <script type="application/javascript" src="chrome://CompactHeader/content/toolbar.js"/>
 
-  <window id="CustomizeToolbarWindow"
-          windowtype="mail:customizetoolbar"/>
 </overlay>

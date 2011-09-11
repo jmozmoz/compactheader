@@ -62,7 +62,7 @@ if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 org.mozdev.compactHeader.pane = function() {
   var pub = {};
 
-  const COHE_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
+  const COMPACTHEADER_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
 
 //  var regex = {
 //    /* taken from https://bugzilla.mozilla.org/show_bug.cgi?id=57104 */
@@ -105,14 +105,15 @@ org.mozdev.compactHeader.pane = function() {
   };
 
   var coheFirstTime = true;
+  var headerFirstTime = true;
 
   function coheOutputSubject(headerEntry, headerValue) {
     var subjectBox;
 
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-      subjectBox = document.getElementById("collapsed2LsubjectOutBox")
+      subjectBox = document.getElementById("CompactHeader_collapsed2LsubjectOutBox")
     } else {
-      subjectBox = document.getElementById("collapsed1LsubjectOutBox")
+      subjectBox = document.getElementById("CompactHeader_collapsed1LsubjectOutBox")
     }
 
 //    if (subjectBox) {
@@ -177,12 +178,12 @@ org.mozdev.compactHeader.pane = function() {
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
       for (index = 0; index < gCoheCollapsedHeader2LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader2LListLongAddresses[index].name] =
-          new createHeaderEntry('collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
+          new createHeaderEntry('CompactHeader_collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
       }
     } else {
       for (index = 0; index < gCoheCollapsedHeader1LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader1LListLongAddresses[index].name] =
-          new createHeaderEntry('collapsed1L', gCoheCollapsedHeader1LListLongAddresses[index]);
+          new createHeaderEntry('CompactHeader_collapsed1L', gCoheCollapsedHeader1LListLongAddresses[index]);
       }
     }
 
@@ -190,7 +191,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   pub.coheOnLoadMsgHeaderPane = function() {
-    org.mozdev.compactHeader.debug.log("start coheOnLoadMsgHeaderPane");
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
 
     coheInitializeHeaderViewTables();
 
@@ -204,24 +205,9 @@ org.mozdev.compactHeader.pane = function() {
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
 
     gCoheCollapsedHeaderViewMode =
-      deckHeaderView.selectedPanel == document.getElementById('collapsedHeaderView');
+      deckHeaderView.selectedPanel == document.getElementById('CompactHeader_collapsedHeaderView');
 
-    var headerViewToolbox = document.getElementById("header-view-toolbox");
-    if (headerViewToolbox) {
-      headerViewToolbox.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
-    }
-
-    var mailToolbox = document.getElementById("mail-toolbox");
-    if (mailToolbox) {
-      mailToolbox.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox, false);
-    }
-    var dispMUAicon = document.getElementById("dispMUAicon");
-    if (dispMUAicon) {
-      dispMUAicon.addEventListener("DOMAttrModified",
-        org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, false);
-    }
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 1");
 
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded
@@ -229,35 +215,28 @@ org.mozdev.compactHeader.pane = function() {
     if (gCoheCollapsedHeaderViewMode)
       document.getElementById('expandedHeaderView').collapsed = true;
     else
-      document.getElementById('collapsedHeaderView').collapsed = true;
+      document.getElementById('CompactHeader_collapsedHeaderView').collapsed = true;
 
     if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
-      document.getElementById('collapsed1LHeadersBox').collapsed = true;
-      document.getElementById('collapsed2LHeadersBox').collapsed = false;
+      document.getElementById('CompactHeader_collapsed1LHeadersBox').collapsed = true;
+      document.getElementById('CompactHeader_collapsed2LHeadersBox').collapsed = false;
     } else {
-      document.getElementById('collapsed1LHeadersBox').collapsed = false;
-      document.getElementById('collapsed2LHeadersBox').collapsed = true;
+      document.getElementById('CompactHeader_collapsed1LHeadersBox').collapsed = false;
+      document.getElementById('CompactHeader_collapsed2LHeadersBox').collapsed = true;
     }
+
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 2");
 
     if (coheFirstTime)
     {
+      org.mozdev.compactHeader.debug.log("coheFirstTime");
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
       org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
       org.mozdev.compactHeader.toolbar.fillToolboxPalette();
       org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-      var toolbox = document.getElementById("header-view-toolbox");
-      toolbox.customizeDone = function(aEvent) {
-        MailToolboxCustomizeDone(aEvent, "CustomizeHeaderToolbar");
-        document.getElementById("header-view-toolbox").removeAttribute("doCustomization");
-        enableButtons();
-        org.mozdev.compactHeader.toolbar.CHTUpdateReplyButton();
-        org.mozdev.compactHeader.toolbar.CHTUpdateJunkButton();
-        org.mozdev.compactHeader.buttons.coheToggleStar();
-        org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-      };
 
-      let collapsed2LtoCcBccBox = document.getElementById("collapsed2LtoCcBccBox");
+      let collapsed2LtoCcBccBox = document.getElementById("CompactHeader_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
         let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox.updateEmailAddressNode;
         function updateEmailAddressNodeNew(aEmailNode, aAddress) {
@@ -268,26 +247,29 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 2a");
+
     if (cohe.firstrun) {
       coheCheckFirstRun();
     }
 
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 3");
+
     coheToggleHeaderContent();
-    var dispMUA = document.getElementById('dispMUA');
-    if (dispMUA) {
-      dispMUA.collapsed = true;
-    }
+
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 4");
+
     org.mozdev.compactHeader.toolbar.setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
     org.mozdev.compactHeader.toolbar.dispMUACheck();
-    org.mozdev.compactHeader.debug.log("stop coheOnLoadMsgHeaderPane");
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane stop");
   }
 
   var coheMessageListener =
   {
     onStartHeaders:
     function cML_onStartHeaders () {
-        gCoheBuiltCollapsedView = false;
+      gCoheBuiltCollapsedView = false;
     },
 
     onEndHeaders:
@@ -296,7 +278,9 @@ org.mozdev.compactHeader.pane = function() {
       coheUpdateMessageHeaders();
     },
 
-    onEndAttachments: function cML_onEndAttachments(){}
+    onEndAttachments: function cML_onEndAttachments() {
+      setTimeout(org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, 50);
+    }
   };
 
   pub.coheOnUnloadMsgHeaderPane = function()
@@ -366,7 +350,7 @@ org.mozdev.compactHeader.pane = function() {
 
   function enableButtons() {
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    if (toolbar) {
+    if (hdrToolbar) {
       var buttons = hdrToolbar.querySelectorAll("[disabled*='true']");
       for (var i=0; i<buttons.length; i++) {
         buttons[i].removeAttribute("disabled");
@@ -383,7 +367,7 @@ org.mozdev.compactHeader.pane = function() {
     deck.selectedPanel.collapsed = true;
 
     if (gCoheCollapsedHeaderViewMode) {
-      deck.selectedPanel = document.getElementById("collapsedHeaderView")
+      deck.selectedPanel = document.getElementById("CompactHeader_collapsedHeaderView")
       coheUpdateMessageHeaders();
     } else {
       deck.selectedPanel = document.getElementById("expandedHeaderView");
@@ -401,16 +385,16 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   function coheToggleHeaderContent() {
-    var strHideLabel = document.getElementById("CoheHideDetailsLabel").value;
-    var strShowLabel = document.getElementById("CoheShowDetailsLabel").value;
+    var strHideLabel = document.getElementById("CompactHeader_CoheHideDetailsLabel").value;
+    var strShowLabel = document.getElementById("CompactHeader_CoheShowDetailsLabel").value;
     var strLabel;
 
     var smimeBox = document.getElementById("smimeBox");
 
     if (smimeBox != null) {
       if (gCoheCollapsedHeaderViewMode) {
-        var parent = document.getElementById("collapsed2LdateOutBox");
-        var refElement = document.getElementById("collapsed2LdateRow");
+        var parent = document.getElementById("CompactHeader_collapsed2LdateOutBox");
+        var refElement = document.getElementById("CompactHeader_collapsed2LdateRow");
         if (parent != null && refElement != null) {
           parent.insertBefore(smimeBox, refElement);
         }
@@ -429,8 +413,8 @@ org.mozdev.compactHeader.pane = function() {
 
     if (dispMUABox != null) {
       if (gCoheCollapsedHeaderViewMode) {
-        var parent = document.getElementById("collapsed2LdateOutBox");
-        var refElement = document.getElementById("collapsed2LdateRow");
+        var parent = document.getElementById("CompactHeader_collapsed2LdateOutBox");
+        var refElement = document.getElementById("CompactHeader_collapsed2LdateRow");
         if (parent != null && refElement != null) {
           parent.insertBefore(dispMUABox, refElement);
         }
@@ -452,14 +436,14 @@ org.mozdev.compactHeader.pane = function() {
       strLabel = strHideLabel;
     }
 
-    if (document.getElementById("hideDetailsMenu")) {
-      document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+    if (document.getElementById("CompactHeader_hideDetailsMenu")) {
+      document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
 
     org.mozdev.compactHeader.toolbar.toggle(gCoheCollapsedHeaderViewMode);
 
-    if (document.getElementById("hideDetailsMenu")) {
-      document.getElementById("hideDetailsMenu").setAttribute("label", strLabel);
+    if (document.getElementById("CompactHeader_hideDetailsMenu")) {
+      document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
   }
 
@@ -472,9 +456,9 @@ org.mozdev.compactHeader.pane = function() {
   function coheUpdateDateValue(headerEntry, headerValue) {
     //var t = currentHeaderData.date.headerValue;
     var d
-    d = document.getElementById("collapsed1LdateBox");
+    d = document.getElementById("CompactHeader_collapsed1LdateBox");
     d.textContent = headerValue;
-    d = document.getElementById("collapsed2LdateBox");
+    d = document.getElementById("CompactHeader_collapsed2LdateBox");
     d.textContent = headerValue;
   }
 
@@ -510,6 +494,29 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
+    if (headerFirstTime) {
+      org.mozdev.compactHeader.debug.log("headerFirstTime");
+      headerFirstTime = false;
+      var toolbox = document.getElementById("header-view-toolbox");
+      var mailToolbox = document.getElementById("mail-toolbox");
+      var oldCustomizeDone = toolbox.customizeDone;
+      var oldCustomizeDoneMailToolbox = mailToolbox.customizeDone;
+      toolbox.customizeDone = function(aEvent) {
+        org.mozdev.compactHeader.debug.log("customizeDone start");
+        oldCustomizeDone(aEvent);
+        org.mozdev.compactHeader.debug.log("customizeDone 0");
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
+        org.mozdev.compactHeader.debug.log("customizeDone stop");
+      };
+      mailToolbox.customizeDone = function(aEvent) {
+        org.mozdev.compactHeader.debug.log("customizeDone start");
+        oldCustomizeDoneMailToolbox(aEvent);
+        org.mozdev.compactHeader.debug.log("customizeDone 0");
+        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
+        org.mozdev.compactHeader.debug.log("customizeDone stop");
+      };
+    }
+
     if (gCoheCollapsedHeaderViewMode)
      gCoheBuiltCollapsedView = true;
 
@@ -518,7 +525,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   function selectEmailDisplayed() {
-    var xulemail = document.getElementById("collapsedtoCcBccBox");
+    var xulemail = document.getElementById("CompactHeader_collapsedtoCcBccBox");
     if (xulemail != null) {
       var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
       if (nextbox != null) {
@@ -536,7 +543,7 @@ org.mozdev.compactHeader.pane = function() {
         }
       }
     }
-    var xulemail = document.getElementById("collapsedfromBox");
+    var xulemail = document.getElementById("CompactHeader_collapsedfromBox");
     if (xulemail != null) {
       var nextbox = document.getAnonymousElementByAttribute(xulemail, "anonid", "longEmailAddresses");
       if (nextbox != null) {
@@ -632,7 +639,7 @@ org.mozdev.compactHeader.pane = function() {
     org.mozdev.compactHeader.debug.log("firstrun 3");
     org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
     Components.utils.import("resource://gre/modules/AddonManager.jsm");
-    AddonManager.getAddonByID(COHE_EXTENSION_UUID,
+    AddonManager.getAddonByID(COMPACTHEADER_EXTENSION_UUID,
       function(myAddon) {
         org.mozdev.compactHeader.debug.log("first run 2");
         cohe.version = "";
@@ -669,7 +676,7 @@ org.mozdev.compactHeader.pane = function() {
   pub.coheInitializeOverlay = function() {
     // var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
     // check if this is part of CompactHeader
-    // if ((gExtensionManager.getItemForID(COHE_EXTENSION_UUID) == null) || isAddonDisabled(COHE_EXTENSION_UUID)) {
+    // if ((gExtensionManager.getItemForID(COMPACTHEADER_EXTENSION_UUID) == null) || isAddonDisabled(COMPACTHEADER_EXTENSION_UUID)) {
     //  return;
     //}
     org.mozdev.compactHeader.debug.log("before register");
@@ -685,7 +692,7 @@ org.mozdev.compactHeader.pane = function() {
       if (topic == "em-action-requested") {
         subject.QueryInterface(Components.interfaces.nsIUpdateItem);
 
-        if (subject.id == COHE_EXTENSION_UUID) {
+        if (subject.id == COMPACTHEADER_EXTENSION_UUID) {
           org.mozdev.compactHeader.debug.log("uninstalling COHE 1");
           if (data == "item-uninstalled") {
             this._uninstall = true;
@@ -703,13 +710,13 @@ org.mozdev.compactHeader.pane = function() {
       }
     },
     onUninstalling: function(addon) {
-      if (addon.id == COHE_EXTENSION_UUID) {
+      if (addon.id == COMPACTHEADER_EXTENSION_UUID) {
         this._uninstall = true;
       }
     },
 
     onOperationCancelled: function(addon) {
-      if (addon.id == COHE_EXTENSION_UUID) {
+      if (addon.id == COMPACTHEADER_EXTENSION_UUID) {
         this._uninstall = (addon.pendingOperations & AddonManager.PENDING_UNINSTALL) != 0;
       }
     },

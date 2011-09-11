@@ -65,7 +65,18 @@ var messageBodyISO8859_1 = "ae: " + String.fromCharCode(228) +
   ", UE: " + String.fromCharCode(220) +
   ", ss: " + String.fromCharCode(223) + "\n";
 
-var messageBodyUTF8 = "ae: ä, oe: ö, ue: ü, AE: Ä, OE: Ö, UE: Ü, ss: ß";
+//var messageBodyUTF8 = "ae: \uc3a4, oe: \uceb6, ue: \uc3bc, " +
+//                      "AE: \uc384, OE: \uc396, UE: \uc39c, ss: \uce9f";
+
+messageBodyUTF8 =
+  "ae: "   + String.fromCharCode(0xc3) + String.fromCharCode(0xa4) +
+  ", oe: " + String.fromCharCode(0xc3) + String.fromCharCode(0xb6) +
+  ", ue: " + String.fromCharCode(0xc3) + String.fromCharCode(0xbc) +
+  ", AE: " + String.fromCharCode(0xc3) + String.fromCharCode(0x84) +
+  ", OE: " + String.fromCharCode(0xc3) + String.fromCharCode(0x96) +
+  ", UE: " + String.fromCharCode(0xc3) + String.fromCharCode(0x9c) +
+  ", ss: " + String.fromCharCode(0xc3) + String.fromCharCode(0x9f) +
+  "\n";
 
 function setupModule(module) {
   let fdh = collector.getModule('folder-display-helpers');
@@ -109,10 +120,6 @@ function setupModule(module) {
 }
 
 
-/**
- *  Make sure that opening the header toolbar customization dialog
- *  does not break the get messages button in main toolbar
- */
 function test_double_preference_change_ISO(){
   select_message_in_folder(folder1, 2, mc);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
@@ -130,8 +137,8 @@ function test_double_preference_change_UTF(){
 }
 
 function subtest_change_twoline_linkify(aController) {
-  aController.click(aController.eid("checkboxCompactTwolineView"));
-  aController.click(aController.eid("checkboxLinkify"));
+  aController.click(aController.eid("CompactHeader_checkboxCompactTwolineView"));
+  aController.click(aController.eid("CompactHeader_checkboxLinkify"));
   close_preferences_dialog(aController);
 }
 
@@ -142,7 +149,7 @@ function test_single_preference_change_folder(){
 }
 
 function subtest_change_twoline(aController) {
-  aController.click(aController.eid("checkboxCompactTwolineView"));
+  aController.click(aController.eid("CompactHeader_checkboxCompactTwolineView"));
   close_preferences_dialog(aController);
 }
 
