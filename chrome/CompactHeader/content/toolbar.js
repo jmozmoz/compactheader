@@ -38,8 +38,6 @@
 # ***** END LICENSE BLOCK *****
 */
 
-EXPORTED_SYMBOLS = ["org"];
-
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
 if(!org) var org={};
