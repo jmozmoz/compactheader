@@ -279,7 +279,7 @@ org.mozdev.compactHeader.pane = function() {
     },
 
     onEndAttachments: function cML_onEndAttachments() {
-      setTimeout(org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, 50);
+      setTimeout(org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, 200);
     }
   };
 
