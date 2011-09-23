@@ -121,7 +121,7 @@
     </vbox>
 
     <vbox id="CompactHeader_dispMUAexp" collapsed="false">
-        <image id="CompactHeader_dispMUAiconExp" tooltiptext=""
+        <image id="CompactHeader_dispMUAiconExp" observes="dispMUAicon" tooltiptext=""
                style="width:48px; height:48px; margin-left:2px; margin-right:2px;"
                onclick="dispMUA.infopopup();"/>
     </vbox>
@@ -216,14 +216,14 @@
     </vbox>
 
     <vbox id="CompactHeader_dispMUA2line">
-      <image id="CompactHeader_dispMUAicon2line"
+      <image id="CompactHeader_dispMUAicon2line" observes="dispMUAicon"
              tooltiptext=""
              style="width:32px; height:32px; margin-left:2px; margin-right:2px;"
              onclick="dispMUA.infopopup();"/>
     </vbox>
 
     <vbox id="CompactHeader_dispMUAcompact">
-      <image id="CompactHeader_dispMUAiconCompact"
+      <image id="CompactHeader_dispMUAiconCompact" observes="dispMUAicon"
              tooltiptext=""
              style="width:24px; height:24px; margin:-2px 2px -2px 2px;"
              onclick="dispMUA.infopopup();"/>

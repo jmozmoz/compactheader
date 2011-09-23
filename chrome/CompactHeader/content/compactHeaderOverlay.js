@@ -278,9 +278,7 @@ org.mozdev.compactHeader.pane = function() {
       coheUpdateMessageHeaders();
     },
 
-    onEndAttachments: function cML_onEndAttachments() {
-      setTimeout(org.mozdev.compactHeader.toolbar.onChangeDispMUAicon, 50);
-    }
+    onEndAttachments: function cML_onEndAttachments(){}
   };
 
   pub.coheOnUnloadMsgHeaderPane = function()

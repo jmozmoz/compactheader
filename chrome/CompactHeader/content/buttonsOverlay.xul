@@ -10,6 +10,7 @@
 <overlay id="CompactHeader_ButtonsOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
 <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
+<script type="application/javascript" src="chrome://CompactHeader/content/toolbar.js"/>
 
 <!--ThunderBird-->
 <toolbarpalette id="MailToolbarPalette">
@@ -30,6 +31,9 @@
   image="chrome://dispmua/content/48x48/thunderbird-windows.png"
   label="display MUA"
   oncommand="dispMUA.infopopup();">
+  <observes element="dispMUAicon" attribute="src"
+            onbroadcast="org.mozdev.compactHeader.toolbar.onChangeDispMUAicon('src');"/>
+  <observes element="dispMUAicon" attribute="tooltiptext"/>
 </toolbarbutton>
 </toolbarpalette>
 
