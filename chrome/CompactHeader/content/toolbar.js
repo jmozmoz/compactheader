@@ -241,7 +241,7 @@ org.mozdev.compactHeader.toolbar = function() {
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
     }
-    pub.onChangeDispMUAicon(); // XXX Check if necessary
+    pub.onChangeDispMUAicon();
     org.mozdev.compactHeader.debug.log("toolbar toggle stop");
   };
 
@@ -307,6 +307,8 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.onChangeDispMUAicon = function() {
     org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
+    var imageSrc = document.getElementById("dispMUAbroadcast").getAttribute("src");
+    org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: " + imageSrc);
     var IconContainerDispMUA = null;
     /* toolbar button */
     if (IconContainerDispMUA = document.getElementById("CompactHeader_button-dispMUA")) {
