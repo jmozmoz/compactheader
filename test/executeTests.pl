@@ -51,7 +51,7 @@ print "xpi: $xpi\n";
 
 my $ftpdir = "ftp";
 
-my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning);
+my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksums);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
@@ -61,14 +61,14 @@ mkdir "$ftpdir";
 
 if ($^O eq "msys") {
   $unpack = "unzip";
-  $unpackargs = "-o";
+  $unpackargs = "-qo";
   $unpacktargetargs = "-d";
   $appbin = "thunderbird.exe";
   $virtualpython = "../mozmill-virtualenv/Scripts/python";
 }
 elsif ($^O eq "linux") {
   $unpack = "tar";
-  $unpackargs = "xjvf";
+  $unpackargs = "xjf";
   $unpacktargetargs = "-C";
   $appbin = "thunderbird";
   $virtualpython = "../mozmill-virtualenv/bin/python";
@@ -76,38 +76,64 @@ elsif ($^O eq "linux") {
 
 while (my $line = <F>)
 {
-  ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning) =
+  ($ostype,$hosttype,$ftppath,$app,$tests,$checksums, $lightning) =
     parse_csv($line);
-
-  $ftppath =~ s/_VER_/${version}/g;
-  $app =~ s/_VER_/${version}/g;
-  $tests =~ s/_VER_/${version}/g;
-
   next if (not defined($ostype));
-  print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n";
+
+  my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/562/addon-562-latest.xpi";
+#  print "$ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
 
 #  next if ($version lt "9.0");
 
   if (($ostype eq $^O)
       && ($hosttype eq $machine)
       ) {
+
+    # Download checksums file to determine version of Thunderbird, because
+    # we use a link to latest release/beta/earlybird/trunk build and do not
+    # know the version!
+    #    wget -r -l1 --no-parent --follow-ftp -A .checksums  '' -nd
+    my @files = glob("$ftpdir/thunderbird*$checksums");
+    foreach my $file (@files) {
+      unlink($file);
+    }
+    `wget -r -l1 --no-parent --follow-ftp -A$checksums $ftppath -nd -P $ftpdir 2>&1`;
+    @files = glob("$ftpdir/thunderbird*$checksums");
+
+    my $file = $files[0];
+
+    $file =~ /thunderbird-(.*)$checksums/;
+    $version = $1;
+
+    # $ftppath =~ s/_VER_/${version}/g;
+    $app =~ s/_VER_/${version}/g;
+    $tests =~ s/_VER_/${version}/g;
+
     print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n";
 
     my $testdir = "test-$version";
 
     mkdir "$testdir";
-    system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
-    system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
-    system "wget", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
+    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
+    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$dispMUA";
+
+    my @dispMUAfiles = glob("$ftpdir/$ostype-$hosttype-$version/display_*");
+    my $dispMUAfile = $dispMUAfiles[-1];
 
     system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-    system "unzip", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
+    system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
 
     my $currentdir = getcwd;
 
+    # "Link" the add-on tests into the mozmill directory
     if ($^O eq "msys") {
-      system "junction", "-d", "$testdir/mozmill/compactheader";
-      system "junction", "$testdir/mozmill/compactheader", "compactheader";
+      # Do not delete the test-xxx directory! Otherwise not only the link to
+      # the compactheader directory will be removed but also all files inside
+      # it (i.e. in the source directory).
+      `junction -d $testdir/mozmill/compactheader`;
+      `junction $testdir/mozmill/compactheader compactheader`;
     }
     else {
       system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
@@ -115,28 +141,35 @@ while (my $line = <F>)
 
     # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
     my @shared_files = glob("shared-modules/*");
-    foreach (@shared_files) {
-      copy("$_","$testdir/mozmill/shared-modules");
+    foreach my $file (@shared_files) {
+      if (! -e "$testdir/mozmill/shared-modules/$file") {
+        copy("$file","$testdir/mozmill/shared-modules");
+      }
     }
 
     chdir "$testdir/mozmill";
-    system "pwd";
+    #system "pwd";
 
     my $log;
     my $python;
 
     if ($version ge "9.0") {
-      system "python resources/installmozmill.py ../mozmill-virtualenv";
+      `python resources/installmozmill.py ../mozmill-virtualenv`;
       $python = "$virtualpython";
     }
     else {
       $python = "python"
     }
 
-    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
-   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
-#    $log = $log . `python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader/test-compactheader-toolbar.js 2>&1`;
-    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,../../ftp//$ostype-$hosttype-$version/lightning.xpi -t compactheader/test-compactheader-preferences.js 2>&1`;
+    my @compatibility_apps = (
+      "../../ftp//$ostype-$hosttype-$version/lightning.xpi",
+      "../../$dispMUAfile"
+    );
+    my $comp_apps = join(",", @compatibility_apps);
+#    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
+    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
+    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
+    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
 
     chdir "$currentdir";
     my @timeData = localtime(time);
@@ -145,6 +178,15 @@ while (my $line = <F>)
     open (LOG, ">log-$version-$ostype-$hosttype-$datestr.txt");
     print LOG "$log";
     close(LOG);
+
+    print "Test failures:\n";
+    my @logs = split(/\n/, $log);
+    foreach my $line (@logs) {
+      if ($line =~ /(UNEXPECTED|^  )/) {
+        print "$line\n";
+      }
+    }
+    print "\n\n";
   }
 }
 
