@@ -153,7 +153,7 @@ while (my $line = <F>)
     my $log;
     my $python;
 
-    if ($version ge "9.0") {
+    if (int($version) >= 9) {
       `python resources/installmozmill.py ../mozmill-virtualenv`;
       $python = "$virtualpython";
     }
