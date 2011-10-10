@@ -97,6 +97,7 @@ while (my $line = <F>)
     foreach my $file (@files) {
       unlink($file);
     }
+    # print "wget -r -l1 --no-parent --follow-ftp -A$checksums $ftppath -nd -P $ftpdir 2>&1\n";
     `wget -r -l1 --no-parent --follow-ftp -A$checksums $ftppath -nd -P $ftpdir 2>&1`;
     @files = glob("$ftpdir/thunderbird*$checksums");
 
@@ -153,7 +154,9 @@ while (my $line = <F>)
     my $log;
     my $python;
 
+    no warnings;
     if (int($version) >= 9) {
+    use warnings;
       `python resources/installmozmill.py ../mozmill-virtualenv`;
       $python = "$virtualpython";
     }
