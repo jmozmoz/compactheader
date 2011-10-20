@@ -264,3 +264,7 @@
   font-style:oblique;
   text-decoration:underline;
 }
+
+#CompactHeader_collapsed1LfromBox .emailStar {
+  -moz-margin-start: -1px !important;
+}
