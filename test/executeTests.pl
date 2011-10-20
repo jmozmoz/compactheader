@@ -51,7 +51,7 @@ print "xpi: $xpi\n";
 
 my $ftpdir = "ftp";
 
-my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksums);
+my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
@@ -74,123 +74,162 @@ elsif ($^O eq "linux") {
   $virtualpython = "../mozmill-virtualenv/bin/python";
 }
 
+my @children;
+my @files;
+my $dispMUAfile;
+my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/562/addon-562-latest.xpi";
+my %testSpecs;
+
+system "wget", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
+my @dispMUAfiles = glob("$ftpdir/display_*");
+$dispMUAfile = $dispMUAfiles[-1];
+
 while (my $line = <F>)
 {
-  ($ostype,$hosttype,$ftppath,$app,$tests,$checksums, $lightning) =
+  ($ostype,$hosttype,$ftppath,$app,$tests,$checksum, $lightning) =
     parse_csv($line);
   next if (not defined($ostype));
 
-  my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/562/addon-562-latest.xpi";
 #  print "$ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
-
-#  next if ($version lt "9.0");
 
   if (($ostype eq $^O)
       && ($hosttype eq $machine)
       ) {
-
     # Download checksums file to determine version of Thunderbird, because
     # we use a link to latest release/beta/earlybird/trunk build and do not
     # know the version!
     #    wget -r -l1 --no-parent --follow-ftp -A .checksums  '' -nd
-    my @files = glob("$ftpdir/thunderbird*$checksums");
+    my @files = glob("$ftpdir/thunderbird*$checksum");
     foreach my $file (@files) {
       unlink($file);
     }
     # print "wget -r -l1 --no-parent --follow-ftp -A$checksums $ftppath -nd -P $ftpdir 2>&1\n";
-    `wget -r -l1 --no-parent --follow-ftp -A$checksums $ftppath -nd -P $ftpdir 2>&1`;
-    @files = glob("$ftpdir/thunderbird*$checksums");
+    `wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P "$ftpdir" 2>&1`;
+    @files = glob("$ftpdir/thunderbird*$checksum");
 
     my $file = $files[0];
 
-    $file =~ /thunderbird-(.*)$checksums/;
+    $file =~ /thunderbird-(.*)$checksum/;
     $version = $1;
+    # next if ($version lt "9.0");
 
     # $ftppath =~ s/_VER_/${version}/g;
     $app =~ s/_VER_/${version}/g;
     $tests =~ s/_VER_/${version}/g;
 
-    print "$ostype\t$hosttype\t$version\t$ftppath\t$app\t$tests\n";
+    # fork to run tests in parallel
+    my $pid = fork();
+    if ($pid) {
+      # parent
+#      print "pid: $pid\n";
+      $testSpecs{$pid} = {
+        version  => $version,
+        appbin   => $appbin,
+        tests    => $tests,
+        ostype   => $ostype,
+        hosttype => $hosttype,
+      };
+      push(@children, $pid);
+    } elsif (not defined $pid) {
+      die "couldn't fork: $!\n";
+    } else {
+      # child
 
-    my $testdir = "test-$version";
+      print "child: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
 
-    mkdir "$testdir";
-    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
-    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
-    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
-    system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$dispMUA";
+      my $testdir = "test-$version";
 
-    my @dispMUAfiles = glob("$ftpdir/$ostype-$hosttype-$version/display_*");
-    my $dispMUAfile = $dispMUAfiles[-1];
+      mkdir "$testdir";
+      system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+      system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+      system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
-    system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-    system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
+      system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
+      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
 
-    my $currentdir = getcwd;
+      my $currentdir = getcwd;
 
-    # "Link" the add-on tests into the mozmill directory
-    if ($^O eq "msys") {
-      # Do not delete the test-xxx directory! Otherwise not only the link to
-      # the compactheader directory will be removed but also all files inside
-      # it (i.e. in the source directory).
-      `junction -d $testdir/mozmill/compactheader`;
-      `junction $testdir/mozmill/compactheader compactheader`;
-    }
-    else {
-      system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
-    }
-
-    # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
-    my @shared_files = glob("shared-modules/*");
-    foreach my $file (@shared_files) {
-      if (! -e "$testdir/mozmill/shared-modules/$file") {
-        copy("$file","$testdir/mozmill/shared-modules");
+      # "Link" the add-on tests into the mozmill directory
+      if ($^O eq "msys") {
+        # Do not delete the test-xxx directory! Otherwise not only the link to
+        # the compactheader directory will be removed but also all files inside
+        # it (i.e. in the source directory).
+        `junction -d $testdir/mozmill/compactheader`;
+        `junction $testdir/mozmill/compactheader compactheader`;
       }
-    }
-
-    chdir "$testdir/mozmill";
-    #system "pwd";
-
-    my $log;
-    my $python;
-
-    no warnings;
-    if (int($version) >= 9) {
-    use warnings;
-      `python resources/installmozmill.py ../mozmill-virtualenv`;
-      $python = "$virtualpython";
-    }
-    else {
-      $python = "python"
-    }
-
-    my @compatibility_apps = (
-      "../../ftp//$ostype-$hosttype-$version/lightning.xpi",
-      "../../$dispMUAfile"
-    );
-    my $comp_apps = join(",", @compatibility_apps);
-#    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
-    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
-    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
-    $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
-
-    chdir "$currentdir";
-    my @timeData = localtime(time);
-    my $datestr = sprintf "%04d%02d%02d%02d%02d", 1900+$timeData[5],
-      1+$timeData[4], $timeData[3], $timeData[2], $timeData[1];
-    open (LOG, ">log-$version-$ostype-$hosttype-$datestr.txt");
-    print LOG "$log";
-    close(LOG);
-
-    print "Test failures:\n";
-    my @logs = split(/\n/, $log);
-    foreach my $line (@logs) {
-      if ($line =~ /(UNEXPECTED|^  )/) {
-        print "$line\n";
+      else {
+        system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
       }
-    }
-    print "\n\n";
+
+      # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
+      my @shared_files = glob("shared-modules/*");
+      foreach my $file (@shared_files) {
+        if (! -e "$testdir/mozmill/shared-modules/$file") {
+          copy("$file","$testdir/mozmill/shared-modules");
+        }
+      }
+
+      exit(0);
+    } # child
+  } # correct OS/architecture
+} # different versions
+
+
+foreach my $pid (@children) {
+  waitpid($pid, 0);
+  my $currentdir = getcwd;
+
+  $version  = $testSpecs{$pid}{version};
+  $appbin   = $testSpecs{$pid}{appbin};
+  $tests    = $testSpecs{$pid}{tests};
+  $ostype   = $testSpecs{$pid}{ostype};
+  $hosttype = $testSpecs{$pid}{hosttype};
+
+  print "$pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n";
+
+  my $testdir = "test-$version";
+  chdir "$testdir/mozmill";
+  #system "pwd";
+
+  my $log;
+  my $python;
+
+  no warnings;
+  if (int($version) >= 9) {
+  use warnings;
+    `python resources/installmozmill.py ../mozmill-virtualenv`;
+    $python = "$virtualpython";
   }
+  else {
+    $python = "python"
+  }
+
+  my @compatibility_apps = (
+    "../../ftp//$ostype-$hosttype-$version/lightning.xpi",
+    "../../$dispMUAfile"
+  );
+  my $comp_apps = join(",", @compatibility_apps);
+#    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
+
+  chdir "$currentdir";
+  my @timeData = localtime(time);
+  my $datestr = sprintf "%04d%02d%02d%02d%02d", 1900+$timeData[5],
+    1+$timeData[4], $timeData[3], $timeData[2], $timeData[1];
+  open (LOG, ">log-$version-$ostype-$hosttype-$datestr.txt");
+  print LOG "$log";
+  close(LOG);
+
+  print "Test failures:\n";
+  my @logs = split(/\n/, $log);
+  foreach my $line (@logs) {
+    if ($line =~ /(UNEXPECTED|^  )/) {
+      print "$line\n";
+    }
+  }
+  print "\n\n";
 }
 
 close (F);
