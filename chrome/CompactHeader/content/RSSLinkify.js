@@ -66,6 +66,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
       return;
     }
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
+      if (!RSSLinkify.newSubject) pub.InitializeHeaderViewTables();
       var url = currentHeaderData["content-base"];
       if(url) {
 //          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" +

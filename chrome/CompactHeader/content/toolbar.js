@@ -307,12 +307,15 @@ org.mozdev.compactHeader.toolbar = function() {
 
   pub.onChangeDispMUAicon = function() {
     org.mozdev.compactHeader.debug.log("onChangeDispMUAicon start");
-    var imageSrc = document.getElementById("dispMUAbroadcast").getAttribute("src");
-    org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: " + imageSrc);
-    var IconContainerDispMUA = null;
-    /* toolbar button */
-    if (IconContainerDispMUA = document.getElementById("CompactHeader_button-dispMUA")) {
-      IconContainerDispMUA.setAttribute("image", imageSrc);
+    var dispMUAbroadcast = document.getElementById("dispMUAbroadcast")
+    if (dispMUAbroadcast) {
+      var imageSrc = dispMUAbroadcast.getAttribute("src");
+      org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: " + imageSrc);
+      var IconContainerDispMUA = null;
+      /* toolbar button */
+      if (IconContainerDispMUA = document.getElementById("CompactHeader_button-dispMUA")) {
+        IconContainerDispMUA.setAttribute("image", imageSrc);
+      }
     }
     org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
   };
