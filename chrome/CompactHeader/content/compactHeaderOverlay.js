@@ -451,13 +451,18 @@ org.mozdev.compactHeader.pane = function() {
     headerEntry.textNode.value = headerValue;
   }
 
-  function coheUpdateDateValue(headerEntry, headerValue) {
+  function coheUpdateDateValue(headerEntry, headerValue, dummy, currentHeaderData) {
     //var t = currentHeaderData.date.headerValue;
-    var d
-    d = document.getElementById("CompactHeader_collapsed1LdateBox");
-    d.textContent = headerValue;
-    d = document.getElementById("CompactHeader_collapsed2LdateBox");
-    d.textContent = headerValue;
+    var d1, d2;
+    d1 = document.getElementById("CompactHeader_collapsed1LdateBox");
+    d2 = document.getElementById("CompactHeader_collapsed2LdateBox");
+    if ("x-mozilla-localizeddate" in currentHeaderData) {
+      d1.textContent = currentHeaderData["x-mozilla-localizeddate"].headerValue;
+      d2.textContent = currentHeaderData["x-mozilla-localizeddate"].headerValue;
+    } else {
+      d1.textContent = headerValue;
+      d2.textContent = headerValue;
+    }
   }
 
 
@@ -487,7 +492,7 @@ org.mozdev.compactHeader.pane = function() {
       }
 
       if (headerEntry) {
-        headerEntry.outputFunction(headerEntry, headerField.headerValue, headerName);
+        headerEntry.outputFunction(headerEntry, headerField.headerValue, headerName, currentHeaderData);
         headerEntry.valid = true;
       }
     }

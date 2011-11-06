@@ -171,6 +171,25 @@ function test_address_type_format(){
   }
 }
 
+function test_date_format_collapsed(){
+  let msg = create_message();
+  add_message_to_folder(folder1, msg);
+  select_message_in_folder(folder1, -1, mc);
+
+  expand_and_assert_header(mc);
+  let expandedValue = mc.e("dateLabel").textContent;
+
+  open_preferences_dialog(mc, set_preferences_twoline);
+  mc.sleep(10);
+  collapse_and_assert_header(mc);
+  assert_equals(expandedValue, mc.e("CompactHeader_collapsed2LdateBox").textContent);
+
+  open_preferences_dialog(mc, set_preferences_oneline);
+  collapse_and_assert_header(mc);
+  assert_equals(expandedValue, mc.e("CompactHeader_collapsed1LdateBox").textContent);
+}
+
+
 function set_preferences_twoline(aController) {
   let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
   if (!checkboxCompactTwolineView.node.getAttribute("checked")) {

@@ -124,7 +124,7 @@ function test_double_preference_change_ISO(){
   select_message_in_folder(folder1, 2, mc);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
   open_preferences_dialog(mc, subtest_change_twoline_linkify);
-  mc.sleep(10);
+  mc.sleep(100);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
 }
 
@@ -132,7 +132,7 @@ function test_double_preference_change_UTF(){
   select_message_in_folder(folder1, 3, mc);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
   open_preferences_dialog(mc, subtest_change_twoline_linkify);
-  mc.sleep(10);
+  mc.sleep(100);
   assert_browser_text_present(mc.e("messagepane"), messageBodyISO8859_1);
 }
 
