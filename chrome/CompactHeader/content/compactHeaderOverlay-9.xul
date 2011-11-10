@@ -56,7 +56,8 @@
     </hbox>
 
     <vbox id="expandedHeadersBox">
-      <hbox id="expandedHeadersTopBox" flex="1">
+      <html:div xmlns:html="http://www.w3.org/1999/xhtml" id="expandedHeadersTopBox" flex="1">
+      <!-- <hbox id="expandedHeadersTopBox" flex="1"> -->
         <toolbox id="header-view-toolbox"
                  mode="icons"
                  defaultmode="icons">
@@ -72,7 +73,8 @@
                    defaultset="hdrReplyToSenderButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,CompactHeader_hdrOtherActionsButton">
           </toolbar>
         </toolbox>
-      </hbox>
+      <!-- </hbox> -->
+      </html:div>
 
 
       <hbox id="expandedHeadersBottomBox">

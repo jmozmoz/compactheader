@@ -64,6 +64,7 @@ function installInto(module) {
   setupModule();
 
   // Now copy helper functions
+  module.reopen_3pane_window = reopen_3pane_window;
   module.close3PaneWindow = close3PaneWindow;
   module.open3PaneWindow = open3PaneWindow;
   module.openAddressBook = openAddressBook;
@@ -74,6 +75,17 @@ function installInto(module) {
   module.expand_and_assert_header = expand_and_assert_header;
 }
 
+function reopen_3pane_window() {
+  // Close the 3PaneWindow to reset margin to start values
+  // Make sure we have a different window open, so that we don't start shutting
+  // down just because the last window was closed
+  let abwc = openAddressBook();
+  // The 3pane window is closed and opened again.
+  close3PaneWindow
+  mc = open3PaneWindow();
+  abwc.window.close();
+  return mc;
+}
 
 /**
  *  Helper function to open an extra window, so that the 3pane
