@@ -223,7 +223,17 @@ org.mozdev.compactHeader.toolbar = function() {
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
     } else {
-      var cBox = document.getElementById("expandedHeaders");
+      var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+                              .getService(Components.interfaces.nsIXULAppInfo);
+      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                                     .getService(Components.interfaces.nsIVersionComparator);
+      var cBox;
+      if(versionChecker.compare(appInfo.version, "8.0") >= 0) {
+        cBox = document.getElementById("expandedBoxSpacer");
+      }
+      else {
+        cBox = document.getElementById("expandedHeaders");
+      }
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -233,7 +243,12 @@ org.mozdev.compactHeader.toolbar = function() {
         if (hdrToolbox.toolbarset) {
           cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
         }
-        cBox.parentNode.appendChild(hdrToolbox);
+        if(versionChecker.compare(appInfo.version, "8.0") >= 0) {
+          cBox.parentNode.insertBefore(hdrToolbox, cBox);
+        }
+        else { // versions before 8.0
+          cBox.parentNode.appendChild(hdrToolbox);
+        }
         hdrToolbox.palette = cloneToolboxPalette;
         hdrToolbox.toolbarset = cloneToolbarset;
         hdrToolbar = document.getElementById("header-view-toolbar");

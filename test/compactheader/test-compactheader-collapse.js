@@ -171,6 +171,59 @@ function test_address_type_format(){
   }
 }
 
+function test_date_format_collapsed(){
+  let msg = create_message();
+  add_message_to_folder(folder1, msg);
+  select_message_in_folder(folder1, -1, mc);
+
+  expand_and_assert_header(mc);
+  let expandedValue = mc.e("dateLabel").textContent;
+
+  open_preferences_dialog(mc, set_preferences_twoline);
+  mc.sleep(10);
+  collapse_and_assert_header(mc);
+  assert_equals(expandedValue, mc.e("CompactHeader_collapsed2LdateBox").textContent);
+
+  open_preferences_dialog(mc, set_preferences_oneline);
+  collapse_and_assert_header(mc);
+  assert_equals(expandedValue, mc.e("CompactHeader_collapsed1LdateBox").textContent);
+}
+
+function test_neighbours_of_header_view_toolbox(){
+  expand_and_assert_header(mc);
+  mc = reopen_3pane_window();
+
+  be_in_folder(folder1);
+
+  // select the first message, which will display it
+  let curMessage = select_click_row(0);
+  assert_selected_and_displayed(mc, curMessage);
+
+  let oldPreviousSibling = mc.e("header-view-toolbox").previousSibling;
+  if (oldPreviousSibling) {
+    oldPreviousSibling = oldPreviousSibling.id;
+  }
+  let oldNextSibling = mc.e("header-view-toolbox").nextSibling;
+  if (oldNextSibling) {
+    oldNextSibling = oldNextSibling.id;
+  }
+
+  collapse_and_assert_header(mc);
+  expand_and_assert_header(mc);
+
+  let newPreviousSibling = mc.e("header-view-toolbox").previousSibling;
+  if (newPreviousSibling) {
+    newPreviousSibling = newPreviousSibling.id;
+  }
+  let newNextSibling = mc.e("header-view-toolbox").nextSibling;
+  if (newNextSibling) {
+    newNextSibling = newNextSibling.id;
+  }
+
+  assert_equals(oldPreviousSibling, newPreviousSibling);
+  assert_equals(oldNextSibling, newNextSibling);
+}
+
 function set_preferences_twoline(aController) {
   let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
   if (!checkboxCompactTwolineView.node.getAttribute("checked")) {

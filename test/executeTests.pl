@@ -145,7 +145,7 @@ while (my $line = <F>)
       system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
       system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*";
+      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*";
 
       my $currentdir = getcwd;
 
