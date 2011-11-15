@@ -438,7 +438,7 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
 
-    org.mozdev.compactHeader.toolbar.toggle(gCoheCollapsedHeaderViewMode);
+    org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
 
     if (document.getElementById("CompactHeader_hideDetailsMenu")) {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);

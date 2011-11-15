@@ -52,6 +52,29 @@ org.mozdev.compactHeader.toolbar = function() {
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
 
+  var gToolboxes = [
+    {pos:"top",   id:"CompactHeader_collapsed2LButtonBox", orient:"horizontal", header:"compact"},
+    {pos:"top",   id:"expandedBoxSpacer", orient:"horizontal", header:"expanded"},
+    {pos:"left",  id:"CompactHeader_leftSidebar_dummy", orient:"vertical"},
+    {pos:"right", id:"CompactHeader_rightSidebar_dummy", orient:"vertical"},
+    {pos:"none",  id:"", orient:""},
+  ];
+
+  function getToolbarTarget(targetPos, targetHeader) {
+    targetPos = targetPos.replace('hdrToolbox.pos.', '');
+    for (i=0; i<gToolboxes.length; i++) {
+      if ((targetPos == gToolboxes[i].pos) &&
+          ((gToolboxes[i].header == null) || (targetHeader == gToolboxes[i].header))
+          ) {
+        return gToolboxes[i];
+      }
+    }
+    org.mozdev.compactHeader.debug.log("orient failed " + targetPos + " " + targetHeader, LOGLEVEL.warn);
+    return null;
+  }
+
+
+
   pub.fillToolboxPalette = function () {
     org.mozdev.compactHeader.debug.log("fillToolboxPalette start");
     removeButtonDispMUA();
@@ -196,16 +219,14 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle stop");
   };
 
-  pub.toggle = function(aHeaderViewMode) {
+  function moveToolbox(aHeaderViewMode, cBoxId, orient) {
     org.mozdev.compactHeader.debug.log("toolbar toggle start");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
-    var strHideLabel = document.getElementById("CompactHeader_CoheHideDetailsLabel").value;
-    var strShowLabel = document.getElementById("CompactHeader_CoheShowDetailsLabel").value;
     var firstPermanentChild = hdrToolbar.firstPermanentChild;
     var lastPermanentChild = hdrToolbar.lastPermanentChild;
     if (aHeaderViewMode) {
-      var cBox = document.getElementById("CompactHeader_collapsed2LButtonBox");
+      var cBox = document.getElementById(cBoxId);
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -223,17 +244,7 @@ org.mozdev.compactHeader.toolbar = function() {
         hdrToolbar.lastPermanentChild = lastPermanentChild;
       }
     } else {
-      var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-                              .getService(Components.interfaces.nsIXULAppInfo);
-      var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-                                     .getService(Components.interfaces.nsIVersionComparator);
-      var cBox;
-      if(versionChecker.compare(appInfo.version, "8.0") >= 0) {
-        cBox = document.getElementById("expandedBoxSpacer");
-      }
-      else {
-        cBox = document.getElementById("expandedHeaders");
-      }
+      cBox = document.getElementById(cBoxId);
       if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
         var cloneToolboxPalette;
         var cloneToolbarset;
@@ -243,12 +254,7 @@ org.mozdev.compactHeader.toolbar = function() {
         if (hdrToolbox.toolbarset) {
           cloneToolbarset = hdrToolbox.toolbarset.cloneNode(true);
         }
-        if(versionChecker.compare(appInfo.version, "8.0") >= 0) {
-          cBox.parentNode.insertBefore(hdrToolbox, cBox);
-        }
-        else { // versions before 8.0
-          cBox.parentNode.appendChild(hdrToolbox);
-        }
+        cBox.parentNode.insertBefore(hdrToolbox, cBox);
         hdrToolbox.palette = cloneToolboxPalette;
         hdrToolbox.toolbarset = cloneToolbarset;
         hdrToolbar = document.getElementById("header-view-toolbar");
@@ -257,6 +263,7 @@ org.mozdev.compactHeader.toolbar = function() {
       }
     }
     pub.onChangeDispMUAicon();
+    hdrToolbar.setAttribute("orient", orient);
     org.mozdev.compactHeader.debug.log("toolbar toggle stop");
   };
 
@@ -485,6 +492,85 @@ org.mozdev.compactHeader.toolbar = function() {
     }
     org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
   };
+
+
+  pub.setCurrentToolboxPosition = function(aHeaderViewMode) {
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition start");
+
+    var singleMessage = document.getElementById("singlemessage");
+    var targetPos = cohePrefBranch.getCharPref("toolbox.position");
+    var multiMessage = document.getElementById("multimessage");
+    var multiBBox;
+    if (multiMessage){
+      multiBBox = multiMessage.contentDocument.getElementById("buttonbox");
+    }
+
+    var hdrViewToolbox = document.getElementById("header-view-toolbox");
+    if (!hdrViewToolbox) {
+      org.mozdev.compactHeader.debug.log("no header-view-toolbox!", LOGLEVEL.warn);
+      return;
+    }
+
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition mid 1");
+
+    if (targetPos == "hdrToolbox.pos.none") {
+      hdrViewToolbox.setAttribute("collapsed", "true");
+      if (multiBBox) {
+        multiBBox.setAttribute("collapsed", "true");
+      }
+      org.mozdev.compactHeader.debug.log("hdrToolbox.pos.none stop");
+      return;
+    }
+    else {
+      hdrViewToolbox.removeAttribute("collapsed");
+      if (multiBBox) {
+        multiBBox.removeAttribute("collapsed");
+      }
+    }
+
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition mid 2");
+
+    if (multiBBox) {
+      multiBBox.removeAttribute("collapsed");
+    }
+
+    if (singleMessage.getAttribute("hidden")) {
+      // The multi message view is visible
+      org.mozdev.compactHeader.debug.log("move to multibuttonhbox");
+      var targetToolbox = getToolbarTarget(targetPos, "");
+      org.mozdev.compactHeader.debug.log("move to multibuttonhbox 1");
+      if (multiBBox) {
+        if (targetPos != "hdrToolbox.pos.top") {
+          org.mozdev.compactHeader.debug.log("x multiBBox: "+multiBBox);
+          multiBBox.setAttribute("collapsed", "true");
+          hdrViewToolbox.removeAttribute("collapsed");
+        } else {
+          org.mozdev.compactHeader.debug.log("x multiBBox: "+multiBBox);
+          multiBBox.removeAttribute("collapsed");
+          hdrViewToolbox.setAttribute("collapsed", "true");
+        }
+      }
+      if (targetToolbox) {
+        moveToolbox(aHeaderViewMode, targetToolbox.id, targetToolbox.orient);
+      }
+    }
+    else {
+      // The single message view is visible
+      org.mozdev.compactHeader.debug.log("move to singlemessage");
+      var targetToolbox;
+      if (aHeaderViewMode) {
+        targetToolbox = getToolbarTarget(targetPos, "compact");
+      }
+      else {
+        targetToolbox = getToolbarTarget(targetPos, "expanded");
+      }
+      if (targetToolbox) {
+        moveToolbox(aHeaderViewMode, targetToolbox.id, targetToolbox.orient);
+      }
+    }
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition stop");
+  }
+
 
   return pub;
 }();
