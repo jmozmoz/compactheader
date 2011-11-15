@@ -42,6 +42,7 @@ use warnings;
 use File::Copy;
 use POSIX;
 use Cwd;
+use Getopt::Long;
 
 my $file = 'testapps.csv';
 my $xpiversion = `grep 'version>' ../install.rdf | sed -e 's/.*version>\\(.*\\)<\\/em.*/\\1/'`;
@@ -54,6 +55,10 @@ my $ftpdir = "ftp";
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
+
+my ($testversion);
+
+GetOptions('version:s' => \$testversion);
 
 open (F, $file) || die ("Could not open $file!");
 
@@ -111,6 +116,8 @@ while (my $line = <F>)
 
     $file =~ /thunderbird-(.*)$checksum/;
     $version = $1;
+
+    next if (($testversion) && ($version ne $testversion));
     # next if ($version lt "9.0");
 
     # $ftppath =~ s/_VER_/${version}/g;
