@@ -471,6 +471,7 @@ org.mozdev.compactHeader.pane = function() {
   // view care about this header value. if it does then call updateHeaderEntry
   function coheUpdateMessageHeaders()
   {
+    org.mozdev.compactHeader.debug.log("coheUpdateMessageHeaders start");
     // Remove the height attr so that it redraws correctly. Works around a
     // problem that attachment-splitter causes if it's moved high enough to
     // affect the header box:
@@ -525,6 +526,7 @@ org.mozdev.compactHeader.pane = function() {
 
     // now update the view to make sure the right elements are visible
     coheUpdateHeaderView();
+    org.mozdev.compactHeader.debug.log("coheUpdateMessageHeaders stop");
   }
 
   function selectEmailDisplayed() {
@@ -566,7 +568,7 @@ org.mozdev.compactHeader.pane = function() {
     }
   };
 
-  var myPrefObserverHeaderSize =
+  var myPrefObserver =
   {
     register: function()
     {
@@ -575,7 +577,7 @@ org.mozdev.compactHeader.pane = function() {
                                   .getService(Components.interfaces.nsIPrefService);
 
       // For this._branch we ask that the preferences for extensions.myextension. and children
-      this._branch = prefService.getBranch("extensions.CompactHeader.headersize.");
+      this._branch = prefService.getBranch("extensions.CompactHeader.");
 
       // Now we queue the interface called nsIPrefBranch2. This interface is described as:
       // "nsIPrefBranch2 allows clients to observe changes to pref values."
@@ -599,9 +601,10 @@ org.mozdev.compactHeader.pane = function() {
       // aData is the name of the pref that's been changed (relative to aSubject)
       org.mozdev.compactHeader.debug.log("prefObserver 1: " + aData);
 
-      if (  (aData == "addressstyle")
-          ||(aData == "twolineview")
-          ||(aData == "linkify")
+      if (  (aData == "headersize.addressstyle")
+          ||(aData == "headersize.twolineview")
+          ||(aData == "headersize.linkify")
+          ||(aData == "toolbox.position")
           ) {
         preferencesUpdate();
       }
@@ -621,6 +624,7 @@ org.mozdev.compactHeader.pane = function() {
     wasHere = true;
     ReloadMessage();
     pub.coheOnLoadMsgHeaderPane();
+    org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
 //    var event = document.createEvent('Events');
 //    event.initEvent('messagepane-loaded', false, true);
 //    var headerViewElement = document.getElementById("msgHeaderView");
@@ -684,10 +688,19 @@ org.mozdev.compactHeader.pane = function() {
     //}
     org.mozdev.compactHeader.debug.log("before register");
     coheUninstallObserver.register();
-    myPrefObserverHeaderSize.register();
+    myPrefObserver.register();
     org.mozdev.compactHeader.debug.log("register PrefObserver");
     org.mozdev.compactHeader.debug.log("after register");
-  }
+    var oldUpdateActiveMessagePane = MessageDisplayWidget.prototype._updateActiveMessagePane;
+    MessageDisplayWidget.prototype._updateActiveMessagePane = function() {
+      org.mozdev.compactHeader.debug.log("_updateActiveMessagePane start");
+      oldUpdateActiveMessagePane.call(this);
+      org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+      org.mozdev.compactHeader.debug.log("_updateActiveMessagePane stop");
+    };
+
+    org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
+  };
 
   var coheUninstallObserver = {
     _uninstall : false,

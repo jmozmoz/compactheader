@@ -32,6 +32,8 @@
                   name="extensions.CompactHeader.headersize.addressstyle" type="bool"/>
       <preference id="CompactHeader_flatButtons"
                   name="extensions.CompactHeader.headersize.flatButtons" type="bool"/>
+      <preference id="CompactHeader_position"
+                  name="extensions.CompactHeader.toolbox.position" type="string"/>
     </preferences>
 
     <checkbox id="CompactHeader_checkboxCompactTwolineView"
@@ -46,5 +48,26 @@
     <checkbox id="CompactHeader_checkboxflatButtons"
               preference="CompactHeader_flatButtons"
               label="&CompactHeader_menu.flatButtons.caption;"/>
+    <groupbox id="CompactHeader_radiobox.ToolbarPosition">
+      <caption label="&CompactHeader_radiobox.ToolbarPosition.caption;"/>
+      <radiogroup id="CompactHeader_hdrToolbox.pos"
+                  preference="CompactHeader_position">
+        <hbox>
+          <radio id="CompactHeader_hdrToolbox.pos.left"
+                 value="left"
+                 label="&CompactHeader_radiobox.ToolbarPosition.left;"/>
+          <radio id="CompactHeader_hdrToolbox.pos.top"
+                 value="top"
+                 label="&CompactHeader_radiobox.ToolbarPosition.top;"/>
+          <radio id="CompactHeader_hdrToolbox.pos.right"
+                 value="right"
+                 label="&CompactHeader_radiobox.ToolbarPosition.right;"/>
+          <radio id="CompactHeader_hdrToolbox.pos.none"
+                 value="none"
+                 label="&CompactHeader_radiobox.ToolbarPosition.none;"/>
+        </hbox>
+      </radiogroup>
+    </groupbox>
+
   </prefpane>
 </prefwindow>

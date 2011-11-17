@@ -40,3 +40,9 @@
 <!ENTITY CompactHeader_menu.Linkify.caption "Link i feed-emner">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Vis kun adresse">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flade knapper">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position of Header Toolbar">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "right">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "top">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "left">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
+

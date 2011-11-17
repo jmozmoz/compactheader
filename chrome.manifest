@@ -17,6 +17,8 @@ overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-9.xul appversion>=9.0a1
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-10.xul appversion>=10.0a1
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
+overlay chrome://CompactHeader/content/preferences.xul   chrome://CompactHeader/content/preferences-old.xul appversion<10.0a2
+
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css
 

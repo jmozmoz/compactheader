@@ -54,14 +54,25 @@ org.mozdev.compactHeader.toolbar = function() {
 
   var gToolboxes = [
     {pos:"top",   id:"CompactHeader_collapsed2LButtonBox", orient:"horizontal", header:"compact"},
-    {pos:"top",   id:"expandedBoxSpacer", orient:"horizontal", header:"expanded"},
-    {pos:"left",  id:"CompactHeader_leftSidebar_dummy", orient:"vertical"},
-    {pos:"right", id:"CompactHeader_rightSidebar_dummy", orient:"vertical"},
-    {pos:"none",  id:"", orient:""},
+    {pos:"top",   id:"expandedBoxSpacer",                  orient:"horizontal", header:"expanded"},
+    {pos:"left",  id:"CompactHeader_leftSidebar_dummy",    orient:"vertical"},
+    {pos:"right", id:"CompactHeader_rightSidebar_dummy",   orient:"vertical"},
+    {pos:"none",  id:"",                                   orient:""},
   ];
 
+  pub.cannotMoveToolbox = function() {
+    var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+      .getService(Components.interfaces.nsIXULAppInfo);
+    var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+      .getService(Components.interfaces.nsIVersionComparator);
+    return (versionChecker.compare(appInfo.version, "10.0a2") < 0)
+  };
+
   function getToolbarTarget(targetPos, targetHeader) {
-    targetPos = targetPos.replace('hdrToolbox.pos.', '');
+    //targetPos = targetPos.replace('hdrToolbox.pos.', '');
+    if (pub.cannotMoveToolbox()) {
+      targetPos = "top";
+    }
     for (i=0; i<gToolboxes.length; i++) {
       if ((targetPos == gToolboxes[i].pos) &&
           ((gToolboxes[i].header == null) || (targetHeader == gToolboxes[i].header))
@@ -220,14 +231,15 @@ org.mozdev.compactHeader.toolbar = function() {
   };
 
   function moveToolbox(aHeaderViewMode, cBoxId, orient) {
-    org.mozdev.compactHeader.debug.log("toolbar toggle start");
+    org.mozdev.compactHeader.debug.log("toolbar toggle start headermode: " + aHeaderViewMode +
+      " cBoxId: " + cBoxId + " orien: " + orient);
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var firstPermanentChild = hdrToolbar.firstPermanentChild;
     var lastPermanentChild = hdrToolbar.lastPermanentChild;
     if (aHeaderViewMode) {
       var cBox = document.getElementById(cBoxId);
-      if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
+      if ((cBox) && (cBox.parentNode.id != hdrToolbox.parentNode.id)) {
         var cloneToolboxPalette;
         var cloneToolbarset;
         if (hdrToolbox.palette) {
@@ -245,7 +257,7 @@ org.mozdev.compactHeader.toolbar = function() {
       }
     } else {
       cBox = document.getElementById(cBoxId);
-      if (cBox.parentNode.id != hdrToolbox.parentNode.id) {
+      if ((cBox) && (cBox.parentNode.id != hdrToolbox.parentNode.id)) {
         var cloneToolboxPalette;
         var cloneToolbarset;
         if (hdrToolbox.palette) {
@@ -502,7 +514,8 @@ org.mozdev.compactHeader.toolbar = function() {
     var multiMessage = document.getElementById("multimessage");
     var multiBBox;
     if (multiMessage){
-      multiBBox = multiMessage.contentDocument.getElementById("buttonbox");
+      org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
+      multiBBox = multiMessage.contentDocument.getElementById("header-view-toolbox");
     }
 
     var hdrViewToolbox = document.getElementById("header-view-toolbox");
@@ -513,12 +526,12 @@ org.mozdev.compactHeader.toolbar = function() {
 
     org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition mid 1");
 
-    if (targetPos == "hdrToolbox.pos.none") {
+    if (targetPos == "none") {
       hdrViewToolbox.setAttribute("collapsed", "true");
       if (multiBBox) {
         multiBBox.setAttribute("collapsed", "true");
       }
-      org.mozdev.compactHeader.debug.log("hdrToolbox.pos.none stop");
+      org.mozdev.compactHeader.debug.log("none stop");
       return;
     }
     else {
@@ -540,7 +553,7 @@ org.mozdev.compactHeader.toolbar = function() {
       var targetToolbox = getToolbarTarget(targetPos, "");
       org.mozdev.compactHeader.debug.log("move to multibuttonhbox 1");
       if (multiBBox) {
-        if (targetPos != "hdrToolbox.pos.top") {
+        if (targetPos != "top") {
           org.mozdev.compactHeader.debug.log("x multiBBox: "+multiBBox);
           multiBBox.setAttribute("collapsed", "true");
           hdrViewToolbox.removeAttribute("collapsed");
