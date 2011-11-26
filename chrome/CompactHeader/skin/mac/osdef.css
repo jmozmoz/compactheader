@@ -216,3 +216,8 @@ toolbar[orient="vertical"] toolbarpaletteitem[dragover="right"] {
 #header-view-toolbar[orient="vertical"] toolbarbutton {
   -moz-box-orient: vertical !important;
 }
+
+.inline-toolbox[doCustomization] .inline-toolbar[orient="vertical"] {
+  min-width: 20px;
+  min-height: 100px;
+}

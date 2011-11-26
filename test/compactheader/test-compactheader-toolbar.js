@@ -599,6 +599,20 @@ function test_customize_header_toolbar_change_button_style(){
   subtest_buttons_style("-moz-box", "none");
 }
 
+function test_set_toolbar_position() {
+
+}
+
+function test_toolbar_visibility() {
+
+}
+
+function test_sidebar_style() {
+
+}
+
+
+
 /**
  *  Check all buttons in the toolbar for the correct style
  *  of text and icon.

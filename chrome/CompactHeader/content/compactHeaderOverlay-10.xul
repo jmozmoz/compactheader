@@ -9,11 +9,13 @@
 
   <hbox id="messagepaneboxwrapper">
     <vbox id="CompactHeader_leftSidebar"
+          class="main-header-area"
           context="header-toolbar-context-menu"
           insertbefore="messagepanebox">
       <hbox id="CompactHeader_leftSidebar_dummy" hidden="true"/>
     </vbox>
     <vbox id="CompactHeader_rightSidebar"
+          class="main-header-area"
           context="header-toolbar-context-menu">
       <hbox id="CompactHeader_rightSidebar_dummy" hidden="true"/>
     </vbox>
