@@ -52,10 +52,6 @@ var WindowHelper;
 
 var folder;
 
-const PREF = "toolbar.customization.usesheet";
-var prefBranch = Cc["@mozilla.org/preferences-service;1"]
-                    .getService(Ci.nsIPrefService).getBranch(null);
-
 function setupModule(module) {
   let fdh = collector.getModule('folder-display-helpers');
   fdh.installInto(module);
@@ -97,6 +93,7 @@ function setupModule(module) {
 function test_get_msg_button_customize_header_toolbar(){
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
 
   // It is necessary to press the Get Message Button to get the popup menu populated
   mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
@@ -134,6 +131,7 @@ function test_customize_header_toolbar_check_default()
   let hdrToolbar = mc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   // In a fresh profile the currentset attribute does not
   // exist, i.e. it returns empty. So check for both valid
@@ -174,8 +172,9 @@ function test_other_actions_icon()
   let curMessage = select_message_in_folder(folder, 0, mc);
 
   // Restore the default buttons to get defined starting conditions.
-  restore_and_check_default_buttons(mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
+  restore_and_check_default_buttons(mc);
 
   let otherActionIcon = mc.a('CompactHeader_hdrOtherActionsButton', {class: "toolbarbutton-icon"});
 
@@ -192,8 +191,9 @@ function test_customize_header_toolbar_reorder_buttons()
   let curMessage = select_message_in_folder(folder, 0, mc);
 
   // Restore the default buttons to get defined starting conditions.
-  restore_and_check_default_buttons(mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
+  restore_and_check_default_buttons(mc);
 
   // Save the currentSet of the toolbar before opening the
   // customization dialog, to get out of the way of the
@@ -224,6 +224,7 @@ function test_customize_header_toolbar_reorder_buttons()
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
   expand_and_assert_header(msgc);
+  set_and_assert_top_toolbox_position(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -242,6 +243,7 @@ function test_customize_header_toolbar_separate_window()
 {
   let curMessage = select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -251,6 +253,7 @@ function test_customize_header_toolbar_separate_window()
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
   expand_and_assert_header(msgc);
+  set_and_assert_top_toolbox_position(msgc);
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -319,6 +322,7 @@ function test_customize_header_toolbar_remove_buttons(){
 
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -401,6 +405,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -523,6 +528,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 function test_customize_header_toolbar_dialog_style(){
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -561,6 +567,7 @@ function test_customize_header_toolbar_dialog_style(){
 function test_customize_header_toolbar_change_button_style(){
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
+  set_and_assert_top_toolbox_position(mc);
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -600,7 +607,6 @@ function test_customize_header_toolbar_change_button_style(){
 }
 
 function test_set_toolbar_position() {
-
 }
 
 function test_toolbar_visibility() {
@@ -633,85 +639,5 @@ function subtest_buttons_style(aIconVisibility, aLabelVisibility)
       assert_equals(mc.window.getComputedStyle(label).getPropertyValue("display"), aLabelVisibility);
     }
   }
-}
-
-/**
- *  Restore the default buttons in the header pane toolbar
- *  by clicking the corresponding button in the palette dialog
- *  and check if it worked.
- */
-function restore_and_check_default_buttons(aController)
-{
-  let ctc = open_header_pane_toolbar_customization(aController);
-  let restoreButton = ctc.window.document.getElementById("main-box").
-    querySelector("[oncommand='overlayRestoreDefaultSet();']");
-  ctc.click(new elib.Elem(restoreButton));
-  close_header_pane_toolbar_customization(ctc);
-
-  let hdrToolbar = aController.eid("header-view-toolbar").node;
-  let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
-
-  assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
-  assert_equals(hdrToolbar.getAttribute("currentset"), hdrBarDefaultSet);
-}
-
-/*
- * Open the header pane toolbar customization dialog.
- */
-function open_header_pane_toolbar_customization(aController)
-{
-  let ctc;
-  aController.click(aController.eid("CustomizeHeaderToolbar"));
-  // Depending on preferences the customization dialog is
-  // either a normal window or embedded into a sheet.
-  if (prefBranch.getBoolPref(PREF, true)) {
-    aController.ewait("donebutton");
-    let contentWindow = aController.eid("customizeToolbarSheetIFrame").node.contentWindow;
-    ctc = WindowHelper.augment_controller(new controller.MozMillController(contentWindow));
-  }
-  else {
-    ctc = WindowHelper.wait_for_existing_window("CustomizeToolbarWindow");
-  }
-  return ctc;
-}
-
-/*
- * Close the header pane toolbar customization dialog.
- */
-function close_header_pane_toolbar_customization(aCtc)
-{
-  aCtc.click(aCtc.eid("donebutton"));
-  // XXX There should be an equivalent for testing the closure of
-  // XXX the dialog embedded in a sheet, but I do not know how.
-  if (!prefBranch.getBoolPref(PREF, true)) {
-   assert_true(aCtc.window.closed, "The customization dialog is not closed.");
-  }
-}
-
-/*
- * Remove invsible buttons from (comma separated) buttons list
- */
-function filterInvisibleButtons(aController, aButtons) {
-  let buttons = aButtons.split(",");
-  let result = new Array;
-
-  for (let i=1; i<buttons.length; i++) {
-    button = buttons[i].replace(new RegExp("wrapper-"), "");
-    if ((aController.eid(button).node) &&
-        (!aController.eid(button).node.getAttribute("collapsed"))
-        ) {
-      result.push(buttons[i]);
-    }
-  }
-
-  let strResult;
-  if (result.length > 0) {
-    strResult = result.join(",");
-  }
-  else {
-    strResult = "__empty";
-  }
-
-  return strResult;
 }
 

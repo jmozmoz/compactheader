@@ -51,7 +51,9 @@ const MODULE_NAME = 'compactheader-helpers';
 var browserPreferences = Components.classes["@mozilla.org/preferences-service;1"]
                                             .getService(Components.interfaces.nsIPrefService)
                                             .getBranch("browser.preferences.");
-
+const usesheetPref = "toolbar.customization.usesheet";
+var allPreferences = Cc["@mozilla.org/preferences-service;1"]
+                    .getService(Ci.nsIPrefService).getBranch(null);
 var L;
 var folderDisplayHelper;
 
@@ -73,6 +75,12 @@ function installInto(module) {
   module.select_message_in_folder = select_message_in_folder;
   module.collapse_and_assert_header = collapse_and_assert_header;
   module.expand_and_assert_header = expand_and_assert_header;
+  module.restore_and_check_default_buttons = restore_and_check_default_buttons;
+  module.open_header_pane_toolbar_customization = open_header_pane_toolbar_customization;
+  module.close_header_pane_toolbar_customization = close_header_pane_toolbar_customization;
+  module.filterInvisibleButtons = filterInvisibleButtons;
+  module.canMoveToolbox = canMoveToolbox;
+  module.set_and_assert_top_toolbox_position = set_and_assert_top_toolbox_position;
 }
 
 function reopen_3pane_window() {
@@ -178,4 +186,114 @@ function expand_and_assert_header(aController) {
   }
   folderDisplayHelper.assert_true(collapsedHeaderView.getAttribute("collapsed"));
   folderDisplayHelper.assert_true(!expandedHeaderView.hasAttribute("collapsed"));
+}
+
+/**
+ *  Restore the default buttons in the header pane toolbar
+ *  by clicking the corresponding button in the palette dialog
+ *  and check if it worked.
+ */
+function restore_and_check_default_buttons(aController)
+{
+  let ctc = open_header_pane_toolbar_customization(aController);
+  let restoreButton = ctc.window.document.getElementById("main-box").
+    querySelector("[oncommand='overlayRestoreDefaultSet();']");
+  ctc.click(new elib.Elem(restoreButton));
+  close_header_pane_toolbar_customization(ctc);
+
+  let hdrToolbar = aController.eid("header-view-toolbar").node;
+  let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+
+  folderDisplayHelper.assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
+  folderDisplayHelper.assert_equals(hdrToolbar.getAttribute("currentset"), hdrBarDefaultSet);
+}
+
+/*
+ * Open the header pane toolbar customization dialog.
+ */
+function open_header_pane_toolbar_customization(aController)
+{
+  let ctc;
+  aController.click(aController.eid("CustomizeHeaderToolbar"));
+  // Depending on preferences the customization dialog is
+  // either a normal window or embedded into a sheet.
+  if (allPreferences.getBoolPref(usesheetPref, true)) {
+    aController.ewait("donebutton");
+    let contentWindow = aController.eid("customizeToolbarSheetIFrame").node.contentWindow;
+    ctc = windowHelper.augment_controller(new controller.MozMillController(contentWindow));
+  }
+  else {
+    ctc = windowHelper.wait_for_existing_window("CustomizeToolbarWindow");
+  }
+  return ctc;
+}
+
+/*
+ * Close the header pane toolbar customization dialog.
+ */
+function close_header_pane_toolbar_customization(aCtc)
+{
+  aCtc.click(aCtc.eid("donebutton"));
+  // XXX There should be an equivalent for testing the closure of
+  // XXX the dialog embedded in a sheet, but I do not know how.
+  if (!allPreferences.getBoolPref(usesheetPref, true)) {
+    folderDisplayHelper.assert_true(aCtc.window.closed, "The customization dialog is not closed.");
+  }
+}
+
+/*
+ * Remove invsible buttons from (comma separated) buttons list
+ */
+function filterInvisibleButtons(aController, aButtons) {
+  let buttons = aButtons.split(",");
+  let result = new Array;
+
+  for (let i=1; i<buttons.length; i++) {
+    button = buttons[i].replace(new RegExp("wrapper-"), "");
+    if ((aController.eid(button).node) &&
+        (!aController.eid(button).node.getAttribute("collapsed"))
+        ) {
+      result.push(buttons[i]);
+    }
+  }
+
+  let strResult;
+  if (result.length > 0) {
+    strResult = result.join(",");
+  }
+  else {
+    strResult = "__empty";
+  }
+
+  return strResult;
+}
+
+function canMoveToolbox() {
+  var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+    .getService(Components.interfaces.nsIXULAppInfo);
+  var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+    .getService(Components.interfaces.nsIVersionComparator);
+  return (versionChecker.compare(appInfo.version, "10.0a2") >= 0)
+};
+
+function set_top_toobox_position(aController) {
+  if (canMoveToolbox()) {
+    aController.click(aController.eid("CompactHeader_hdrToolbox.pos.top"));
+  }
+  close_preferences_dialog(aController);
+}
+
+function set_and_assert_top_toolbox_position(aController) {
+  open_preferences_dialog(aController, set_top_toobox_position);
+  expand_and_assert_header(aController);
+  aController.sleep(100);
+  let e = aController.e("msgHeaderViewDeck").getElementsByAttribute("id", "header-view-toolbox");
+  folderDisplayHelper.assert_equals(e.length, 1);
+
+  if (canMoveToolbox()) {
+    e = aController.e("CompactHeader_leftSidebar").getElementsByAttribute("id", "header-view-toolbox");
+    folderDisplayHelper.assert_equals(e.length, 0);
+    e = aController.e("CompactHeader_rightSidebar").getElementsByAttribute("id", "header-view-toolbox");
+    folderDisplayHelper.assert_equals(e.length, 0);
+  }
 }
