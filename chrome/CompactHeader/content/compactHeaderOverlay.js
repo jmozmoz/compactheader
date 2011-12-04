@@ -691,14 +691,15 @@ org.mozdev.compactHeader.pane = function() {
     myPrefObserver.register();
     org.mozdev.compactHeader.debug.log("register PrefObserver");
     org.mozdev.compactHeader.debug.log("after register");
-    var oldUpdateActiveMessagePane = MessageDisplayWidget.prototype._updateActiveMessagePane;
-    MessageDisplayWidget.prototype._updateActiveMessagePane = function() {
-      org.mozdev.compactHeader.debug.log("_updateActiveMessagePane start");
-      oldUpdateActiveMessagePane.call(this);
-      org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
-      org.mozdev.compactHeader.debug.log("_updateActiveMessagePane stop");
-    };
-
+    if (MessageDisplayWidget) {
+      var oldUpdateActiveMessagePane = MessageDisplayWidget.prototype._updateActiveMessagePane;
+      MessageDisplayWidget.prototype._updateActiveMessagePane = function() {
+        org.mozdev.compactHeader.debug.log("_updateActiveMessagePane start");
+        oldUpdateActiveMessagePane.call(this);
+        org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+        org.mozdev.compactHeader.debug.log("_updateActiveMessagePane stop");
+      };
+    }
     org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
   };
 
