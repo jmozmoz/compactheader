@@ -144,29 +144,16 @@ toolbox[labelalign="end"] toolbar[mode="full"] .msgHeaderView-flat-button-out .t
   width: 20px !important;
 }
 
-toolbar[orient="vertical"] toolbarpaletteitem {
-  margin: -2px 0px;
-  border: none;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
+/**
+Toolbarseparator auf der Toolbar und im Konfigurationsmodus
+*/
+toolbar[orient="vertical"] toolbarseparator {
+  -moz-appearance: none !important;
+  margin: 3px 6px 2px 6px;
+  border-bottom: 1px solid -moz-ButtonHoverFace;
 }
 
-toolbar[orient="vertical"] toolbarpaletteitem[dragover="left"] {
-  border-color: transparent;
-  border-top-color: #000000;
-}
-
-toolbar[orient="vertical"] toolbarpaletteitem[dragover="right"] {
-  border-color: transparent;
-  border-bottom-color: #000000;
-}
-
-#header-view-toolbar[orient="vertical"] toolbarbutton {
-  -moz-box-orient: vertical !important;
-}
-
-
-.inline-toolbox[doCustomization] .inline-toolbar[orient="vertical"] {
-  min-width: 20px;
-  min-height: 100px;
+toolbar[orient="vertical"][iconsize="small"] toolbarseparator {
+  margin-left: 5px;
+  margin-right: 5px;
 }

@@ -46,33 +46,29 @@
   display: none;
 }
 
-toolbar[orient="vertical"] toolbarpaletteitem {
-  margin: -2px 0px;
-  border: none;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-}
-
-toolbar[orient="vertical"] toolbarpaletteitem[dragover="left"] {
-  border-color: transparent;
-  border-top-color: #000000;
-}
-
-toolbar[orient="vertical"] toolbarpaletteitem[dragover="right"] {
-  border-color: transparent;
-  border-bottom-color: #000000;
-}
-
-#header-view-toolbar[orient="vertical"] toolbarbutton {
-  -moz-box-orient: vertical !important;
-}
-
-.inline-toolbox[doCustomization] .inline-toolbar[orient="vertical"] {
-  min-width: 20px;
-  min-height: 100px;
-}
-
 #CompactHeader_rightSidebar,
-#CompactHeader_lefttSidebar {
+#CompactHeader_leftSidebar {
   background: #f8f8f8;
+  padding: 0px;
+}
+
+
+toolbar[orient="vertical"] toolbarbutton {
+  margin: 2px 1px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/** Toolbarbutton mit Dropmarker */
+toolbar[orient="vertical"] toolbarbutton toolbarbutton {
+  margin: 0px;
+}
+
+toolbar[orient="vertical"][iconsize="small"] .toolbarbutton-icon {
+  margin: 1px;
+}
+
+toolbar[orient="vertical"] toolbarseparator,
+toolbar[orient="vertical"] toolbarpaletteitem[id^="wrapper-separator"] {
+  margin: 4px 2px 2px 2px;
 }
