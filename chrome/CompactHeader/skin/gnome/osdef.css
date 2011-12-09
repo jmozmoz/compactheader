@@ -157,3 +157,16 @@ toolbar[orient="vertical"][iconsize="small"] toolbarseparator {
   margin-left: 5px;
   margin-right: 5px;
 }
+
+#CompactHeader_hideDetailsButton:hover,
+#CompactHeader_hideDetailsButton {
+  width: 13px;
+  height: 9px;
+}
+
+#CompactHeader_showDetailsButton:hover,
+#CompactHeader_showDetailsButton {
+  width: 13px;
+  height: 9px;
+}
+	
