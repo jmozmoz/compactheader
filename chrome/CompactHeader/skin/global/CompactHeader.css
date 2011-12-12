@@ -351,3 +351,11 @@ toolbar[orient="vertical"] toolbarbutton hbox {
   min-width: 20px;
   min-height: 100px;
 }
+
+#CompactHeader_hideDetailsButton:hover,
+#CompactHeader_hideDetailsButton,
+#CompactHeader_showDetailsButton:hover,
+#CompactHeader_showDetailsButton {
+  width:  13px;
+  height: 13px;
+}

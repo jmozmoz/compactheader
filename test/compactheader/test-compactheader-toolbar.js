@@ -93,7 +93,7 @@ function setupModule(module) {
 function test_get_msg_button_customize_header_toolbar(){
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
 
   // It is necessary to press the Get Message Button to get the popup menu populated
   mc.click(mc.aid("button-getmsg", {class: "toolbarbutton-menubutton-dropmarker"}));
@@ -131,7 +131,7 @@ function test_customize_header_toolbar_check_default()
   let hdrToolbar = mc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   // In a fresh profile the currentset attribute does not
   // exist, i.e. it returns empty. So check for both valid
@@ -173,7 +173,7 @@ function test_other_actions_icon()
 
   // Restore the default buttons to get defined starting conditions.
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
   restore_and_check_default_buttons(mc);
 
   let otherActionIcon = mc.a('CompactHeader_hdrOtherActionsButton', {class: "toolbarbutton-icon"});
@@ -192,7 +192,7 @@ function test_customize_header_toolbar_reorder_buttons()
 
   // Restore the default buttons to get defined starting conditions.
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
   restore_and_check_default_buttons(mc);
 
   // Save the currentSet of the toolbar before opening the
@@ -224,7 +224,7 @@ function test_customize_header_toolbar_reorder_buttons()
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
   expand_and_assert_header(msgc);
-  set_and_assert_top_toolbox_position(msgc);
+  set_and_assert_toolbox_position(msgc, 'top');
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -243,7 +243,7 @@ function test_customize_header_toolbar_separate_window()
 {
   let curMessage = select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -253,7 +253,7 @@ function test_customize_header_toolbar_separate_window()
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
   expand_and_assert_header(msgc);
-  set_and_assert_top_toolbox_position(msgc);
+  set_and_assert_toolbox_position(msgc, 'top');
   let hdrToolbar = msgc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
@@ -322,7 +322,7 @@ function test_customize_header_toolbar_remove_buttons(){
 
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -405,7 +405,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -528,7 +528,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 function test_customize_header_toolbar_dialog_style(){
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -567,7 +567,7 @@ function test_customize_header_toolbar_dialog_style(){
 function test_customize_header_toolbar_change_button_style(){
   select_message_in_folder(folder, 0, mc);
   expand_and_assert_header(mc);
-  set_and_assert_top_toolbox_position(mc);
+  set_and_assert_toolbox_position(mc, 'top');
 
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
@@ -607,14 +607,93 @@ function test_customize_header_toolbar_change_button_style(){
 }
 
 function test_set_toolbar_position() {
-}
+  select_message_in_folder(folder, 0, mc);
+  expand_and_assert_header(mc);
+  restore_and_check_default_buttons(mc);
 
-function test_toolbar_visibility() {
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'top');
 
-}
+  collapse_and_assert_header(mc);
+  open_preferences_dialog(mc, subtest_change_twoline);
 
-function test_sidebar_style() {
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'top');
 
+  collapse_and_assert_header(mc);
+  open_preferences_dialog(mc, subtest_change_oneline);
+
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'top');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'left');
+  set_and_assert_toolbox_position(mc, 'right');
+  set_and_assert_toolbox_position(mc, 'none');
+  set_and_assert_toolbox_position(mc, 'top');
+
+  expand_and_assert_header(mc);
+  restore_and_check_default_buttons(mc);
 }
 
 
