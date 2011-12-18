@@ -264,3 +264,98 @@
   font-style:oblique;
   text-decoration:underline;
 }
+
+/* Toolbarspacer auf der Toolbar und im Konfigurationsmodus */
+toolbar[orient="vertical"] toolbarspacer,
+toolbar[orient="vertical"] toolbarpaletteitem[id^="wrapper-spacer"] {
+  height: 21px;
+}
+
+toolbar[orient="vertical"] toolbarseparator,
+toolbar[orient="vertical"] toolbarpaletteitem[id^="wrapper-separator"] {
+  -moz-appearance: none;
+  height: 2px;
+  max-height: 2px;
+  min-height: 2px;
+  min-width: 24px;
+  padding: 0px;
+  border: none;
+  border-top: 1px solid ThreedShadow;
+  border-bottom: 1px solid ThreedHighlight;
+}
+
+toolbar[orient="vertical"] toolbarseparator,
+toolbar[orient="vertical"] toolbarpaletteitem[id^="wrapper-separator"] {
+  border-bottom: none;
+}
+
+toolbar[orient="vertical"] toolbarpaletteitem[id^="wrapper-separator"] {
+  min-height: 5px;
+  border-bottom: 1px solid ThreedHighlight;
+  background-color: ActiveBorder;
+}
+
+/* Drag-and-Drop-Markierung im Konfigurationsmodus */
+toolbar[orient="vertical"] toolbarpaletteitem {
+  margin: -2px 0px;
+  border: none;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+}
+
+toolbar[orient="vertical"] toolbarpaletteitem[dragover="left"] {
+  border-color: transparent;
+  border-top-color: #000000;
+}
+
+toolbar[orient="vertical"] toolbarpaletteitem[dragover="right"] {
+    border-color: transparent;
+    border-bottom-color: #000000;
+}
+
+toolbar[orient="vertical"][mode="icons"] label,
+toolbar[orient="vertical"][mode="icons"] .chevron > label {
+    display: none !important;
+}
+
+toolbar[mode="icons"]:not([iconsize="small"]) .bookmark-item > image {
+    width: 22px;
+    height: 22px;
+    margin: 1px;
+}
+
+toolbar[orient="vertical"][mode="icons"] menupopup label {
+    display: block !important;
+}
+
+
+toolbar[orient="vertical"] {
+  -moz-box-orient: vertical;
+}
+
+/* Toolbar-Mode: Text */
+toolbar[orient="vertical"][mode="text"] toolbarbutton {
+    -moz-box-orient: horizontal;
+}
+
+toolbar[orient="vertical"][mode="text"] .toolbarbutton-text {
+    text-align: left;
+}
+
+toolbar[orient="vertical"] toolbarbutton,
+toolbar[orient="vertical"] toolbarbutton hbox {
+  -moz-box-orient: vertical !important;
+}
+
+.inline-toolbox[doCustomization] .inline-toolbar[orient="vertical"] {
+  min-width: 20px;
+  min-height: 100px;
+}
+
+#CompactHeader_hideDetailsButton:hover,
+#CompactHeader_hideDetailsButton,
+#CompactHeader_showDetailsButton:hover,
+#CompactHeader_showDetailsButton {
+  width:  13px;
+  height: 13px;
+}

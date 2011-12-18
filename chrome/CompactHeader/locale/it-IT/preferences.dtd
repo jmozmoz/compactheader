@@ -40,3 +40,8 @@
 <!ENTITY CompactHeader_menu.Linkify.caption "Link nell'oggetto dei feed RSS">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostra solo l'indirizzo">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Pulsanti piani">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posizione della Barra Intestazioni">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "destra">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "alto">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "sinistra">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisibile">

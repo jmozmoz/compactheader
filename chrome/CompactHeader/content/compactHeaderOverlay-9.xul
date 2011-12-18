@@ -60,6 +60,7 @@
       <!-- <hbox id="expandedHeadersTopBox" flex="1"> -->
         <toolbox id="header-view-toolbox"
                  mode="icons"
+                 minwidth="10px"
                  defaultmode="icons">
           <toolbarpalette id="header-view-toolbar-palette">
             <toolbarbutton id="CompactHeader_hdrOtherActionsButton"

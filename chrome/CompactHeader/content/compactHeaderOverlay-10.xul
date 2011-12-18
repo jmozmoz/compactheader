@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<?xml-stylesheet href="chrome://CompactHeader/skin/CompactHeader.css" type="text/css"?>
+<?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
+
+
+<overlay id="compactHeaderOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <hbox id="messagepaneboxwrapper">
+    <vbox id="CompactHeader_leftSidebar"
+          class="main-header-area"
+          context="header-toolbar-context-menu"
+          insertbefore="messagepanebox">
+      <hbox id="CompactHeader_leftSidebar_dummy" hidden="true"/>
+    </vbox>
+    <vbox id="CompactHeader_rightSidebar"
+          class="main-header-area"
+          context="header-toolbar-context-menu">
+      <hbox id="CompactHeader_rightSidebar_dummy" hidden="true"/>
+    </vbox>
+  </hbox>
+
+</overlay>

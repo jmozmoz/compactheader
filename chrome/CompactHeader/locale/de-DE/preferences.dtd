@@ -40,3 +40,9 @@
 <!ENTITY CompactHeader_menu.Linkify.caption "Link in Betreff von RSS Feeds">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flache Schaltflächen">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position der Kopfzeilenwerkzeugleiste">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "rechts">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "oben">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "links">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "unsichtbar">
+

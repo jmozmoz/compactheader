@@ -65,6 +65,9 @@ var messageBodyISO8859_1 = "ae: " + String.fromCharCode(228) +
   ", UE: " + String.fromCharCode(220) +
   ", ss: " + String.fromCharCode(223) + "\n";
 
+//var messageBodyUTF8 = "ae: ä, oe: ö, ue: ü, " +
+//  "AE: Ä, OE: Ö, UE: Ü, ss: ß";
+
 //var messageBodyUTF8 = "ae: \uc3a4, oe: \uceb6, ue: \uc3bc, " +
 //                      "AE: \uc384, OE: \uc396, UE: \uc39c, ss: \uce9f";
 
@@ -146,11 +149,6 @@ function test_single_preference_change_folder(){
   select_message_in_folder(folder1, 3, mc);
   open_preferences_dialog(mc, subtest_change_twoline);
   select_message_in_folder(folder2, 0, mc);
-}
-
-function subtest_change_twoline(aController) {
-  aController.click(aController.eid("CompactHeader_checkboxCompactTwolineView"));
-  close_preferences_dialog(aController);
 }
 
 function addToFolder(aSubject, aBody, aFolder, aCharset) {

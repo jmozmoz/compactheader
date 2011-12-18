@@ -216,3 +216,7 @@ toolbar[orient="vertical"] toolbarpaletteitem[dragover="right"] {
 #header-view-toolbar[orient="vertical"] toolbarbutton {
   -moz-box-orient: vertical !important;
 }
+
+toolbar[orient="vertical"] toolbarbutton {
+    margin: 2px 1px;
+}
