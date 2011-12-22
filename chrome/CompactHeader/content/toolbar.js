@@ -47,6 +47,7 @@ if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
 org.mozdev.compactHeader.toolbar = function() {
   var pub = {};
+  var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
