@@ -51,11 +51,11 @@ org.mozdev.compactHeader.debug = function() {
   var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
                                            .getService(Components.interfaces.nsIConsoleService);
 
-  var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
-  var gCurrentLogLevel = LOGLEVEL.info; // TODO: Set to info
+  pub.LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
+  var gCurrentLogLevel = pub.LOGLEVEL.info; // TODO: Set to info
 
   pub.log = function(str, logLevel) {
-    if (!logLevel) var logLevel = LOGLEVEL.debug;
+    if (!logLevel) var logLevel = pub.LOGLEVEL.debug;
     if (logLevel >= gCurrentLogLevel) {
       aConsoleService.logStringMessage(Date() + " CH: " + str);
     }
@@ -72,7 +72,7 @@ org.mozdev.compactHeader.debug = function() {
     } catch(e) {
     } finally {
     }
-    pub.log("Current logLevel: " + gCurrentLogLevel, LOGLEVEL.error)
+    pub.log("Current logLevel: " + gCurrentLogLevel, pub.LOGLEVEL.error)
     return gCurrentLogLevel;
   };
 

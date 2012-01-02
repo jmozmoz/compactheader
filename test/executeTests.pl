@@ -118,7 +118,6 @@ while (my $line = <F>)
     $version = $1;
 
     next if (($testversion) && ($version ne $testversion));
-    # next if ($version lt "9.0");
 
     # $ftppath =~ s/_VER_/${version}/g;
     $app =~ s/_VER_/${version}/g;
@@ -218,6 +217,7 @@ foreach my $pid (@children) {
   my $comp_apps = join(",", @compatibility_apps);
 #    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1`;
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
 

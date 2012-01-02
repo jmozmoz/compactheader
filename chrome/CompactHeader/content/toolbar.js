@@ -47,7 +47,6 @@ if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
 org.mozdev.compactHeader.toolbar = function() {
   var pub = {};
-  var LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
@@ -81,7 +80,8 @@ org.mozdev.compactHeader.toolbar = function() {
         return gToolboxes[i];
       }
     }
-    org.mozdev.compactHeader.debug.log("orient failed " + targetPos + " " + targetHeader, LOGLEVEL.warn);
+    org.mozdev.compactHeader.debug.log("orient failed " + targetPos + " " + targetHeader,
+      org.mozdev.compactHeader.debug.LOGLEVEL.warn);
     return null;
   }
 
@@ -144,7 +144,8 @@ org.mozdev.compactHeader.toolbar = function() {
           hdrToolbar.currentSet = currentSet;
         }
       }
-    }
+    org.mozdev.compactHeader.debug.log("fillToolboxPalette stop");
+    };
 
     var buttonsRemove = ["hdrForwardButton", "hdrArchiveButton",
                          "hdrReplyToSenderButton"];//, "hdrReplyButton",
@@ -521,7 +522,8 @@ org.mozdev.compactHeader.toolbar = function() {
 
     var hdrViewToolbox = document.getElementById("header-view-toolbox");
     if (!hdrViewToolbox) {
-      org.mozdev.compactHeader.debug.log("no header-view-toolbox!", LOGLEVEL.warn);
+      org.mozdev.compactHeader.debug.log("no header-view-toolbox!",
+        org.mozdev.compactHeader.debug.LOGLEVEL.warn);
       return;
     }
 
