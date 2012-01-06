@@ -691,7 +691,8 @@ org.mozdev.compactHeader.pane = function() {
     myPrefObserver.register();
     org.mozdev.compactHeader.debug.log("register PrefObserver");
     org.mozdev.compactHeader.debug.log("after register");
-    if (MessageDisplayWidget) {
+    if ((typeof MessageDisplayWidget != "undefined") && MessageDisplayWidget) {
+      org.mozdev.compactHeader.debug.log("coheInitializeOverlay found MessageDisplayWidget");
       var oldUpdateActiveMessagePane = MessageDisplayWidget.prototype._updateActiveMessagePane;
       MessageDisplayWidget.prototype._updateActiveMessagePane = function() {
         org.mozdev.compactHeader.debug.log("_updateActiveMessagePane start");
@@ -700,8 +701,24 @@ org.mozdev.compactHeader.pane = function() {
         org.mozdev.compactHeader.debug.log("_updateActiveMessagePane stop");
       };
     }
+    else {
+      org.mozdev.compactHeader.debug.log("coheInitializeOverlay didn't find MessageDisplayWidget");
+    }
+
+    var multiMessage = document.getElementById("multimessage");
+    if (multiMessage){
+      org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
+      multiMessage.addEventListener("DOMContentLoaded", multiMessageLoaded, true);
+    }
+
     org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
   };
+
+  function multiMessageLoaded() {
+    org.mozdev.compactHeader.debug.log("multiMessageLoaded start");
+    org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+    org.mozdev.compactHeader.debug.log("multiMessageLoaded stop");
+  }
 
   var coheUninstallObserver = {
     _uninstall : false,
