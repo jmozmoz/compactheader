@@ -50,7 +50,7 @@ Cu.import('resource://mozmill/modules/controller.js', controller);
 // The WindowHelper module
 var WindowHelper;
 
-var folder;
+var folder1, folder2;
 
 function setupModule(module) {
   let fdh = collector.getModule('folder-display-helpers');
@@ -64,7 +64,7 @@ function setupModule(module) {
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
-  folder = create_folder("MessageWindowB");
+  folder1 = create_folder("MessageWindowB");
 
   // create a message that has the interesting headers that commonly
   // show up in the message header pane for testing
@@ -77,12 +77,49 @@ function setupModule(module) {
                               "Bcc": "Richard Roe <richard.roe@momo.invalid>"
                             }});
 
-  add_message_to_folder(folder, msg);
+  add_message_to_folder(folder1, msg);
 
   // create a message that has boring headers to be able to switch to and
   // back from, to force the more button to collapse again.
   msg = create_message();
-  add_message_to_folder(folder, msg);
+  add_message_to_folder(folder1, msg);
+
+  folder2 = create_folder("ThreadTest");
+
+  thread1 = create_thread(3);
+  add_sets_to_folders([folder2], [thread1]);
+}
+
+
+/**
+ *  Test header pane toolbar position
+ */
+function test_button_visibility() {
+  be_in_folder(folder2);
+  select_click_row(0);
+  set_and_assert_toolbox_position(mc, 'right');
+  restore_and_check_default_buttons(mc);
+  let ctc = open_header_pane_toolbar_customization(mc);
+  let palette = ctc.e("palette-box");
+
+  let button1 = ctc.e("wrapper-CompactHeader_button-starMessages");
+  let button2 = mc.e("wrapper-hdrJunkButton");
+  drag_n_drop_element(button1, ctc.window, button2, mc.window, 0.25, 0.0, palette);
+  close_header_pane_toolbar_customization(ctc);
+
+  button1 = mc.e("CompactHeader_button-starMessages");
+  assert_false(button1.hasAttribute("disabled"));
+
+  make_display_threaded();
+  toggle_thread_row(0);
+
+  assert_true(button1.hasAttribute("disabled"));
+  assert_equals(button1.getAttribute("disabled"), "true");
+
+  select_message_in_folder(folder1, 0, mc);
+  assert_false(button1.hasAttribute("disabled"));
+
+  restore_and_check_default_buttons(mc);
 }
 
 
@@ -91,7 +128,7 @@ function setupModule(module) {
  *  does not break the get messages button in main toolbar
  */
 function test_get_msg_button_customize_header_toolbar(){
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
 
@@ -127,7 +164,7 @@ function test_get_msg_button_customize_header_toolbar(){
  */
 function test_customize_header_toolbar_check_default()
 {
-  let curMessage = select_message_in_folder(folder, 0, mc);
+  let curMessage = select_message_in_folder(folder1, 0, mc);
   let hdrToolbar = mc.eid("header-view-toolbar").node;
   let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   expand_and_assert_header(mc);
@@ -164,12 +201,12 @@ function test_customize_header_toolbar_check_default()
   close_window(msgc);
 }
 
-///**
-//*  Test that other action button has icon
-//*/
+/**
+*  Test that other action button has icon
+*/
 function test_other_actions_icon()
 {
-  let curMessage = select_message_in_folder(folder, 0, mc);
+  let curMessage = select_message_in_folder(folder1, 0, mc);
 
   // Restore the default buttons to get defined starting conditions.
   expand_and_assert_header(mc);
@@ -183,12 +220,12 @@ function test_other_actions_icon()
 
 }
 
-///**
-// *  Test header pane toolbar customization: Reorder buttons
-// */
+/**
+ *  Test header pane toolbar customization: Reorder buttons
+ */
 function test_customize_header_toolbar_reorder_buttons()
 {
-  let curMessage = select_message_in_folder(folder, 0, mc);
+  let curMessage = select_message_in_folder(folder1, 0, mc);
 
   // Restore the default buttons to get defined starting conditions.
   expand_and_assert_header(mc);
@@ -241,7 +278,7 @@ function test_customize_header_toolbar_reorder_buttons()
 // */
 function test_customize_header_toolbar_separate_window()
 {
-  let curMessage = select_message_in_folder(folder, 0, mc);
+  let curMessage = select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
 
@@ -291,7 +328,7 @@ function test_customize_header_toolbar_separate_window()
 
   mc = open3PaneWindow();
   abwc.window.close();
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
 
   // Check, if the buttons in the mail3pane window are the correct ones.
   let hdrToolbar = mc.eid("header-view-toolbar").node;
@@ -320,7 +357,7 @@ function test_customize_header_toolbar_remove_buttons(){
   // at the end.
   var lCurrentset;
 
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
 
@@ -344,7 +381,7 @@ function test_customize_header_toolbar_remove_buttons(){
       "__empty");
 
   // Move to the next message and check again.
-  let curMessage = select_message_in_folder(folder, 1, mc);
+  let curMessage = select_message_in_folder(folder1, 1, mc);
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet), "__empty");
   assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
       "__empty");
@@ -370,7 +407,7 @@ function test_customize_header_toolbar_remove_buttons(){
   close3PaneWindow();
   mc = open3PaneWindow();
   abwc.window.close();
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
 
   let toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet), "__empty");
@@ -403,7 +440,7 @@ function test_customize_header_toolbar_remove_buttons(){
  */
 function test_customize_header_toolbar_add_all_buttons(){
 
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
 
@@ -500,7 +537,7 @@ function test_customize_header_toolbar_add_all_buttons(){
 
   // Reopen customization dialog and
   // all buttons are still in the palette
-  select_message_in_folder(folder, 1, mc);
+  select_message_in_folder(folder1, 1, mc);
   let ctc = open_header_pane_toolbar_customization(mc);
 
   let backButtons = new Array;
@@ -526,7 +563,7 @@ function test_customize_header_toolbar_add_all_buttons(){
  *  Test header pane toolbar customization dialog layout
  */
 function test_customize_header_toolbar_dialog_style(){
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
 
@@ -565,7 +602,7 @@ function test_customize_header_toolbar_dialog_style(){
  *  Test header pane toolbar customization dialog for button style changes
  */
 function test_customize_header_toolbar_change_button_style(){
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
 
@@ -606,8 +643,11 @@ function test_customize_header_toolbar_change_button_style(){
   subtest_buttons_style("-moz-box", "none");
 }
 
+/**
+ *  Test header pane toolbar position
+ */
 function test_set_toolbar_position() {
-  select_message_in_folder(folder, 0, mc);
+  select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   restore_and_check_default_buttons(mc);
 

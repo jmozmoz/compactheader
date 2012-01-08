@@ -12,24 +12,28 @@
 <script type="application/javascript" src="chrome://CompactHeader/content/buttonsOverlay.js"/>
 <script type="application/javascript" src="chrome://CompactHeader/content/toolbar.js"/>
 
+<commandset id="mailToolbarItems">
+  <command id="CompactHeader_button_singlemessage"/>
+</commandset>
+
+
 <!--ThunderBird-->
 <toolbarpalette id="MailToolbarPalette">
 
-<!--
-<script type="application/x-javascript" src="chrome://CompactHeader/content/buttons.js"/>
--->
 
 <toolbarbutton
 	class="toolbarbutton-1"
 	id="CompactHeader_button-starMessages"
 	label="&markStarredCmd.label;"
 	tooltiptext="&markStarredCmd.label;"
+  observes="CompactHeader_button_singlemessage"
 	oncommand="goDoCommand('cmd_markAsFlagged');" />
 <toolbarbutton
   class="toolbarbutton-1"
   id="CompactHeader_button-dispMUA"
   image="chrome://dispmua/content/48x48/thunderbird-windows.png"
   label="display MUA"
+  observes="CompactHeader_button_singlemessage"
   oncommand="dispMUA.infopopup();">
   <observes element="dispMUAbroadcast" attribute="src"
             onbroadcast="org.mozdev.compactHeader.toolbar.onChangeDispMUAicon();"/>

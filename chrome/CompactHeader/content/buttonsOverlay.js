@@ -78,7 +78,36 @@ org.mozdev.compactHeader.buttons = function() {
       }
     },
   }
+
+  pub.singlemessage_controller = {
+    onLoad:function(e) {
+      top.controllers.appendController(this);
+    },
+
+    supportsCommand: function(command) {
+      switch(command) {
+      case "CompactHeader_button_singlemessage":
+          return true;
+      }
+      return false;
+    },
+
+    isCommandEnabled: function(command) {
+      switch (command) {
+      case "CompactHeader_button_singlemessage":
+          var tabmail = document.getElementById("tabmail");
+          return ((tabmail.selectedTab.mode.name == "folder") && (gFolderDisplay.selectedCount == 1)) || (tabmail.selectedTab.mode.name == "message");
+      }
+      return false;
+    },
+
+    doCommand: function(command) { },
+
+    onEvent: function(event) { }
+  };
+
   return pub;
 }();
 
 org.mozdev.compactHeader.buttons.init();
+window.addEventListener("load", function(e) { org.mozdev.compactHeader.buttons.singlemessage_controller.onLoad(e); }, false);
