@@ -95,6 +95,14 @@ function setupModule(module) {
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
+  // Get rid of possibly showing up lightning import wizard
+  // Get rid of possibly showing up lightning import wizard
+  let wizard = Services.wm.getMostRecentWindow("Calendar:MigrationWizard");
+  if (wizard) {
+    close_window(wizard);
+    mc = open3PaneWindow();
+  }
+
   folder1 = create_folder("MessageWindowC");
   folder2 = create_folder("MessageWindowD");
 
