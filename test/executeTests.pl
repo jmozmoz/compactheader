@@ -211,7 +211,7 @@ foreach my $pid (@children) {
   }
 
   my @compatibility_apps = (
-    "../../ftp//$ostype-$hosttype-$version/lightning.xpi",
+    glob("../../ftp//$ostype-$hosttype-$version/lightning*.xpi"),
     "../../$dispMUAfile"
   );
   my $comp_apps = join(",", @compatibility_apps);

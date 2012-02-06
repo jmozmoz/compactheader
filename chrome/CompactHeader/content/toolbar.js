@@ -550,7 +550,7 @@ org.mozdev.compactHeader.toolbar = function() {
       multiBBox.removeAttribute("collapsed");
     }
 
-    if (singleMessage.getAttribute("hidden")) {
+    if (singleMessage && singleMessage.getAttribute("hidden")) {
       // The multi message view is visible
       org.mozdev.compactHeader.debug.log("move to multibuttonhbox");
       var targetToolbox = getToolbarTarget(targetPos, "");

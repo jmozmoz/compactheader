@@ -96,7 +96,10 @@ org.mozdev.compactHeader.buttons = function() {
       switch (command) {
       case "CompactHeader_button_singlemessage":
           var tabmail = document.getElementById("tabmail");
-          return ((tabmail.selectedTab.mode.name == "folder") && (gFolderDisplay.selectedCount == 1)) || (tabmail.selectedTab.mode.name == "message");
+          return (tabmail == null) ||
+                 ((tabmail.selectedTab.mode.name == "folder") &&
+                  (gFolderDisplay.selectedCount == 1)
+                  ) || (tabmail.selectedTab.mode.name == "message");
       }
       return false;
     },

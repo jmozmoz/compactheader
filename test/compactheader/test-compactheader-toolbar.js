@@ -102,33 +102,34 @@ function setupModule(module) {
  *  Test header pane toolbar position
  */
 function test_button_visibility() {
-  be_in_folder(folder2);
-  select_click_row(0);
-  set_and_assert_toolbox_position(mc, 'right');
-  restore_and_check_default_buttons(mc);
-  let ctc = open_header_pane_toolbar_customization(mc);
-  let palette = ctc.e("palette-box");
+  if (canMoveToolbox()) {
+    be_in_folder(folder2);
+    select_click_row(0);
+    set_and_assert_toolbox_position(mc, 'right');
+    restore_and_check_default_buttons(mc);
+    let ctc = open_header_pane_toolbar_customization(mc);
+    let palette = ctc.e("palette-box");
 
-  let button1 = ctc.e("wrapper-CompactHeader_button-starMessages");
-  let button2 = mc.e("wrapper-hdrJunkButton");
-  drag_n_drop_element(button1, ctc.window, button2, mc.window, 0.25, 0.0, palette);
-  close_header_pane_toolbar_customization(ctc);
+    let button1 = ctc.e("wrapper-CompactHeader_button-starMessages");
+    let button2 = mc.e("wrapper-hdrJunkButton");
+    drag_n_drop_element(button1, ctc.window, button2, mc.window, 0.25, 0.0, palette);
+    close_header_pane_toolbar_customization(ctc);
 
-  button1 = mc.e("CompactHeader_button-starMessages");
-  assert_false(button1.hasAttribute("disabled"));
+    button1 = mc.e("CompactHeader_button-starMessages");
+    assert_false(button1.hasAttribute("disabled"));
 
-  make_display_threaded();
-  toggle_thread_row(0);
+    make_display_threaded();
+    toggle_thread_row(0);
 
-  assert_true(button1.hasAttribute("disabled"));
-  assert_equals(button1.getAttribute("disabled"), "true");
+    assert_true(button1.hasAttribute("disabled"));
+    assert_equals(button1.getAttribute("disabled"), "true");
 
-  select_message_in_folder(folder1, 0, mc);
-  assert_false(button1.hasAttribute("disabled"));
+    select_message_in_folder(folder1, 0, mc);
+    assert_false(button1.hasAttribute("disabled"));
 
-  restore_and_check_default_buttons(mc);
+    restore_and_check_default_buttons(mc);
+  }
 }
-
 
 /**
  *  Make sure that opening the header toolbar customization dialog
