@@ -132,6 +132,10 @@ org.mozdev.compactHeader.pane = function() {
     var names = {};
     var numAddresses =  0;
 
+    let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
+        "anonid", "more");
+    let moreTooltip = moreButton.getAttribute("tooltiptext");
+
     var msgHeaderParser = Components.classes["@mozilla.org/messenger/headerparser;1"]
                                     .getService(Components.interfaces.nsIMsgHeaderParser);
     numAddresses = msgHeaderParser.parseHeadersWithArray(emailAddresses, addresses, names, fullNames);
@@ -151,6 +155,19 @@ org.mozdev.compactHeader.pane = function() {
       } else {
         address.displayName = names.value[index];
       }
+      org.mozdev.compactHeader.debug.log("0: " + address.fullAddress);
+      org.mozdev.compactHeader.debug.log("0: " + addressType);
+      if (address.fullAddress != "" &&
+           (addressType == "to" || addressType == "cc" || addressType == "bcc")) {
+        if (moreTooltip == "") {
+          moreTooltip = address.fullAddress;
+          org.mozdev.compactHeader.debug.log("1: " + address.fullAddress);
+        } else {
+          moreTooltip = moreTooltip + ", " + address.fullAddress;
+          org.mozdev.compactHeader.debug.log("2: " + address.fullAddress);
+        }
+      }
+//      window.alert(address);
       if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.addAddressView == 'function')) {
         headerEntry.enclosingBox.addAddressView(address);
       } else {
@@ -158,6 +175,7 @@ org.mozdev.compactHeader.pane = function() {
       }
       index++;
     }
+    moreButton.setAttribute("tooltiptext", moreTooltip);
 
     if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.buildViews == 'function'))
       headerEntry.enclosingBox.buildViews();
@@ -179,6 +197,33 @@ org.mozdev.compactHeader.pane = function() {
       for (index = 0; index < gCoheCollapsedHeader2LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader2LListLongAddresses[index].name] =
           new createHeaderEntry('CompactHeader_collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
+      }
+      let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
+        "anonid", "more");
+      let moreButtonTo = document.getAnonymousElementByAttribute(document.getElementById("expandedtoBox"),
+          "anonid", "more");
+      let moreButtonCC = document.getAnonymousElementByAttribute(document.getElementById("expandedccBox"),
+          "anonid", "more");
+      let moreButtonBCC = document.getAnonymousElementByAttribute(document.getElementById("expandedbccBox"),
+          "anonid", "more");
+
+      if (moreButton) {
+        let oldToggleWrap = moreButton.parentNode.toggleWrap;
+        moreButton.parentNode.toggleWrap = function() {
+          pub.coheToggleHeaderView();
+          if (!moreButtonTo.hasAttribute("collapsed")) {
+            moreButtonTo.click();
+            org.mozdev.compactHeader.debug.log("toggle To");
+          }
+          if (!moreButtonCC.hasAttribute("collapsed")) {
+            moreButtonCC.click();
+            org.mozdev.compactHeader.debug.log("toggle cc");
+          }
+          if (!moreButtonBCC.hasAttribute("collapsed")) {
+            moreButtonBCC.click();
+            org.mozdev.compactHeader.debug.log("toggle bcc");
+          }
+        };
       }
     } else {
       for (index = 0; index < gCoheCollapsedHeader1LListLongAddresses.length; index++) {
@@ -255,13 +300,14 @@ org.mozdev.compactHeader.pane = function() {
 
     org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 3");
 
-    coheToggleHeaderContent();
-
-    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 4");
-
     org.mozdev.compactHeader.toolbar.setButtonStyle();
     org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
     org.mozdev.compactHeader.toolbar.dispMUACheck();
+
+    org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane 4");
+
+    coheToggleHeaderContent();
+
     org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane stop");
   }
 
@@ -383,6 +429,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   function coheToggleHeaderContent() {
+    org.mozdev.compactHeader.debug.log("coheToggleHeaderContent start");
     var strHideLabel = document.getElementById("CompactHeader_CoheHideDetailsLabel").value;
     var strShowLabel = document.getElementById("CompactHeader_CoheShowDetailsLabel").value;
     var strLabel;
@@ -433,7 +480,6 @@ org.mozdev.compactHeader.pane = function() {
     } else {
       strLabel = strHideLabel;
     }
-
     if (document.getElementById("CompactHeader_hideDetailsMenu")) {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
@@ -443,6 +489,7 @@ org.mozdev.compactHeader.pane = function() {
     if (document.getElementById("CompactHeader_hideDetailsMenu")) {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
+    org.mozdev.compactHeader.debug.log("coheToggleHeaderContent stop");
   }
 
   // default method for updating a header value into a header entry
@@ -476,6 +523,10 @@ org.mozdev.compactHeader.pane = function() {
     // problem that attachment-splitter causes if it's moved high enough to
     // affect the header box:
     document.getElementById('msgHeaderView').removeAttribute('height');
+
+    let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
+        "anonid", "more");
+    moreButton.setAttribute("tooltiptext", "");
 
     // iterate over each header we received and see if we have a matching entry
     // in each header view table...

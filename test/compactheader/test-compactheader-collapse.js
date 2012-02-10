@@ -108,6 +108,45 @@ function setupModule(module) {
   add_message_to_folder(folder1, msg);
 }
 
+function test_wide_layout_and_compact() {
+  set_pane_layout(kWideMailLayout);
+  assert_pane_layout(kWideMailLayout);
+  let abwc = openAddressBook();
+  // The 3pane window is closed and opened again.
+  close3PaneWindow();
+
+  mc = open3PaneWindow();
+  abwc.window.close();
+
+  select_message_in_folder(folder1, 0, mc);
+  collapse_and_assert_header(mc);
+
+  let largeDispMUAIcon = mc.e("CompactHeader_dispMUAiconExp");
+  let twoLineDispMUAIcon = mc.e("CompactHeader_dispMUAicon2line");
+  let oneLineDispMUAIcon = mc.e("CompactHeader_dispMUAiconCompact");
+
+  let orignalDispMUA = mc.e("dispMUA");
+
+  if (orignalDispMUA == null) {
+    assert_equals(oneLineDispMUAIcon.getAttribute("collapsed"), "true");
+    assert_equals(twoLineDispMUAIcon.getAttribute("collapsed"), "true");
+  }
+
+  expand_and_assert_header(mc);
+  if (orignalDispMUA == null) {
+    assert_equals(oneLineDispMUAIcon.getAttribute("collapsed"), "true");
+    assert_equals(twoLineDispMUAIcon.getAttribute("collapsed"), "true");
+  }
+
+  set_pane_layout(kClassicMailLayout);
+  assert_pane_layout(kClassicMailLayout);
+  let abwc = openAddressBook();
+  // The 3pane window is closed and opened again.
+  close3PaneWindow();
+
+  mc = open3PaneWindow();
+  abwc.window.close();
+}
 function test_toggle_header_view_twoline(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
@@ -223,20 +262,3 @@ function test_neighbours_of_header_view_toolbox(){
   assert_equals(oldPreviousSibling, newPreviousSibling);
   assert_equals(oldNextSibling, newNextSibling);
 }
-
-function set_preferences_twoline(aController) {
-  let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
-  if (!checkboxCompactTwolineView.node.getAttribute("checked")) {
-    aController.click(checkboxCompactTwolineView);
-  }
-  close_preferences_dialog(aController);
-}
-
-function set_preferences_oneline(aController) {
-  let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
-  if (checkboxCompactTwolineView.node.getAttribute("checked")) {
-    aController.click(checkboxCompactTwolineView);
-  }
-  close_preferences_dialog(aController);
-}
-

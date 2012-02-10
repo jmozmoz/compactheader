@@ -356,7 +356,7 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("onChangeDispMUAicon stop");
   };
 
-  hideDispMUABox = function(dispMUABox) {
+  function hideDispMUABox(dispMUABox) {
     org.mozdev.compactHeader.debug.log("hideDispMUABox start");
     dispMUABox.setAttribute("collapsed", "true"); // hide original
     var dispMUAicon = document.getElementById("dispMUAicon");
@@ -380,7 +380,7 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("hideDispMUABox stop");
   };
 
-  removeButtonDispMUA = function() {
+  function removeButtonDispMUA() {
     org.mozdev.compactHeader.debug.log("removeButtonDispMUA start");
     if (!document.getElementById("dispMUA")) {
       var button = document.getElementById("CompactHeader_button-dispMUA");
@@ -507,8 +507,15 @@ org.mozdev.compactHeader.toolbar = function() {
     org.mozdev.compactHeader.debug.log("onDoCustomizationHeaderViewToolbox done");
   };
 
+  var setToolboxRunning = false;
 
   pub.setCurrentToolboxPosition = function(aHeaderViewMode) {
+    if (setToolboxRunning) {
+      org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition is running");
+      return;
+    }
+    setToolboxRunning = true;
+
     org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition start");
 
     var singleMessage = document.getElementById("singlemessage");
@@ -520,10 +527,13 @@ org.mozdev.compactHeader.toolbar = function() {
       multiBBox = multiMessage.contentDocument.getElementById("header-view-toolbox");
     }
 
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition mid 0");
+
     var hdrViewToolbox = document.getElementById("header-view-toolbox");
     if (!hdrViewToolbox) {
       org.mozdev.compactHeader.debug.log("no header-view-toolbox!",
         org.mozdev.compactHeader.debug.LOGLEVEL.warn);
+      setToolboxRunning = false;
       return;
     }
 
@@ -535,6 +545,7 @@ org.mozdev.compactHeader.toolbar = function() {
         multiBBox.setAttribute("collapsed", "true");
       }
       org.mozdev.compactHeader.debug.log("none stop");
+      setToolboxRunning = false;
       return;
     }
     else {
@@ -575,9 +586,11 @@ org.mozdev.compactHeader.toolbar = function() {
       org.mozdev.compactHeader.debug.log("move to singlemessage");
       var targetToolbox;
       if (aHeaderViewMode) {
+        org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition aHeaderViewMode");
         targetToolbox = getToolbarTarget(targetPos, "compact");
       }
       else {
+        org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition no aHeaderViewMode");
         targetToolbox = getToolbarTarget(targetPos, "expanded");
       }
       if (targetToolbox) {
@@ -585,6 +598,7 @@ org.mozdev.compactHeader.toolbar = function() {
       }
     }
     org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition stop");
+    setToolboxRunning = false;
   }
 
 

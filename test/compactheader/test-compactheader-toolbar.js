@@ -70,7 +70,7 @@ function setupModule(module) {
     close_window(wizard);
     mc = open3PaneWindow();
   }
-  
+
   folder1 = create_folder("MessageWindowB");
 
   // create a message that has the interesting headers that commonly
@@ -513,7 +513,7 @@ function test_customize_header_toolbar_add_all_buttons(){
   // Move the buttons back to palette
   let ctc = open_header_pane_toolbar_customization(mc);
   let target = ctc.e("palette-box");
-  for (let i=0; i<wrappedButtons.length; i++) {
+  for (let i=wrappedButtons.length-1; i>= 0; i--) {
     let button = mc.e(wrappedButtons[i]);
     drag_n_drop_element(button, mc.window, target, ctc.window, 0.5, 0.5, toolbar);
   }
@@ -531,7 +531,7 @@ function test_customize_header_toolbar_add_all_buttons(){
   let backButtons = new Array;
   let tmp = ctc.window.document.getElementById("palette-box").
     getElementsByTagName("toolbarpaletteitem");
-  for (let i=0; i<tmp.length; i++) {
+  for (let i=tmp.length-1; i>=0; i--) {
     let type = tmp[i].getAttribute("type");
     if ((type != "separator") &&
         (type != "spring") &&
@@ -551,7 +551,7 @@ function test_customize_header_toolbar_add_all_buttons(){
   let backButtons = new Array;
   let tmp = ctc.window.document.getElementById("palette-box").
     getElementsByTagName("toolbarpaletteitem");
-  for (let i=0; i<tmp.length; i++) {
+  for (let i=tmp.length-1; i>=0; i--) {
     let type = tmp[i].getAttribute("type");
     if ((type != "separator") &&
         (type != "spring") &&

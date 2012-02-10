@@ -83,6 +83,10 @@ function installInto(module) {
   module.set_and_assert_toolbox_position = set_and_assert_toolbox_position;
   module.subtest_change_oneline = subtest_change_oneline;
   module.subtest_change_twoline = subtest_change_twoline;
+  module.set_preferences_twoline = set_preferences_twoline;
+  module.set_preferences_oneline = set_preferences_oneline;
+  module.assert_collapsed = assert_collapsed;
+  module.assert_expanded = assert_expanded;
 }
 
 function reopen_3pane_window() {
@@ -175,6 +179,12 @@ function collapse_and_assert_header(aController) {
   if (collapsedHeaderView.getAttribute("collapsed")) {
     aController.click(aController.eid("CompactHeader_hideDetailsButton"));
   }
+  assert_collapsed(aController);
+}
+
+function assert_collapsed(aController) {
+  let collapsedHeaderView = aController.e("CompactHeader_collapsedHeaderView");
+  let expandedHeaderView = aController.e("expandedHeaderView");
   folderDisplayHelper.assert_true(!collapsedHeaderView.hasAttribute("collapsed"));
   folderDisplayHelper.assert_true(expandedHeaderView.getAttribute("collapsed"));
 }
@@ -186,6 +196,12 @@ function expand_and_assert_header(aController) {
       !collapsedHeaderView.getAttribute("collapsed")) {
     aController.click(aController.eid("CompactHeader_showDetailsButton"));
   }
+  assert_expanded(aController);
+}
+
+function assert_expanded(aController) {
+  let collapsedHeaderView = aController.e("CompactHeader_collapsedHeaderView");
+  let expandedHeaderView = aController.e("expandedHeaderView");
   folderDisplayHelper.assert_true(collapsedHeaderView.getAttribute("collapsed"));
   folderDisplayHelper.assert_true(!expandedHeaderView.hasAttribute("collapsed"));
 }
@@ -379,6 +395,22 @@ function subtest_change_twoline(aController) {
 
   if (!lineModeNode.hasAttribute("checked")) {
     aController.click(lineMode);
+  }
+  close_preferences_dialog(aController);
+}
+
+function set_preferences_twoline(aController) {
+  let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
+  if (!checkboxCompactTwolineView.node.getAttribute("checked")) {
+    aController.click(checkboxCompactTwolineView);
+  }
+  close_preferences_dialog(aController);
+}
+
+function set_preferences_oneline(aController) {
+  let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
+  if (checkboxCompactTwolineView.node.getAttribute("checked")) {
+    aController.click(checkboxCompactTwolineView);
   }
   close_preferences_dialog(aController);
 }

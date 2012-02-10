@@ -210,6 +210,8 @@ foreach my $pid (@children) {
     $python = "python"
   }
 
+  # We have own tests for this, so delete it
+  unlink("message-header/test-header-toolbar.js");
   my @compatibility_apps = (
     glob("../../ftp//$ostype-$hosttype-$version/lightning*.xpi"),
     "../../$dispMUAfile"
@@ -217,6 +219,7 @@ foreach my $pid (@children) {
   my $comp_apps = join(",", @compatibility_apps);
 #    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1`;
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1`;
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
