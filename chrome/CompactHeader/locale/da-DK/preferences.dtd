@@ -1,4 +1,4 @@
-<!-- ***** BEGIN LICENSE BLOCK *****
+﻿<!-- ***** BEGIN LICENSE BLOCK *****
  Version: MPL 1.1/GPL 2.0/LGPL 2.1
 
  The contents of this file are subject to the Mozilla Public License Version
@@ -34,15 +34,16 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** -->
-
+ 
 <!ENTITY CompactHeader_dialog.title "CompactHeader Indstillinger">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link i feed-emner">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Vis kun adresse">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flade knapper">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position of Header Toolbar">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "right">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "top">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "left">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position værktøjslinje i meddelelseshovedet">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "højre">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "øverst">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "venstre">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "usynlig">
+
 
