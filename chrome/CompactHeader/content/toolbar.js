@@ -508,8 +508,11 @@ org.mozdev.compactHeader.toolbar = function() {
   };
 
   var setToolboxRunning = false;
+  var currentToolboxPosition;
+  var currentToolboxType;
 
   pub.setCurrentToolboxPosition = function(aHeaderViewMode) {
+    var targetType = "single";
     if (setToolboxRunning) {
       org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition is running");
       return;
@@ -522,6 +525,24 @@ org.mozdev.compactHeader.toolbar = function() {
     var targetPos = cohePrefBranch.getCharPref("toolbox.position");
     var multiMessage = document.getElementById("multimessage");
     var multiBBox;
+
+    if (singleMessage && singleMessage.getAttribute("hidden")) {
+      targetType = "multi";
+    }
+
+    if ((currentToolboxPosition == targetPos) &&
+        (currentToolboxType == targetType) &&
+        (targetType == "single")) {
+      org.mozdev.compactHeader.debug.log("curPos: " + currentToolboxPosition + " targetPos: " + targetPos);
+      org.mozdev.compactHeader.debug.log("curType: " + currentToolboxType + " targetType: " + targetType);
+      org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition does not need to change position/type");
+      setToolboxRunning = false;
+      return;
+    }
+
+    currentToolboxPosition = targetPos;
+    currentToolboxType = targetType;
+
     if (multiMessage){
       org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
       multiBBox = multiMessage.contentDocument.getElementById("header-view-toolbox");

@@ -530,8 +530,18 @@ org.mozdev.compactHeader.pane = function() {
 
     // iterate over each header we received and see if we have a matching entry
     // in each header view table...
-    for (var headerName in currentHeaderData)
+    var keys = [];
+    for (var key in currentHeaderData) {
+      if (currentHeaderData.hasOwnProperty(key)) {
+        keys.push(key);
+      }
+    }
+
+    keys.sort();
+    keys.reverse();
+    for (let i=0; i<keys.length; i++)
     {
+      let headerName = keys[i];
       var headerField = currentHeaderData[headerName];
       var headerEntry = null;
 

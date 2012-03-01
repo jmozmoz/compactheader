@@ -106,9 +106,21 @@ function setupModule(module) {
     }});
 
   add_message_to_folder(folder1, msg);
+
+  let msg = create_message({
+    subject: "This is a short subject.",
+    to: [["T Toe", "t.toe@t.invalid"]],
+    clobberHeaders: {
+      "Bcc": "R Roe <r.roe@r.invalid>",
+      "cc": "S Soe <s.soe@s.invalid>",
+    },
+    });
+
+  add_message_to_folder(folder1, msg);
+
 }
 
-function test_wide_layout_and_compact() {
+function notest_wide_layout_and_compact() {
   set_pane_layout(kWideMailLayout);
   assert_pane_layout(kWideMailLayout);
   let abwc = openAddressBook();
@@ -147,7 +159,7 @@ function test_wide_layout_and_compact() {
   mc = open3PaneWindow();
   abwc.window.close();
 }
-function test_toggle_header_view_twoline(){
+function notest_toggle_header_view_twoline(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
@@ -160,7 +172,7 @@ function test_toggle_header_view_twoline(){
   collapse_and_assert_header(mc);
 }
 
-function test_toggle_header_view_oneline(){
+function notest_toggle_header_view_oneline(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_oneline);
   mc.sleep(10);
@@ -174,7 +186,7 @@ function test_toggle_header_view_oneline(){
 }
 
 
-function test_address_type_format(){
+function notest_address_type_format(){
   select_message_in_folder(folder1, 1, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
@@ -210,7 +222,7 @@ function test_address_type_format(){
   }
 }
 
-function test_date_format_collapsed(){
+function notest_date_format_collapsed(){
   let msg = create_message();
   add_message_to_folder(folder1, msg);
   select_message_in_folder(folder1, -1, mc);
@@ -228,7 +240,7 @@ function test_date_format_collapsed(){
   assert_equals(expandedValue, mc.e("CompactHeader_collapsed1LdateBox").textContent);
 }
 
-function test_neighbours_of_header_view_toolbox(){
+function notest_neighbours_of_header_view_toolbox(){
   expand_and_assert_header(mc);
   mc = reopen_3pane_window();
 
@@ -261,4 +273,24 @@ function test_neighbours_of_header_view_toolbox(){
 
   assert_equals(oldPreviousSibling, newPreviousSibling);
   assert_equals(oldNextSibling, newNextSibling);
+}
+
+function test_address_type_order(){
+  select_message_in_folder(folder1, 2, mc);
+  open_preferences_dialog(mc, set_preferences_twoline);
+  mc.sleep(10);
+  collapse_and_assert_header(mc);
+  select_message_in_folder(folder1, 2, mc);
+  
+  let toCcBccDescription = mc.a('CompactHeader_collapsed2LtoCcBccBox', {class: "headerValue"});
+  let addrs = toCcBccDescription.getElementsByTagName('mail-emailaddress');
+
+  let currentAddressType = "to";
+  for (let i=0; i<addrs.length; i++) {
+    let addressType = addrs[i].getAttribute("addressType");
+    assert_true((addressType == "to") || (addressType == "cc") || (addressType == "bcc"),
+      "wrong address type");
+    assert_true(addressType <= currentAddressType, "wrong address type order");
+    currentAddressType = addressType;
+  }
 }
