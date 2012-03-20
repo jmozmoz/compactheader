@@ -403,6 +403,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   pub.coheToggleHeaderView = function() {
+    org.mozdev.compactHeader.debug.log("coheToggleHeaderView start");
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
 
     let deck = document.getElementById('msgHeaderViewDeck');
@@ -415,7 +416,7 @@ org.mozdev.compactHeader.pane = function() {
       coheUpdateMessageHeaders();
     } else {
       deck.selectedPanel = document.getElementById("expandedHeaderView");
-      ClearHeaderView(gExpandedHeaderView);
+      //ClearHeaderView(gExpandedHeaderView);
       UpdateExpandedMessageHeaders();
       //gDBView.reloadMessage();
     }
@@ -426,6 +427,7 @@ org.mozdev.compactHeader.pane = function() {
     syncGridColumnWidths();
 
     coheToggleHeaderContent();
+    org.mozdev.compactHeader.debug.log("coheToggleHeaderView stop");
   }
 
   function coheToggleHeaderContent() {
