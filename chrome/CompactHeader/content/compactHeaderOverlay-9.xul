@@ -109,7 +109,7 @@
                    command="cmd_viewNormalHeader"/>
                 </menupopup>
               </menu>
-              <menuseparator id="otherActionPopupAfterViewSource"/>
+              <menuseparator id="CompactHeader_otherActionPopupAfterViewSource"/>
               <menuitem id="CompactHeader_hideDetailsMenu"
                         label="&CompactHeader_hideDetailsButton.label;"
                         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
