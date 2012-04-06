@@ -40,7 +40,7 @@ var MODULE_NAME = 'test-compactheader-toolbar';
 var RELATIVE_ROOT = '../shared-modules';
 var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
                        'address-book-helpers', 'mouse-event-helpers',
-                       'compactheader-helpers'];
+                       'dom-helpers', 'compactheader-helpers'];
 
 var elib = {};
 Cu.import('resource://mozmill/modules/elementslib.js', elib);
@@ -63,6 +63,8 @@ function setupModule(module) {
   meh.installInto(module);
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
+  let domh = collector.getModule('dom-helpers');
+  domh.installInto(module);
 
   // Get rid of possibly showing up lightning import wizard
   let wizard = Services.wm.getMostRecentWindow("Calendar:MigrationWizard");
@@ -652,6 +654,24 @@ function test_customize_header_toolbar_change_button_style(){
 }
 
 /**
+ *  Test header pane toolbar visible after toggling
+ */
+function test_visible_toolbar() {
+  select_message_in_folder(folder1, 1, mc);
+  expand_and_assert_header(mc);
+  set_and_assert_toolbox_position(mc, 'top');
+  let toolbar = mc.eid("header-view-toolbar").node;
+  assert_equals(isVisible(toolbar), true);
+  open_preferences_dialog(mc, subtest_change_twoline);
+  collapse_and_assert_header(mc);
+  let toolbar = mc.eid("header-view-toolbar").node;
+  assert_equals(isVisible(toolbar), true);
+  expand_and_assert_header(mc);
+  let toolbar = mc.eid("header-view-toolbar").node;
+  assert_equals(isVisible(toolbar), true);
+}
+
+/**
  *  Test header pane toolbar position
  */
 function test_set_toolbar_position() {
@@ -768,3 +788,14 @@ function subtest_buttons_style(aIconVisibility, aLabelVisibility)
   }
 }
 
+function isVisible(aElem) {
+  if (aElem.hidden || aElem.collapsed)
+    return false;
+  let parent = aElem.parentNode;
+  if (parent == null)
+    return true;
+  if (("selectedPanel" in parent) &&
+      parent.selectedPanel != aElem)
+    return false;
+  return isVisible(parent);
+}

@@ -120,7 +120,7 @@ function setupModule(module) {
 
 }
 
-function notest_wide_layout_and_compact() {
+function test_wide_layout_and_compact() {
   set_pane_layout(kWideMailLayout);
   assert_pane_layout(kWideMailLayout);
   let abwc = openAddressBook();
@@ -159,7 +159,7 @@ function notest_wide_layout_and_compact() {
   mc = open3PaneWindow();
   abwc.window.close();
 }
-function notest_toggle_header_view_twoline(){
+function test_toggle_header_view_twoline(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
@@ -172,7 +172,7 @@ function notest_toggle_header_view_twoline(){
   collapse_and_assert_header(mc);
 }
 
-function notest_toggle_header_view_oneline(){
+function test_toggle_header_view_oneline(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_oneline);
   mc.sleep(10);
@@ -186,7 +186,7 @@ function notest_toggle_header_view_oneline(){
 }
 
 
-function notest_address_type_format(){
+function test_address_type_format(){
   select_message_in_folder(folder1, 1, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
@@ -222,7 +222,7 @@ function notest_address_type_format(){
   }
 }
 
-function notest_date_format_collapsed(){
+function test_date_format_collapsed(){
   let msg = create_message();
   add_message_to_folder(folder1, msg);
   select_message_in_folder(folder1, -1, mc);
@@ -240,7 +240,7 @@ function notest_date_format_collapsed(){
   assert_equals(expandedValue, mc.e("CompactHeader_collapsed1LdateBox").textContent);
 }
 
-function notest_neighbours_of_header_view_toolbox(){
+function test_neighbours_of_header_view_toolbox(){
   expand_and_assert_header(mc);
   mc = reopen_3pane_window();
 

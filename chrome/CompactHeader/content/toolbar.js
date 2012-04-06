@@ -510,6 +510,7 @@ org.mozdev.compactHeader.toolbar = function() {
   var setToolboxRunning = false;
   var currentToolboxPosition;
   var currentToolboxType;
+  var currentHeaderViewMode;
 
   pub.setCurrentToolboxPosition = function(aHeaderViewMode) {
     var targetType = "single";
@@ -532,6 +533,7 @@ org.mozdev.compactHeader.toolbar = function() {
 
     if ((currentToolboxPosition == targetPos) &&
         (currentToolboxType == targetType) &&
+        (currentHeaderViewMode == aHeaderViewMode) && 
         (targetType == "single")) {
       org.mozdev.compactHeader.debug.log("curPos: " + currentToolboxPosition + " targetPos: " + targetPos);
       org.mozdev.compactHeader.debug.log("curType: " + currentToolboxType + " targetType: " + targetType);
@@ -542,7 +544,8 @@ org.mozdev.compactHeader.toolbar = function() {
 
     currentToolboxPosition = targetPos;
     currentToolboxType = targetType;
-
+    currentHeaderViewMode = aHeaderViewMode;
+    
     if (multiMessage){
       org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
       multiBBox = multiMessage.contentDocument.getElementById("header-view-toolbox");
