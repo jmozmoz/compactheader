@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var MODULE_NAME = 'test-compactheader-preferences';
+var MODULE_NAME = 'test-compactheader-collapse';
 
 var RELATIVE_ROOT = '../shared-modules';
 var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
@@ -52,10 +52,6 @@ var WindowHelper;
 
 var folder1;
 var folder2;
-
-const PREF = "browser.preferences.instantApply";
-var prefBranch = Cc["@mozilla.org/preferences-service;1"]
-                    .getService(Ci.nsIPrefService).getBranch(null);
 
 var messageBodyISO8859_1 = "ae: " + String.fromCharCode(228) +
   ", oe: " + String.fromCharCode(246) +
@@ -93,7 +89,6 @@ function setupModule(module) {
                               "Content-Base": "http://example.com/",
                               "Bcc": "Richard Roe <richard.roe@momo.invalid>"
                             }});
-
   add_message_to_folder(folder1, msg);
 
   let msg = create_message({cc: msgGen.makeNamesAndAddresses(2), // YYY
@@ -104,7 +99,6 @@ function setupModule(module) {
       "Content-Base": "http://example.com/",
       "Bcc": "Richard Roe <richard.roe@momo.invalid>"
     }});
-
   add_message_to_folder(folder1, msg);
 
   let msg = create_message({
@@ -115,7 +109,11 @@ function setupModule(module) {
       "cc": "S Soe <s.soe@s.invalid>",
     },
     });
+  add_message_to_folder(folder1, msg);
 
+  let msg = create_message({cc: msgGen.makeNamesAndAddresses(3),
+    to: msgGen.makeNamesAndAddresses(1)
+  });
   add_message_to_folder(folder1, msg);
 
 }
@@ -293,4 +291,78 @@ function test_address_type_order(){
     assert_true(addressType <= currentAddressType, "wrong address type order");
     currentAddressType = addressType;
   }
+}
+
+function test_addresses_do_not_double(){
+  const MORE_PREF = "mailnews.headers.show_n_lines_before_more";
+  Services.prefs.setIntPref(MORE_PREF, 2);
+
+  select_message_in_folder(folder1, 2, mc);
+  collapse_and_assert_header(mc);
+  expand_and_assert_header(mc);
+  select_message_in_folder(folder1, 3, mc);
+
+  let addrs;
+  
+  let fromDescription = mc.a('expandedfromBox', {class: "headerValue"});
+  addrs = fromDescription.getElementsByTagName('mail-emailaddress');
+  let firstFromAddrNum = 0;
+    for (let i = 0; i<addrs.length; i++) {
+      if (isVisible(addrs[i])) {
+        firstFromAddrNum += 1;
+      }
+  }
+    
+  let toDescription = mc.a('expandedtoBox', {class: "headerValue"});
+  addrs = toDescription.getElementsByTagName('mail-emailaddress');
+  let firstToAddrNum = 0;
+  for (let i = 0; i<addrs.length; i++) {
+    if (isVisible(addrs[i])) {
+      firstToAddrNum += 1;
+    }
+  }
+  
+  let ccDescription = mc.a('expandedccBox', {class: "headerValue"});
+  addrs = ccDescription.getElementsByTagName('mail-emailaddress');
+  let firstCCAddrNum = 0;
+  for (let i = 0; i<addrs.length; i++) {
+    if (isVisible(addrs[i])) {
+      firstCCAddrNum += 1;
+    }
+  }
+
+  collapse_and_assert_header(mc);
+  expand_and_assert_header(mc);
+  
+  addrs = fromDescription.getElementsByTagName('mail-emailaddress');
+  let secondFromAddrNum = 0;
+  for (let i = 0; i<addrs.length; i++) {
+    if (isVisible(addrs[i])) {
+      secondFromAddrNum += 1;
+    }
+  }
+
+  addrs = toDescription.getElementsByTagName('mail-emailaddress');
+  let secondToAddrNum = 0;
+  for (let i = 0; i<addrs.length; i++) {
+    if (isVisible(addrs[i])) {
+      secondToAddrNum += 1;
+    }
+  }
+  
+  addrs = ccDescription.getElementsByTagName('mail-emailaddress');
+  let secondCCAddrNum = 0;
+  for (let i = 0; i<addrs.length; i++) {
+    if (isVisible(addrs[i])) {
+      secondCCAddrNum += 1;
+    }
+  }
+  
+  assert_true(firstFromAddrNum == secondFromAddrNum, "number of from addresses changed from " +
+      firstFromAddrNum + " to " + secondFromAddrNum);
+  assert_true(firstToAddrNum == secondToAddrNum, "number of to addresses changed from " +
+      firstToAddrNum + " to " + secondToAddrNum);
+  assert_true(firstCCAddrNum == secondCCAddrNum, "number of cc addresses changed from " +
+      firstCCAddrNum + " to " + secondCCAddrNum);
+  Services.prefs.clearUserPref(MORE_PREF);
 }

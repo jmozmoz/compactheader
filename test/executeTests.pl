@@ -83,11 +83,19 @@ my @children;
 my @files;
 my $dispMUAfile;
 my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/562/addon-562-latest.xpi";
+
+my $mnenhyfile;
+my $mnenhy = "https://addons.mozilla.org/thunderbird/downloads/latest/2516/addon-2516-latest.xpi";
+
 my %testSpecs;
 
 system "wget", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
 my @dispMUAfiles = glob("$ftpdir/display_*");
 $dispMUAfile = $dispMUAfiles[-1];
+
+system "wget", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
+my @mnenhyfiles = glob("$ftpdir/mnenhy-*");
+$mnenhyfile = $mnenhyfiles[-1];
 
 while (my $line = <F>)
 {
@@ -210,13 +218,17 @@ foreach my $pid (@children) {
     $python = "python"
   }
 
-  # We have own tests for this, so delete it
+  # We have out own tests for this, so delete it
   unlink("message-header/test-header-toolbar.js");
   my @compatibility_apps = (
     glob("../../ftp//$ostype-$hosttype-$version/lightning*.xpi"),
-    "../../$dispMUAfile"
+    "../../$dispMUAfile",
+#    "../../$mnenhyfile" # activate when mozmill can handle this addon: 
   );
+  
   my $comp_apps = join(",", @compatibility_apps);
+  
+  print $comp_apps;
 #    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1`;

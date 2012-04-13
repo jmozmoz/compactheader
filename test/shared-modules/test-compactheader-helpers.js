@@ -87,6 +87,7 @@ function installInto(module) {
   module.set_preferences_oneline = set_preferences_oneline;
   module.assert_collapsed = assert_collapsed;
   module.assert_expanded = assert_expanded;
+  module.isVisible = isVisible;
 }
 
 function reopen_3pane_window() {
@@ -415,3 +416,14 @@ function set_preferences_oneline(aController) {
   close_preferences_dialog(aController);
 }
 
+function isVisible(aElem) {
+  if (aElem.hidden || aElem.collapsed)
+    return false;
+  let parent = aElem.parentNode;
+  if (parent == null)
+    return true;
+  if (("selectedPanel" in parent) &&
+      parent.selectedPanel != aElem)
+    return false;
+  return isVisible(parent);
+}

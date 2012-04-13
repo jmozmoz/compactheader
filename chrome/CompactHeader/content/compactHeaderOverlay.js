@@ -106,6 +106,8 @@ org.mozdev.compactHeader.pane = function() {
 
   var coheFirstTime = true;
   var headerFirstTime = true;
+  
+  var pressMores = null;
 
   function coheOutputSubject(headerEntry, headerValue) {
     var subjectBox;
@@ -200,29 +202,12 @@ org.mozdev.compactHeader.pane = function() {
       }
       let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
         "anonid", "more");
-      let moreButtonTo = document.getAnonymousElementByAttribute(document.getElementById("expandedtoBox"),
-          "anonid", "more");
-      let moreButtonCC = document.getAnonymousElementByAttribute(document.getElementById("expandedccBox"),
-          "anonid", "more");
-      let moreButtonBCC = document.getAnonymousElementByAttribute(document.getElementById("expandedbccBox"),
-          "anonid", "more");
 
       if (moreButton) {
         let oldToggleWrap = moreButton.parentNode.toggleWrap;
         moreButton.parentNode.toggleWrap = function() {
+          pressMores = pressMoreButtons;
           pub.coheToggleHeaderView();
-          if (!moreButtonTo.hasAttribute("collapsed")) {
-            moreButtonTo.click();
-            org.mozdev.compactHeader.debug.log("toggle To");
-          }
-          if (!moreButtonCC.hasAttribute("collapsed")) {
-            moreButtonCC.click();
-            org.mozdev.compactHeader.debug.log("toggle cc");
-          }
-          if (!moreButtonBCC.hasAttribute("collapsed")) {
-            moreButtonBCC.click();
-            org.mozdev.compactHeader.debug.log("toggle bcc");
-          }
         };
       }
     } else {
@@ -235,6 +220,28 @@ org.mozdev.compactHeader.pane = function() {
     org.mozdev.compactHeader.RSSLinkify.InitializeHeaderViewTables();
   }
 
+  function pressMoreButtons() {
+    let moreButtonTo = document.getAnonymousElementByAttribute(document.getElementById("expandedtoBox"),
+        "anonid", "more");
+    let moreButtonCC = document.getAnonymousElementByAttribute(document.getElementById("expandedccBox"),
+        "anonid", "more");
+    let moreButtonBCC = document.getAnonymousElementByAttribute(document.getElementById("expandedbccBox"),
+        "anonid", "more");
+    if (!moreButtonTo.hasAttribute("collapsed")) {
+      moreButtonTo.click();
+      org.mozdev.compactHeader.debug.log("toggle To");
+    }
+    if (!moreButtonCC.hasAttribute("collapsed")) {
+      moreButtonCC.click();
+      org.mozdev.compactHeader.debug.log("toggle cc");
+    }
+    if (!moreButtonBCC.hasAttribute("collapsed")) {
+      moreButtonBCC.click();
+      org.mozdev.compactHeader.debug.log("toggle bcc");
+    }
+    pressMores = null;
+  }
+  
   pub.coheOnLoadMsgHeaderPane = function() {
     org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
 
@@ -322,6 +329,10 @@ org.mozdev.compactHeader.pane = function() {
     function cML_onEndHeaders() {
       ClearHeaderView(gCoheCollapsedHeaderView);
       coheUpdateMessageHeaders();
+      if (pressMores) {
+        pressMoreButtons();
+        pressMore = null;
+      }
     },
 
     onEndAttachments: function cML_onEndAttachments(){}
@@ -413,12 +424,13 @@ org.mozdev.compactHeader.pane = function() {
 
     if (gCoheCollapsedHeaderViewMode) {
       deck.selectedPanel = document.getElementById("CompactHeader_collapsedHeaderView")
-      coheUpdateMessageHeaders();
+      gDBView.reloadMessage();
+      //coheUpdateMessageHeaders();
     } else {
       deck.selectedPanel = document.getElementById("expandedHeaderView");
       //ClearHeaderView(gExpandedHeaderView);
-      UpdateExpandedMessageHeaders();
-      //gDBView.reloadMessage();
+      gDBView.reloadMessage();
+      //UpdateExpandedMessageHeaders();
     }
 
     // Work around a xul deck bug where the height of the deck is determined

@@ -787,15 +787,3 @@ function subtest_buttons_style(aIconVisibility, aLabelVisibility)
     }
   }
 }
-
-function isVisible(aElem) {
-  if (aElem.hidden || aElem.collapsed)
-    return false;
-  let parent = aElem.parentNode;
-  if (parent == null)
-    return true;
-  if (("selectedPanel" in parent) &&
-      parent.selectedPanel != aElem)
-    return false;
-  return isVisible(parent);
-}

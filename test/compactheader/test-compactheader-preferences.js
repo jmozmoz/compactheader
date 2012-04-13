@@ -54,8 +54,6 @@ var folder1;
 var folder2;
 
 const PREF = "browser.preferences.instantApply";
-var prefBranch = Cc["@mozilla.org/preferences-service;1"]
-                    .getService(Ci.nsIPrefService).getBranch(null);
 
 var messageBodyISO8859_1 = "ae: " + String.fromCharCode(228) +
   ", oe: " + String.fromCharCode(246) +
