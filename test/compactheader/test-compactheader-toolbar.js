@@ -669,12 +669,49 @@ function test_visible_toolbar() {
   expand_and_assert_header(mc);
   let toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(isVisible(toolbar), true);
+
+  set_pane_layout(kWideMailLayout);
+  assert_pane_layout(kWideMailLayout);
+  let abwc = openAddressBook();
+  // The 3pane window is closed and opened again.
+  close3PaneWindow();
+
+  mc = open3PaneWindow();
+  abwc.window.close();
+
+  mc.sleep(10);
+  
+  collapse_and_assert_header(mc);
+  let toolbar = mc.eid("header-view-toolbar").node;
+  assert_equals(isVisible(toolbar), true);
+  expand_and_assert_header(mc);
+  let toolbar = mc.eid("header-view-toolbar").node;
+  assert_equals(isVisible(toolbar), true);
+    
+  set_pane_layout(kClassicMailLayout);
+  assert_pane_layout(kClassicMailLayout);
+  let abwc = openAddressBook();
+  // The 3pane window is closed and opened again.
+  close3PaneWindow();
+
+  mc = open3PaneWindow();
+  abwc.window.close();
+
 }
 
 /**
  *  Test header pane toolbar position
  */
 function test_set_toolbar_position() {
+  set_pane_layout(kClassicMailLayout);
+  assert_pane_layout(kClassicMailLayout);
+  let abwc = openAddressBook();
+  // The 3pane window is closed and opened again.
+  close3PaneWindow();
+
+  mc = open3PaneWindow();
+  abwc.window.close();
+
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   restore_and_check_default_buttons(mc);
@@ -763,7 +800,6 @@ function test_set_toolbar_position() {
   expand_and_assert_header(mc);
   restore_and_check_default_buttons(mc);
 }
-
 
 
 /**

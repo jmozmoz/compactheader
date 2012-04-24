@@ -531,6 +531,8 @@ org.mozdev.compactHeader.toolbar = function() {
       targetType = "multi";
     }
 
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition 1");
+
     if ((currentToolboxPosition == targetPos) &&
         (currentToolboxType == targetType) &&
         (currentHeaderViewMode == aHeaderViewMode) && 
@@ -542,13 +544,23 @@ org.mozdev.compactHeader.toolbar = function() {
       return;
     }
 
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition 2");
+
     currentToolboxPosition = targetPos;
     currentToolboxType = targetType;
     currentHeaderViewMode = aHeaderViewMode;
+
+    org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition 3");
     
     if (multiMessage){
       org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
-      multiBBox = multiMessage.contentDocument.getElementById("header-view-toolbox");
+      try {
+        multiBBox = multiMessage.contentDocument.getElementById("header-view-toolbox");
+        org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition have multiMessage.contentDocument");
+      }
+      catch (e) {
+        org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition no multiMessage.contentDocument " + e);
+      }
     }
 
     org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition mid 0");
