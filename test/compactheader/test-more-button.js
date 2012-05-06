@@ -227,9 +227,6 @@ function test_more_number_indicator(){
 
   let hiddenAddressesCC = numAddressesCC - firstCCAddrNum;
   let hiddenAddressesTo = numAddressesTo - firstToAddrNum;
-
-  let expandedToBox = mc.e("expandedtoBox");
-  let expandedCCBox = mc.e("expandedccBox");
   
   let expandedToBox = mc.e("expandedtoBox");
   let expandedCCBox = mc.e("expandedccBox");
