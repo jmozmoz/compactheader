@@ -786,6 +786,12 @@ org.mozdev.compactHeader.pane = function() {
       multiMessage.addEventListener("DOMContentLoaded", multiMessageLoaded, true);
     }
 
+    var msgHeaderViewDeck = document.getElementById("msgHeaderViewDeck");
+    if (msgHeaderViewDeck){
+      org.mozdev.compactHeader.debug.log("msgHeaderViewDeck " + msgHeaderViewDeck);
+      msgHeaderViewDeck.addEventListener("dblclick", org.mozdev.compactHeader.pane.coheToggleHeaderView, true);
+    }
+
     org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
   };
 

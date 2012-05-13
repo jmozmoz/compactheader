@@ -157,6 +157,7 @@ function test_wide_layout_and_compact() {
   mc = open3PaneWindow();
   abwc.window.close();
 }
+
 function test_toggle_header_view_twoline(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
@@ -183,6 +184,23 @@ function test_toggle_header_view_oneline(){
   collapse_and_assert_header(mc);
 }
 
+function test_dblclick(){
+  select_message_in_folder(folder1, 0, mc);
+  open_preferences_dialog(mc, set_preferences_oneline);
+  mc.sleep(10);
+  expand_and_assert_header(mc);
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  assert_collapsed(mc);
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  assert_expanded(mc);
+  open_preferences_dialog(mc, set_preferences_twoline);
+  mc.sleep(10);
+  expand_and_assert_header(mc);
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  assert_collapsed(mc);
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  assert_expanded(mc);
+}
 
 function test_address_type_format(){
   select_message_in_folder(folder1, 1, mc);
