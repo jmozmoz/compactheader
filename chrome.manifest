@@ -7,13 +7,13 @@ skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/windows/ os=WI
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/mac/     os=Darwin
 
 locale    CompactHeader     en-US   chrome/CompactHeader/locale/en-US/
-locale    CompactHeader     de-DE   chrome/CompactHeader/locale/de-DE/
-locale    CompactHeader     it-IT   chrome/CompactHeader/locale/it-IT/
-locale    CompactHeader     da-DK   chrome/CompactHeader/locale/da-DK/
-locale    CompactHeader     fr-FR   chrome/CompactHeader/locale/fr-FR/
+locale    CompactHeader     de   chrome/CompactHeader/locale/de/
+locale    CompactHeader     it   chrome/CompactHeader/locale/it/
+locale    CompactHeader     da   chrome/CompactHeader/locale/da/
+locale    CompactHeader     fr   chrome/CompactHeader/locale/fr/
 locale    CompactHeader     es-ES   chrome/CompactHeader/locale/es-ES/
-locale    CompactHeader     ja-JP   chrome/CompactHeader/locale/ja-JP/
-locale    CompactHeader     ru-RU   chrome/CompactHeader/locale/ru-RU/
+locale    CompactHeader     ja   chrome/CompactHeader/locale/ja/
+locale    CompactHeader     ru   chrome/CompactHeader/locale/ru/
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul   appversion<9.0a1
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-9.xul appversion>=9.0a1
