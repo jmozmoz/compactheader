@@ -45,3 +45,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "alto">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "sinistra">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisibile">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">

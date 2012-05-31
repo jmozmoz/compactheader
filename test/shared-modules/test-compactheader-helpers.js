@@ -85,6 +85,8 @@ function installInto(module) {
   module.subtest_change_twoline = subtest_change_twoline;
   module.set_preferences_twoline = set_preferences_twoline;
   module.set_preferences_oneline = set_preferences_oneline;
+  module.subtest_change_dblclick = subtest_change_dblclick;
+  module.subtest_change_no_dblclick = subtest_change_no_dblclick;
   module.assert_collapsed = assert_collapsed;
   module.assert_expanded = assert_expanded;
   module.isVisible = isVisible;
@@ -426,4 +428,25 @@ function isVisible(aElem) {
       parent.selectedPanel != aElem)
     return false;
   return isVisible(parent);
+}
+
+function subtest_change_no_dblclick(aController) {
+  let dblClick = aController.eid("CompactHeader_checkbox_dblclick_header");
+  let dblClickNode = dblClick.node;
+
+  if (dblClickNode.hasAttribute("checked")) {
+    aController.click(dblClick);
+  }
+  
+  close_preferences_dialog(aController);
+}
+
+function subtest_change_dblclick(aController) {
+  let dblClick = aController.eid("CompactHeader_checkbox_dblclick_header");
+  let dblClickNode = dblClick.node;
+
+  if (!dblClickNode.hasAttribute("checked")) {
+    aController.click(dblClick);
+  }
+  close_preferences_dialog(aController);
 }

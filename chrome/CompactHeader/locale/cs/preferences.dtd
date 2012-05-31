@@ -45,3 +45,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "střed">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "vlevo">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "neviditelný">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">

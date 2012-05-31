@@ -45,4 +45,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "oben">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "links">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "unsichtbar">
-
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Umschalten der Kopfzeilen mit Doppelklick">

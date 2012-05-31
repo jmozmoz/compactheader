@@ -45,5 +45,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "øverst">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "venstre">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "usynlig">
-
-
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
