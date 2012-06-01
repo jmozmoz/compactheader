@@ -34,6 +34,7 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** 
+
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader 首选项">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "在紧凑视图下显示两行">
@@ -45,4 +46,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "上">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "左">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "不可见">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "双击切换标题头">
