@@ -682,6 +682,8 @@ org.mozdev.compactHeader.pane = function() {
           ||(aData == "toolbox.position")
           ) {
         preferencesUpdate();
+      } else if (aData == "header.doubleclick") {
+        setDblClickHeaderEventHandler();
       }
 
       org.mozdev.compactHeader.debug.log("prefObserver stop");
@@ -786,15 +788,21 @@ org.mozdev.compactHeader.pane = function() {
       multiMessage.addEventListener("DOMContentLoaded", multiMessageLoaded, true);
     }
 
-    var msgHeaderViewDeck = document.getElementById("msgHeaderViewDeck");
-    if (msgHeaderViewDeck){
-      org.mozdev.compactHeader.debug.log("msgHeaderViewDeck " + msgHeaderViewDeck);
-      msgHeaderViewDeck.addEventListener("dblclick", org.mozdev.compactHeader.pane.coheToggleHeaderView, true);
-    }
 
+    setDblClickHeaderEventHandler();
     org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
   };
 
+  function setDblClickHeaderEventHandler() {
+    var msgHeaderViewDeck = document.getElementById("msgHeaderViewDeck");
+    if (msgHeaderViewDeck){
+      org.mozdev.compactHeader.debug.log("msgHeaderViewDeck " + msgHeaderViewDeck);
+      if (cohePrefBranch.getBoolPref("header.doubleclick"))
+        msgHeaderViewDeck.addEventListener("dblclick", org.mozdev.compactHeader.pane.coheToggleHeaderView, true);
+      else
+        msgHeaderViewDeck.removeEventListener("dblclick", org.mozdev.compactHeader.pane.coheToggleHeaderView, true);
+    }
+  }
   function multiMessageLoaded() {
     org.mozdev.compactHeader.debug.log("multiMessageLoaded start");
     org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);

@@ -112,7 +112,8 @@
               <menuseparator id="CompactHeader_otherActionPopupAfterViewSource"/>
               <menuitem id="CompactHeader_hideDetailsMenu"
                         label="&CompactHeader_hideDetailsButton.label;"
-                        oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
+                        oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+                        key="CompactHeader_hideDetailsKey"/>
               <menuitem id="CompactHeader_hidecohePreferencesButton"
                         label="&CompactHeader_dialog.title;"
                         oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"/>

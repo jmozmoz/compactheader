@@ -20,6 +20,7 @@
  the Initial Developer. All Rights Reserved.
 
  Contributor(s):
+ Cai <http://forums.mozillazine.org/memberlist.php?mode=viewprofile&u=145991>
 
  Alternatively, the contents of this file may be used under the terms of
  either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,14 +36,14 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY CompactHeader_dialog.title "Preferencias de CompactHeader">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Usar dos filas para la vista compacta">
-<!ENTITY CompactHeader_menu.Linkify.caption "Mostrar asunto como un enlace en los canales RSS">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar sólo las direcciones de correo">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Mostrar botones planos">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posición de la barra de herramientas de cabeceras">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Derecha">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "Arriba">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "Izquierda">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "Invisible">
+<!ENTITY CompactHeader_dialog.title "CompactHeader 設定">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "2 行表示">
+<!ENTITY CompactHeader_menu.Linkify.caption "RSS フィードの件名にリンクを設定する">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "メールアドレスのみ表示">
+<!ENTITY CompactHeader_menu.flatButtons.caption "フラットボタン">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "ツールバーの位置">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "右">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "上">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "左">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "非表示">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">

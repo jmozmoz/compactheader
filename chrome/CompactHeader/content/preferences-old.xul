@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-
-<overlay id="CompactHeader_customizeToolbarOverlay"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <groupbox id="CompactHeader_radiobox.ToolbarPosition" hidden="true"/>
-</overlay>

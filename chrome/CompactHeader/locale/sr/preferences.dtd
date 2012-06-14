@@ -33,16 +33,17 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
+ ***** END LICENSE BLOCK ***** 
 
-<!ENTITY CompactHeader_dialog.title "CompactHeader Einstellungen">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
-<!ENTITY CompactHeader_menu.Linkify.caption "Link in Betreff von RSS Feeds">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Flache Schaltflächen">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position der Kopfzeilenwerkzeugleiste">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "rechts">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "oben">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "links">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "unsichtbar">
-
+-->
+<!ENTITY CompactHeader_dialog.title "CompactHeader - опције">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Прикажи две линије у сажетом приказу">
+<!ENTITY CompactHeader_menu.Linkify.caption "Повежи теме у RSS доводима">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Прикажи само адресу">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Равна дугмад">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Место траке са алаткама у заглављу">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "десно">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "врх">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "лево">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "невидљива">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Дуплим кликом пребацуј између заглавља">

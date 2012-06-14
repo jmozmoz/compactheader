@@ -1,4 +1,4 @@
-<!-- ***** BEGIN LICENSE BLOCK *****
+<!--﻿ ***** BEGIN LICENSE BLOCK *****
  Version: MPL 1.1/GPL 2.0/LGPL 2.1
 
  The contents of this file are subject to the Mozilla Public License Version
@@ -33,15 +33,16 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
-<!ENTITY CompactHeader_dialog.title "Preferenze di CompactHeader">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Mostra due linee nella visualizzazione compatta">
-<!ENTITY CompactHeader_menu.Linkify.caption "Link nell'oggetto dei feed RSS">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostra solo l'indirizzo">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Pulsanti piani">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posizione della Barra Intestazioni">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "destra">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "alto">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "sinistra">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisibile">
+ ***** END LICENSE BLOCK ***** 
+-->
+<!ENTITY CompactHeader_dialog.title "CompactHeader Indstillinger">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
+<!ENTITY CompactHeader_menu.Linkify.caption "Link i feed-emner">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Vis kun adresse">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Flade knapper">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position værktøjslinje i meddelelseshovedet">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "højre">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "øverst">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "venstre">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "usynlig">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Vis/skjul meddelelseshovedet med dobbeltklik">

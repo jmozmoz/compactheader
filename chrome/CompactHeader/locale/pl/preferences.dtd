@@ -35,14 +35,14 @@
 
  ***** END LICENSE BLOCK ***** -->
 
-<!ENTITY CompactHeader_dialog.title "Preferencias de CompactHeader">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Usar dos filas para la vista compacta">
-<!ENTITY CompactHeader_menu.Linkify.caption "Mostrar asunto como un enlace en los canales RSS">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar sólo las direcciones de correo">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Mostrar botones planos">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posición de la barra de herramientas de cabeceras">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Derecha">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "Arriba">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "Izquierda">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "Invisible">
+<!ENTITY CompactHeader_dialog.title "Ustawienia CompactHeader">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Dwie linie nagłówka">
+<!ENTITY CompactHeader_menu.Linkify.caption "Linki RSS w tematach">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Pokazuj tylko adresy">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Płaskie przyciski">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Pozycja nagłówka">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "po prawej">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "na górze">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "po lewej">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "niewidoczny">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">

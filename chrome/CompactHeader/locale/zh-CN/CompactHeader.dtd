@@ -33,15 +33,9 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
+ ***** END LICENSE BLOCK ***** 
 
-<!ENTITY CompactHeader_dialog.title "Préférences de CompactHeader">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Afficher la vue compacte sur deux lignes">
-<!ENTITY CompactHeader_menu.Linkify.caption "Transformer en lien les sujets des fils RSS">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Afficher seulement les adresses des courriels">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Boutons plats">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "haut">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "gauche">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
+-->
+<!ENTITY CompactHeader_hideDetailsButton.label "隐藏详细信息">
+<!ENTITY CompactHeader_toggleDetails.key "h">
+<!ENTITY CompactHeader_showDetailsButton.label "显示详细信息">

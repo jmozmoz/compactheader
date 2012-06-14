@@ -20,7 +20,6 @@
  the Initial Developer. All Rights Reserved.
 
  Contributor(s):
- Cai <http://forums.mozillazine.org/memberlist.php?mode=viewprofile&u=145991>
 
  Alternatively, the contents of this file may be used under the terms of
  either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,15 +33,16 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
-<!ENTITY CompactHeader_dialog.title "CompactHeader 設定">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "2 行表示">
-<!ENTITY CompactHeader_menu.Linkify.caption "RSS フィードの件名にリンクを設定する">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "メールアドレスのみ表示">
-<!ENTITY CompactHeader_menu.flatButtons.caption "フラットボタン">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "ツールバーの位置">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "右">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "上">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "左">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "非表示">
+ ***** END LICENSE BLOCK ***** 
+-->
+<!ENTITY CompactHeader_dialog.title "CompactHeader Nastavení">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Zobrazit dva řádky v kompaktním zobrazení">
+<!ENTITY CompactHeader_menu.Linkify.caption "Odkaz v předmětech RSS">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Zobrazit pouze adresu">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Jednoduché tlačítka">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Pozice tlačítek panelu záhlaví">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "vpravo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "střed">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "vlevo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "neviditelný">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">

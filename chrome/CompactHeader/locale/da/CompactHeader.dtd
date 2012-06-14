@@ -1,4 +1,4 @@
-<!-- ***** BEGIN LICENSE BLOCK *****
+<!--﻿ ***** BEGIN LICENSE BLOCK *****
  Version: MPL 1.1/GPL 2.0/LGPL 2.1
 
  The contents of this file are subject to the Mozilla Public License Version
@@ -33,16 +33,8 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
-<!ENTITY CompactHeader_dialog.title "Preferencias de CompactHeader">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Usar dos filas para la vista compacta">
-<!ENTITY CompactHeader_menu.Linkify.caption "Mostrar asunto como un enlace en los canales RSS">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar sólo las direcciones de correo">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Mostrar botones planos">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posición de la barra de herramientas de cabeceras">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Derecha">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "Arriba">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "Izquierda">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "Invisible">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
+ ***** END LICENSE BLOCK ***** 
+-->
+<!ENTITY CompactHeader_hideDetailsButton.label "Skjul detaljer">
+<!ENTITY CompactHeader_toggleDetails.key "h">
+<!ENTITY CompactHeader_showDetailsButton.label "Vis detaljer">

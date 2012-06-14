@@ -195,3 +195,31 @@ function assert_browser_text_present(aBrowser, aText) {
     throw new Error("Unable to find string \"" + escape(aText) + "\" on the message pane");
   }
 }
+
+function subtest_change_twoline_dblclick(aController) {
+  let dblClick = aController.eid("CompactHeader_checkbox_dblclick_header");
+  let dblClickNode = dblClick.node;
+
+  if (!dblClickNode.hasAttribute("checked")) {
+    aController.click(dblClick);
+  }
+  let checkboxCompactTwolineView = aController.eid("CompactHeader_checkboxCompactTwolineView");
+  if (!checkboxCompactTwolineView.node.getAttribute("checked")) {
+    aController.click(checkboxCompactTwolineView);
+  }
+
+  close_preferences_dialog(aController);
+}
+
+function test_dblclick_header(){
+  select_message_in_folder(folder1, 3, mc);
+  open_preferences_dialog(mc, subtest_change_oneline);
+  open_preferences_dialog(mc, subtest_change_no_dblclick);
+  collapse_and_assert_header(mc);
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  assert_collapsed(mc);
+  open_preferences_dialog(mc, subtest_change_twoline_dblclick);
+  collapse_and_assert_header(mc);
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  assert_expanded(mc);
+}
