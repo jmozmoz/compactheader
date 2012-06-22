@@ -60,6 +60,17 @@ org.mozdev.compactHeader.toolbar = function() {
     {pos:"none",  id:"",                                   orient:""},
   ];
 
+  let gOtherMenuCommands = {
+      otherActionsOpenConversation: "cmd_openConversation",
+      otherActionsOpenInNewWindow:  "cmd_openConversation",
+      otherActionsOpenInNewTab:     "cmd_openMessage",
+      viewSourceMenuItem:           "cmd_viewPageSource",
+      markAsReadMenuItem:           "cmd_markAsRead",
+      markAsUnreadMenuItem:         "cmd_markAsUnread",
+      saveAsMenuItem:               "cmd_saveAsFile",
+      otherActionsPrint:            "cmd_print"
+    };
+
   pub.cannotMoveToolbox = function() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
       .getService(Components.interfaces.nsIXULAppInfo);
@@ -169,10 +180,26 @@ org.mozdev.compactHeader.toolbar = function() {
       myElement= document.getElementById("otherActionsPopup");
       if (myElement) {
         newParent.appendChild(myElement);
+        for (let menu in gOtherMenuCommands) {
+          let menuEl = document.getElementById(menu);
+          if (menuEl) {
+            menuEl.setAttribute("command", gOtherMenuCommands[menu]);
+          }
+        }
       }
     }
     org.mozdev.compactHeader.debug.log("fillToolboxPalette stop");
   };
+
+  pub.showOtherActionButtonMenu = function() {
+    org.mozdev.compactHeader.debug.log("showOtherActionButtonMenu start");
+    onShowOtherActionsPopup();
+    InitMessageMark();
+    for (let menu in gOtherMenuCommands) {
+      goUpdateCommand(gOtherMenuCommands[menu]);
+    }
+    org.mozdev.compactHeader.debug.log("showOtherActionButtonMenu stop");
+  }
 
   pub.setButtonStyle = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle start");
@@ -535,7 +562,7 @@ org.mozdev.compactHeader.toolbar = function() {
 
     if ((currentToolboxPosition == targetPos) &&
         (currentToolboxType == targetType) &&
-        (currentHeaderViewMode == aHeaderViewMode) && 
+        (currentHeaderViewMode == aHeaderViewMode) &&
         (targetType == "single")) {
       org.mozdev.compactHeader.debug.log("curPos: " + currentToolboxPosition + " targetPos: " + targetPos);
       org.mozdev.compactHeader.debug.log("curType: " + currentToolboxType + " targetType: " + targetType);
@@ -551,7 +578,7 @@ org.mozdev.compactHeader.toolbar = function() {
     currentHeaderViewMode = aHeaderViewMode;
 
     org.mozdev.compactHeader.debug.log("setCurrentToolboxPosition 3");
-    
+
     if (multiMessage){
       org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
       try {
