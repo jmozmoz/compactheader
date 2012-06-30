@@ -85,7 +85,7 @@
           <button type="menu" id="otherActionsButton" collapsed="true"
                   label="&otherActionsButton1.label;"
                   class="msgHeaderView-button msgHeaderView-flat-button">
-            <menupopup id="otherActionsPopup" onpopupshowing="InitMessageMark()">
+            <menupopup id="otherActionsPopup" onpopupshowing="org.mozdev.compactHeader.toolbar.showOtherActionButtonMenu();">
               <menuitem id="CompactHeader_hdrPane-markFlagged"
                         type="checkbox"
                         label="&markStarredCmd.label;"
@@ -94,7 +94,7 @@
                         insertbefore="viewSourceMenuItem"
                         key="key_toggleFlagged"/>
               <menu id="CompactHeader_hdrPane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
-                <menupopup id="menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
+                <menupopup id="CompactHeader_menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
                   <menuitem id="CompactHeader_hdrPane-viewallheaders"
                    type="radio"
                    name="viewheadergroup"

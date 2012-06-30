@@ -20,8 +20,7 @@
  the Initial Developer. All Rights Reserved.
 
  Contributor(s):
- Cai <http://forums.mozillazine.org/memberlist.php?mode=viewprofile&u=145991>
- 
+
  Alternatively, the contents of this file may be used under the terms of
  either the GNU General Public License Version 2 or later (the "GPL"), or
  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -36,6 +35,6 @@
 
  ***** END LICENSE BLOCK ***** 
 -->
-<!ENTITY CompactHeader_hideDetailsButton.label "詳細を隠す">
+<!ENTITY CompactHeader_hideDetailsButton.label "Detayları gizle">
 <!ENTITY CompactHeader_toggleDetails.key "h">
-<!ENTITY CompactHeader_showDetailsButton.label "詳細を表示">
+<!ENTITY CompactHeader_showDetailsButton.label "Detayları göster">

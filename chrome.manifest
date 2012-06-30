@@ -6,17 +6,18 @@ skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/gnome/   os=Li
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/windows/ os=WINNT
 skin      CompactHeader-os  classic/1.0 chrome/CompactHeader/skin/mac/     os=Darwin
 
-locale    CompactHeader     en-US   chrome/CompactHeader/locale/en-US/
-locale    CompactHeader     de   chrome/CompactHeader/locale/de/
-locale    CompactHeader     it   chrome/CompactHeader/locale/it/
-locale    CompactHeader     da   chrome/CompactHeader/locale/da/
-locale    CompactHeader     fr   chrome/CompactHeader/locale/fr/
-locale    CompactHeader     es-ES   chrome/CompactHeader/locale/es-ES/
-locale    CompactHeader     ja   chrome/CompactHeader/locale/ja/
-locale    CompactHeader     ru   chrome/CompactHeader/locale/ru/
-locale    CompactHeader     pl   chrome/CompactHeader/locale/pl/
-locale    CompactHeader     sr   chrome/CompactHeader/locale/sr/
 locale    CompactHeader     cs   chrome/CompactHeader/locale/cs/
+locale    CompactHeader     da   chrome/CompactHeader/locale/da/
+locale    CompactHeader     de   chrome/CompactHeader/locale/de/
+locale    CompactHeader     en-US   chrome/CompactHeader/locale/en-US/
+locale    CompactHeader     es-ES   chrome/CompactHeader/locale/es-ES/
+locale    CompactHeader     fr   chrome/CompactHeader/locale/fr/
+locale    CompactHeader     it   chrome/CompactHeader/locale/it/
+locale    CompactHeader     ja   chrome/CompactHeader/locale/ja/
+locale    CompactHeader     pl   chrome/CompactHeader/locale/pl/
+locale    CompactHeader     ru   chrome/CompactHeader/locale/ru/
+locale    CompactHeader     sr   chrome/CompactHeader/locale/sr/
+locale    CompactHeader     tr   chrome/CompactHeader/locale/tr/
 locale    CompactHeader     zh-CN   chrome/CompactHeader/locale/zh-CN/
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul   appversion<9.0a1

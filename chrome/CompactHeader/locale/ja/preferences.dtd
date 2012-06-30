@@ -34,8 +34,8 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
+ ***** END LICENSE BLOCK ***** 
+-->
 <!ENTITY CompactHeader_dialog.title "CompactHeader 設定">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "2 行表示">
 <!ENTITY CompactHeader_menu.Linkify.caption "RSS フィードの件名にリンクを設定する">
@@ -43,7 +43,7 @@
 <!ENTITY CompactHeader_menu.flatButtons.caption "フラットボタン">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "ツールバーの位置">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "右">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "上">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "左">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "非表示">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "上">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "左">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "非表示">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "ダブルクリックでヘッダ表示を切り替える">

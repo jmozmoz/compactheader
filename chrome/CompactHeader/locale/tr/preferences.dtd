@@ -20,8 +20,7 @@
  the Initial Developer. All Rights Reserved.
 
  Contributor(s):
- Cai <http://forums.mozillazine.org/memberlist.php?mode=viewprofile&u=145991>
- 
+
  Alternatively, the contents of this file may be used under the terms of
  either the GNU General Public License Version 2 or later (the "GPL"), or
  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -36,6 +35,14 @@
 
  ***** END LICENSE BLOCK ***** 
 -->
-<!ENTITY CompactHeader_hideDetailsButton.label "詳細を隠す">
-<!ENTITY CompactHeader_toggleDetails.key "h">
-<!ENTITY CompactHeader_showDetailsButton.label "詳細を表示">
+<!ENTITY CompactHeader_dialog.title "CompactHeader Tercihleri">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakt görünümde iki satır göster">
+<!ENTITY CompactHeader_menu.Linkify.caption "Rss beslemelerindeki konulara bağlantı">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Sadece adresleri göster">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Düz düğmeler">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Başlık Çubuğu Pozisyonu">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "sağ">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "üst">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "sol">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "görünmez">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Başlığı çift tıklamayla aç-kapat">

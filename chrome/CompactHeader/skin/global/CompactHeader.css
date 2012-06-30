@@ -359,3 +359,8 @@ toolbar[orient="vertical"] toolbarbutton hbox {
   width:  13px;
   height: 13px;
 }
+
+#CompactHeader_leftSidebar,
+#CompactHeader_rightSidebar {
+  padding: 0px !important;
+}

@@ -108,6 +108,7 @@ org.mozdev.compactHeader.pane = function() {
   var headerFirstTime = true;
   
   var pressMores = null;
+  var gMoreTooltip = "";
 
   function coheOutputSubject(headerEntry, headerValue) {
     var subjectBox;
@@ -136,7 +137,8 @@ org.mozdev.compactHeader.pane = function() {
 
     let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
         "anonid", "more");
-    let moreTooltip = moreButton.getAttribute("tooltiptext");
+    let moreTooltip = gMoreTooltip;
+//    let moreTooltip = moreButton.getAttribute("tooltiptext");
 
     var msgHeaderParser = Components.classes["@mozilla.org/messenger/headerparser;1"]
                                     .getService(Components.interfaces.nsIMsgHeaderParser);
@@ -177,7 +179,9 @@ org.mozdev.compactHeader.pane = function() {
       }
       index++;
     }
+    org.mozdev.compactHeader.debug.log("tooltiptext: " + moreTooltip);
     moreButton.setAttribute("tooltiptext", moreTooltip);
+    gMoreTooltip = moreTooltip;
 
     if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.buildViews == 'function'))
       headerEntry.enclosingBox.buildViews();
@@ -296,6 +300,16 @@ org.mozdev.compactHeader.pane = function() {
           aEmailNode.setAttribute("addressType", aAddress.addressType);
         }
         collapsed2LtoCcBccBox.updateEmailAddressNode = updateEmailAddressNodeNew;
+        if (typeof collapsed2LtoCcBccBox.setNMoreTooltiptext == 'function') {
+          // remove setNMoreTooltiptext because we have our own function
+          collapsed2LtoCcBccBox.setNMoreTooltiptext = function() {
+            let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
+              "anonid", "more");
+            if (moreButton) {
+              moreButton.setAttribute("tooltiptext", gMoreTooltip);
+            }
+          };
+        }
       }
     }
 
@@ -541,6 +555,7 @@ org.mozdev.compactHeader.pane = function() {
     let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
         "anonid", "more");
     moreButton.setAttribute("tooltiptext", "");
+    gMoreTooltip = "";
 
     // iterate over each header we received and see if we have a matching entry
     // in each header view table...
@@ -787,7 +802,6 @@ org.mozdev.compactHeader.pane = function() {
       org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
       multiMessage.addEventListener("DOMContentLoaded", multiMessageLoaded, true);
     }
-
 
     setDblClickHeaderEventHandler();
     org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
