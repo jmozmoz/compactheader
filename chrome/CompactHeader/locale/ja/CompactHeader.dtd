@@ -34,8 +34,8 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
+ ***** END LICENSE BLOCK ***** 
+-->
 <!ENTITY CompactHeader_hideDetailsButton.label "詳細を隠す">
 <!ENTITY CompactHeader_toggleDetails.key "h">
 <!ENTITY CompactHeader_showDetailsButton.label "詳細を表示">
