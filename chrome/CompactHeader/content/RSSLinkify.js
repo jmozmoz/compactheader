@@ -78,6 +78,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
         RSSLinkify.newSubject.setAttribute("tooltiptext", url.headerValue);
         RSSLinkify.newSubject.addEventListener("click",
           org.mozdev.compactHeader.RSSLinkify.openBrowser, false);
+        RSSLinkify.newSubject.setAttribute("context", "CompactHeader_CohecopyUrlPopup");
       } else {
         removeEventListener('click',
             org.mozdev.compactHeader.RSSLinkify.openBrowser, true);
