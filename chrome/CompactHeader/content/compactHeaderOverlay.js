@@ -106,7 +106,7 @@ org.mozdev.compactHeader.pane = function() {
 
   var coheFirstTime = true;
   var headerFirstTime = true;
-  
+
   var pressMores = null;
   var gMoreTooltip = "";
 
@@ -245,7 +245,7 @@ org.mozdev.compactHeader.pane = function() {
     }
     pressMores = null;
   }
-  
+
   pub.coheOnLoadMsgHeaderPane = function() {
     org.mozdev.compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
 
@@ -296,7 +296,13 @@ org.mozdev.compactHeader.pane = function() {
       if (collapsed2LtoCcBccBox) {
         let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox.updateEmailAddressNode;
         function updateEmailAddressNodeNew(aEmailNode, aAddress) {
-          updateEmailAddressNode(aEmailNode, aAddress)
+          try {
+            updateEmailAddressNodeFunction(aEmailNode, aAddress);
+          }
+          catch(e) {
+            org.mozdev.compactHeader.debug.log("got execption " + e +
+              " from updateEmailAddressNode");
+          }
           aEmailNode.setAttribute("addressType", aAddress.addressType);
         }
         collapsed2LtoCcBccBox.updateEmailAddressNode = updateEmailAddressNodeNew;

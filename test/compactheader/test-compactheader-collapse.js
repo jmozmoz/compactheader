@@ -42,6 +42,8 @@ var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
                        'address-book-helpers', 'mouse-event-helpers',
                        'compactheader-helpers'];
 
+const ENABLE_CHAT_PREF="mail.chat.enabled";
+
 var elib = {};
 Cu.import('resource://mozmill/modules/elementslib.js', elib);
 var controller = {};
@@ -115,7 +117,14 @@ function setupModule(module) {
     to: msgGen.makeNamesAndAddresses(1)
   });
   add_message_to_folder(folder1, msg);
+}
 
+function teardownModule() {
+  Services.prefs.clearUserPref(ENABLE_CHAT_PREF);
+  let abwc = openAddressBook();
+  close3PaneWindow();
+  mc = open3PaneWindow();
+  abwc.window.close();
 }
 
 function test_wide_layout_and_compact() {
@@ -297,7 +306,7 @@ function test_address_type_order(){
   mc.sleep(10);
   collapse_and_assert_header(mc);
   select_message_in_folder(folder1, 2, mc);
-  
+
   let toCcBccDescription = mc.a('CompactHeader_collapsed2LtoCcBccBox', {class: "headerValue"});
   let addrs = toCcBccDescription.getElementsByTagName('mail-emailaddress');
 
@@ -321,7 +330,7 @@ function test_addresses_do_not_double(){
   select_message_in_folder(folder1, 3, mc);
 
   let addrs;
-  
+
   let fromDescription = mc.a('expandedfromBox', {class: "headerValue"});
   addrs = fromDescription.getElementsByTagName('mail-emailaddress');
   let firstFromAddrNum = 0;
@@ -330,7 +339,7 @@ function test_addresses_do_not_double(){
         firstFromAddrNum += 1;
       }
   }
-    
+
   let toDescription = mc.a('expandedtoBox', {class: "headerValue"});
   addrs = toDescription.getElementsByTagName('mail-emailaddress');
   let firstToAddrNum = 0;
@@ -339,7 +348,7 @@ function test_addresses_do_not_double(){
       firstToAddrNum += 1;
     }
   }
-  
+
   let ccDescription = mc.a('expandedccBox', {class: "headerValue"});
   addrs = ccDescription.getElementsByTagName('mail-emailaddress');
   let firstCCAddrNum = 0;
@@ -351,7 +360,7 @@ function test_addresses_do_not_double(){
 
   collapse_and_assert_header(mc);
   expand_and_assert_header(mc);
-  
+
   addrs = fromDescription.getElementsByTagName('mail-emailaddress');
   let secondFromAddrNum = 0;
   for (let i = 0; i<addrs.length; i++) {
@@ -367,7 +376,7 @@ function test_addresses_do_not_double(){
       secondToAddrNum += 1;
     }
   }
-  
+
   addrs = ccDescription.getElementsByTagName('mail-emailaddress');
   let secondCCAddrNum = 0;
   for (let i = 0; i<addrs.length; i++) {
@@ -375,7 +384,7 @@ function test_addresses_do_not_double(){
       secondCCAddrNum += 1;
     }
   }
-  
+
   assert_true(firstFromAddrNum == secondFromAddrNum, "number of from addresses changed from " +
       firstFromAddrNum + " to " + secondFromAddrNum);
   assert_true(firstToAddrNum == secondToAddrNum, "number of to addresses changed from " +
@@ -383,4 +392,37 @@ function test_addresses_do_not_double(){
   assert_true(firstCCAddrNum == secondCCAddrNum, "number of cc addresses changed from " +
       firstCCAddrNum + " to " + secondCCAddrNum);
   Services.prefs.clearUserPref(MORE_PREF);
+}
+
+function test_toCcBcc_without_chat_enabled(){
+  select_message_in_folder(folder1, 0, mc);
+  open_preferences_dialog(mc, set_preferences_twoline);
+
+  Services.prefs.setBoolPref(ENABLE_CHAT_PREF, false);
+
+  let abwc = openAddressBook();
+  close3PaneWindow();
+  mc = open3PaneWindow();
+  abwc.window.close();
+
+  let msg = create_message({
+    subject: "This is a short subject.",
+    to: [["U Ull", "u.ull@t.invalid"]],
+      clobberHeaders: {
+        "cc": "W Wer <w.wer@s.invalid>",
+    },
+    });
+  add_message_to_folder(folder1, msg);
+  select_message_in_folder(folder1, -1, mc);
+
+  mc.sleep(10);
+  collapse_and_assert_header(mc);
+
+  let toDescription = mc.a('CompactHeader_collapsed2LtoCcBccBox', {class: "headerValue"});
+  let addrs = toDescription.getElementsByTagName('mail-emailaddress');
+  for (let i=0; i<addrs.length; i++) {
+    let labels = mc.window.document.getAnonymousElementByAttribute(
+      addrs[i], "anonid", "emaillabel");
+    assert_true(labels.value.length > 0);
+  }
 }

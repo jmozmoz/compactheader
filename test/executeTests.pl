@@ -57,8 +57,10 @@ my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
 my ($testversion);
+my ($downloadonly);
 
-GetOptions('version:s' => \$testversion);
+GetOptions('version:s' => \$testversion,
+           'downloadonly' => \$downloadonly);
 
 open (F, $file) || die ("Could not open $file!");
 
@@ -188,9 +190,14 @@ while (my $line = <F>)
   } # correct OS/architecture
 } # different versions
 
+close (F);
 
 foreach my $pid (@children) {
   waitpid($pid, 0);
+
+  if ($downloadonly) {
+    exit 0;
+  }
   my $currentdir = getcwd;
 
   $version  = $testSpecs{$pid}{version};
@@ -223,11 +230,11 @@ foreach my $pid (@children) {
   my @compatibility_apps = (
     glob("../../ftp//$ostype-$hosttype-$version/lightning*.xpi"),
     "../../$dispMUAfile",
-#    "../../$mnenhyfile" # activate when mozmill can handle this addon: 
+#    "../../$mnenhyfile" # activate when mozmill can handle this addon:
   );
-  
+
   my $comp_apps = join(",", @compatibility_apps);
-  
+
   print $comp_apps;
 #    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
@@ -253,8 +260,6 @@ foreach my $pid (@children) {
   }
   print "\n\n";
 }
-
-close (F);
 
 sub parse_csv {
   my $text = shift;
