@@ -46,3 +46,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "left">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">

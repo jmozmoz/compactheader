@@ -34,6 +34,8 @@
                   name="extensions.CompactHeader.headersize.flatButtons" type="bool"/>
       <preference id="CompactHeader_dblclick_header"
                   name="extensions.CompactHeader.header.doubleclick" type="bool"/>
+      <preference id="CompactHeader_darken_on_focus"
+                  name="extensions.CompactHeader.header.darkenonfocus" type="bool"/>
       <preference id="CompactHeader_position"
                   name="extensions.CompactHeader.toolbox.position" type="string"/>
     </preferences>
@@ -53,6 +55,9 @@
     <checkbox id="CompactHeader_checkbox_dblclick_header"
               preference="CompactHeader_dblclick_header"
               label="&CompactHeader_menu.dblclick_header.caption;"/>
+    <checkbox id="CompactHeader_checkbox_darken_on_focus"
+              preference="CompactHeader_darken_on_focus"
+              label="&CompactHeader_menu.darken_on_focus.caption;"/>
     <groupbox id="CompactHeader_radiobox.ToolbarPosition">
       <caption label="&CompactHeader_radiobox.ToolbarPosition.caption;"/>
       <radiogroup id="CompactHeader_hdrToolbox.pos"

@@ -33,7 +33,7 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** 
+ ***** END LICENSE BLOCK *****
 
 -->
 <!ENTITY CompactHeader_dialog.title "Настройки CompactHeader">
@@ -47,3 +47,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "слева">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "невидимa">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Переключение режима двойным щелчком мышки">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">

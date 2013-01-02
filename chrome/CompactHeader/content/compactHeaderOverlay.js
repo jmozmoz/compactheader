@@ -804,14 +804,81 @@ org.mozdev.compactHeader.pane = function() {
     }
 
     var multiMessage = document.getElementById("multimessage");
-    if (multiMessage){
+    if (multiMessage) {
       org.mozdev.compactHeader.debug.log("multiMessage " + multiMessage);
       multiMessage.addEventListener("DOMContentLoaded", multiMessageLoaded, true);
     }
 
+    addMessagePaneBoxFocusHandler();
     setDblClickHeaderEventHandler();
     org.mozdev.compactHeader.debug.log("coheInitializeOverlay stop");
   };
+
+  function addMessagePaneBoxFocusHandler() {
+    let messagepanebox = document.getElementById("messagepanebox");
+    if (messagepanebox) {
+      messagepanebox.addEventListener("focus", messagePaneBoxFocus, true);
+      messagepanebox.addEventListener("blur", messagePaneBoxBlur, true);
+    }
+  }
+
+  var msgHeaderViewBackground;
+
+  function messagePaneBoxFocus(event) {
+    org.mozdev.compactHeader.debug.log("messagePaneBoxFocus start");
+    let msgHeaderView = document.getElementById("msgHeaderView");
+    let wintype = document.documentElement.getAttribute("windowtype");
+//    let tabmail = document.getElementById("tabmail");
+    if (cohePrefBranch.getBoolPref("header.darkenonfocus") &&
+        msgHeaderView && wintype && wintype == "mail:3pane" ) {
+//          && tabmail && tabmail.tabContainer.selectedIndex == 0) {
+      org.mozdev.compactHeader.debug.log("background: " +
+          msgHeaderViewBackground);
+      if (typeof msgHeaderViewBackground === "undefined") {
+        var style =
+          document.defaultView.getComputedStyle(msgHeaderView, null);
+        msgHeaderViewBackground = style.getPropertyValue("background-color");
+      }
+      org.mozdev.compactHeader.debug.log("style: " + style);
+      org.mozdev.compactHeader.debug.log("background: " +
+        msgHeaderViewBackground);
+      let newColor = darkenColor(msgHeaderViewBackground);
+      msgHeaderView.style.backgroundColor = newColor;
+      //       msgHeaderView.setAttribute('style', 'background-color:darkblue;');
+    }
+    org.mozdev.compactHeader.debug.log("messagePaneBoxFocus stop");
+  }
+
+  function darkenColor(color) {
+    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+
+    var red = parseInt(digits[2]);
+    var green = parseInt(digits[3]);
+    var blue = parseInt(digits[4]);
+
+    let factor = 0.9;
+
+    red = red * factor;
+    green = green * factor;
+    blue = blue * factor;
+
+    var rgb = blue | (green << 8) | (red << 16);
+    return digits[1] + '#' + rgb.toString(16);
+}
+
+  function messagePaneBoxBlur(event) {
+    let msgHeaderView = document.getElementById("msgHeaderView");
+    let wintype = document.documentElement.getAttribute("windowtype");
+    let tabmail = document.getElementById("tabmail");
+//    if (msgHeaderView && wintype && wintype == "mail:3pane" &&
+//        tabmail && tabmail.tabContainer.selectedIndex == 0) {
+    if (msgHeaderView) {
+      if (!(typeof msgHeaderViewBackground === "undefined")) {
+        msgHeaderView.style.backgroundColor = msgHeaderViewBackground;
+        msgHeaderViewBackground = undefined;
+      }
+    }
+  }
 
   function setDblClickHeaderEventHandler() {
     var msgHeaderViewDeck = document.getElementById("msgHeaderViewDeck");
@@ -823,6 +890,7 @@ org.mozdev.compactHeader.pane = function() {
         msgHeaderViewDeck.removeEventListener("dblclick", org.mozdev.compactHeader.pane.coheToggleHeaderView, true);
     }
   }
+
   function multiMessageLoaded() {
     org.mozdev.compactHeader.debug.log("multiMessageLoaded start");
     org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);

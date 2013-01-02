@@ -33,7 +33,7 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** 
+ ***** END LICENSE BLOCK *****
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader Nastavení">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Zobrazit dva řádky v kompaktním zobrazení">
@@ -46,3 +46,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "vlevo">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "neviditelný">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">

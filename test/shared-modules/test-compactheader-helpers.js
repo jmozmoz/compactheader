@@ -85,6 +85,8 @@ function installInto(module) {
   module.subtest_change_twoline = subtest_change_twoline;
   module.set_preferences_twoline = set_preferences_twoline;
   module.set_preferences_oneline = set_preferences_oneline;
+  module.set_preferences_darken = set_preferences_darken;
+  module.set_preferences_non_darken = set_preferences_non_darken;
   module.subtest_change_dblclick = subtest_change_dblclick;
   module.subtest_change_no_dblclick = subtest_change_no_dblclick;
   module.assert_collapsed = assert_collapsed;
@@ -418,6 +420,22 @@ function set_preferences_oneline(aController) {
   close_preferences_dialog(aController);
 }
 
+function set_preferences_darken(aController) {
+  let checkboxDarken = aController.eid("CompactHeader_checkbox_darken_on_focus");
+  if (!checkboxDarken.node.getAttribute("checked")) {
+    aController.click(checkboxDarken);
+  }
+  close_preferences_dialog(aController);
+}
+
+function set_preferences_non_darken(aController) {
+  let checkboxDarken = aController.eid("CompactHeader_checkbox_darken_on_focus");
+  if (checkboxDarken.node.getAttribute("checked")) {
+    aController.click(checkboxDarken);
+  }
+  close_preferences_dialog(aController);
+}
+
 function isVisible(aElem) {
   if (aElem.hidden || aElem.collapsed)
     return false;
@@ -437,7 +455,7 @@ function subtest_change_no_dblclick(aController) {
   if (dblClickNode.hasAttribute("checked")) {
     aController.click(dblClick);
   }
-  
+
   close_preferences_dialog(aController);
 }
 

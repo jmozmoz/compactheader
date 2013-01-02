@@ -46,3 +46,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "links">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "unsichtbar">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Umschalten der Kopfzeilen mit Doppelklick">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Kopfzeile dunkel, falls Fokus auf Meldungsfläche">

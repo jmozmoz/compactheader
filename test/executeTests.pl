@@ -47,10 +47,15 @@ use Getopt::Long;
 my $file = 'testapps.csv';
 my $xpiversion = `grep 'version>' ../install.rdf | sed -e 's/.*version>\\(.*\\)<\\/em.*/\\1/'`;
 chomp($xpiversion);
-my $xpi = "../../../AMO/CompactHeader-${xpiversion}.xpi";
+my $xpi = getcwd . "/../AMO/CompactHeader-${xpiversion}.xpi";
+
 print "xpi: $xpi\n";
 
-my $ftpdir = "ftp";
+my $ftpdir = "/tmp/compactheader/ftp";
+mkdir "$ftpdir";
+copy($xpi, $ftpdir);
+$xpi = "../../ftp/CompactHeader-${xpiversion}.xpi";
+print "xpi: $xpi\n";
 
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
@@ -64,7 +69,6 @@ GetOptions('version:s' => \$testversion,
 
 open (F, $file) || die ("Could not open $file!");
 
-mkdir "$ftpdir";
 
 if ($^O eq "msys") {
   $unpack = "unzip";
@@ -92,12 +96,8 @@ my $mnenhy = "https://addons.mozilla.org/thunderbird/downloads/latest/2516/addon
 my %testSpecs;
 
 system "wget", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
-my @dispMUAfiles = glob("$ftpdir/display_*");
-$dispMUAfile = $dispMUAfiles[-1];
 
 system "wget", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
-my @mnenhyfiles = glob("$ftpdir/mnenhy-*");
-$mnenhyfile = $mnenhyfiles[-1];
 
 while (my $line = <F>)
 {
@@ -118,7 +118,8 @@ while (my $line = <F>)
     foreach my $file (@files) {
       unlink($file);
     }
-    # print "wget -r -l1 --no-parent --follow-ftp -A$checksums $ftppath -nd -P $ftpdir 2>&1\n";
+    #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P $ftpdir 2>&1\n";
+    #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\";\n";
     `wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P "$ftpdir" 2>&1`;
     @files = glob("$ftpdir/thunderbird*$checksum");
 
@@ -153,7 +154,7 @@ while (my $line = <F>)
 
       print "child: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
 
-      my $testdir = "test-$version";
+      my $testdir = "/tmp/compactheader/test-$version";
 
       mkdir "$testdir";
       system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
@@ -208,7 +209,7 @@ foreach my $pid (@children) {
 
   print "$pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n";
 
-  my $testdir = "test-$version";
+  my $testdir = "/tmp/compactheader/test-$version";
   chdir "$testdir/mozmill";
   #system "pwd";
 
@@ -217,7 +218,10 @@ foreach my $pid (@children) {
 
   no warnings;
   if (int($version) >= 9) {
-  use warnings;
+    use warnings;
+    print "\n";
+    print getcwd;
+    print "... installing mozmill\n";
     `python resources/installmozmill.py ../mozmill-virtualenv`;
     $python = "$virtualpython";
   }
@@ -225,22 +229,32 @@ foreach my $pid (@children) {
     $python = "python"
   }
 
+  my @dispMUAfiles = glob("../../ftp/display_*");
+  $dispMUAfile = $dispMUAfiles[-1];
+  my @mnenhyfiles = glob("$ftpdir/mnenhy-*");
+  $mnenhyfile = $mnenhyfiles[-1];
+
   # We have out own tests for this, so delete it
   unlink("message-header/test-header-toolbar.js");
   my @compatibility_apps = (
-    glob("../../ftp//$ostype-$hosttype-$version/lightning*.xpi"),
-    "../../$dispMUAfile",
-#    "../../$mnenhyfile" # activate when mozmill can handle this addon:
+    glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
+    "$dispMUAfile",
+#    "$mnenhyfile" # activate when mozmill can handle this addon:
   );
 
   my $comp_apps = join(",", @compatibility_apps);
-
   print $comp_apps;
-#    print "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
+  print "\n";
+
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
 
   chdir "$currentdir";
