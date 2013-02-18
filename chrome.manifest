@@ -17,6 +17,7 @@ locale    CompactHeader     ja   chrome/CompactHeader/locale/ja/
 locale    CompactHeader     pl   chrome/CompactHeader/locale/pl/
 locale    CompactHeader     ru   chrome/CompactHeader/locale/ru/
 locale    CompactHeader     sr   chrome/CompactHeader/locale/sr/
+locale    CompactHeader     sv-SE   chrome/CompactHeader/locale/sv-SE/
 locale    CompactHeader     tr   chrome/CompactHeader/locale/tr/
 locale    CompactHeader     zh-CN   chrome/CompactHeader/locale/zh-CN/
 

@@ -35,16 +35,17 @@
 
  ***** END LICENSE BLOCK *****
 
+
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader 首选项">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "在紧凑视图下显示两行">
 <!ENTITY CompactHeader_menu.Linkify.caption "RSS 订阅主题中的链接">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "仅显示地址">
 <!ENTITY CompactHeader_menu.flatButtons.caption "浮动按钮">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "标题头工具栏位置">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "消息头工具栏位置">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "右">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "上">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "左">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "不可见">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "双击切换标题头">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "双击切换消息头">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "如果焦点在消息面板上那么使消息头变暗">

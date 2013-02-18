@@ -34,8 +34,7 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** 
-
 -->
-<!ENTITY CompactHeader_hideDetailsButton.label "Detayları gizle">
-<!ENTITY CompactHeader_toggleDetails.key "h">
-<!ENTITY CompactHeader_showDetailsButton.label "Detayları göster">
+<!ENTITY CompactHeader_hideDetailsButton.label "Dölj info">
+<!ENTITY CompactHeader_toggleDetails.key "f">
+<!ENTITY CompactHeader_showDetailsButton.label "Visa info">

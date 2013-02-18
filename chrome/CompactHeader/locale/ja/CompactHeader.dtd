@@ -35,6 +35,7 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** 
+
 -->
 <!ENTITY CompactHeader_hideDetailsButton.label "詳細を隠す">
 <!ENTITY CompactHeader_toggleDetails.key "h">

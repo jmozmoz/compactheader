@@ -34,6 +34,7 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK *****
+
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader Tercihleri">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakt görünümde iki satır göster">
@@ -46,4 +47,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "sol">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "görünmez">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Başlığı çift tıklamayla aç-kapat">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "İleti bölümüne odaklanılırsa başlığı karart">
