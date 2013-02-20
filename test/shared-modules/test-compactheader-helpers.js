@@ -87,6 +87,8 @@ function installInto(module) {
   module.set_preferences_oneline = set_preferences_oneline;
   module.set_preferences_darken = set_preferences_darken;
   module.set_preferences_non_darken = set_preferences_non_darken;
+  module.set_preferences_linkify = set_preferences_linkify;
+  module.set_preferences_non_linkify = set_preferences_non_linkify;
   module.subtest_change_dblclick = subtest_change_dblclick;
   module.subtest_change_no_dblclick = subtest_change_no_dblclick;
   module.assert_collapsed = assert_collapsed;
@@ -436,8 +438,30 @@ function set_preferences_non_darken(aController) {
   close_preferences_dialog(aController);
 }
 
+function set_preferences_linkify(aController) {
+  let checkboxLinkify = aController.eid("CompactHeader_checkboxLinkify");
+  if (!checkboxLinkify.node.getAttribute("checked")) {
+    aController.click(checkboxLinkify);
+  }
+  close_preferences_dialog(aController);
+}
+
+function set_preferences_non_linkify(aController) {
+  let checkboxLinkify = aController.eid("CompactHeader_checkboxLinkify");
+  if (checkboxLinkify.node.getAttribute("checked")) {
+    aController.click(checkboxLinkify);
+  }
+  close_preferences_dialog(aController);
+}
+
 function isVisible(aElem) {
-  if (aElem.hidden || aElem.collapsed)
+  if (   aElem.hidden || aElem.collapsed
+      || aElem.state == "closed"
+      || (typeof aElem.hasAttribute === 'function'
+          && aElem.hasAttribute("collapsed")
+          && aElem.getAttribute("collapsed") == "true"
+         )
+     )
     return false;
   let parent = aElem.parentNode;
   if (parent == null)

@@ -1,6 +1,9 @@
 <?xml version="1.0" ?>
 
 <!DOCTYPE overlay [
+  <!ENTITY % utilityDTD SYSTEM
+  "chrome://communicator/locale/utilityOverlay.dtd">
+  %utilityDTD; <!-- copyCmd -->
   <!ENTITY % msgHeaderDTD SYSTEM
   "chrome://messenger/locale/msgHdrViewOverlay.dtd">
   %msgHeaderDTD;
@@ -130,9 +133,13 @@
   </vbox>
 
   <vbox id="CompactHeader_collapsedHeaderView" orient="horizontal" flex="1">
-    <menupopup id="CompactHeader_CohecopyUrlPopup" popupanchor="bottomleft">
-      <menuitem label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;"
-                oncommand="org.mozdev.compactHeader.RSSLinkify.CoheCopyWebsiteAddress(document.popupNode)"/>
+    <menupopup id="CompactHeader_copyPopup" popupanchor="bottomleft">
+      <menuitem id="CompactHeader_copyPopup_CopyLink"
+                label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;"
+                oncommand="org.mozdev.compactHeader.RSSLinkify.CopyToClipboard(document.popupNode, 'url')"/>
+      <menuitem id="CompactHeader_copyPopup_CopyText"
+                label="&copyCmd.label;" accesskey="&copyCmd.accesskey;"
+                oncommand="org.mozdev.compactHeader.RSSLinkify.CopyToClipboard(document.popupNode, 'value')"/>
     </menupopup>
     <vbox id="CompactHeader_showDetailsButtonBox" align="start" flex="0">
       <button id="CompactHeader_showDetailsButton"

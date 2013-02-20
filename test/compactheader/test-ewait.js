@@ -44,6 +44,7 @@ var MODULE_NAME = 'test-header-toolbar';
 
 var RELATIVE_ROOT = '../shared-modules';
 var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
+                       'mouse-event-helpers',
                        'address-book-helpers'];
 
 var elib = {};
@@ -63,6 +64,8 @@ function setupModule(module) {
   wh.installInto(module);
   let abh = collector.getModule('address-book-helpers');
   abh.installInto(module);
+  let meh = collector.getModule('mouse-event-helpers');
+  meh.installInto(module);
 
   folder = create_folder("TestEwait");
 
@@ -143,165 +146,4 @@ function close_header_pane_toolbar_customization(aController)
   if (!Services.prefs.getBoolPref(USE_SHEET_PREF, true)) {
     assert_true(aController.window.closed, "The customization dialog is not closed.");
   }
-}
-
-
-// taken form test-mouse-event-helpers:
-
-/**
- * Execute a drag and drop session.
- * @param {XULElement} aDragObject
- *   the element from which the drag session should be started.
- * @param {} aDragWindow
- *   the window the aDragObject is in
- * @param {XULElement} aDropObject
- *   the element at which the drag session should be ended.
- * @param {} aDropWindow
- *   the window the aDropObject is in
- * @param {} aRelDropX
- *   the relative x-position the element is dropped over the aDropObject
- *   in percent of the aDropObject width
- * @param {} aRelDropY
- *   the relative y-position the element is dropped over the aDropObject
- *   in percent of the aDropObject height
- * @param {XULElement} aListener
- *   the element who's drop target should be captured and returned.
- */
-function drag_n_drop_element(aDragObject, aDragWindow, aDropObject,
-                             aDropWindow, aRelDropX, aRelDropY, aListener)
-{
-  let dt = synthesize_drag_start(aDragWindow, aDragObject, aListener);
-  assert_true(dt, "Drag target was undefined");
-
-  synthesize_drag_over(aDropWindow, aDropObject, dt);
-
-  synthesize_drop(aDropWindow, aDropObject, dt,
-      { screenX : aDropObject.boxObject.screenX +
-                    (aDropObject.boxObject.width * aRelDropX),
-        screenY : aDropObject.boxObject.screenY +
-                    (aDropObject.boxObject.width * aRelDropY)
-      });
-}
-
-/**
- * Starts a drag new session.
- * @param {} aWindow
- * @param {XULElement} aDispatcher
- *   the element from which the drag session should be started.
- * @param {XULElement} aListener
- *   the element who's drop target should be captured and returned.
- * @return {nsIDataTransfer}
- *   returns the DataTransfer Object of captured by aListener.
- */
-function synthesize_drag_start(aWindow, aDispatcher, aListener)
-{
-  let dt;
-
-  var trapDrag = function(event) {
-
-    if ( !event.dataTransfer )
-      throw "no DataTransfer";
-
-    dt = event.dataTransfer;
-
-    //event.stopPropagation();
-    event.preventDefault();
-  };
-
-  aListener.addEventListener("dragstart", trapDrag, true);
-
-  EventUtils.synthesizeMouse(aDispatcher, 5, 5, {type:"mousedown"}, aWindow);
-  EventUtils.synthesizeMouse(aDispatcher, 5, 10, {type:"mousemove"}, aWindow);
-  EventUtils.synthesizeMouse(aDispatcher, 5, 15, {type:"mousemove"}, aWindow);
-
-  aListener.removeEventListener("dragstart", trapDrag, true);
-
-  return dt;
-}
-
-/**
- * Synthesizes a drag over event.
- * @param {} aWindow
- * @param {XULElement} aDispatcher
- *   the element from which the drag session should be started.
- * @param {nsIDataTransfer} aDt
- *   the DataTransfer Object of captured by listener.
- * @param {} aArgs
- *   arguments passed to the mouse event.
- */
-function synthesize_drag_over(aWindow, aDispatcher, aDt, aArgs)
-{
-  _synthesizeDragEvent("dragover", aWindow, aDispatcher, aDt, aArgs);
-}
-
-/**
- * Synthesizes a drag end event.
- * @param {} aWindow
- * @param {XULElement} aDispatcher
- *   the element from which the drag session should be started.
- * @param {nsIDataTransfer} aDt
- *   the DataTransfer Object of captured by listener.
- * @param {} aArgs
- *   arguments passed to the mouse event.
- */
-function synthesize_drag_end(aWindow, aDispatcher, aListener, aDt, aArgs)
-{
-  _synthesizeDragEvent("dragend", aWindow, aListener, aDt, aArgs);
-
-  //Ensure drag has ended.
-  EventUtils.synthesizeMouse(aDispatcher, 5, 5, {type:"mousemove"}, aWindow);
-  EventUtils.synthesizeMouse(aDispatcher, 5, 10, {type:"mousemove"}, aWindow);
-  EventUtils.synthesizeMouse(aDispatcher, 5, 5, {type:"mouseup"}, aWindow);
-}
-
-/**
- * Synthesizes a drop oevent.
- * @param {} aWindow
- * @param {XULElement} aDispatcher
- *   the element from which the drag session should be started.
- * @param {nsIDataTransfer} aDt
- *   the DataTransfer Object of captured by listener.
- * @param {} aArgs
- *   arguments passed to the mouse event.
- */
-function synthesize_drop(aWindow, aDispatcher, aDt, aArgs)
-{
-  _synthesizeDragEvent("drop", aWindow, aDispatcher, aDt, aArgs);
-
-  // Ensure drag has ended.
-  EventUtils.synthesizeMouse(aDispatcher, 5, 5, {type:"mousemove"}, aWindow);
-  EventUtils.synthesizeMouse(aDispatcher, 5, 10, {type:"mousemove"}, aWindow);
-  EventUtils.synthesizeMouse(aDispatcher, 5, 5, {type:"mouseup"}, aWindow);
-}
-
-/**
- * Private function: Synthesizes a specified drag event.
- * @param {} aType
- *   the type of the drag event to be synthesiyzed.
- * @param {} aWindow
- * @param {XULElement} aDispatcher
- *   the element from which the drag session should be started.
- * @param {nsIDataTransfer} aDt
- *   the DataTransfer Object of captured by listener.
- * @param {} aArgs
- *   arguments passed to the mouse event.
- */
-function _synthesizeDragEvent(aType, aWindow, aDispatcher, aDt, aArgs)
-{
-  let screenX;
-  if (aArgs && ("screenX" in aArgs))
-    screenX = aArgs.screenX;
-  else
-    screenX = aDispatcher.boxObject.ScreenX;
-
-  let screenY;
-  if (aArgs && ("screenY" in aArgs))
-    screenY = aArgs.screenY;
-  else
-    screenY = aDispatcher.boxObject.ScreenY;
-
-  let event = aWindow.document.createEvent("DragEvents");
-  event.initDragEvent(aType, true, true, aWindow, 0,
-      screenX, screenY, 0, 0, false, false, false, false, 0, null, aDt);
-  aDispatcher.dispatchEvent(event);
 }

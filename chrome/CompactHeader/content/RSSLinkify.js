@@ -67,7 +67,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     }
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       if (!RSSLinkify.newSubject) pub.InitializeHeaderViewTables();
-      var url = currentHeaderData["content-base"];
+      var url = currentHeaderData["content-base"] || currentHeaderData["x-post-url"];
       if(url) {
 //          RSSLinkify.newSubject.setAttribute("onclick", "if (!event.button) messenger.launchExternalURL('" +
 //                                               url.headerValue + "');");
@@ -78,7 +78,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
         RSSLinkify.newSubject.setAttribute("tooltiptext", url.headerValue);
         RSSLinkify.newSubject.addEventListener("click",
           org.mozdev.compactHeader.RSSLinkify.openBrowser, false);
-        RSSLinkify.newSubject.setAttribute("context", "CompactHeader_CohecopyUrlPopup");
+        RSSLinkify.newSubject.setAttribute("context", "CompactHeader_copyPopup");
       } else {
         removeEventListener('click',
             org.mozdev.compactHeader.RSSLinkify.openBrowser, true);
@@ -122,7 +122,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
       RSSLinkify.newSubject.setAttribute("id", "CompactHeader_collapsedsubjectlinkBox");
       RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
       RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
-      RSSLinkify.newSubject.setAttribute("context", "CohecopyUrlPopup");
+      RSSLinkify.newSubject.setAttribute("context", "CompactHeader_copyPopup");
       RSSLinkify.newSubject.setAttribute("keywordrelated", "true");
       RSSLinkify.newSubject.setAttribute("readonly", "true");
       RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
@@ -188,16 +188,12 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     }
   }
 
-  pub.CoheCopyWebsiteAddress = function (websiteAddressNode)
-  {
-    if (websiteAddressNode)
-    {
-      var websiteAddress = websiteAddressNode.getAttribute("url");
-
+  pub.CopyToClipboard = function(node, attr) {
+    if (node) {
       var contractid = "@mozilla.org/widget/clipboardhelper;1";
       var iid = Components.interfaces.nsIClipboardHelper;
       var clipboard = Components.classes[contractid].getService(iid);
-      clipboard.copyString(websiteAddress);
+      clipboard.copyString( node.getAttribute(attr) );
     }
   }
 

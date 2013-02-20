@@ -39,7 +39,7 @@
 -->
 <!ENTITY CompactHeader_dialog.title "Настройки CompactHeader">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Две строчки в компактном режиме">
-<!ENTITY CompactHeader_menu.Linkify.caption "Тема ленты новостей как ссылка">
+<!ENTITY CompactHeader_menu.Linkify.caption "Темы сообщений из лент и групп новостей работают как ссылки">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Показывать только адрес">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Плоские кнопки">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Расположение панели инструментов заголовка">
