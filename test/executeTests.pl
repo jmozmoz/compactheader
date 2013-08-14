@@ -240,7 +240,7 @@ foreach my $pid (@children) {
     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"),
     glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
     "$dispMUAfile",
-    "../../ftp/addon-562*.xpi",
+    glob("../../ftp/addon-562*.xpi"),
     "$xpi"
 #    "$mnenhyfile" # activate when mozmill can handle this addon:
   );
