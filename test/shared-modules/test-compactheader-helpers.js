@@ -56,14 +56,30 @@ var allPreferences = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService).getBranch(null);
 var L;
 var folderDisplayHelper;
+var gCDHelper;
 
-function setupModule() {
+function setupModule(module) {
   folderDisplayHelper = collector.getModule('folder-display-helpers');
   windowHelper = collector.getModule('window-helpers');
+  let cu = collector.getModule('customization-helpers');
+  cu.installInto(module);
+ 
+  var appInfo = Cc["@mozilla.org/xre/app-info;1"]
+  .getService(Ci.nsIXULAppInfo);
+  var versionChecker = Cc["@mozilla.org/xpcom/version-comparator;1"]
+    .getService(Ci.nsIVersionComparator);
+  if (versionChecker.compare(appInfo.version, "24.0b1") < 0) {
+    gCDHelper = new module.CustomizeDialogHelper('header-view-toolbar',
+      'CustomizeHeaderToolbar', 'CustomizeToolbarWindow');
+  }
+  else {
+    gCDHelper = new module.CustomizeDialogHelper('header-view-toolbar',
+        'CustomizeHeaderToolbar', 'mailnews:customizeToolbar');
+  }
 }
 
 function installInto(module) {
-  setupModule();
+  setupModule(module);
 
   // Now copy helper functions
   module.reopen_3pane_window = reopen_3pane_window;
@@ -224,6 +240,7 @@ function restore_and_check_default_buttons(aController)
   let restoreButton = ctc.window.document.getElementById("main-box").
     querySelector("[oncommand='overlayRestoreDefaultSet();']");
   ctc.click(new elib.Elem(restoreButton));
+//  gCDHelper.restoreDefaultButtons(aController);
   close_header_pane_toolbar_customization(ctc);
 
   let hdrToolbar = aController.eid("header-view-toolbar").node;
@@ -239,17 +256,7 @@ function restore_and_check_default_buttons(aController)
 function open_header_pane_toolbar_customization(aController)
 {
   let ctc;
-  aController.click(aController.eid("CustomizeHeaderToolbar"));
-  // Depending on preferences the customization dialog is
-  // either a normal window or embedded into a sheet.
-  if (allPreferences.getBoolPref(usesheetPref, true)) {
-    aController.ewait("donebutton");
-    let contentWindow = aController.eid("customizeToolbarSheetIFrame").node.contentWindow;
-    ctc = windowHelper.augment_controller(new controller.MozMillController(contentWindow));
-  }
-  else {
-    ctc = windowHelper.wait_for_existing_window("CustomizeToolbarWindow");
-  }
+  ctc = gCDHelper.open(aController);
   return ctc;
 }
 
@@ -258,9 +265,9 @@ function open_header_pane_toolbar_customization(aController)
  */
 function close_header_pane_toolbar_customization(aCtc)
 {
-  aCtc.click(aCtc.eid("donebutton"));
-  // XXX There should be an equivalent for testing the closure of
-  // XXX the dialog embedded in a sheet, but I do not know how.
+  gCDHelper.close(aCtc);
+//  // XXX There should be an equivalent for testing the closure of
+//  // XXX the dialog embedded in a sheet, but I do not know how.
   if (!allPreferences.getBoolPref(usesheetPref, true)) {
     folderDisplayHelper.assert_true(aCtc.window.closed, "The customization dialog is not closed.");
   }

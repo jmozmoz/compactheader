@@ -619,6 +619,7 @@ function test_customize_header_toolbar_change_button_style(){
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
   // The default mode is icon visible only.
+  
   subtest_buttons_style("-moz-box", "none");
 
   // Change the button style to text and icon mode
@@ -818,6 +819,23 @@ function subtest_buttons_style(aIconVisibility, aLabelVisibility)
     if (mc.eid(currentSet[i]).node.tagName == "toolbarbutton") {
       let icon = mc.aid(currentSet[i], {class: "toolbarbutton-icon"}).node;
       let label = mc.aid(currentSet[i], {class: "toolbarbutton-text"}).node;
+            
+      if (!icon) {
+        let exp1 = mc.e(currentSet[i]);
+        let node = mc.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
+        if (node) {
+          icon = mc.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-icon");
+        }
+      }
+      if (!label) {
+        let exp1 = mc.e(currentSet[i]);
+        let node = mc.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
+        if (node) {
+          label = mc.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-text");
+        }
+      }
+      assert_not_equals(null, label, "No label of button " + currentSet[i] + " found!");
+      assert_not_equals(null, icon, "No icon of button " + currentSet[i] + " found!");
       assert_equals(mc.window.getComputedStyle(icon).getPropertyValue("display"), aIconVisibility);
       assert_equals(mc.window.getComputedStyle(label).getPropertyValue("display"), aLabelVisibility);
     }
