@@ -237,10 +237,15 @@ foreach my $pid (@children) {
   # We have out own tests for this, so delete it
   unlink("message-header/test-header-toolbar.js");
   my @compatibility_apps = (
+    glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"),
     glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
     "$dispMUAfile",
+    "../../ftp/addon-562*.xpi",
+    "$xpi"
 #    "$mnenhyfile" # activate when mozmill can handle this addon:
   );
+  
+  @compatibility_apps = grep { $_ && !m/^\s+$/ } @compatibility_apps;
 
   my $comp_apps = join(",", @compatibility_apps);
   print $comp_apps;
@@ -252,10 +257,10 @@ foreach my $pid (@children) {
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1`;
   print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1`;
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi,$comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
 
   chdir "$currentdir";
   my @timeData = localtime(time);
