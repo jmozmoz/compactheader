@@ -36,10 +36,11 @@
 
  ***** END LICENSE BLOCK *****
 
+
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader 設定">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "2 行表示">
-<!ENTITY CompactHeader_menu.Linkify.caption "RSS フィードの件名にリンクを設定する">
+<!ENTITY CompactHeader_menu.Linkify.caption "RSS フィードとニュースグループの件名にリンクを設定する">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "メールアドレスのみ表示">
 <!ENTITY CompactHeader_menu.flatButtons.caption "フラットボタン">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "ツールバーの位置">

@@ -37,7 +37,7 @@
 
 <!ENTITY CompactHeader_dialog.title "CompactHeader Einstellungen">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
-<!ENTITY CompactHeader_menu.Linkify.caption "Link in Betreff von RSS Feeds">
+<!ENTITY CompactHeader_menu.Linkify.caption "Link in Betreffs von RSS Feeds und Newsgroup Nachrichten">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flache Schaltflächen">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position der Kopfzeilenwerkzeugleiste">
