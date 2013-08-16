@@ -39,7 +39,7 @@
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader - Indstillinger">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
-<!ENTITY CompactHeader_menu.Linkify.caption "Link i feed-emner og NNTP-indlæg">
+<!ENTITY CompactHeader_menu.Linkify.caption "Link i feed-emner og indlæg i nyhedsgrupper">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Vis kun adresse">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flade knapper">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position værktøjslinje i meddelelseshovedet">
