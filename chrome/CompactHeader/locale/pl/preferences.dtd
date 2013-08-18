@@ -33,17 +33,17 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
-<!ENTITY CompactHeader_dialog.title "Ustawienia CompactHeader">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Dwie linie nagłówka">
-<!ENTITY CompactHeader_menu.Linkify.caption "Linki RSS w tematach">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Pokazuj tylko adresy">
-<!ENTITY CompactHeader_menu.flatButtons.caption "Płaskie przyciski">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Pozycja nagłówka">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "po prawej">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "na górze">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "po lewej">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "niewidoczny">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
+ ***** END LICENSE BLOCK ***** 
+-->
+<!ENTITY CompactHeader_dialog.title "CompactHeader – ustawienia">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Wyświetlaj dwa wiersze nagłówka">
+<!ENTITY CompactHeader_menu.Linkify.caption "Wyświetlaj odnośnik w tematach kanałów RSS i postów grup dyskusyjnych">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Wyświetlaj tylko adresy">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Wyświetlaj płaskie przyciski">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Położenie paska narzędzi nagłówka">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Po prawej">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "Na górze">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "Po lewej">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "Niewidoczny">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Przełączaj widok nagłówka dwukrotnym kliknięciem">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Przyciemniaj nagłówek, gdy panel wiadomości jest aktywny">
