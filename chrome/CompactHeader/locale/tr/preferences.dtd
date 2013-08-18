@@ -38,7 +38,7 @@
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader Tercihleri">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakt görünümde iki satır göster">
-<!ENTITY CompactHeader_menu.Linkify.caption "Rss beslemelerindeki konulara bağlantı">
+<!ENTITY CompactHeader_menu.Linkify.caption "RSS beslemeleri ve haber grubu mesajlarındaki bağlantı">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Sadece adresleri göster">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Düz düğmeler">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Başlık Çubuğu Pozisyonu">

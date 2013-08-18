@@ -34,10 +34,11 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** 
+
 -->
 <!ENTITY CompactHeader_dialog.title "Inställningar för CompactHeader">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Visa två rader i kompaktvyn">
-<!ENTITY CompactHeader_menu.Linkify.caption "Länka i ämnen för RSS-flöden">
+<!ENTITY CompactHeader_menu.Linkify.caption "Länk i ämnesraderna för RSS-flöden och nyhetsgruppsinlägg">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Visa endast adresser">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Platta knappar">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position för brevhuvudverktygsfältet">
