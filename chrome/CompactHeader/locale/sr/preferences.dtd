@@ -39,7 +39,7 @@
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader - опције">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Прикажи две линије у сажетом приказу">
-<!ENTITY CompactHeader_menu.Linkify.caption "Повежи теме у RSS доводима">
+<!ENTITY CompactHeader_menu.Linkify.caption "Повежи субјекте RSS претплата и групних објава новости">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Прикажи само адресу">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Равна дугмад">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Место траке са алаткама у заглављу">
