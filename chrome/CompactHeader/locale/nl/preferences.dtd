@@ -33,9 +33,17 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** -->
-
-<!ENTITY CompactHeader_hideDetailsButton.label "Hide details">
-<!ENTITY CompactHeader_toggleDetails.key "h">
-<!ENTITY CompactHeader_showDetailsButton.label "Show details">
-<!ENTITY CompactHeader_compactMenu.label "Compact">
+ ***** END LICENSE BLOCK ***** 
+-->
+<!ENTITY CompactHeader_dialog.title "CompactHeader voorkeuren">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Laat twee regels zien in compact beeld">
+<!ENTITY CompactHeader_menu.Linkify.caption "Link in onderwerp van RSS feeds en nieuwsgroep berichten">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Laat alleen adressen zien">
+<!ENTITY CompactHeader_menu.flatButtons.caption "Platte knoppen">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Plaats van Berichtkop werkbalk">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "rechts">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "boven">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "links">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "onzichtbaar">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Wissel berichtkop door te dubbel klikken">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Maak de berichtkop donkerder als het berichtpaneel focus heeft">

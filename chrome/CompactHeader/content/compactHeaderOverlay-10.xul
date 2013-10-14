@@ -3,9 +3,35 @@
 <?xml-stylesheet href="chrome://CompactHeader/skin/CompactHeader.css" type="text/css"?>
 <?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
 
+<!DOCTYPE overlay [
+  <!ENTITY % utilityDTD SYSTEM
+  "chrome://communicator/locale/utilityOverlay.dtd">
+  %utilityDTD; <!-- copyCmd -->
+  <!ENTITY % msgHeaderDTD SYSTEM
+  "chrome://messenger/locale/msgHdrViewOverlay.dtd">
+  %msgHeaderDTD;
+  <!ENTITY % compactHeaderDTD SYSTEM
+  "chrome://CompactHeader/locale/CompactHeader.dtd">
+  %compactHeaderDTD;
+  <!ENTITY % preferencesDTD SYSTEM
+  "chrome://CompactHeader/locale/preferences.dtd">
+  %preferencesDTD;
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd">
+  %messengerDTD;
+]>
+
 
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <menupopup id="menu_HeadersPopup">
+    <menuseparator id="CompactHeader_viewMenuCompactSeparator"/>
+    <menuitem id="CompactHeader_viewMenuCompact"
+              label="&CompactHeader_compactMenu.label;"
+              type="checkbox"
+              key="CompactHeader_hideDetailsKey"
+              oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
+  </menupopup>
 
   <hbox id="messagepaneboxwrapper">
     <vbox id="CompactHeader_leftSidebar"

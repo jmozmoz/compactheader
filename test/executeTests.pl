@@ -283,6 +283,7 @@ foreach my $pid (@children) {
 sub parse_csv {
   my $text = shift;
   my @new = ();
+  $text =~ s/#.*//;
   push (@new, $+) while $text =~ m{
           "([^\"\\]*(?:\\.[^\"\\]*)*)",?
           | ([^,]+),?
