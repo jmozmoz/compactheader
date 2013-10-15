@@ -24,13 +24,33 @@
 <overlay id="compactHeaderOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <broadcasterset>
+    <broadcaster id="CompactHeader_viewMenuCompactBroadcast"
+                 checked="false"/>
+  </broadcasterset>
+
   <menupopup id="menu_HeadersPopup">
     <menuseparator id="CompactHeader_viewMenuCompactSeparator"/>
     <menuitem id="CompactHeader_viewMenuCompact"
               label="&CompactHeader_compactMenu.label;"
               type="checkbox"
-              key="CompactHeader_hideDetailsKey"
-              oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
+              oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              key="CompactHeader_hideDetailsKey">
+      <observes element="CompactHeader_viewMenuCompactBroadcast"
+                attribute="checked"/>
+    </menuitem>
+  </menupopup>
+
+  <menupopup id="appmenu_HeadersPopup">
+    <menuseparator id="CompactHeader_appmenu_viewMenuCompactSeparator"/>
+    <menuitem id="CompactHeader_appmenu_viewMenuCompact"
+              label="&CompactHeader_compactMenu.label;"
+              type="checkbox"
+              oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              key="CompactHeader_hideDetailsKey">
+      <observes element="CompactHeader_viewMenuCompactBroadcast"
+                attribute="checked"/>
+    </menuitem>
   </menupopup>
 
   <hbox id="messagepaneboxwrapper">
