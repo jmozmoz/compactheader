@@ -38,3 +38,5 @@
 <!ENTITY CompactHeader_hideDetailsButton.label "Skrýt podrobnosti">
 <!ENTITY CompactHeader_toggleDetails.key "s">
 <!ENTITY CompactHeader_showDetailsButton.label "Zobrazit podrobnosti">
+<!ENTITY CompactHeader_compactMenu.label "Compact">
+<!ENTITY CompactHeader_compactMenu.accesskey "C">

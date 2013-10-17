@@ -36,7 +36,10 @@
  ***** END LICENSE BLOCK ***** 
 
 
+
 -->
 <!ENTITY CompactHeader_hideDetailsButton.label "隐藏详细信息">
 <!ENTITY CompactHeader_toggleDetails.key "h">
 <!ENTITY CompactHeader_showDetailsButton.label "显示详细信息">
+<!ENTITY CompactHeader_compactMenu.label "紧凑视图">
+<!ENTITY CompactHeader_compactMenu.accesskey "紧">

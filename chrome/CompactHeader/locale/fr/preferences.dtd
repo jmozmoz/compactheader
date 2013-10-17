@@ -42,8 +42,8 @@
 <!ENTITY CompactHeader_menu.flatButtons.caption "Boutons plats">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "haut">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "gauche">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "haut">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "gauche">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisible">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Activer/désactiver l'en-tête avec un double clic">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Griser l'en-tête si le panneau des messages est au premier plan">

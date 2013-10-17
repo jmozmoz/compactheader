@@ -39,3 +39,4 @@
 <!ENTITY CompactHeader_toggleDetails.key "h">
 <!ENTITY CompactHeader_showDetailsButton.label "Details anzeigen">
 <!ENTITY CompactHeader_compactMenu.label "Kompakt">
+<!ENTITY CompactHeader_compactMenu.accesskey "K">

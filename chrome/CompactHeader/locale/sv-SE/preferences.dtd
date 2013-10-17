@@ -47,4 +47,4 @@
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "till vänster">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "osynligt">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Växla visning av huvudet med dubbelklick">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Gör huvudet mörkare om meddelandepanelen har fokus">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Gör huvudet mörkare när meddelandepanelen har fokus">

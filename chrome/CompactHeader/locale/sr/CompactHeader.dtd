@@ -39,3 +39,5 @@
 <!ENTITY CompactHeader_hideDetailsButton.label "Сакриј детаље">
 <!ENTITY CompactHeader_toggleDetails.key "д">
 <!ENTITY CompactHeader_showDetailsButton.label "Прикажи детаље">
+<!ENTITY CompactHeader_compactMenu.label "Сажето">
+<!ENTITY CompactHeader_compactMenu.accesskey "С">

@@ -34,6 +34,7 @@
     <menuitem id="CompactHeader_viewMenuCompact"
               label="&CompactHeader_compactMenu.label;"
               type="checkbox"
+              accesskey="&CompactHeader_compactMenu.accesskey;"
               oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
               key="CompactHeader_hideDetailsKey">
       <observes element="CompactHeader_viewMenuCompactBroadcast"
@@ -46,6 +47,7 @@
     <menuitem id="CompactHeader_appmenu_viewMenuCompact"
               label="&CompactHeader_compactMenu.label;"
               type="checkbox"
+              accesskey="&CompactHeader_compactMenu.accesskey;"
               oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
               key="CompactHeader_hideDetailsKey">
       <observes element="CompactHeader_viewMenuCompactBroadcast"

@@ -39,3 +39,5 @@
 <!ENTITY CompactHeader_hideDetailsButton.label "Ocultar detalles">
 <!ENTITY CompactHeader_toggleDetails.key "h">
 <!ENTITY CompactHeader_showDetailsButton.label "Mostrar detalles">
+<!ENTITY CompactHeader_compactMenu.label "Compact">
+<!ENTITY CompactHeader_compactMenu.accesskey "C">

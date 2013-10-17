@@ -41,3 +41,5 @@
 <!ENTITY CompactHeader_hideDetailsButton.label "詳細を隠す">
 <!ENTITY CompactHeader_toggleDetails.key "h">
 <!ENTITY CompactHeader_showDetailsButton.label "詳細を表示">
+<!ENTITY CompactHeader_compactMenu.label "コンパクト">
+<!ENTITY CompactHeader_compactMenu.accesskey "コ">

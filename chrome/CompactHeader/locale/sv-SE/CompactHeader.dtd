@@ -35,7 +35,10 @@
 
  ***** END LICENSE BLOCK ***** 
 
+
 -->
 <!ENTITY CompactHeader_hideDetailsButton.label "Dölj info">
 <!ENTITY CompactHeader_toggleDetails.key "f">
 <!ENTITY CompactHeader_showDetailsButton.label "Visa info">
+<!ENTITY CompactHeader_compactMenu.label "Kompakt">
+<!ENTITY CompactHeader_compactMenu.accesskey "K">
