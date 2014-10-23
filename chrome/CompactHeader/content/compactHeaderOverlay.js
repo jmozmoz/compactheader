@@ -364,8 +364,10 @@ org.mozdev.compactHeader.pane = function() {
               .getService(Components.interfaces.nsIAbManager)
               .removeAddressBookListener(coheAddressBookListener);
 
-    removeEventListener('messagepane-loaded', coheOnLoadMsgHeaderPane, true);
-    removeEventListener('messagepane-unloaded', coheOnUnloadMsgHeaderPane, true);
+    removeEventListener('messagepane-loaded', 
+      org.mozdev.compactHeader.pane.coheOnLoadMsgHeaderPane, true);
+    removeEventListener('messagepane-unloaded', 
+      org.mozdev.compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
   }
 
   var coheAddressBookListener =
