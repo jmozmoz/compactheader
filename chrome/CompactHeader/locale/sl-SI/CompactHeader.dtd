@@ -33,9 +33,10 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** 
+ ***** END LICENSE BLOCK *****
 -->
 <!ENTITY CompactHeader_hideDetailsButton.label "Skrij podrobnosti">
 <!ENTITY CompactHeader_toggleDetails.key "S">
 <!ENTITY CompactHeader_showDetailsButton.label "Prikaži podrobnosti">
 <!ENTITY CompactHeader_compactMenu.label "Strni">
+<!ENTITY CompactHeader_compactMenu.accesskey "S">
