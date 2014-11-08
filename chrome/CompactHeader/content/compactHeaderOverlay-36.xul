@@ -67,8 +67,8 @@
                  defaultmode="icons">
           <toolbarpalette id="header-view-toolbar-palette">
             <toolbarbutton id="CompactHeader_hdrOtherActionsButton"
-                           label="&otherActionsButton1.label;"
-                           tooltiptext="&otherActionsButton1.label;"
+                           label="&otherActionsButton2.label;"
+                           tooltiptext="&otherActionsButton.tooltip;"
                            class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
                            type="menu"/>
           </toolbarpalette>
@@ -86,7 +86,7 @@
         <vbox id="otherActionsBox" flex="0">
           <hbox id="dateValueBox" flex="0"/>
           <button type="menu" id="otherActionsButton" collapsed="true"
-                  label="&otherActionsButton1.label;"
+                  label="&otherActionsButton2.label;"
                   class="msgHeaderView-button msgHeaderView-flat-button">
             <menupopup id="otherActionsPopup" onpopupshowing="org.mozdev.compactHeader.toolbar.showOtherActionButtonMenu();">
               <menuitem id="CompactHeader_hdrPane-markFlagged"

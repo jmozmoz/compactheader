@@ -24,7 +24,7 @@ locale    CompactHeader     nl   chrome/CompactHeader/locale/nl/
 locale    CompactHeader     sl-SI   chrome/CompactHeader/locale/sl-SI/
 
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-9.xul appversion<24.0a2
-overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-24.xul appversion>=24.0a2
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-36.xul appversion>=36.0a1
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-10.xul appversion>=10.0a1
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 overlay chrome://CompactHeader/content/preferences.xul   chrome://CompactHeader/content/preferences-old.xul appversion<10.0a2

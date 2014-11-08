@@ -153,6 +153,7 @@
   background-position: center center;
   margin-top: 5px;
   -moz-margin-start: 2px;
+  min-width: 1em;
 }
 
 #CompactHeader_showDetailsButton:hover,
@@ -170,6 +171,7 @@
   background-position: center center;
   margin-top: 5px;
   -moz-margin-start: 2px;
+  min-width: 1em;
 }
 
 #expandedfromBox,
