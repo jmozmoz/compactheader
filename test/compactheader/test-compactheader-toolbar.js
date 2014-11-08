@@ -195,8 +195,8 @@ function test_customize_header_toolbar_check_default()
   let msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
   expand_and_assert_header(msgc);
-  let hdrToolbar = msgc.eid("header-view-toolbar").node;
-  let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+  hdrToolbar = msgc.eid("header-view-toolbar").node;
+  hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   // In a fresh profile the currentset attribute does not
   // exist, i.e. it returns empty. So check for both valid
@@ -341,15 +341,15 @@ function test_customize_header_toolbar_separate_window()
   select_message_in_folder(folder1, 0, mc);
 
   // Check, if the buttons in the mail3pane window are the correct ones.
-  let hdrToolbar = mc.eid("header-view-toolbar").node;
-  let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+  hdrToolbar = mc.eid("header-view-toolbar").node;
+  hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   assert_equals(hdrToolbar.getAttribute("currentset"), hdrBarDefaultSet);
 
   // Open separate mail window again and check another time.
-  let msgc = open_selected_message_in_new_window();
+  msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
-  let toolbar = msgc.eid("header-view-toolbar").node;
+  toolbar = msgc.eid("header-view-toolbar").node;
   assert_equals(filterInvisibleButtons(msgc, toolbar.currentSet), reverseSet);
   assert_equals(filterInvisibleButtons(msgc, toolbar.getAttribute("currentset")),
       reverseSet);
@@ -385,7 +385,7 @@ function test_customize_header_toolbar_remove_buttons(){
   close_header_pane_toolbar_customization(ctc);
 
   // Check, if the toolbar is really empty.
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet), "__empty");
   assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
       "__empty");
@@ -419,16 +419,16 @@ function test_customize_header_toolbar_remove_buttons(){
   abwc.window.close();
   select_message_in_folder(folder1, 0, mc);
 
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet), "__empty");
   assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
       "__empty");
 
   // Check that all removed buttons show up in the palette
   // and move it back in the toolbar.
-  let ctc = open_header_pane_toolbar_customization(mc);
-  let toolbar = mc.eid("header-view-toolbar").node;
-  let palette = ctc.e("palette-box");
+  ctc = open_header_pane_toolbar_customization(mc);
+  toolbar = mc.eid("header-view-toolbar").node;
+  palette = ctc.e("palette-box");
   for (let i=0; i<lCurrentset.length; i++) {
     let button = ctc.e(lCurrentset[i]);
     assert_true(button!=null, "Button " + lCurrentset[i] + " not in palette");
@@ -438,7 +438,7 @@ function test_customize_header_toolbar_remove_buttons(){
   }
   close_header_pane_toolbar_customization(ctc);
 
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(filterInvisibleButtons(mc, toolbar.currentSet),
       filterInvisibleButtons(mc, hdrBarDefaultSet));
   assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
@@ -494,9 +494,9 @@ function test_customize_header_toolbar_add_all_buttons(){
 
   // No buttons are left in the palette
   // Get all buttons in the palette and move them to toolbar
-  let ctc = open_header_pane_toolbar_customization(mc);
-  let palette = ctc.e("palette-box");
-  let tmp = ctc.window.document.getElementById("palette-box").
+  ctc = open_header_pane_toolbar_customization(mc);
+  palette = ctc.e("palette-box");
+  tmp = ctc.window.document.getElementById("palette-box").
     getElementsByTagName("toolbarpaletteitem");
 
   let leftButtons = new Array;
@@ -513,7 +513,7 @@ function test_customize_header_toolbar_add_all_buttons(){
   close_header_pane_toolbar_customization(ctc);
 
   // Move the buttons back to palette
-  let ctc = open_header_pane_toolbar_customization(mc);
+  ctc = open_header_pane_toolbar_customization(mc);
   let target = ctc.e("palette-box");
   for (let i=wrappedButtons.length-1; i>= 0; i--) {
     let button = mc.e(wrappedButtons[i]);
@@ -529,9 +529,9 @@ function test_customize_header_toolbar_add_all_buttons(){
       filterInvisibleButtons(mc, hdrBarDefaultSet));
 
   // All buttons have shown up in the palette
-  let ctc = open_header_pane_toolbar_customization(mc);
-  let backButtons = new Array;
-  let tmp = ctc.window.document.getElementById("palette-box").
+  ctc = open_header_pane_toolbar_customization(mc);
+  backButtons = new Array;
+  tmp = ctc.window.document.getElementById("palette-box").
     getElementsByTagName("toolbarpaletteitem");
   for (let i=tmp.length-1; i>=0; i--) {
     let type = tmp[i].getAttribute("type");
@@ -548,10 +548,10 @@ function test_customize_header_toolbar_add_all_buttons(){
   // Reopen customization dialog and
   // all buttons are still in the palette
   select_message_in_folder(folder1, 1, mc);
-  let ctc = open_header_pane_toolbar_customization(mc);
+  ctc = open_header_pane_toolbar_customization(mc);
 
-  let backButtons = new Array;
-  let tmp = ctc.window.document.getElementById("palette-box").
+  backButtons = new Array;
+  tmp = ctc.window.document.getElementById("palette-box").
     getElementsByTagName("toolbarpaletteitem");
   for (let i=tmp.length-1; i>=0; i--) {
     let type = tmp[i].getAttribute("type");
@@ -619,7 +619,7 @@ function test_customize_header_toolbar_change_button_style(){
   // Restore the default buttons to get defined starting conditions.
   restore_and_check_default_buttons(mc);
   // The default mode is icon visible only.
-  
+
   subtest_buttons_style("-moz-box", "none");
 
   // Change the button style to text and icon mode
@@ -632,8 +632,8 @@ function test_customize_header_toolbar_change_button_style(){
   subtest_buttons_style("-moz-box", "-moz-box");
 
   // Change the button style to icon mode only
-  let ctc = open_header_pane_toolbar_customization(mc);
-  let iconMode = ctc.window.document.getElementById("main-box").
+  ctc = open_header_pane_toolbar_customization(mc);
+  iconMode = ctc.window.document.getElementById("main-box").
     querySelector("[value='icons']");
   ctc.click(new elib.Elem(iconMode));
   close_header_pane_toolbar_customization(ctc);
@@ -641,7 +641,7 @@ function test_customize_header_toolbar_change_button_style(){
   subtest_buttons_style("-moz-box", "none");
 
   // Change the button style to text (only) mode
-  let ctc = open_header_pane_toolbar_customization(mc);
+  ctc = open_header_pane_toolbar_customization(mc);
   let textMode = ctc.window.document.getElementById("main-box").
     querySelector("[value='text']");
   ctc.click(new elib.Elem(textMode));
@@ -665,10 +665,10 @@ function test_visible_toolbar() {
   assert_equals(isVisible(toolbar), true);
   open_preferences_dialog(mc, subtest_change_twoline);
   collapse_and_assert_header(mc);
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(isVisible(toolbar), true);
   expand_and_assert_header(mc);
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(isVisible(toolbar), true);
 
   set_pane_layout(kWideMailLayout);
@@ -681,17 +681,17 @@ function test_visible_toolbar() {
   abwc.window.close();
 
   mc.sleep(10);
-  
+
   collapse_and_assert_header(mc);
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(isVisible(toolbar), true);
   expand_and_assert_header(mc);
-  let toolbar = mc.eid("header-view-toolbar").node;
+  toolbar = mc.eid("header-view-toolbar").node;
   assert_equals(isVisible(toolbar), true);
-    
+
   set_pane_layout(kClassicMailLayout);
   assert_pane_layout(kClassicMailLayout);
-  let abwc = openAddressBook();
+  abwc = openAddressBook();
   // The 3pane window is closed and opened again.
   close3PaneWindow();
 
@@ -819,7 +819,7 @@ function subtest_buttons_style(aIconVisibility, aLabelVisibility)
     if (mc.eid(currentSet[i]).node.tagName == "toolbarbutton") {
       let icon = mc.aid(currentSet[i], {class: "toolbarbutton-icon"}).node;
       let label = mc.aid(currentSet[i], {class: "toolbarbutton-text"}).node;
-            
+
       if (!icon) {
         let exp1 = mc.e(currentSet[i]);
         let node = mc.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
