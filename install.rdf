@@ -6,6 +6,14 @@
 
 	<RDF:Description about="urn:mozilla:install-manifest">
 		<em:name>CompactHeader</em:name>
+    <em:localized>
+      <Description>
+        <em:locale>sl-SI</em:locale>
+        <em:name>CompactHeader</em:name>
+        <em:description>Doda zmožnost zmanjševanja velikosti glave na eno ali dve vrstici. Ustvari povezave iz zadev virov RSS.</em:description>
+        <em:translator>Peter Klofutar</em:translator>
+      </Description>
+    </em:localized>
 		<em:version>2.0.9beta2</em:version>
 		<em:description>Add ability to reduce header size to one or two lines. Linkify subjects in RSS feeds.</em:description>
 		<em:creator>Joachim Herb</em:creator>
