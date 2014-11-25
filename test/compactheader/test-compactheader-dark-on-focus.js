@@ -64,8 +64,6 @@ function setupModule(module) {
   abh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
-  let meh = collector.getModule('mouse-event-helpers');
-  meh.installInto(module);
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 

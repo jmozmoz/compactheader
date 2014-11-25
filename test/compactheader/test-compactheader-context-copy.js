@@ -65,8 +65,6 @@ function setupModule(module) {
   abh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
-  let meh = collector.getModule('mouse-event-helpers');
-  meh.installInto(module);
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
@@ -80,12 +78,12 @@ function setupModule(module) {
 
   add_message_to_folder(folder1, msg);
   // create a message which looks like an RSS feed
-  let msg = create_message({to: msgGen.makeNamesAndAddresses(1), // YYY
+  let msg2 = create_message({to: msgGen.makeNamesAndAddresses(1), // YYY
                             subject: "RSS feed message",
                             clobberHeaders: {
                               "Content-Base": FEED_ADDR
                             }});
-  add_message_to_folder(folder1, msg);
+  add_message_to_folder(folder1, msg2);
 
 }
 
@@ -129,7 +127,7 @@ function test_without_linkify() {
   assert_equals(null, mc.e("CompactHeader_collapsedsubjectlinkBox"));
 
   // select RSS message
-  let curMessage = select_message_in_folder(folder1, 1, mc);
+  curMessage = select_message_in_folder(folder1, 1, mc);
   expand_and_assert_header(mc);
 
   // check context menu of subject = Copy
@@ -196,7 +194,7 @@ function test_with_linkify() {
   mc.click_menus_in_sequence(mc.e("copyPopup"), [{id: "copyMenuitem"}]);
   assert_clipboard_content(curMessage.mime2DecodedSubject);
 
-  let curMessage = select_message_in_folder(folder1, 1, mc);
+  curMessage = select_message_in_folder(folder1, 1, mc);
   expand_and_assert_header(mc);
 
   // check context menu of subject = Copy

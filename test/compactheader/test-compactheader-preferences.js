@@ -88,8 +88,6 @@ function setupModule(module) {
   abh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
-  let meh = collector.getModule('mouse-event-helpers');
-  meh.installInto(module);
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
@@ -121,11 +119,11 @@ function setupModule(module) {
   addToFolder("test encoded ISO-8859-1", messageBodyISO8859_1, folder1, "iso-8859-1");
   addToFolder("test encoded UTF-8", messageBodyUTF8, folder1, "utf-8");
 
-  let msg = create_message();
-  add_message_to_folder(folder1, msg);
+  let msg2 = create_message();
+  add_message_to_folder(folder1, msg2);
 
-  let msg = create_message();
-  add_message_to_folder(folder2, msg);
+  let msg3 = create_message();
+  add_message_to_folder(folder2, msg3);
 }
 
 

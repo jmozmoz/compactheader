@@ -74,8 +74,6 @@ function setupModule(module) {
   abh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
-  let meh = collector.getModule('mouse-event-helpers');
-  meh.installInto(module);
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
@@ -93,7 +91,7 @@ function setupModule(module) {
                             }});
   add_message_to_folder(folder1, msg);
 
-  let msg = create_message({cc: msgGen.makeNamesAndAddresses(2), // YYY
+  let msg2 = create_message({cc: msgGen.makeNamesAndAddresses(2), // YYY
     subject: "This is a really, really, really, really, really, really, really, really, long subject.",
     clobberHeaders: {
       "Newsgroups": "alt.test",
@@ -101,9 +99,9 @@ function setupModule(module) {
       "Content-Base": "http://example.com/",
       "Bcc": "Richard Roe <richard.roe@momo.invalid>"
     }});
-  add_message_to_folder(folder1, msg);
+  add_message_to_folder(folder1, msg2);
 
-  let msg = create_message({
+  let msg3 = create_message({
     subject: "This is a short subject.",
     to: [["T Toe", "t.toe@t.invalid"]],
     clobberHeaders: {
@@ -111,12 +109,12 @@ function setupModule(module) {
       "cc": "S Soe <s.soe@s.invalid>",
     },
     });
-  add_message_to_folder(folder1, msg);
+  add_message_to_folder(folder1, msg3);
 
-  let msg = create_message({cc: msgGen.makeNamesAndAddresses(3),
+  let msg4 = create_message({cc: msgGen.makeNamesAndAddresses(3),
     to: msgGen.makeNamesAndAddresses(1)
   });
-  add_message_to_folder(folder1, msg);
+  add_message_to_folder(folder1, msg4);
 }
 
 function teardownModule() {
@@ -159,7 +157,7 @@ function test_wide_layout_and_compact() {
 
   set_pane_layout(kClassicMailLayout);
   assert_pane_layout(kClassicMailLayout);
-  let abwc = openAddressBook();
+  abwc = openAddressBook();
   // The 3pane window is closed and opened again.
   close3PaneWindow();
 

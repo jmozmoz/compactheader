@@ -95,9 +95,9 @@ my $mnenhy = "https://addons.mozilla.org/thunderbird/downloads/latest/2516/addon
 
 my %testSpecs;
 
-system "wget", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
+system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
 
-system "wget", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
+system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
 
 while (my $line = <F>)
 {
@@ -120,7 +120,8 @@ while (my $line = <F>)
     }
     #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P $ftpdir 2>&1\n";
     #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\";\n";
-    `wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P "$ftpdir" 2>&1`;
+    print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\" 2>&1";
+    `wget -r -l1 --no-check-certificate --no-parent --follow-ftp -A$checksum $ftppath -nd -P "$ftpdir" 2>&1`;
     @files = glob("$ftpdir/thunderbird*$checksum");
 
     my $file = $files[0];
@@ -157,9 +158,9 @@ while (my $line = <F>)
       my $testdir = "/tmp/compactheader/test-$version";
 
       mkdir "$testdir";
-      system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
-      system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
-      system "wget", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
+      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
       system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
       system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*";
@@ -222,7 +223,7 @@ foreach my $pid (@children) {
     print "\n";
     print getcwd;
     print "... installing mozmill\n";
-    `python resources/installmozmill.py ../mozmill-virtualenv`;
+    `python resources/installmozmill.py ../mozmill-virtualenv ../mozbase/`;
     $python = "$virtualpython";
   }
   else {
@@ -244,7 +245,7 @@ foreach my $pid (@children) {
     "$xpi"
 #    "$mnenhyfile" # activate when mozmill can handle this addon:
   );
-  
+
   @compatibility_apps = grep { $_ && !m/^\s+$/ } @compatibility_apps;
 
   my $comp_apps = join(",", @compatibility_apps);

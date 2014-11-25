@@ -61,8 +61,6 @@ function setupModule(module) {
   abh.installInto(module);
   let meh = collector.getModule('mouse-event-helpers');
   meh.installInto(module);
-  let meh = collector.getModule('mouse-event-helpers');
-  meh.installInto(module);
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
@@ -101,7 +99,7 @@ function test_click_more(){
   assert_true(isVisible(moreIndicator))
   if (moreIndicator) {
     mc.click(moreIndicator);
-  } 
+  }
   assert_expanded(mc);
 
   let expandedToBox = mc.e("expandedtoBox");
@@ -227,7 +225,7 @@ function test_more_number_indicator(){
 
   let hiddenAddressesCC = numAddressesCC - firstCCAddrNum;
   let hiddenAddressesTo = numAddressesTo - firstToAddrNum;
-  
+
   let expandedToBox = mc.e("expandedtoBox");
   let expandedCCBox = mc.e("expandedccBox");
   let eTOmoreIndicator = mc.window.document.getAnonymousElementByAttribute(
