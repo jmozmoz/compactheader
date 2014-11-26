@@ -21,7 +21,7 @@
 
  Contributor(s):
  Cai <http://forums.mozillazine.org/memberlist.php?mode=viewprofile&u=145991>
- 
+
  Alternatively, the contents of this file may be used under the terms of
  either the GNU General Public License Version 2 or later (the "GPL"), or
  the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -34,7 +34,7 @@
  the provisions above, a recipient may use your version of this file under
  the terms of any one of the MPL, the GPL or the LGPL.
 
- ***** END LICENSE BLOCK ***** 
+ ***** END LICENSE BLOCK *****
 
 
 -->
@@ -42,4 +42,4 @@
 <!ENTITY CompactHeader_toggleDetails.key "h">
 <!ENTITY CompactHeader_showDetailsButton.label "詳細を表示">
 <!ENTITY CompactHeader_compactMenu.label "コンパクト">
-<!ENTITY CompactHeader_compactMenu.accesskey "コ">
+<!ENTITY CompactHeader_compactMenu.accesskey "C">
