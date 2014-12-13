@@ -51,9 +51,49 @@
 // view in the message header pane.
 ////////////////////////////////////////////////////////////////////////////////////
 
-if(!org) var org={};
+if(org === "undefined" || !org) var org = {};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
+
+org.mozdev.compactHeader.debug = function() {
+  var pub = {};
+
+  var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
+                                          .getService(Components.interfaces.nsIPrefService)
+                                          .getBranch("extensions.CompactHeader.");
+  var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
+                                           .getService(Components.interfaces.nsIConsoleService);
+  const { console } = Components.utils.import("resource://gre/modules/devtools/Console.jsm", {});
+
+  pub.LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
+  var gCurrentLogLevel = pub.LOGLEVEL.info; // TODO: Set to info
+
+  pub.log = function(str, logLevel) {
+    logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
+    if (logLevel >= gCurrentLogLevel) {
+      aConsoleService.logStringMessage(Date() + " CH: " + str);
+      Application.console.log(Date() + " CH: " + str);
+//      console.log(Date() + " CH: " + str);
+    }
+  };
+
+  pub.setLogLevel = function(logLevel) {
+    gCurrentLogLevel = logLevel;
+    cohePrefBranch.setIntPref("debugLevel", debugLevel);
+  };
+
+  pub.getLogLevel = function() {
+    try{
+      gCurrentLogLevel = cohePrefBranch.getIntPref("debugLevel");
+    } catch(e) {
+    } finally {
+    }
+    pub.log("Current logLevel: " + gCurrentLogLevel, pub.LOGLEVEL.error)
+    return gCurrentLogLevel;
+  };
+
+  return pub;
+}();
 
 //Components.utils.import("chrome://CompactHeader/content/RSSLinkify.jsm");
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
@@ -295,7 +335,7 @@ org.mozdev.compactHeader.pane = function() {
       let collapsed2LtoCcBccBox = document.getElementById("CompactHeader_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
         let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox.updateEmailAddressNode;
-        function updateEmailAddressNodeNew(aEmailNode, aAddress) {
+        collapsed2LtoCcBccBox.updateEmailAddressNode = function(aEmailNode, aAddress) {
           try {
             updateEmailAddressNodeFunction(aEmailNode, aAddress);
           }
@@ -304,8 +344,7 @@ org.mozdev.compactHeader.pane = function() {
               " from updateEmailAddressNode");
           }
           aEmailNode.setAttribute("addressType", aAddress.addressType);
-        }
-        collapsed2LtoCcBccBox.updateEmailAddressNode = updateEmailAddressNodeNew;
+        };
         if (typeof collapsed2LtoCcBccBox.setNMoreTooltiptext == 'function') {
           // remove setNMoreTooltiptext because we have our own function
           collapsed2LtoCcBccBox.setNMoreTooltiptext = function() {
@@ -364,9 +403,9 @@ org.mozdev.compactHeader.pane = function() {
               .getService(Components.interfaces.nsIAbManager)
               .removeAddressBookListener(coheAddressBookListener);
 
-    removeEventListener('messagepane-loaded', 
+    removeEventListener('messagepane-loaded',
       org.mozdev.compactHeader.pane.coheOnLoadMsgHeaderPane, true);
-    removeEventListener('messagepane-unloaded', 
+    removeEventListener('messagepane-unloaded',
       org.mozdev.compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
   }
 
@@ -525,10 +564,10 @@ org.mozdev.compactHeader.pane = function() {
     if (document.getElementById("CompactHeader_hideDetailsMenu")) {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
-    
+
     document.getElementById("CompactHeader_viewMenuCompactBroadcast")
             .setAttribute("checked", gCoheCollapsedHeaderViewMode);
-    
+
     org.mozdev.compactHeader.debug.log("coheToggleHeaderContent stop");
   }
 

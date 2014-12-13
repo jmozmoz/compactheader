@@ -40,7 +40,7 @@
 
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
-if(!org) var org={};
+if(org === "undefined" || !org) var org = {};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
@@ -150,7 +150,7 @@ org.mozdev.compactHeader.RSSLinkify = function() {
     if (regex.links.test(subject)) {
       var text = subject;
       /* utility function to split text and links */
-      function linkify(text) {
+      linkify = function(text) {
         var matches = regex.links.exec(text);
         var pre, post = null;
         [pre, post] = text.split(matches[1]);

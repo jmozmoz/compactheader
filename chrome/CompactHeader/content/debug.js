@@ -38,7 +38,7 @@
 # ***** END LICENSE BLOCK *****
 */
 
-if(!org) var org={};
+if(org === "undefined" || !org) var org = {};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
@@ -50,14 +50,17 @@ org.mozdev.compactHeader.debug = function() {
                                           .getBranch("extensions.CompactHeader.");
   var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
                                            .getService(Components.interfaces.nsIConsoleService);
+  const { console } = Components.utils.import("resource://gre/modules/devtools/Console.jsm", {});
 
   pub.LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
   var gCurrentLogLevel = pub.LOGLEVEL.info; // TODO: Set to info
 
   pub.log = function(str, logLevel) {
-    if (!logLevel) var logLevel = pub.LOGLEVEL.debug;
+    logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
     if (logLevel >= gCurrentLogLevel) {
       aConsoleService.logStringMessage(Date() + " CH: " + str);
+      Application.console.log(Date() + " CH: " + str);
+//      console.log(Date() + " CH: " + str);
     }
   };
 

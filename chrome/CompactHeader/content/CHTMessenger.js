@@ -38,7 +38,7 @@
 # ***** END LICENSE BLOCK *****
 */
 
-if(!org) var org={};
+if(org === "undefined" || !org) var org = {};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.customizeHeaderToolbar) org.mozdev.customizeHeaderToolbar = {};
 

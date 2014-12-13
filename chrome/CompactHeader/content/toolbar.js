@@ -40,7 +40,7 @@
 
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
-if(!org) var org={};
+if(org === "undefined" || !org) var org = {};
 if(!org.mozdev) org.mozdev={};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
@@ -84,7 +84,7 @@ org.mozdev.compactHeader.toolbar = function() {
     if (pub.cannotMoveToolbox()) {
       targetPos = "top";
     }
-    for (i=0; i<gToolboxes.length; i++) {
+    for (let i = 0; i < gToolboxes.length; i++) {
       if ((targetPos == gToolboxes[i].pos) &&
           ((gToolboxes[i].header == null) || (targetHeader == gToolboxes[i].header))
           ) {
@@ -321,35 +321,43 @@ org.mozdev.compactHeader.toolbar = function() {
       var IconContainerDispMUA = null;
       if (dispMUAButton) {
         /* expanded view 48 * 48 */
-        if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconExp")) {
+        IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconExp");
+        if (IconContainerDispMUA) {
           IconContainerDispMUA.setAttribute("collapsed", "true");
         }
         /* two line view 32 * 32 */
-        if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line")) {
+        IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line")
+        if (IconContainerDispMUA) {
           IconContainerDispMUA.setAttribute("collapsed", "true");
         }
         /* compact view 24 * 24 */
-        if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact")) {
+        IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact")
+        if (IconContainerDispMUA) {
           IconContainerDispMUA.setAttribute("collapsed", "true");
         }
       }
       else if (dispMUABox){
         /* expanded view 48 * 48 */
-        if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconExp")) {
+        IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconExp")
+        if (IconContainerDispMUA) {
           IconContainerDispMUA.removeAttribute("collapsed");
         }
         if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
           /* two line view 32 * 32 */
-          if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line"))
+          IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line")
+          if (IconContainerDispMUA)
             IconContainerDispMUA.removeAttribute("collapsed");
-          if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact"))
+          IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact")
+          if (IconContainerDispMUA)
             IconContainerDispMUA.setAttribute("collapsed", "true");
         }
         else {
           /* compact view 24 * 24 */
-          if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact"))
+          IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact")
+          if (IconContainerDispMUA)
             IconContainerDispMUA.removeAttribute("collapsed");
-          if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line"))
+          IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line")
+          if (IconContainerDispMUA)
             IconContainerDispMUA.setAttribute("collapsed", "true");
         }
       }
@@ -357,15 +365,18 @@ org.mozdev.compactHeader.toolbar = function() {
     else {
       var IconContainerDispMUA = null;
       /* expanded view 48 * 48 */
-      if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconExp")) {
+      IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconExp")
+      if (IconContainerDispMUA) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* two line view 32 * 32 */
-      if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line")) {
+      IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAicon2line")
+      if (IconContainerDispMUA) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
       /* compact view 24 * 24 */
-      if (IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact")) {
+      IconContainerDispMUA = document.getElementById("CompactHeader_dispMUAiconCompact")
+      if (IconContainerDispMUA) {
         IconContainerDispMUA.setAttribute("collapsed", "true");
       }
     }
@@ -380,7 +391,8 @@ org.mozdev.compactHeader.toolbar = function() {
       org.mozdev.compactHeader.debug.log("onChangeDispMUAicon: " + imageSrc);
       var IconContainerDispMUA = null;
       /* toolbar button */
-      if (IconContainerDispMUA = document.getElementById("CompactHeader_button-dispMUA")) {
+      IconContainerDispMUA = document.getElementById("CompactHeader_button-dispMUA")
+      if (IconContainerDispMUA) {
         IconContainerDispMUA.setAttribute("image", imageSrc);
       }
     }

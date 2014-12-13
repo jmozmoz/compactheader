@@ -38,8 +38,8 @@
 # ***** END LICENSE BLOCK *****
 */
 
-if(!org) var org={};
-if(!org.mozdev) org.mozdev={};
+if(org === "undefined" || !org) var org = {};
+if(!org.mozdev) org.mozdev = {};
 if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
 org.mozdev.compactHeader.buttons = function() {
@@ -51,6 +51,7 @@ org.mozdev.compactHeader.buttons = function() {
                                 .getService(Components.interfaces.nsIMsgMailSession);
     var nsIFolderListener = Components.interfaces.nsIFolderListener;
     mailSession.AddFolderListener(folderListener, nsIFolderListener.propertyFlagChanged);
+    window.addEventListener("load", function(e) { pub.singlemessage_controller.onLoad(e); }, false);
   }
 
   pub.coheToggleStar = function () {
@@ -113,4 +114,3 @@ org.mozdev.compactHeader.buttons = function() {
 }();
 
 org.mozdev.compactHeader.buttons.init();
-window.addEventListener("load", function(e) { org.mozdev.compactHeader.buttons.singlemessage_controller.onLoad(e); }, false);
