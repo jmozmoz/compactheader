@@ -26,7 +26,7 @@ locale    CompactHeader     sl-SI   chrome/CompactHeader/locale/sl-SI/
 overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader/content/CHTMessenger.xul
 overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/CHTMessenger.xul
 
-overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay-36.xul appversion>=36.0a1
+overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 
 style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
