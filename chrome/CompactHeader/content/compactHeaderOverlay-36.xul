@@ -65,6 +65,7 @@
                  mode="icons"
                  minwidth="10px"
                  defaultmode="icons">
+<!--
           <toolbarpalette id="header-view-toolbar-palette">
             <toolbarbutton id="CompactHeader_hdrOtherActionsButton"
                            label="&otherActionsButton2.label;"
@@ -72,6 +73,7 @@
                            class="toolbarbutton-1 msgHeaderView-button hdrOtherActionsButton"
                            type="menu"/>
           </toolbarpalette>
+ -->
           <toolbar id="header-view-toolbar"
                    mode="icons" defaultmode="icons"
                    defaultset="hdrReplyToSenderButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,CompactHeader_hdrOtherActionsButton">

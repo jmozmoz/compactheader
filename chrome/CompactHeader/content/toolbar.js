@@ -61,14 +61,14 @@ org.mozdev.compactHeader.toolbar = function() {
   ];
 
   let gOtherMenuCommands = {
-      otherActionsOpenConversation: "cmd_openConversation",
-      otherActionsOpenInNewWindow:  "cmd_openMessage",
-      otherActionsOpenInNewTab:     "cmd_openMessage",
-      viewSourceMenuItem:           "cmd_viewPageSource",
-      markAsReadMenuItem:           "cmd_markAsRead",
-      markAsUnreadMenuItem:         "cmd_markAsUnread",
-      saveAsMenuItem:               "cmd_saveAsFile",
-      otherActionsPrint:            "cmd_print"
+//      otherActionsOpenConversation: "cmd_openConversation",
+//      otherActionsOpenInNewWindow:  "cmd_openMessage",
+//      otherActionsOpenInNewTab:     "cmd_openMessage",
+//      viewSourceMenuItem:           "cmd_viewPageSource",
+//      markAsReadMenuItem:           "cmd_markAsRead",
+//      markAsUnreadMenuItem:         "cmd_markAsUnread",
+//      saveAsMenuItem:               "cmd_saveAsFile",
+//      otherActionsPrint:            "cmd_print"
     };
 
   pub.cannotMoveToolbox = function() {
@@ -170,38 +170,38 @@ org.mozdev.compactHeader.toolbar = function() {
       }
     }
 
-    var target = "CompactHeader_hdrOtherActionsButton";
-
-    var newParent = document.getElementById(target) ||
-        document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
-
-    org.mozdev.compactHeader.debug.log("looking for CompactHeader_hdrOtherActionsButton");
-
-    if (newParent != null) {
-      var myElement;
-      myElement= document.getElementById("otherActionsPopup");
-      if (myElement) {
-        newParent.appendChild(myElement);
-        for (let menu in gOtherMenuCommands) {
-          let menuEl = document.getElementById(menu);
-          org.mozdev.compactHeader.debug.log("command to " + menu);
-          if (menuEl) {
-            org.mozdev.compactHeader.debug.log("fillToolboxPalette add command to " + menu + ": " + gOtherMenuCommands[menu]);
-            menuEl.setAttribute("command", gOtherMenuCommands[menu]);
-          }
-        }
-      }
-    }
+//    var target = "otherActionsButton";
+//
+//    var newParent = document.getElementById(target) ||
+//        document.getElementById("header-view-toolbox").palette.getElementsByAttribute("id", target)[0];
+//
+//    org.mozdev.compactHeader.debug.log("looking for otherActionsButton");
+//
+//    if (newParent != null) {
+//      var myElement;
+//      myElement= document.getElementById("otherActionsPopup");
+//      if (myElement) {
+//        newParent.appendChild(myElement);
+//        for (let menu in gOtherMenuCommands) {
+//          let menuEl = document.getElementById(menu);
+//          org.mozdev.compactHeader.debug.log("command to " + menu);
+//          if (menuEl) {
+//            org.mozdev.compactHeader.debug.log("fillToolboxPalette add command to " + menu + ": " + gOtherMenuCommands[menu]);
+//            menuEl.setAttribute("command", gOtherMenuCommands[menu]);
+//          }
+//        }
+//      }
+//    }
     org.mozdev.compactHeader.debug.log("fillToolboxPalette stop");
   };
 
   pub.showOtherActionButtonMenu = function() {
     org.mozdev.compactHeader.debug.log("showOtherActionButtonMenu start");
-    onShowOtherActionsPopup();
-    InitMessageMark();
-    for (let menu in gOtherMenuCommands) {
-      goUpdateCommand(gOtherMenuCommands[menu]);
-    }
+//    onShowOtherActionsPopup();
+//    InitMessageMark();
+//    for (let menu in gOtherMenuCommands) {
+//      goUpdateCommand(gOtherMenuCommands[menu]);
+//    }
     org.mozdev.compactHeader.debug.log("showOtherActionButtonMenu stop");
   }
 
