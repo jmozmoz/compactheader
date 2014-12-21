@@ -107,7 +107,7 @@
           </toolbarpalette>
           <toolbar id="header-view-toolbar"
                    mode="icons" defaultmode="icons"
-                   defaultset="hdrReplyToSenderButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,CompactHeader_hdrOtherActionsButton">
+                   defaultset="hdrReplyToSenderButton,hdrForwardButton,button-reply,button-forward,hdrArchiveButton,hdrJunkButton,hdrTrashButton,otherActionsButton">
           </toolbar>
         </toolbox>
       </html:div>

@@ -95,9 +95,9 @@ function test_other_actions_button() {
   set_and_assert_toolbox_position(mc, 'right');
 
   // It is necessary to press the Other Actions Button to get the popup menu populated
-  mc.click(mc.eid("CompactHeader_hdrOtherActionsButton"));
+  mc.click(mc.eid("otherActionsButton"));
   mc.ewait("CompactHeader_hidecohePreferencesButton");
-  mc.click(mc.eid("CompactHeader_hdrOtherActionsButton"));
+  mc.click(mc.eid("otherActionsButton"));
 
   let menuItems = {
     "otherActionsOpenConversation":      false, // always disabled, probably because messages are not indexed
@@ -120,9 +120,9 @@ function test_other_actions_button() {
   assert_nothing_selected();
 
   // It is necessary to press the Other Actions Button to get the popup menu populated
-  mc.click(mc.eid("CompactHeader_hdrOtherActionsButton"));
+  mc.click(mc.eid("otherActionsButton"));
   mc.ewait("CompactHeader_hidecohePreferencesButton");
-  mc.click(mc.eid("CompactHeader_hdrOtherActionsButton"));
+  mc.click(mc.eid("otherActionsButton"));
 
   for (let menu in menuItems) {
     let menuEl = mc.e(menu);
@@ -133,9 +133,9 @@ function test_other_actions_button() {
   select_control_click_row(0);
   assert_selected_and_displayed(0, 3);
 
-  mc.click(mc.eid("CompactHeader_hdrOtherActionsButton"));
+  mc.click(mc.eid("otherActionsButton"));
   mc.ewait("CompactHeader_hidecohePreferencesButton");
-  mc.click(mc.eid("CompactHeader_hdrOtherActionsButton"));
+  mc.click(mc.eid("otherActionsButton"));
 
   for (let menu in menuItems) {
     let menuEl = mc.e(menu);

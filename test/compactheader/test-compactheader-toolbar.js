@@ -212,25 +212,6 @@ function test_customize_header_toolbar_check_default()
 }
 
 /**
-*  Test that other action button has icon
-*/
-function test_other_actions_icon()
-{
-  let curMessage = select_message_in_folder(folder1, 0, mc);
-
-  // Restore the default buttons to get defined starting conditions.
-  expand_and_assert_header(mc);
-  set_and_assert_toolbox_position(mc, 'top');
-  restore_and_check_default_buttons(mc);
-
-  let otherActionIcon = mc.a('CompactHeader_hdrOtherActionsButton', {class: "toolbarbutton-icon"});
-
-  let imageSrc = 'url("chrome://compactheader-os/skin/other-action-small.png")';
-  assert_equals(mc.window.getComputedStyle(otherActionIcon).getPropertyValue("list-style-image"), imageSrc);
-
-}
-
-/**
  *  Test header pane toolbar customization: Reorder buttons
  */
 function test_customize_header_toolbar_reorder_buttons()

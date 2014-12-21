@@ -42,13 +42,6 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 /* All values copied from gnomestrip theme. Have to be checked */
-#CompactHeader_hdrOtherActionsButton {
-  list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
-}
-
-toolbar[iconsize="small"] #CompactHeader_hdrOtherActionsButton {
-  list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
-}
 
 #expandedButtonBox {
   margin: 0px;

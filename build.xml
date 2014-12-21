@@ -2,7 +2,7 @@
 
 <project name="CompactHeader" default="dist">
   <property name="src.dir" value="." />
-	<property name="mozdev.dir" value="${src.dir}/../compactheader.mozdev.org"/>
+	<property name="mozdev.dir" value="${src.dir}/../../workspace/compactheader.mozdev.org"/>
   <property name="dist.dir" value="${mozdev.dir}/downloads/"/>
   <property name="AMOdist.dir" value="${src.dir}/AMO/"/>
   <property name="www.dir" value="${mozdev.dir}/www/"/>
