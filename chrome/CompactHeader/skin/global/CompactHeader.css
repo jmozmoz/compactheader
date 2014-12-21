@@ -105,18 +105,18 @@
   display: none;
 }
 
-#CompactHeader_otherActionsButton[OnlyIcon="Text"] .button-text,
+#otherActionsButton[OnlyIcon="Text"] .button-text,
 #tagMenuPopup[OnlyIcon="Text"] .button-text {
   -moz-padding-end: 1px;
   -moz-padding-start: 5px;
 }
 
-#CompactHeader_otherActionsButton[OnlyIcon="Icon"] .button-text,
+#otherActionsButton[OnlyIcon="Icon"] .button-text,
 #tagMenuPopup[OnlyIcon="Icon"] .button-text {
 	display: none;
 }
 
-#CompactHeader_otherActionsButton .button-icon,
+#otherActionsButton .button-icon,
 #CompactHeader_tagMenuPopup .button-icon {
   -moz-margin-start: 1px;
   -moz-margin-end: 1px;

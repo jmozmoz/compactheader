@@ -564,7 +564,10 @@ org.mozdev.compactHeader.pane = function() {
     if (document.getElementById("CompactHeader_hideDetailsMenu")) {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
-
+    
+    document.getElementById("CompactHeader_viewMenuCompactBroadcast")
+            .setAttribute("checked", gCoheCollapsedHeaderViewMode);
+    
     org.mozdev.compactHeader.debug.log("coheToggleHeaderContent stop");
   }
 

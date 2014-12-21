@@ -78,10 +78,10 @@ toolbar[iconsize="small"] #CompactHeader_button-dispMUA .toolbarbutton-icon {
   height:18px;
 }
 
-.hdrOtherActionsButton {
+.customize-header-toolbar-otherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action.png");
 }
 
-toolbar[iconsize="small"] .hdrOtherActionsButton {
+toolbar[iconsize="small"] .customize-header-toolbar-otherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
 }
