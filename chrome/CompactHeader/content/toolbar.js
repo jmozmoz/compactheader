@@ -60,6 +60,17 @@ org.mozdev.compactHeader.toolbar = function() {
     {pos:"none",  id:"",                                   orient:""},
   ];
 
+  let gOtherMenuCommands = {
+      otherActionsOpenConversation: "cmd_openConversation",
+      otherActionsOpenInNewWindow:  "cmd_openMessage",
+      otherActionsOpenInNewTab:     "cmd_openMessage",
+      viewSourceMenuItem:           "cmd_viewPageSource",
+      markAsReadMenuItem:           "cmd_markAsRead",
+      markAsUnreadMenuItem:         "cmd_markAsUnread",
+      saveAsMenuItem:               "cmd_saveAsFile",
+      otherActionsPrint:            "cmd_print"
+    };
+
   pub.cannotMoveToolbox = function() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
       .getService(Components.interfaces.nsIXULAppInfo);
@@ -160,6 +171,16 @@ org.mozdev.compactHeader.toolbar = function() {
     }
     org.mozdev.compactHeader.debug.log("fillToolboxPalette stop");
   };
+
+  pub.showOtherActionButtonMenu = function() {
+    org.mozdev.compactHeader.debug.log("showOtherActionButtonMenu start");
+    onShowOtherActionsPopup();
+    InitMessageMark();
+    for (let menu in gOtherMenuCommands) {
+      goUpdateCommand(gOtherMenuCommands[menu]);
+    }
+    org.mozdev.compactHeader.debug.log("showOtherActionButtonMenu stop");
+  }
 
   pub.setButtonStyle = function() {
     org.mozdev.compactHeader.debug.log("setButtonStyle start");

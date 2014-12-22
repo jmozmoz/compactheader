@@ -46,6 +46,7 @@ var elib = {};
 Cu.import('resource://mozmill/modules/elementslib.js', elib);
 var controller = {};
 Cu.import('resource://mozmill/modules/controller.js', controller);
+Cu.import("resource://gre/modules/Services.jsm");
 
 // The WindowHelper module
 var WindowHelper;
@@ -109,6 +110,7 @@ function test_button_visibility() {
     select_click_row(0);
     set_and_assert_toolbox_position(mc, 'right');
     restore_and_check_default_buttons(mc);
+    Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
     let ctc = open_header_pane_toolbar_customization(mc);
     let palette = ctc.e("palette-box");
 
@@ -130,6 +132,7 @@ function test_button_visibility() {
     assert_false(button1.hasAttribute("disabled"));
 
     restore_and_check_default_buttons(mc);
+    Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
   }
 }
 
@@ -212,10 +215,30 @@ function test_customize_header_toolbar_check_default()
 }
 
 /**
+*  Test that other action button has icon
+*/
+function test_other_actions_icon()
+{
+  let curMessage = select_message_in_folder(folder1, 0, mc);
+
+  // Restore the default buttons to get defined starting conditions.
+  expand_and_assert_header(mc);
+  set_and_assert_toolbox_position(mc, 'top');
+  restore_and_check_default_buttons(mc);
+
+  let otherActionIcon = mc.a('otherActionsButton', {class: "toolbarbutton-icon"});
+
+  let imageSrc = 'url("chrome://compactheader-os/skin/other-action-small.png")';
+  assert_equals(mc.window.getComputedStyle(otherActionIcon).getPropertyValue("list-style-image"), imageSrc);
+
+}
+
+/**
  *  Test header pane toolbar customization: Reorder buttons
  */
 function test_customize_header_toolbar_reorder_buttons()
 {
+  Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   let curMessage = select_message_in_folder(folder1, 0, mc);
 
   // Restore the default buttons to get defined starting conditions.
@@ -261,6 +284,7 @@ function test_customize_header_toolbar_reorder_buttons()
 
   // Leave the toolbar in the default state.
   restore_and_check_default_buttons(mc);
+  Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
 }
 //
 ///**
@@ -269,6 +293,7 @@ function test_customize_header_toolbar_reorder_buttons()
 // */
 function test_customize_header_toolbar_separate_window()
 {
+  Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   let curMessage = select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
@@ -337,6 +362,7 @@ function test_customize_header_toolbar_separate_window()
 
   // Leave the toolbar in the default state.
   restore_and_check_default_buttons(msgc);
+  Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
   close_window(msgc);
 }
 
@@ -347,6 +373,7 @@ function test_customize_header_toolbar_remove_buttons(){
   // Save currentset of toolbar for adding the buttons back
   // at the end.
   var lCurrentset;
+  Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
 
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
@@ -424,6 +451,7 @@ function test_customize_header_toolbar_remove_buttons(){
       filterInvisibleButtons(mc, hdrBarDefaultSet));
   assert_equals(filterInvisibleButtons(mc, toolbar.getAttribute("currentset")),
       filterInvisibleButtons(mc, hdrBarDefaultSet));
+  Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
 }
 
 /**
@@ -431,6 +459,7 @@ function test_customize_header_toolbar_remove_buttons(){
  */
 function test_customize_header_toolbar_add_all_buttons(){
 
+  Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
@@ -546,6 +575,7 @@ function test_customize_header_toolbar_add_all_buttons(){
   assert_equals(backButtons.join(","), wrappedButtons.join(","));
 
   close_header_pane_toolbar_customization(ctc);
+  Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
 
 }
 
@@ -593,6 +623,7 @@ function test_customize_header_toolbar_dialog_style(){
  *  Test header pane toolbar customization dialog for button style changes
  */
 function test_customize_header_toolbar_change_button_style(){
+  Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
@@ -633,6 +664,7 @@ function test_customize_header_toolbar_change_button_style(){
   // The default mode is icon visible only.
   restore_and_check_default_buttons(mc);
   subtest_buttons_style("-moz-box", "none");
+  Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
 }
 
 /**

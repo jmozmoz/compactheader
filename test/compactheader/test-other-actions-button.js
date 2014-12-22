@@ -83,8 +83,8 @@ function setupModule(module) {
   select_message_in_folder(folder1, 0, mc);
 }
 
-/* click the more button in compact view should change to expanded
- * header view
+/* check that the context menu of the other actions button are populated
+ * correctly
  */
 function test_other_actions_button() {
   select_message_in_folder(folder1, 0, mc);

@@ -85,3 +85,7 @@ toolbar[iconsize="small"] #CompactHeader_button-dispMUA .toolbarbutton-icon {
 toolbar[iconsize="small"] .customize-header-toolbar-otherActionsButton {
   list-style-image: url("chrome://CompactHeader-os/skin/other-action-small.png");
 }
+
+toolbar[mode="full"] #otherActionsButton > .toolbarbutton-icon {
+  display: -moz-box !important;
+}

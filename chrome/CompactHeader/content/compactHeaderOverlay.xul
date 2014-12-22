@@ -70,7 +70,8 @@
                            label="&otherActionsButton2.label;"
                            tooltiptext="&otherActionsButton.tooltip;"
                            class="toolbarbutton-1 msgHeaderView-button">
-              <menupopup id="otherActionsPopup">
+              <menupopup id="otherActionsPopup"
+                          onpopupshowing="org.mozdev.compactHeader.toolbar.showOtherActionButtonMenu();">
                 <menuitem id="CompactHeader_hdrPane-markFlagged"
                           type="checkbox"
                           label="&markStarredCmd.label;"
