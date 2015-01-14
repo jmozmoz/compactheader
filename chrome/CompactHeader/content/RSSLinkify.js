@@ -40,12 +40,12 @@
 
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
-if(org === "undefined" || !org) var org = {};
-if(!org.mozdev) org.mozdev={};
-if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
+if (typeof org_mozdev_compactHeader == "undefined") {
+  var org_mozdev_compactHeader = {};
+};
 
 
-org.mozdev.compactHeader.RSSLinkify = function() {
+org_mozdev_compactHeader.RSSLinkify = function() {
   var pub = {};
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
@@ -60,9 +60,9 @@ org.mozdev.compactHeader.RSSLinkify = function() {
   };
 
   pub.UpdateHeaderView = function(currentHeaderData) {
-    org.mozdev.compactHeader.debug.log("updateheaderview start");
+    org_mozdev_compactHeader.debug.log("updateheaderview start");
     if (!currentHeaderData) {
-      org.mozdev.compactHeader.debug.log("updateheaderview: no currentHeaderData!");
+      org_mozdev_compactHeader.debug.log("updateheaderview: no currentHeaderData!");
       return;
     }
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
@@ -77,11 +77,11 @@ org.mozdev.compactHeader.RSSLinkify = function() {
         RSSLinkify.oldSubject.setAttribute("collapsed", "true");
         RSSLinkify.newSubject.setAttribute("tooltiptext", url.headerValue);
         RSSLinkify.newSubject.addEventListener("click",
-          org.mozdev.compactHeader.RSSLinkify.openBrowser, false);
+          org_mozdev_compactHeader.RSSLinkify.openBrowser, false);
         RSSLinkify.newSubject.setAttribute("context", "CompactHeader_copyPopup");
       } else {
         removeEventListener('click',
-            org.mozdev.compactHeader.RSSLinkify.openBrowser, true);
+            org_mozdev_compactHeader.RSSLinkify.openBrowser, true);
         RSSLinkify.newSubject.setAttribute("collapsed", "true");
         RSSLinkify.oldSubject.setAttribute("collapsed", "false");
         RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
@@ -101,24 +101,24 @@ org.mozdev.compactHeader.RSSLinkify = function() {
         RSSLinkify.oldSubject.setAttribute("tooltiptext", currentHeaderData["subject"].headerValue);
       }
     }
-    org.mozdev.compactHeader.debug.log("updateheaderview stop");
+    org_mozdev_compactHeader.debug.log("updateheaderview stop");
   };
 
   pub.openBrowser = function(event) {
-    org.mozdev.compactHeader.debug.log("open browser 0" + event.attrName);
+    org_mozdev_compactHeader.debug.log("open browser 0" + event.attrName);
     if (!event.button) {
       let url = RSSLinkify.newSubject.getAttribute("url");
-      org.mozdev.compactHeader.debug.log("open browser 2" + url);
+      org_mozdev_compactHeader.debug.log("open browser 2" + url);
       messenger.launchExternalURL(url);
     }
   };
 
   pub.InitializeHeaderViewTables = function() {
-    org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start");
+    org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start");
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
-      org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
+      org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
       RSSLinkify.newSubject = document.getElementById("CompactHeader_collapsedsubjectlinkBox") || document.createElement("label");
-      org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
+      org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
       RSSLinkify.newSubject.setAttribute("id", "CompactHeader_collapsedsubjectlinkBox");
       RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");
       RSSLinkify.newSubject.setAttribute("originalclass", "headerValue plain headerValueUrl");
@@ -127,17 +127,17 @@ org.mozdev.compactHeader.RSSLinkify = function() {
       RSSLinkify.newSubject.setAttribute("readonly", "true");
       RSSLinkify.newSubject.setAttribute("appendoriginalclass", "true");
       RSSLinkify.newSubject.setAttribute("flex", "1");
-      org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
+      org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
       if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
         RSSLinkify.oldSubject = document.getElementById("CompactHeader_collapsed2LsubjectBox");
       } else {
         RSSLinkify.oldSubject = document.getElementById("CompactHeader_collapsed1LsubjectBox");
       }
-      org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
+      org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 3");
       RSSLinkify.oldSubject.parentNode.insertBefore(RSSLinkify.newSubject, RSSLinkify.oldSubject);
-      org.mozdev.compactHeader.debug.log("rss InitializeHeaderViewTables start 4");
+      org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 4");
     }
-    org.mozdev.compactHeader.debug.log("InitializeHeaderViewTables stop");
+    org_mozdev_compactHeader.debug.log("InitializeHeaderViewTables stop");
   };
 
   function linkifySubject(subjectValueStr) {

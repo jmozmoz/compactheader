@@ -38,11 +38,12 @@
 # ***** END LICENSE BLOCK *****
 */
 
-if(org === "undefined" || !org) var org = {};
-if(!org.mozdev) org.mozdev={};
-if(!org.mozdev.customizeHeaderToolbar) org.mozdev.customizeHeaderToolbar = {};
+if (typeof org_mozdev_compactHeader == "undefined") {
+  var org_mozdev_compactHeader = {};
+};
 
-org.mozdev.customizeHeaderToolbar.messenger = function(){
+
+org_mozdev_compactHeader.messenger = function(){
   var pub = {};
 
 //  pub.init = function () {
@@ -50,7 +51,7 @@ org.mozdev.customizeHeaderToolbar.messenger = function(){
 //    if (onLoadFkt) {
 //      var strTest = new RegExp('OnLoadMessenger', 'g');;
 //      onLoadFkt = onLoadFkt.replace(strTest,
-//        "org.mozdev.customizeHeaderToolbar.messenger.CHTLoadMessenger");
+//        "org_mozdev_compactHeader.messenger.CHTLoadMessenger");
 //      document.getElementById("messengerWindow").setAttribute("onload", onLoadFkt);
 //    }
 //  }
@@ -113,4 +114,4 @@ org.mozdev.customizeHeaderToolbar.messenger = function(){
   return pub;
 }();
 
-//org.mozdev.customizeHeaderToolbar.messenger.init();
+//org_mozdev_compactHeader.messenger.init();

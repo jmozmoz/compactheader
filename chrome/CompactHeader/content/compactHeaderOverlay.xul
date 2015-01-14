@@ -34,7 +34,7 @@
     <key id="CompactHeader_hideDetailsKey"
          modifiers="shift"
          key="&CompactHeader_toggleDetails.key;"
-         oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"/>
+         oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"/>
   </keyset>
 
   <menupopup id="header-toolbar-context-menu">
@@ -49,7 +49,7 @@
     <vbox id="CompactHeader_hideDetailsButtonBox" insertbefore="expandedHeadersBox">
       <button id="CompactHeader_hideDetailsButton"
               tooltiptext="&CompactHeader_hideDetailsButton.label;"
-              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              onclick="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
               class="msgHeaderView-flat-button"/>
     </vbox>
 
@@ -71,7 +71,7 @@
                            tooltiptext="&otherActionsButton.tooltip;"
                            class="toolbarbutton-1 msgHeaderView-button">
               <menupopup id="otherActionsPopup"
-                          onpopupshowing="org.mozdev.compactHeader.toolbar.showOtherActionButtonMenu();">
+                          onpopupshowing="org_mozdev_compactHeader.toolbar.showOtherActionButtonMenu();">
                 <menuitem id="CompactHeader_hdrPane-markFlagged"
                           type="checkbox"
                           label="&markStarredCmd.label;"
@@ -98,7 +98,7 @@
                 <menuseparator id="CompactHeader_otherActionPopupAfterViewSource"/>
                 <menuitem id="CompactHeader_hideDetailsMenu"
                           label="&CompactHeader_hideDetailsButton.label;"
-                          oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+                          oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
                           key="CompactHeader_hideDetailsKey"/>
                 <menuitem id="CompactHeader_hidecohePreferencesButton"
                           label="&CompactHeader_dialog.title;"
@@ -128,15 +128,15 @@
     <menupopup id="CompactHeader_copyPopup" popupanchor="bottomleft">
       <menuitem id="CompactHeader_copyPopup_CopyLink"
                 label="&copyLinkCmd.label;" accesskey="&copyLinkCmd.accesskey;"
-                oncommand="org.mozdev.compactHeader.RSSLinkify.CopyToClipboard(document.popupNode, 'url')"/>
+                oncommand="org_mozdev_compactHeader.RSSLinkify.CopyToClipboard(document.popupNode, 'url')"/>
       <menuitem id="CompactHeader_copyPopup_CopyText"
                 label="&copyCmd.label;" accesskey="&copyCmd.accesskey;"
-                oncommand="org.mozdev.compactHeader.RSSLinkify.CopyToClipboard(document.popupNode, 'value')"/>
+                oncommand="org_mozdev_compactHeader.RSSLinkify.CopyToClipboard(document.popupNode, 'value')"/>
     </menupopup>
     <vbox id="CompactHeader_showDetailsButtonBox" align="start" flex="0">
       <button id="CompactHeader_showDetailsButton"
               tooltiptext="&CompactHeader_showDetailsButton.label;"
-              onclick="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              onclick="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
               class="msgHeaderView-flat-button"/>
     </vbox>
     <vbox id="CompactHeader_collapsed1LHeadersBox" flex="1" collapsed="false">
@@ -245,7 +245,7 @@
               label="&CompactHeader_compactMenu.label;"
               type="checkbox"
               accesskey="&CompactHeader_compactMenu.accesskey;"
-              oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
               key="CompactHeader_hideDetailsKey">
       <observes element="CompactHeader_viewMenuCompactBroadcast"
                 attribute="checked"/>
@@ -258,7 +258,7 @@
               label="&CompactHeader_compactMenu.label;"
               type="checkbox"
               accesskey="&CompactHeader_compactMenu.accesskey;"
-              oncommand="org.mozdev.compactHeader.pane.coheToggleHeaderView();"
+              oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
               key="CompactHeader_hideDetailsKey">
       <observes element="CompactHeader_viewMenuCompactBroadcast"
                 attribute="checked"/>

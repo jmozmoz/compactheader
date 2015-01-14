@@ -36,7 +36,7 @@
   observes="CompactHeader_button_singlemessage"
   oncommand="dispMUA.infopopup();">
   <observes element="dispMUAbroadcast" attribute="src"
-            onbroadcast="org.mozdev.compactHeader.toolbar.onChangeDispMUAicon();"/>
+            onbroadcast="org_mozdev_compactHeader.toolbar.onChangeDispMUAicon();"/>
   <observes element="dispMUAbroadcast" attribute="tooltiptext"/>
 </toolbarbutton>
 </toolbarpalette>

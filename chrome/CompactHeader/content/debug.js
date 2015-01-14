@@ -38,11 +38,13 @@
 # ***** END LICENSE BLOCK *****
 */
 
-if(org === "undefined" || !org) var org = {};
-if(!org.mozdev) org.mozdev={};
-if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
-org.mozdev.compactHeader.debug = function() {
+if (typeof org_mozdev_compactHeader == "undefined") {
+  var org_mozdev_compactHeader = {};
+};
+
+
+org_mozdev_compactHeader.debug = function() {
   var pub = {};
 
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]

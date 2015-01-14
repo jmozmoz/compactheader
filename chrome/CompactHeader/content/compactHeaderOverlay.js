@@ -51,69 +51,13 @@
 // view in the message header pane.
 ////////////////////////////////////////////////////////////////////////////////////
 
-if(org === "undefined" || !org) var org = {};
-if(!org.mozdev) org.mozdev={};
-if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
 
-org.mozdev.compactHeader.debug = function() {
+if (typeof org_mozdev_compactHeader == "undefined") {
+  var org_mozdev_compactHeader = {};
+};
+
+org_mozdev_compactHeader.pane = function() {
   var pub = {};
-
-  var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
-                                          .getService(Components.interfaces.nsIPrefService)
-                                          .getBranch("extensions.CompactHeader.");
-  var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
-                                           .getService(Components.interfaces.nsIConsoleService);
-  const { console } = Components.utils.import("resource://gre/modules/devtools/Console.jsm", {});
-
-  pub.LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
-  var gCurrentLogLevel = pub.LOGLEVEL.info; // TODO: Set to info
-
-  pub.log = function(str, logLevel) {
-    logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
-    if (logLevel >= gCurrentLogLevel) {
-      aConsoleService.logStringMessage(Date() + " CH: " + str);
-      Application.console.log(Date() + " CH: " + str);
-//      console.log(Date() + " CH: " + str);
-    }
-  };
-
-  pub.setLogLevel = function(logLevel) {
-    gCurrentLogLevel = logLevel;
-    cohePrefBranch.setIntPref("debugLevel", debugLevel);
-  };
-
-  pub.getLogLevel = function() {
-    try{
-      gCurrentLogLevel = cohePrefBranch.getIntPref("debugLevel");
-    } catch(e) {
-    } finally {
-    }
-    pub.log("Current logLevel: " + gCurrentLogLevel, pub.LOGLEVEL.error)
-    return gCurrentLogLevel;
-  };
-
-  return pub;
-}();
-
-//Components.utils.import("chrome://CompactHeader/content/RSSLinkify.jsm");
-//Components.utils.import("chrome://CompactHeader/content/debug.jsm");
-//Components.utils.import("chrome://CompactHeader/content/toolbar.jsm");
-
-org.mozdev.compactHeader.pane = function() {
-  var pub = {};
-
-  pub.LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
-  var gCurrentLogLevel = pub.LOGLEVEL.info; // TODO: Set to info
-
-  pub.log = function(str, logLevel) {
-    logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
-    if (logLevel >= gCurrentLogLevel) {
-      aConsoleService.logStringMessage(Date() + " CH: " + str);
-      Application.console.log(Date() + " CH: " + str);
-//      console.log(Date() + " CH: " + str);
-    }
-  };
-
 
   const COMPACTHEADER_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
 
@@ -212,16 +156,16 @@ org.mozdev.compactHeader.pane = function() {
       } else {
         address.displayName = names.value[index];
       }
-      pub.log("0: " + address.fullAddress);
-      pub.log("0: " + addressType);
+      org_mozdev_compactHeader.debug.log("0: " + address.fullAddress);
+      org_mozdev_compactHeader.debug.log("0: " + addressType);
       if (address.fullAddress != "" &&
            (addressType == "to" || addressType == "cc" || addressType == "bcc")) {
         if (moreTooltip == "") {
           moreTooltip = address.fullAddress;
-          pub.log("1: " + address.fullAddress);
+          org_mozdev_compactHeader.debug.log("1: " + address.fullAddress);
         } else {
           moreTooltip = moreTooltip + ", " + address.fullAddress;
-          pub.log("2: " + address.fullAddress);
+          org_mozdev_compactHeader.debug.log("2: " + address.fullAddress);
         }
       }
 //      window.alert(address);
@@ -232,7 +176,7 @@ org.mozdev.compactHeader.pane = function() {
       }
       index++;
     }
-    pub.log("tooltiptext: " + moreTooltip);
+    org_mozdev_compactHeader.debug.log("tooltiptext: " + moreTooltip);
     moreButton.setAttribute("tooltiptext", moreTooltip);
     gMoreTooltip = moreTooltip;
 
@@ -249,6 +193,7 @@ org.mozdev.compactHeader.pane = function() {
 
   function coheInitializeHeaderViewTables()
   {
+    org_mozdev_compactHeader.debug.log("coheInitializeHeaderViewTables start");
     gCoheCollapsedHeaderView = {};
     var index;
 
@@ -274,7 +219,10 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
-    org.mozdev.compactHeader.RSSLinkify.InitializeHeaderViewTables();
+    org_mozdev_compactHeader.debug.log("call to org_mozdev_compactHeader.RSSLinkify.InitializeHeaderViewTables");
+    org_mozdev_compactHeader.RSSLinkify.InitializeHeaderViewTables();
+
+    org_mozdev_compactHeader.debug.log("coheInitializeHeaderViewTables stop");
   }
 
   function pressMoreButtons() {
@@ -286,21 +234,21 @@ org.mozdev.compactHeader.pane = function() {
         "anonid", "more");
     if (!moreButtonTo.hasAttribute("collapsed")) {
       moreButtonTo.click();
-      pub.log("toggle To");
+      org_mozdev_compactHeader.debug.log("toggle To");
     }
     if (!moreButtonCC.hasAttribute("collapsed")) {
       moreButtonCC.click();
-      pub.log("toggle cc");
+      org_mozdev_compactHeader.debug.log("toggle cc");
     }
     if (!moreButtonBCC.hasAttribute("collapsed")) {
       moreButtonBCC.click();
-      pub.log("toggle bcc");
+      org_mozdev_compactHeader.debug.log("toggle bcc");
     }
     pressMores = null;
   }
 
   pub.coheOnLoadMsgHeaderPane = function() {
-    pub.log("coheOnLoadMsgHeaderPane start");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
 
     coheInitializeHeaderViewTables();
 
@@ -316,7 +264,7 @@ org.mozdev.compactHeader.pane = function() {
     gCoheCollapsedHeaderViewMode =
       deckHeaderView.selectedPanel == document.getElementById('CompactHeader_collapsedHeaderView');
 
-    pub.log("coheOnLoadMsgHeaderPane 1");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 1");
 
     // work around XUL deck bug where collapsed header view, if it's the persisted
     // default, wouldn't be sized properly because of the larger expanded
@@ -334,16 +282,16 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById('CompactHeader_collapsed2LHeadersBox').collapsed = true;
     }
 
-    pub.log("coheOnLoadMsgHeaderPane 2");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 2");
 
     if (coheFirstTime)
     {
-      pub.log("coheFirstTime");
+      org_mozdev_compactHeader.debug.log("coheFirstTime");
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
-      org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
-      org.mozdev.compactHeader.toolbar.fillToolboxPalette();
-      org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
+      org_mozdev_compactHeader.messenger.loadToolboxData();
+      org_mozdev_compactHeader.toolbar.fillToolboxPalette();
+      org_mozdev_compactHeader.messenger.saveToolboxData();
 
       let collapsed2LtoCcBccBox = document.getElementById("CompactHeader_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
@@ -353,7 +301,7 @@ org.mozdev.compactHeader.pane = function() {
             updateEmailAddressNodeFunction(aEmailNode, aAddress);
           }
           catch(e) {
-            pub.log("got execption " + e +
+            org_mozdev_compactHeader.debug.log("got execption " + e +
               " from updateEmailAddressNode");
           }
           aEmailNode.setAttribute("addressType", aAddress.addressType);
@@ -371,23 +319,23 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
-    pub.log("coheOnLoadMsgHeaderPane 2a");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 2a");
 
     if (cohe.firstrun) {
       coheCheckFirstRun();
     }
 
-    pub.log("coheOnLoadMsgHeaderPane 3");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 3");
 
-    org.mozdev.compactHeader.toolbar.setButtonStyle();
-    org.mozdev.customizeHeaderToolbar.messenger.saveToolboxData();
-    org.mozdev.compactHeader.toolbar.dispMUACheck();
+    org_mozdev_compactHeader.toolbar.setButtonStyle();
+    org_mozdev_compactHeader.messenger.saveToolboxData();
+    org_mozdev_compactHeader.toolbar.dispMUACheck();
 
-    pub.log("coheOnLoadMsgHeaderPane 4");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 4");
 
     coheToggleHeaderContent();
 
-    pub.log("coheOnLoadMsgHeaderPane stop");
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane stop");
   }
 
   var coheMessageListener =
@@ -464,17 +412,17 @@ org.mozdev.compactHeader.pane = function() {
     if (gCoheCollapsedHeaderViewMode)
       showHeaderView(gCoheCollapsedHeaderView);
 
-    org.mozdev.compactHeader.RSSLinkify.UpdateHeaderView(currentHeaderData);
+    org_mozdev_compactHeader.RSSLinkify.UpdateHeaderView(currentHeaderData);
 
     if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
       selectEmailDisplayed();
     }
 
-    //org.mozdev.compactHeader.toolbar.fillToolboxPalette(document);
+    //org_mozdev_compactHeader.toolbar.fillToolboxPalette(document);
     coheToggleHeaderContent();
-    org.mozdev.compactHeader.toolbar.CHTUpdateReplyButton();
-    org.mozdev.compactHeader.toolbar.CHTUpdateJunkButton();
-    org.mozdev.compactHeader.buttons.coheToggleStar();
+    org_mozdev_compactHeader.toolbar.CHTUpdateReplyButton();
+    org_mozdev_compactHeader.toolbar.CHTUpdateJunkButton();
+    org_mozdev_compactHeader.buttons.coheToggleStar();
   }
 
   function enableButtons() {
@@ -488,7 +436,7 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   pub.coheToggleHeaderView = function() {
-    pub.log("coheToggleHeaderView start");
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView start");
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
 
     let deck = document.getElementById('msgHeaderViewDeck');
@@ -513,11 +461,11 @@ org.mozdev.compactHeader.pane = function() {
     syncGridColumnWidths();
 
     coheToggleHeaderContent();
-    pub.log("coheToggleHeaderView stop");
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView stop");
   }
 
   function coheToggleHeaderContent() {
-    pub.log("coheToggleHeaderContent start");
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderContent start");
     var strHideLabel = document.getElementById("CompactHeader_CoheHideDetailsLabel").value;
     var strShowLabel = document.getElementById("CompactHeader_CoheShowDetailsLabel").value;
     var strLabel;
@@ -561,7 +509,7 @@ org.mozdev.compactHeader.pane = function() {
       }
     }
 
-    org.mozdev.customizeHeaderToolbar.messenger.loadToolboxData();
+    org_mozdev_compactHeader.messenger.loadToolboxData();
 
     if (gCoheCollapsedHeaderViewMode) {
       strLabel = strShowLabel;
@@ -572,7 +520,7 @@ org.mozdev.compactHeader.pane = function() {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
     }
 
-    org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+    org_mozdev_compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
 
     if (document.getElementById("CompactHeader_hideDetailsMenu")) {
       document.getElementById("CompactHeader_hideDetailsMenu").setAttribute("label", strLabel);
@@ -581,7 +529,7 @@ org.mozdev.compactHeader.pane = function() {
     document.getElementById("CompactHeader_viewMenuCompactBroadcast")
             .setAttribute("checked", gCoheCollapsedHeaderViewMode);
 
-    pub.log("coheToggleHeaderContent stop");
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderContent stop");
   }
 
   // default method for updating a header value into a header entry
@@ -610,7 +558,7 @@ org.mozdev.compactHeader.pane = function() {
   // view care about this header value. if it does then call updateHeaderEntry
   function coheUpdateMessageHeaders()
   {
-    pub.log("coheUpdateMessageHeaders start");
+    org_mozdev_compactHeader.debug.log("coheUpdateMessageHeaders start");
     // Remove the height attr so that it redraws correctly. Works around a
     // problem that attachment-splitter causes if it's moved high enough to
     // affect the header box:
@@ -653,25 +601,25 @@ org.mozdev.compactHeader.pane = function() {
     }
 
     if (headerFirstTime) {
-      pub.log("headerFirstTime");
+      org_mozdev_compactHeader.debug.log("headerFirstTime");
       headerFirstTime = false;
       var toolbox = document.getElementById("header-view-toolbox");
       var mailToolbox = document.getElementById("mail-toolbox");
       var oldCustomizeDone = toolbox.customizeDone;
       var oldCustomizeDoneMailToolbox = mailToolbox.customizeDone;
       toolbox.customizeDone = function(aEvent) {
-        pub.log("customizeDone start");
+        org_mozdev_compactHeader.debug.log("customizeDone start");
         oldCustomizeDone(aEvent);
-        pub.log("customizeDone 0");
-        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
-        pub.log("customizeDone stop");
+        org_mozdev_compactHeader.debug.log("customizeDone 0");
+        org_mozdev_compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
+        org_mozdev_compactHeader.debug.log("customizeDone stop");
       };
       mailToolbox.customizeDone = function(aEvent) {
-        pub.log("customizeDone start");
+        org_mozdev_compactHeader.debug.log("customizeDone start");
         oldCustomizeDoneMailToolbox(aEvent);
-        pub.log("customizeDone 0");
-        org.mozdev.compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
-        pub.log("customizeDone stop");
+        org_mozdev_compactHeader.debug.log("customizeDone 0");
+        org_mozdev_compactHeader.toolbar.onDoCustomizationHeaderViewToolbox("doCustomization");
+        org_mozdev_compactHeader.debug.log("customizeDone stop");
       };
     }
 
@@ -680,7 +628,7 @@ org.mozdev.compactHeader.pane = function() {
 
     // now update the view to make sure the right elements are visible
     coheUpdateHeaderView();
-    pub.log("coheUpdateMessageHeaders stop");
+    org_mozdev_compactHeader.debug.log("coheUpdateMessageHeaders stop");
   }
 
   function selectEmailDisplayed() {
@@ -749,11 +697,11 @@ org.mozdev.compactHeader.pane = function() {
 
     observe: function(aSubject, aTopic, aData)
     {
-      pub.log("prefObserver start");
+      org_mozdev_compactHeader.debug.log("prefObserver start");
       if(aTopic != "nsPref:changed") return;
       // aSubject is the nsIPrefBranch we're observing (after appropriate QI)
       // aData is the name of the pref that's been changed (relative to aSubject)
-      pub.log("prefObserver 1: " + aData);
+      org_mozdev_compactHeader.debug.log("prefObserver 1: " + aData);
 
       if (  (aData == "headersize.addressstyle")
           ||(aData == "headersize.twolineview")
@@ -765,46 +713,46 @@ org.mozdev.compactHeader.pane = function() {
         setDblClickHeaderEventHandler();
       }
 
-      pub.log("prefObserver stop");
+      org_mozdev_compactHeader.debug.log("prefObserver stop");
     }
   }
 
   var wasHere = false;
 
   function preferencesUpdate() {
-    pub.log("preferencesUpdate " + wasHere);
+    org_mozdev_compactHeader.debug.log("preferencesUpdate " + wasHere);
     if (!browserPreferences.getBoolPref("instantApply")
         && wasHere)
       return;
-    pub.log("preferencesUpdate 2");
+    org_mozdev_compactHeader.debug.log("preferencesUpdate 2");
     wasHere = true;
     ReloadMessage();
     pub.coheOnLoadMsgHeaderPane();
-    org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+    org_mozdev_compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
 //    var event = document.createEvent('Events');
 //    event.initEvent('messagepane-loaded', false, true);
 //    var headerViewElement = document.getElementById("msgHeaderView");
 //    headerViewElement.dispatchEvent(event);
     setTimeout(clearReloadTimeout, 250);
-    pub.log("preferencesUpdate stop");
+    org_mozdev_compactHeader.debug.log("preferencesUpdate stop");
   }
 
   function clearReloadTimeout() {
     wasHere = false;
-    pub.log("wasHere cleared");
+    org_mozdev_compactHeader.debug.log("wasHere cleared");
   }
 
   function coheCheckFirstRun() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
                                      .getService(Components.interfaces.nsIXULAppInfo);
-//    pub.log("first run 0");
-    var debugLevel = org.mozdev.compactHeader.debug.getLogLevel();
-    pub.log("firstrun 3");
-    org.mozdev.compactHeader.toolbar.populateEmptyToolbar();
+//    org_mozdev_compactHeader.debug.log("first run 0");
+    var debugLevel = org_mozdev_compactHeader.debug.getLogLevel();
+    org_mozdev_compactHeader.debug.log("firstrun 3");
+    org_mozdev_compactHeader.toolbar.populateEmptyToolbar();
     Components.utils.import("resource://gre/modules/AddonManager.jsm");
     AddonManager.getAddonByID(COMPACTHEADER_EXTENSION_UUID,
       function(myAddon) {
-        pub.log("first run 2");
+        org_mozdev_compactHeader.debug.log("first run 2");
         cohe.version = "";
         cohe.firstrun = false;
         cohe.current = myAddon.version;
@@ -815,24 +763,24 @@ org.mozdev.compactHeader.pane = function() {
         } finally {
           //check for first run
           if (cohe.firstrun){
-            pub.log("first run 2c");
-            org.mozdev.compactHeader.toolbar.CHTSetDefaultButtons();
+            org_mozdev_compactHeader.debug.log("first run 2c");
+            org_mozdev_compactHeader.toolbar.CHTSetDefaultButtons();
             cohePrefBranch.setBoolPref("firstrun",false);
             cohePrefBranch.setCharPref("version",cohe.current);
-            pub.log("first run 2cc");
+            org_mozdev_compactHeader.debug.log("first run 2cc");
           }
           //check for upgrade
           if (cohe.version!=cohe.current && !cohe.firstrun){
             cohePrefBranch.setCharPref("version",cohe.current);
-            pub.log("found version change");
+            org_mozdev_compactHeader.debug.log("found version change");
             // XXX
           }
           cohe.firstrun = false;
-          pub.log("first run 2d");
+          org_mozdev_compactHeader.debug.log("first run 2d");
         }
       }
     );
-    pub.log("firstrun 4");
+    org_mozdev_compactHeader.debug.log("firstrun 4");
   }
 
 
@@ -842,34 +790,34 @@ org.mozdev.compactHeader.pane = function() {
     // if ((gExtensionManager.getItemForID(COMPACTHEADER_EXTENSION_UUID) == null) || isAddonDisabled(COMPACTHEADER_EXTENSION_UUID)) {
     //  return;
     //}
-    pub.log("before register");
+    org_mozdev_compactHeader.debug.log("before register");
     coheUninstallObserver.register();
     myPrefObserver.register();
-    pub.log("register PrefObserver");
-    pub.log("after register");
+    org_mozdev_compactHeader.debug.log("register PrefObserver");
+    org_mozdev_compactHeader.debug.log("after register");
     if ((typeof MessageDisplayWidget != "undefined") && MessageDisplayWidget) {
-      pub.log("coheInitializeOverlay found MessageDisplayWidget");
+      org_mozdev_compactHeader.debug.log("coheInitializeOverlay found MessageDisplayWidget");
       var oldUpdateActiveMessagePane = MessageDisplayWidget.prototype._updateActiveMessagePane;
       MessageDisplayWidget.prototype._updateActiveMessagePane = function() {
-        pub.log("_updateActiveMessagePane start");
+        org_mozdev_compactHeader.debug.log("_updateActiveMessagePane start");
         oldUpdateActiveMessagePane.call(this);
-        org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
-        pub.log("_updateActiveMessagePane stop");
+        org_mozdev_compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+        org_mozdev_compactHeader.debug.log("_updateActiveMessagePane stop");
       };
     }
     else {
-      pub.log("coheInitializeOverlay didn't find MessageDisplayWidget");
+      org_mozdev_compactHeader.debug.log("coheInitializeOverlay didn't find MessageDisplayWidget");
     }
 
     var multiMessage = document.getElementById("multimessage");
     if (multiMessage) {
-      pub.log("multiMessage " + multiMessage);
+      org_mozdev_compactHeader.debug.log("multiMessage " + multiMessage);
       multiMessage.addEventListener("DOMContentLoaded", multiMessageLoaded, true);
     }
 
     addMessagePaneBoxFocusHandler();
     setDblClickHeaderEventHandler();
-    pub.log("coheInitializeOverlay stop");
+    org_mozdev_compactHeader.debug.log("coheInitializeOverlay stop");
   };
 
   function addMessagePaneBoxFocusHandler() {
@@ -883,28 +831,28 @@ org.mozdev.compactHeader.pane = function() {
   var msgHeaderViewBackground;
 
   function messagePaneBoxFocus(event) {
-    pub.log("messagePaneBoxFocus start");
+    org_mozdev_compactHeader.debug.log("messagePaneBoxFocus start");
     let msgHeaderView = document.getElementById("msgHeaderView");
     let wintype = document.documentElement.getAttribute("windowtype");
 //    let tabmail = document.getElementById("tabmail");
     if (cohePrefBranch.getBoolPref("header.darkenonfocus") &&
         msgHeaderView && wintype && wintype == "mail:3pane" ) {
 //          && tabmail && tabmail.tabContainer.selectedIndex == 0) {
-      pub.log("background: " +
+      org_mozdev_compactHeader.debug.log("background: " +
           msgHeaderViewBackground);
       if (typeof msgHeaderViewBackground === "undefined") {
         var style =
           document.defaultView.getComputedStyle(msgHeaderView, null);
         msgHeaderViewBackground = style.getPropertyValue("background-color");
       }
-      pub.log("style: " + style);
-      pub.log("background: " +
+      org_mozdev_compactHeader.debug.log("style: " + style);
+      org_mozdev_compactHeader.debug.log("background: " +
         msgHeaderViewBackground);
       let newColor = darkenColor(msgHeaderViewBackground);
       msgHeaderView.style.backgroundColor = newColor;
       //       msgHeaderView.setAttribute('style', 'background-color:darkblue;');
     }
-    pub.log("messagePaneBoxFocus stop");
+    org_mozdev_compactHeader.debug.log("messagePaneBoxFocus stop");
   }
 
   function darkenColor(color) {
@@ -941,7 +889,7 @@ org.mozdev.compactHeader.pane = function() {
   function setDblClickHeaderEventHandler() {
     var msgHeaderViewDeck = document.getElementById("msgHeaderViewDeck");
     if (msgHeaderViewDeck){
-      pub.log("msgHeaderViewDeck " + msgHeaderViewDeck);
+      org_mozdev_compactHeader.debug.log("msgHeaderViewDeck " + msgHeaderViewDeck);
       if (cohePrefBranch.getBoolPref("header.doubleclick"))
         msgHeaderViewDeck.addEventListener("dblclick", pub.coheToggleHeaderView, true);
       else
@@ -950,9 +898,9 @@ org.mozdev.compactHeader.pane = function() {
   }
 
   function multiMessageLoaded() {
-    pub.log("multiMessageLoaded start");
-    org.mozdev.compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
-    pub.log("multiMessageLoaded stop");
+    org_mozdev_compactHeader.debug.log("multiMessageLoaded start");
+    org_mozdev_compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
+    org_mozdev_compactHeader.debug.log("multiMessageLoaded stop");
   }
 
   var coheUninstallObserver = {
@@ -962,7 +910,7 @@ org.mozdev.compactHeader.pane = function() {
         subject.QueryInterface(Components.interfaces.nsIUpdateItem);
 
         if (subject.id == COMPACTHEADER_EXTENSION_UUID) {
-          pub.log("uninstalling COHE 1");
+          org_mozdev_compactHeader.debug.log("uninstalling COHE 1");
           if (data == "item-uninstalled") {
             this._uninstall = true;
           } else if (data == "item-cancel-action") {
@@ -970,10 +918,10 @@ org.mozdev.compactHeader.pane = function() {
           }
         }
       } else if (topic == "quit-application-granted") {
-        pub.log("uninstalling COHE 2");
+        org_mozdev_compactHeader.debug.log("uninstalling COHE 2");
         if (this._uninstall) {
           cohePrefBranch.deleteBranch("");
-          org.mozdev.compactHeader.toolbar.CHTCleanupButtons();
+          org_mozdev_compactHeader.toolbar.CHTCleanupButtons();
         }
         this.unregister();
       }
@@ -991,19 +939,19 @@ org.mozdev.compactHeader.pane = function() {
     },
 
     register : function() {
-      pub.log("register uninstall start");
+      org_mozdev_compactHeader.debug.log("register uninstall start");
       var observerService =
         Components.classes["@mozilla.org/observer-service;1"].
         getService(Components.interfaces.nsIObserverService);
-      pub.log("register uninstall start 1");
+      org_mozdev_compactHeader.debug.log("register uninstall start 1");
 
-      pub.log("register uninstall start 2");
+      org_mozdev_compactHeader.debug.log("register uninstall start 2");
 
-      pub.log("register uninstall neu 2");
+      org_mozdev_compactHeader.debug.log("register uninstall neu 2");
       observerService.addObserver(this, "quit-application-granted", false);
       Components.utils.import("resource://gre/modules/AddonManager.jsm");
       AddonManager.addAddonListener(this);
-      pub.log("register uninstall neu 2");
+      org_mozdev_compactHeader.debug.log("register uninstall neu 2");
     },
     unregister : function() {
       var observerService =
@@ -1037,6 +985,6 @@ org.mozdev.compactHeader.pane = function() {
   return pub;
 }();
 
-addEventListener('messagepane-loaded', org.mozdev.compactHeader.pane.coheOnLoadMsgHeaderPane, true);
-addEventListener('messagepane-unloaded', org.mozdev.compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
-addEventListener('load', org.mozdev.compactHeader.pane.coheInitializeOverlay, false);
+addEventListener('messagepane-loaded', org_mozdev_compactHeader.pane.coheOnLoadMsgHeaderPane, true);
+addEventListener('messagepane-unloaded', org_mozdev_compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
+addEventListener('load', org_mozdev_compactHeader.pane.coheInitializeOverlay, false);

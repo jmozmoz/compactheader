@@ -38,11 +38,12 @@
 # ***** END LICENSE BLOCK *****
 */
 
-if(org === "undefined" || !org) var org = {};
-if(!org.mozdev) org.mozdev = {};
-if(!org.mozdev.compactHeader) org.mozdev.compactHeader = {};
+if (typeof org_mozdev_compactHeader == "undefined") {
+  var org_mozdev_compactHeader = {};
+};
 
-org.mozdev.compactHeader.buttons = function() {
+
+org_mozdev_compactHeader.buttons = function() {
   var pub = {};
   const MSG_FLAG_FLAGGED = 0x4;
 
@@ -113,4 +114,4 @@ org.mozdev.compactHeader.buttons = function() {
   return pub;
 }();
 
-org.mozdev.compactHeader.buttons.init();
+org_mozdev_compactHeader.buttons.init();
