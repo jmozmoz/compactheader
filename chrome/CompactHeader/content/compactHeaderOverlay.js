@@ -785,11 +785,6 @@ org_mozdev_compactHeader.pane = function() {
 
 
   pub.coheInitializeOverlay = function() {
-    // var gExtensionManager = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-    // check if this is part of CompactHeader
-    // if ((gExtensionManager.getItemForID(COMPACTHEADER_EXTENSION_UUID) == null) || isAddonDisabled(COMPACTHEADER_EXTENSION_UUID)) {
-    //  return;
-    //}
     org_mozdev_compactHeader.debug.log("before register");
     coheUninstallObserver.register();
     myPrefObserver.register();
@@ -906,18 +901,9 @@ org_mozdev_compactHeader.pane = function() {
   var coheUninstallObserver = {
     _uninstall : false,
     observe : function(subject, topic, data) {
-      if (topic == "em-action-requested") {
-        subject.QueryInterface(Components.interfaces.nsIUpdateItem);
-
-        if (subject.id == COMPACTHEADER_EXTENSION_UUID) {
-          org_mozdev_compactHeader.debug.log("uninstalling COHE 1");
-          if (data == "item-uninstalled") {
-            this._uninstall = true;
-          } else if (data == "item-cancel-action") {
-            this._uninstall = false;
-          }
-        }
-      } else if (topic == "quit-application-granted") {
+      org_mozdev_compactHeader.debug.log("test: " + subject + ", " +
+          topic + ", " + data);
+      if (topic == "quit-application-granted") {
         org_mozdev_compactHeader.debug.log("uninstalling COHE 2");
         if (this._uninstall) {
           cohePrefBranch.deleteBranch("");
@@ -963,25 +949,6 @@ org_mozdev_compactHeader.pane = function() {
     }
   }
 
-  function isAddonDisabled(uuid) {
-    var rdfService = Components.classes["@mozilla.org/rdf/rdf-service;1"].getService(Components.interfaces.nsIRDFService);
-    var addon = rdfService.GetResource("urn:mozilla:item:" + uuid);
-
-    var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-    var ds = em.datasource;
-
-    var appRes = rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#appDisabled");
-    var appDisabled = ds.GetTarget(addon, appRes, true);
-    if(appDisabled instanceof Components.interfaces.nsIRDFLiteral && appDisabled.Value == "true")
-      return true;
-
-    var userRes = rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#userDisabled");
-    var userDisabled = ds.GetTarget(addon, userRes, true);
-    if(userDisabled instanceof Components.interfaces.nsIRDFLiteral && userDisabled.Value == "true")
-      return true;
-
-    return false;
-  }
   return pub;
 }();
 
