@@ -22,6 +22,7 @@ locale    CompactHeader     tr   chrome/CompactHeader/locale/tr/
 locale    CompactHeader     zh-CN   chrome/CompactHeader/locale/zh-CN/
 locale    CompactHeader     nl   chrome/CompactHeader/locale/nl/
 locale    CompactHeader     sl-SI   chrome/CompactHeader/locale/sl-SI/
+locale    CompactHeader     bt-BR   chrome/CompactHeader/locale/bt-BR/
 
 overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader/content/CHTMessenger.xul
 overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/CHTMessenger.xul
