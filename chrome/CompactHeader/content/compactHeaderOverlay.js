@@ -785,6 +785,7 @@ org_mozdev_compactHeader.pane = function() {
 
 
   pub.coheInitializeOverlay = function() {
+    removeEventListener('load', org_mozdev_compactHeader.pane.coheInitializeOverlay, false);
     org_mozdev_compactHeader.debug.log("before register");
     coheUninstallObserver.register();
     myPrefObserver.register();
@@ -893,6 +894,11 @@ org_mozdev_compactHeader.pane = function() {
   }
 
   function multiMessageLoaded() {
+    var multiMessage = document.getElementById("multimessage");
+    if (multiMessage) {
+      multiMessage.removeEventListener("DOMContentLoaded", multiMessageLoaded, false);
+    }
+
     org_mozdev_compactHeader.debug.log("multiMessageLoaded start");
     org_mozdev_compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
     org_mozdev_compactHeader.debug.log("multiMessageLoaded stop");
