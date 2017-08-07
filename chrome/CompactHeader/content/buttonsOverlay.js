@@ -52,7 +52,12 @@ org_mozdev_compactHeader.buttons = function() {
                                 .getService(Components.interfaces.nsIMsgMailSession);
     var nsIFolderListener = Components.interfaces.nsIFolderListener;
     mailSession.AddFolderListener(folderListener, nsIFolderListener.propertyFlagChanged);
-    window.addEventListener("load", function(e) { pub.singlemessage_controller.onLoad(e); }, false);
+    window.addEventListener("load", function loadEventListener(e)
+    {
+      window.removeEventListener("load", loadEventListener, false);
+      pub.singlemessage_controller.onLoad(e);
+    },
+    false);
   }
 
   pub.coheToggleStar = function () {
