@@ -121,13 +121,19 @@ while (my $line = <F>)
     #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P $ftpdir 2>&1\n";
     #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\";\n";
     print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\" 2>&1";
-    `wget -r -l1 --no-check-certificate --no-parent --follow-ftp -A$checksum $ftppath -nd -P "$ftpdir" 2>&1`;
+    print "\n";
+
+    `wget -r -l1 --no-check-certificate --no-parent --follow-ftp -A$checksum $ftppath/ -nd -P "$ftpdir" 2>&1`;
     @files = glob("$ftpdir/thunderbird*$checksum");
 
-    my $file = $files[0];
+    my $file = $files[-1];
 
     $file =~ /thunderbird-(.*)$checksum/;
     $version = $1;
+
+    print "************\n";
+    print "found version: ", $version, "\n";
+    print "************\n";
 
     next if (($testversion) && ($version ne $testversion));
 
@@ -158,8 +164,14 @@ while (my $line = <F>)
       my $testdir = "/tmp/compactheader/test-$version";
 
       mkdir "$testdir";
+      print "$ftpdir/$ostype-$hosttype-$version\n";
+      print "$ftppath/$app\n";
       system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+
+      print "$ftppath/$tests\n";
       system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+
+      print "$ftppath/$lightning\n";
       system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
       system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
