@@ -46,7 +46,9 @@ if (typeof org_mozdev_compactHeader == "undefined") {
 
 org_mozdev_compactHeader.debug = function() {
   var pub = {};
+  const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 
+  Cu.import("resource://gre/modules/Services.jsm");
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
@@ -61,7 +63,7 @@ org_mozdev_compactHeader.debug = function() {
     logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
     if (logLevel >= gCurrentLogLevel) {
       aConsoleService.logStringMessage(Date() + " CH: " + str);
-      Application.console.log(Date() + " CH: " + str);
+      Services.console.logStringMessage(Date() + " CH: " + str);
 //      console.log(Date() + " CH: " + str);
     }
   };
