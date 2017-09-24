@@ -187,7 +187,10 @@ org_mozdev_compactHeader.toolbar = function() {
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var buttons1 = Array.prototype.slice.call(hdrToolbar.querySelectorAll("toolbarbutton"));
-    var buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbarbutton"));
+    var buttons2 = [];
+    if (hdrToolbox && hdrToolbox.palette) {
+      buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbarbutton"));
+    }
     var buttons = buttons1.concat(buttons2);
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
@@ -220,7 +223,11 @@ org_mozdev_compactHeader.toolbar = function() {
     org_mozdev_compactHeader.debug.log("setButtonStyle start 1");
 
     var buttons1 = Array.prototype.slice.call(hdrToolbar.querySelectorAll("toolbaritem"));
-    var buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbaritem"));
+    var buttons2;
+    if (hdrToolbox && hdrToolbox.palette) {
+      buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbaritem"));
+    }
+
     var buttons = buttons1.concat(buttons2);
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];

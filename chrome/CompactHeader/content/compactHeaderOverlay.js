@@ -365,7 +365,7 @@ org_mozdev_compactHeader.pane = function() {
               .removeAddressBookListener(coheAddressBookListener);
 
     removeEventListener('messagepane-loaded',
-      pub.coheOnLoadMsgHeaderPane, true);
+    pub.coheOnLoadMsgHeaderPane, true);
     removeEventListener('messagepane-unloaded',
       pub.coheOnUnloadMsgHeaderPane, true);
   }
@@ -674,6 +674,8 @@ org_mozdev_compactHeader.pane = function() {
   {
     register: function()
     {
+      org_mozdev_compactHeader.debug.log("prefObserver registration start");
+
       // First we'll need the preference services to look for preferences.
       var prefService = Components.classes["@mozilla.org/preferences-service;1"]
                                   .getService(Components.interfaces.nsIPrefService);
@@ -687,6 +689,7 @@ org_mozdev_compactHeader.pane = function() {
 
       // Finally add the observer.
       this._branch.addObserver("", this, false);
+      org_mozdev_compactHeader.debug.log("prefObserver registration stop");
     },
 
     unregister: function()
@@ -715,7 +718,7 @@ org_mozdev_compactHeader.pane = function() {
 
       org_mozdev_compactHeader.debug.log("prefObserver stop");
     }
-  }
+  };
 
   var wasHere = false;
 
@@ -726,8 +729,10 @@ org_mozdev_compactHeader.pane = function() {
       return;
     org_mozdev_compactHeader.debug.log("preferencesUpdate 2");
     wasHere = true;
-    ReloadMessage();
-    pub.coheOnLoadMsgHeaderPane();
+    if ((typeof gDBView  != "undefined") && gDBView) {
+      gDBView.reloadMessage();
+      pub.coheOnLoadMsgHeaderPane();
+    }
     org_mozdev_compactHeader.toolbar.setCurrentToolboxPosition(gCoheCollapsedHeaderViewMode);
 //    var event = document.createEvent('Events');
 //    event.initEvent('messagepane-loaded', false, true);
@@ -788,8 +793,8 @@ org_mozdev_compactHeader.pane = function() {
     removeEventListener('load', org_mozdev_compactHeader.pane.coheInitializeOverlay, false);
     org_mozdev_compactHeader.debug.log("before register");
     coheUninstallObserver.register();
-    myPrefObserver.register();
     org_mozdev_compactHeader.debug.log("register PrefObserver");
+    myPrefObserver.register();
     org_mozdev_compactHeader.debug.log("after register");
     if ((typeof MessageDisplayWidget != "undefined") && MessageDisplayWidget) {
       org_mozdev_compactHeader.debug.log("coheInitializeOverlay found MessageDisplayWidget");
