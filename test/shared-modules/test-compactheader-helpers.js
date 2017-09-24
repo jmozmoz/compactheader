@@ -39,6 +39,8 @@ var Ci = Components.interfaces;
 var Cc = Components.classes;
 var Cu = Components.utils;
 
+var MODULE_NAME = "compactheader-helpers";
+
 var elib = {};
 Cu.import('resource://mozmill/modules/elementslib.js', elib);
 var mozmill = {};
@@ -46,7 +48,9 @@ Cu.import('resource://mozmill/modules/mozmill.js', mozmill);
 var EventUtils = {};
 Cu.import('resource://mozmill/stdlib/EventUtils.js', EventUtils);
 
-const MODULE_NAME = 'compactheader-helpers';
+var RELATIVE_ROOT = "../shared-modules";
+var MODULE_REQUIRES = ["folder-display-helpers", "window-helpers", 
+                       "customization-helpers"];
 
 var browserPreferences = Components.classes["@mozilla.org/preferences-service;1"]
                                             .getService(Components.interfaces.nsIPrefService)
