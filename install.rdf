@@ -13,10 +13,12 @@
 		<em:contributor>Alex Dedul (original author of RSS Linkify Subject)</em:contributor>
 		<em:contributor>Marco (Help for Mac OS X theme)</em:contributor>
 		<em:contributor>Axel Grude (Help on DispMUA)</em:contributor>
+		<em:translator>Jørgen (da)</em:translator>
 		<em:translator>Joachim Herb (en-US)</em:translator>
 		<em:translator>Joachim Herb (de)</em:translator>
 		<em:translator>Óvári (hu)</em:translator>
 		<em:translator>Peter Klofutar (sl)</em:translator>
+		<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
 		<em:optionsURL>chrome://CompactHeader/content/preferences.xul</em:optionsURL>
 		<em:homepageURL>http://compactheader.mozdev.org/</em:homepageURL>
 		<em:updateURL>http://compactheader.mozdev.org/update.rdf</em:updateURL>
@@ -44,10 +46,12 @@
 				<em:contributor>Alex Dedul (eredeti szerző: RSS Linkify Subject)</em:contributor>
 				<em:contributor>Marco (segítség a Mac OS X témában)</em:contributor>
 				<em:contributor>Axel Grude (segítség a DispMUA-val)</em:contributor>
+				<em:translator>Jørgen (da)</em:translator>
 				<em:translator>Joachim Herb (en-US)</em:translator>
 				<em:translator>Joachim Herb (de)</em:translator>
 				<em:translator>Óvári (hu)</em:translator>
 				<em:translator>Peter Klofutar (sl)</em:translator>
+				<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
 			</Description>
 		</em:localized>
 
@@ -61,10 +65,12 @@
 				<em:contributor>Alex Dedul (original author of RSS Linkify Subject)</em:contributor>
 				<em:contributor>Marco (Help for Mac OS X theme)</em:contributor>
 				<em:contributor>Axel Grude (Help on DispMUA)</em:contributor>
+				<em:translator>Jørgen (da)</em:translator>
 				<em:translator>Joachim Herb (en-US)</em:translator>
 				<em:translator>Joachim Herb (de)</em:translator>
 				<em:translator>Óvári (hu)</em:translator>
 				<em:translator>Peter Klofutar (sl)</em:translator>
+				<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
 			</Description>
 		</em:localized>
 
