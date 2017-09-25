@@ -12,18 +12,18 @@ locale    CompactHeader     de   chrome/CompactHeader/locale/de/
 locale    CompactHeader     en-US   chrome/CompactHeader/locale/en-US/
 locale    CompactHeader     es-ES   chrome/CompactHeader/locale/es-ES/
 locale    CompactHeader     fr   chrome/CompactHeader/locale/fr/
+locale    CompactHeader     hu   chrome/CompactHeader/locale/hu/
 locale    CompactHeader     it   chrome/CompactHeader/locale/it/
 locale    CompactHeader     ja   chrome/CompactHeader/locale/ja/
+locale    CompactHeader     nl   chrome/CompactHeader/locale/nl/
 locale    CompactHeader     pl   chrome/CompactHeader/locale/pl/
+locale    CompactHeader     pt-BR   chrome/CompactHeader/locale/pt-BR/
 locale    CompactHeader     ru   chrome/CompactHeader/locale/ru/
+locale    CompactHeader     sl-SI   chrome/CompactHeader/locale/sl-SI/
 locale    CompactHeader     sr   chrome/CompactHeader/locale/sr/
 locale    CompactHeader     sv-SE   chrome/CompactHeader/locale/sv-SE/
 locale    CompactHeader     tr   chrome/CompactHeader/locale/tr/
 locale    CompactHeader     zh-CN   chrome/CompactHeader/locale/zh-CN/
-locale    CompactHeader     nl   chrome/CompactHeader/locale/nl/
-locale    CompactHeader     sl-SI   chrome/CompactHeader/locale/sl-SI/
-locale    CompactHeader     pt-BR   chrome/CompactHeader/locale/pt-BR/
-locale    CompactHeader     hu   chrome/CompactHeader/locale/hu/
 
 overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader/content/CHTMessenger.xul
 overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/CHTMessenger.xul

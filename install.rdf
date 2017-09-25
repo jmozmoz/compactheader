@@ -14,6 +14,8 @@
 		<em:contributor>Marco (Help for Mac OS X theme)</em:contributor>
 		<em:contributor>Axel Grude (Help on DispMUA)</em:contributor>
 		<em:translator>Jørgen (da)</em:translator>
+		<em:translator>Joachim Herb (en-US)</em:translator>
+		<em:translator>Joachim Herb (de)</em:translator>
 		<em:translator>Óvári (hu)</em:translator>
 		<em:translator>Peter Klofutar (sl)</em:translator>
 		<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
@@ -35,16 +37,18 @@
 		</em:targetApplication>
 
 		<em:localized>
-      		<Description>
+      			<Description>
 				<em:locale>hu</em:locale>
-				<em:name>Tömörít fejléc (CompactHeader)</em:name>
-				<em:description>Adjon hozzá képességet a fejléc méretének csökkentésére egy vagy két sorra. Link tárgyakat az RSS csatornákban.</em:description>
+				<em:name>Tömörített fejléc (CompactHeader)</em:name>
+				<em:description>A fejléc méretének egy vagy két sorral való módosítása. Link témák az RSS csatornákban.</em:description>
 				<em:creator>Joachim Herb</em:creator>
 				<em:contributor>Zamula</em:contributor>
 				<em:contributor>Alex Dedul (eredeti szerző: RSS Linkify Subject)</em:contributor>
 				<em:contributor>Marco (segítség a Mac OS X témában)</em:contributor>
 				<em:contributor>Axel Grude (segítség a DispMUA-val)</em:contributor>
 				<em:translator>Jørgen (da)</em:translator>
+				<em:translator>Joachim Herb (en-US)</em:translator>
+				<em:translator>Joachim Herb (de)</em:translator>
 				<em:translator>Óvári (hu)</em:translator>
 				<em:translator>Peter Klofutar (sl)</em:translator>
 				<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
@@ -62,6 +66,8 @@
 				<em:contributor>Marco (Help for Mac OS X theme)</em:contributor>
 				<em:contributor>Axel Grude (Help on DispMUA)</em:contributor>
 				<em:translator>Jørgen (da)</em:translator>
+				<em:translator>Joachim Herb (en-US)</em:translator>
+				<em:translator>Joachim Herb (de)</em:translator>
 				<em:translator>Óvári (hu)</em:translator>
 				<em:translator>Peter Klofutar (sl)</em:translator>
 				<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
