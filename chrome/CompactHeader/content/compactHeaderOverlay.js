@@ -738,7 +738,10 @@ org_mozdev_compactHeader.pane = function() {
 //    event.initEvent('messagepane-loaded', false, true);
 //    var headerViewElement = document.getElementById("msgHeaderView");
 //    headerViewElement.dispatchEvent(event);
-    setTimeout(clearReloadTimeout, 250);
+    setTimeout(function() {
+        clearReloadTimeout();
+        return;
+      }, 250);
     org_mozdev_compactHeader.debug.log("preferencesUpdate stop");
   }
 
