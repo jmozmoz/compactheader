@@ -36,14 +36,25 @@
  ***** END LICENSE BLOCK ***** 
 -->
 <!ENTITY CompactHeader_dialog.title "Nastavitve CompactHeader">
+<!ENTITY CompactHeader_dialog.accessKey "N">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Prikaži dve vrstici v strnjenem pogledu">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
 <!ENTITY CompactHeader_menu.Linkify.caption "Poveži zadeve virov RSS in objav novičarskih skupin">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Prikaži samo naslov">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Ploščati gumbi">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Položaj orodne vrstice glave">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "desno">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "zgoraj">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "levo">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "nevidno">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Preklopi glavo z dvoklikom">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Potemni glavo, če je podokno sporočil v žarišču">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Položaj orodne vrstice glave">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "levo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "zgoraj">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "z">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "desno">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "d">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "nevidno">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "n">
