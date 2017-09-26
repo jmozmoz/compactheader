@@ -52,10 +52,10 @@
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "İ">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Başlık Çubuğu Pozisyonu">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "sol">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "s">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "s">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "üst">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "ü">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "sağ">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "ğ">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "görünmez">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "g">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "g">
