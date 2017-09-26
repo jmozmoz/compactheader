@@ -36,14 +36,25 @@
  ***** END LICENSE BLOCK ***** -->
 
 <!ENTITY CompactHeader_dialog.title "CompactHeader Preferences">
+<!ENTITY CompactHeader_dialog.accessKey "P">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Display two lines in compact view">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link in subjects of RSS feeds and news group posts">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "s">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Display only address">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flat buttons">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position of Header Toolbar">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "right">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "r">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "top">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "t">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "left">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "i">
