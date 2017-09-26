@@ -50,11 +50,11 @@
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Tmavší záhlaví, pokud je panel zpráv zaměřen">
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Pozice tlačítek panelu záhlaví">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "vpravo">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "p">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "střed">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "s">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "vlevo">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "střed">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "s">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "vpravo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "p">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "neviditelný">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "n">
