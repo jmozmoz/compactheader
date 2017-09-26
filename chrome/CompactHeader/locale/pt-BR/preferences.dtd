@@ -36,14 +36,25 @@
  ***** END LICENSE BLOCK ***** 
 -->
 <!ENTITY CompactHeader_dialog.title "Preferências CompactHeader">
+<!ENTITY CompactHeader_dialog.accessKey "P">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Exibir duas linhas em visualização compacta">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link em feeds RSS e mensagens de grupo de notícias">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar só endereço">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Botões flat">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posição do cabeçalho da barra de ferramentas">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "direito">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "superior">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "esquerdo">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisivel">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Alternar cabeçalho com um duplo clique">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Escurecer o cabeçalho do painel da mensagem em foco">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posição do cabeçalho da barra de ferramentas">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "esquerdo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "e">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "superior">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "s">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "direito">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "d">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisivel">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "i">
