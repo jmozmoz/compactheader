@@ -37,14 +37,25 @@
  ***** END LICENSE BLOCK ***** -->
 
 <!ENTITY CompactHeader_dialog.title "Tömörített fejléc beállítások">
+<!ENTITY CompactHeader_dialog.accessKey "b">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kétsoros megjelenítés tömörített nézetben">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "K">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link a tárgyakban az RSS csatornák és a hírcsoportok bejegyzéseiben">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "t">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Csak a cím megjelenítése">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "c">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Lapos gombok">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "g">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Dupla kattintás a fejléc ki- vagy bekapcsolásához">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "D">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Elsötétül a fejléc, ha az üzenetablak fókuszban van">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "E">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Fejléc eszköztárának helye">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "jobb">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "j">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "felső">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "f">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "bal">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "b">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "láthatatlan">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Dupla kattintás a fejléc ki- vagy bekapcsolásához">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Elsötétül a fejléc, ha az üzenetablak fókuszban van">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "l">
