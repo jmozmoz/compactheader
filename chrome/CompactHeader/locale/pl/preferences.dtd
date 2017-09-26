@@ -36,14 +36,25 @@
  ***** END LICENSE BLOCK ***** 
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader – ustawienia">
+<!ENTITY CompactHeader_dialog.accessKey "u">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Wyświetlaj dwa wiersze nagłówka">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
 <!ENTITY CompactHeader_menu.Linkify.caption "Wyświetlaj odnośnik w tematach kanałów RSS i postów grup dyskusyjnych">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Wyświetlaj tylko adresy">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Wyświetlaj płaskie przyciski">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Położenie paska narzędzi nagłówka">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Po prawej">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "Na górze">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "Po lewej">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "Niewidoczny">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Przełączaj widok nagłówka dwukrotnym kliknięciem">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Przyciemniaj nagłówek, gdy panel wiadomości jest aktywny">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Położenie paska narzędzi nagłówka">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "Po lewej">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "Na górze">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "g">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Po prawej">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "p">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "Niewidoczny">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "N">
