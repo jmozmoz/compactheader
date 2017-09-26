@@ -37,14 +37,25 @@
 
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader Tercihleri">
+<!ENTITY CompactHeader_dialog.accessKey "T">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakt görünümde iki satır göster">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
 <!ENTITY CompactHeader_menu.Linkify.caption "RSS beslemeleri ve haber grubu mesajlarındaki bağlantı">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Sadece adresleri göster">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Düz düğmeler">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Başlık Çubuğu Pozisyonu">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "sağ">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "üst">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "sol">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "görünmez">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Başlığı çift tıklamayla aç-kapat">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "İleti bölümüne odaklanılırsa başlığı karart">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Başlık Çubuğu Pozisyonu">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "sol">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "s">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "üst">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "ü">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "sağ">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "s">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "görünmez">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "g">
