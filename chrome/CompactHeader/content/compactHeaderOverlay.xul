@@ -40,6 +40,7 @@
   <menupopup id="header-toolbar-context-menu">
     <menuitem id="CompactHeader_hidecohePreferencesButton"
               label="&CompactHeader_dialog.title;"
+              accesskey="&CompactHeader_dialog.accessKey;"
               oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
   </menupopup>
 
