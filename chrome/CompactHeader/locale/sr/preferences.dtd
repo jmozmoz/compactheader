@@ -38,14 +38,25 @@
 
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader - опције">
+<!ENTITY CompactHeader_dialog.accessKey "1">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Прикажи две линије у сажетом приказу">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
 <!ENTITY CompactHeader_menu.Linkify.caption "Повежи субјекте RSS претплата и групних објава новости">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Прикажи само адресу">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Равна дугмад">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Место траке са алаткама у заглављу">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "десно">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "врх">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "лево">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "невидљива">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Дуплим кликом пребацуј између заглавља">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Затамни заглавље ако табла са порукама има фокус">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Место траке са алаткама у заглављу">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "лево">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "<">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "врх">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "^">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "десно">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey ">">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "невидљива">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "0">
