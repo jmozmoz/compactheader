@@ -50,11 +50,11 @@
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position of Header Toolbar">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "right">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "r">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "top">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "t">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "left">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "top">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "t">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "right">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "r">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisible">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "i">
