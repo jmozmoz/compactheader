@@ -42,22 +42,28 @@
 
     <checkbox id="CompactHeader_checkboxCompactTwolineView"
               preference="CompactHeader_twolineview"
-              label="&CompactHeader_checkbox.Compact.TwolineView.caption;"/>
+              label="&CompactHeader_checkbox.Compact.TwolineView.caption;"
+              accesskey="&CompactHeader_checkbox.Compact.TwolineView.accessKey;"/>
     <checkbox id="CompactHeader_checkboxLinkify"
               preference="CompactHeader_linkify"
-              label="&CompactHeader_menu.Linkify.caption;"/>
+              label="&CompactHeader_menu.Linkify.caption;"
+              accesskey="&CompactHeader_menu.Linkify.accessKey;"/>
     <checkbox id="CompactHeader_checkboxShowOnlyAddress"
               preference="CompactHeader_addressstyle"
-              label="&CompactHeader_menu.ShowOnlyAddress.caption;"/>
+              label="&CompactHeader_menu.ShowOnlyAddress.caption;"
+              accesskey="&CompactHeader_menu.ShowOnlyAddress.accessKey;"/>
     <checkbox id="CompactHeader_checkboxflatButtons"
               preference="CompactHeader_flatButtons"
-              label="&CompactHeader_menu.flatButtons.caption;"/>
+              label="&CompactHeader_menu.flatButtons.caption;"
+              accesskey="&CompactHeader_menu.flatButtons.accessKey;"/>
     <checkbox id="CompactHeader_checkbox_dblclick_header"
               preference="CompactHeader_dblclick_header"
-              label="&CompactHeader_menu.dblclick_header.caption;"/>
+              label="&CompactHeader_menu.dblclick_header.caption;"
+              accesskey="&CompactHeader_menu.dblclick_header.accessKey;"/>
     <checkbox id="CompactHeader_checkbox_darken_on_focus"
               preference="CompactHeader_darken_on_focus"
-              label="&CompactHeader_menu.darken_on_focus.caption;"/>
+              label="&CompactHeader_menu.darken_on_focus.caption;"
+              accesskey="&CompactHeader_menu.darken_on_focus.accessKey;"/>
     <groupbox id="CompactHeader_radiobox.ToolbarPosition">
       <caption label="&CompactHeader_radiobox.ToolbarPosition.caption;"/>
       <radiogroup id="CompactHeader_hdrToolbox.pos"
@@ -65,16 +71,20 @@
         <hbox>
           <radio id="CompactHeader_hdrToolbox.pos.left"
                  value="left"
-                 label="&CompactHeader_radiobox.ToolbarPosition.left;"/>
+                 label="&CompactHeader_radiobox.ToolbarPosition.left;"
+                 accesskey="&CompactHeader_radiobox.ToolbarPosition.left.accessKey;"/>
           <radio id="CompactHeader_hdrToolbox.pos.top"
                  value="top"
-                 label="&CompactHeader_radiobox.ToolbarPosition.top;"/>
+                 label="&CompactHeader_radiobox.ToolbarPosition.top;"
+                 accesskey="&CompactHeader_radiobox.ToolbarPosition.top.accessKey;"/>
           <radio id="CompactHeader_hdrToolbox.pos.right"
                  value="right"
-                 label="&CompactHeader_radiobox.ToolbarPosition.right;"/>
+                 label="&CompactHeader_radiobox.ToolbarPosition.right;"
+                 accesskey="&CompactHeader_radiobox.ToolbarPosition.right.accessKey;"/>
           <radio id="CompactHeader_hdrToolbox.pos.none"
                  value="none"
-                 label="&CompactHeader_radiobox.ToolbarPosition.none;"/>
+                 label="&CompactHeader_radiobox.ToolbarPosition.none;"
+                 accesskey="&CompactHeader_radiobox.ToolbarPosition.none.accessKey;"/>
         </hbox>
       </radiogroup>
     </groupbox>
