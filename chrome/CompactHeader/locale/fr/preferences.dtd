@@ -36,14 +36,25 @@
  ***** END LICENSE BLOCK ***** -->
 
 <!ENTITY CompactHeader_dialog.title "Préférences de CompactHeader">
+<!ENTITY CompactHeader_dialog.accessKey "P">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Afficher la vue compacte sur deux lignes">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
 <!ENTITY CompactHeader_menu.Linkify.caption "Transformer en lien les sujets des fils RSS">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "s">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Afficher seulement les adresses des courriels">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Boutons plats">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "haut">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "gauche">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisible">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Activer/désactiver l'en-tête avec un double clic">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Griser l'en-tête si le panneau des messages est au premier plan">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "gauche">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "g">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "haut">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "h">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "d">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisible">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "i">
