@@ -36,14 +36,25 @@
  ***** END LICENSE BLOCK ***** -->
 
 <!ENTITY CompactHeader_dialog.title "CompactHeader Einstellungen">
+<!ENTITY CompactHeader_dialog.accessKey "E">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Kompakte Headeranzeige mit zwei Zeilen">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link in Betreffs von RSS Feeds und Newsgroup Nachrichten">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "s">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Nur Adresse anzeigen">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flache Schaltflächen">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position der Kopfzeilenwerkzeugleiste">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "rechts">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "oben">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "links">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "unsichtbar">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Umschalten der Kopfzeilen mit Doppelklick">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Kopfzeile dunkel, falls Fokus auf Meldungsfläche">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position der Kopfzeilenwerkzeugleiste">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "links">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "oben">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "o">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "rechts">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "r">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "unsichtbar">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "u">
