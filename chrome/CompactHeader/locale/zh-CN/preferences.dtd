@@ -53,10 +53,10 @@
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "如">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "消息头工具栏位置">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "左">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "左">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "左">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "上">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "上">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "右">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "右">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "不可见">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "不">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "不">
