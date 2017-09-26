@@ -46,7 +46,7 @@
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Прикажи само адресу">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "а">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Равна дугмад">
-<!ENTITY CompactHeader_menu.flatButtons.accessKey "Р">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "р">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Дуплим кликом пребацуј између заглавља">
 <!ENTITY CompactHeader_menu.dblclick_header.accessKey "к">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Затамни заглавље ако табла са порукама има фокус">
