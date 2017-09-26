@@ -38,14 +38,25 @@
 
 -->
 <!ENTITY CompactHeader_dialog.title "Настройки CompactHeader">
+<!ENTITY CompactHeader_dialog.accessKey "1">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Две строчки в компактном режиме">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
 <!ENTITY CompactHeader_menu.Linkify.caption "Тема ленты или группы новостей как ссылка">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Показывать только адрес">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Плоские кнопки">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Расположение панели инструментов заголовка">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "справа">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "сверху">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "слева">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "невидимa">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Переключение режима двойным щелчком мышки">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Заголовок темнее если в фокусе текст сообщения">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Расположение панели инструментов заголовка">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "слева">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "<">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "сверху">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "^">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "справа">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey ">">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "невидимa">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "0">
