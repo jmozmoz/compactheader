@@ -40,21 +40,21 @@
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Mostra due linee nella visualizzazione compatta">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link nell'oggetto dei feed RSS">
-<!ENTITY CompactHeader_menu.Linkify.accessKey "s">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "R">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostra solo l'indirizzo">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "M">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Pulsanti piani">
-<!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Toggle header by double click">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Darken header if message pane has focus">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "P">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Attiva l'intestazione doppio clic">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "l">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Annota l'intestazione se il riquadro dei messaggi ha la messa a fuoco">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "f">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posizione della Barra Intestazioni">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "sinistra">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "s">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "alto">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "sinistra">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "s">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "alto">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "a">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "destra">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "d">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "invisibile">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "i">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisibile">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "i">
