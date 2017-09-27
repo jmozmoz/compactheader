@@ -51,11 +51,11 @@
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Elsötétül a fejléc, ha az üzenetablak fókuszban van">
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "E">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Fejléc eszköztárának helye">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left  "bal">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "b">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.top   "felső">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "bal">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "b">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.top "felső">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "f">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "jobb">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "j">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none  "láthatatlan">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none "láthatatlan">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "l">
