@@ -43,19 +43,19 @@
 <!ENTITY CompactHeader_menu.Linkify.caption "Mostrar el asunto en los canales RSS como un enlace">
 <!ENTITY CompactHeader_menu.Linkify.accessKey "s">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar sólo las direcciones de correo">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "r">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Mostrar botones «planos»">
 <!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Alternar la vista de las cabeceras mediante doble clic">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "l">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Oscurecer cabeceras si el cuerpo del mensaje recibe el foco">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "f">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posición de la barra de herramientas de cabeceras">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "Izquierda">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "I">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "I">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "Arriba">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "A">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "Derecha">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "D">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "Invisible">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "v">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "v">

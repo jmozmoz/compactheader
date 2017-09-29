@@ -46,15 +46,15 @@
 <!ENTITY CompactHeader_menu.flatButtons.caption "Boutons plats">
 <!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Activer/désactiver l'en-tête avec un double clic">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "t">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Griser l'en-tête si le panneau des messages est au premier plan">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "p">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position de la barre d'outil">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "gauche">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "g">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "g">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "haut">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "h">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "droite">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "d">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "invisible">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "i">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "i">

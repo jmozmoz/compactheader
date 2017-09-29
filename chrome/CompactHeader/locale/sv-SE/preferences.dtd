@@ -39,23 +39,23 @@
 <!ENTITY CompactHeader_dialog.title "Inställningar för CompactHeader">
 <!ENTITY CompactHeader_dialog.accessKey "I">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Visa två rader i kompaktvyn">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "2">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "t">
 <!ENTITY CompactHeader_menu.Linkify.caption "Länk i ämnesraderna för RSS-flöden och nyhetsgruppsinlägg">
-<!ENTITY CompactHeader_menu.Linkify.accessKey "3">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "R">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Visa endast adresser">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "4">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Platta knappar">
-<!ENTITY CompactHeader_menu.flatButtons.accessKey "5">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "k">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Växla visning av huvudet med dubbelklick">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "6">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "d">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Gör huvudet mörkare när meddelandepanelen har fokus">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "7">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "G">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position för brevhuvudverktygsfältet">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "till vänster">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "v">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "v">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "överst">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "ö">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right "till höger">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "h">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "osynligt">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "o">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "o">

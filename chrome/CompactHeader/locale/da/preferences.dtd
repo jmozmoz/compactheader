@@ -40,23 +40,23 @@
 <!ENTITY CompactHeader_dialog.title "CompactHeader - Indstillinger">
 <!ENTITY CompactHeader_dialog.accessKey "I">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Vis to linjer i sammenfoldet visning">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "l">
 <!ENTITY CompactHeader_menu.Linkify.caption "Link i feed-emner og indlæg i nyhedsgrupper">
-<!ENTITY CompactHeader_menu.Linkify.accessKey "s">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "n">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Vis kun adresse">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Flade knapper">
-<!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "k">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Vis/skjul meddelelseshovedet med dobbeltklik">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "m">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Gør headeren mørkere hvis meddelelsesruden er i fokus">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "f">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position værktøjslinje i meddelelseshovedet">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "højre">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "h">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "venstre">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "v">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "øverst">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "ø">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "venstre">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "v">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "højre">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "h">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "usynlig">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "u">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "u">

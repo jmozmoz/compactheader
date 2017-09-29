@@ -38,23 +38,23 @@
 <!ENTITY CompactHeader_dialog.title "CompactHeader Nastavení">
 <!ENTITY CompactHeader_dialog.accessKey "N">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Zobrazit dva řádky v kompaktním zobrazení">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "Z">
 <!ENTITY CompactHeader_menu.Linkify.caption "Odkaz v předmětech RSS">
-<!ENTITY CompactHeader_menu.Linkify.accessKey "s">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "R">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Zobrazit pouze adresu">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Jednoduché tlačítka">
-<!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "J">
 <!ENTITY CompactHeader_menu.dblclick_header.caption "Přepněte záhlaví dvojitým kliknutím">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "h">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "P">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Tmavší záhlaví, pokud je panel zpráv zaměřen">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "T">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Pozice tlačítek panelu záhlaví">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "vpravo">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "p">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "vlevo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "v">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "střed">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top.accessKey "s">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left "vlevo">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey  "l">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right "vpravo">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.right.accessKey "o">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.none "neviditelný">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey  "n">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.none.accessKey "n">
