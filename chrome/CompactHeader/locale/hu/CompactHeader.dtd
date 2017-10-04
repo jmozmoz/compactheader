@@ -37,7 +37,7 @@
  ***** END LICENSE BLOCK ***** -->
 
 <!ENTITY CompactHeader_hideDetailsButton.label "Rejtett részletek">
-<!ENTITY CompactHeader_toggleDetails.key "r">
+<!ENTITY CompactHeader_toggleDetails.key "R">
 <!ENTITY CompactHeader_showDetailsButton.label "Részletek mutatása">
 <!ENTITY CompactHeader_compactMenu.label "Tömörít">
-<!ENTITY CompactHeader_compactMenu.accesskey "t">
+<!ENTITY CompactHeader_compactMenu.accesskey "T">
