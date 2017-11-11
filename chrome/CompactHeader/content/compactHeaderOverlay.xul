@@ -100,12 +100,10 @@
                 <menuitem id="CompactHeader_hideDetailsMenu"
                           label="&CompactHeader_hideDetailsButton.label;"
                           oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
-                          key="CompactHeader_hideDetailsKey"
-                          accesskey="&CompactHeader_toggleDetails.key;"/>
+                          key="CompactHeader_hideDetailsKey"/>
                 <menuitem id="CompactHeader_hidecohePreferencesButton"
                           label="&CompactHeader_dialog.title;"
-                          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"
-                          accesskey="&CompactHeader_dialog.accessKey;"/>
+                          oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,centerscreen,dependent,all,resizable=no');"/>
               </menupopup>
             </toolbarbutton>
           </toolbarpalette>
