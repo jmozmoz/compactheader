@@ -683,9 +683,9 @@ org_mozdev_compactHeader.pane = function() {
       // For this._branch we ask that the preferences for extensions.myextension. and children
       this._branch = prefService.getBranch("extensions.CompactHeader.");
 
-      // Now we queue the interface called nsIPrefBranch2. This interface is described as:
+      // Now we queue the interface called nsIPrefBranch. This interface is described as:
       // "nsIPrefBranch2 allows clients to observe changes to pref values."
-      this._branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+      this._branch.QueryInterface(Components.interfaces.nsIPrefBranch);
 
       // Finally add the observer.
       this._branch.addObserver("", this, false);
