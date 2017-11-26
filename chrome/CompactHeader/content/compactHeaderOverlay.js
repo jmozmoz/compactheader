@@ -87,6 +87,9 @@ org_mozdev_compactHeader.pane = function() {
     {name:"date", outputFunction:coheUpdateDateValue}
     ];
 
+  var prefserv = Components.classes["@mozilla.org/preferences-service;1"]
+    .getService(Components.interfaces.nsIPrefBranch);
+
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
     .getService(Components.interfaces.nsIPrefService)
     .getBranch("extensions.CompactHeader.");
@@ -197,7 +200,7 @@ org_mozdev_compactHeader.pane = function() {
     gCoheCollapsedHeaderView = {};
     var index;
 
-    if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
+    if (prefserv.getBoolPref("extensions.CompactHeader.headersize.twolineview")) {
       for (index = 0; index < gCoheCollapsedHeader2LListLongAddresses.length; index++) {
         gCoheCollapsedHeaderView[gCoheCollapsedHeader2LListLongAddresses[index].name] =
           new createHeaderEntry('CompactHeader_collapsed2L', gCoheCollapsedHeader2LListLongAddresses[index]);
