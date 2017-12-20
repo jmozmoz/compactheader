@@ -104,7 +104,7 @@ function setupModule(module) {
 /**
  *  Test header pane toolbar position
  */
-function notest_button_visibility() {
+function test_button_visibility() {
   if (canMoveToolbox()) {
     be_in_folder(folder2);
     select_click_row(0);
@@ -140,7 +140,7 @@ function notest_button_visibility() {
  *  Make sure that opening the header toolbar customization dialog
  *  does not break the get messages button in main toolbar
  */
-function notest_get_msg_button_customize_header_toolbar(){
+function test_get_msg_button_customize_header_toolbar(){
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
@@ -175,7 +175,7 @@ function notest_get_msg_button_customize_header_toolbar(){
 /**
  *  Test header pane toolbar customization: Check for default button sets
  */
-function notest_customize_header_toolbar_check_default()
+function test_customize_header_toolbar_check_default()
 {
   let curMessage = select_message_in_folder(folder1, 0, mc);
   let hdrToolbar = mc.eid("header-view-toolbar").node;
@@ -217,7 +217,7 @@ function notest_customize_header_toolbar_check_default()
 /**
 *  Test that other action button has icon
 */
-function notest_other_actions_icon()
+function test_other_actions_icon()
 {
   let curMessage = select_message_in_folder(folder1, 0, mc);
 
@@ -236,7 +236,7 @@ function notest_other_actions_icon()
 /**
  *  Test header pane toolbar customization: Reorder buttons
  */
-function notest_customize_header_toolbar_reorder_buttons()
+function test_customize_header_toolbar_reorder_buttons()
 {
   Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   let curMessage = select_message_in_folder(folder1, 0, mc);
@@ -291,7 +291,7 @@ function notest_customize_header_toolbar_reorder_buttons()
 // *  Test header pane toolbar customization: Change buttons in
 // *  separate mail window
 // */
-function notest_customize_header_toolbar_separate_window()
+function test_customize_header_toolbar_separate_window()
 {
   Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   let curMessage = select_message_in_folder(folder1, 0, mc);
@@ -369,7 +369,7 @@ function notest_customize_header_toolbar_separate_window()
 /**
  *  Test header pane toolbar customization: Remove buttons
  */
-function notest_customize_header_toolbar_remove_buttons(){
+function test_customize_header_toolbar_remove_buttons(){
   // Save currentset of toolbar for adding the buttons back
   // at the end.
   var lCurrentset;
@@ -457,7 +457,7 @@ function notest_customize_header_toolbar_remove_buttons(){
 /**
  *  Test header pane toolbar customization: Add all buttons to toolbar
  */
-function notest_customize_header_toolbar_add_all_buttons(){
+function test_customize_header_toolbar_add_all_buttons(){
 
   Services.prefs.setBoolPref("toolkit.customization.unsafe_drag_events", true);
   select_message_in_folder(folder1, 0, mc);
@@ -583,7 +583,7 @@ function notest_customize_header_toolbar_add_all_buttons(){
 /**
  *  Test header pane toolbar customization dialog layout
  */
-function notest_customize_header_toolbar_dialog_style(){
+function test_customize_header_toolbar_dialog_style(){
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
   set_and_assert_toolbox_position(mc, 'top');
@@ -719,7 +719,7 @@ function test_visible_toolbar() {
 /**
  *  Test header pane toolbar position
  */
-function notest_set_toolbar_position() {
+function test_set_toolbar_position() {
   set_pane_layout(kClassicMailLayout);
   assert_pane_layout(kClassicMailLayout);
   let abwc = openAddressBook();

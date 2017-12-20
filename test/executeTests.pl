@@ -63,9 +63,11 @@ my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
 my ($testversion);
 my ($downloadonly);
+my ($nodownload);
 
 GetOptions('version:s' => \$testversion,
-           'downloadonly' => \$downloadonly);
+           'downloadonly' => \$downloadonly,
+           'nodownload' => \$nodownload);
 
 open (F, $file) || die ("Could not open $file!");
 
@@ -95,6 +97,7 @@ my $mnenhy = "https://addons.mozilla.org/thunderbird/downloads/latest/2516/addon
 
 my %testSpecs;
 
+
 system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
 
 system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
@@ -110,6 +113,7 @@ while (my $line = <F>)
   if (($ostype eq $^O)
       && ($hosttype eq $machine)
       ) {
+
     # Download checksums file to determine version of Thunderbird, because
     # we use a link to latest release/beta/earlybird/trunk build and do not
     # know the version!
@@ -166,16 +170,18 @@ while (my $line = <F>)
       mkdir "$testdir";
       print "$ftpdir/$ostype-$hosttype-$version\n";
       print "$ftppath/$app\n";
-      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+      if (! $nodownload) {
+	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
 
-      print "$ftppath/$tests\n";
-      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+	      print "$ftppath/$tests\n";
+	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
 
-      print "$ftppath/$lightning\n";
-      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
+	      print "$ftppath/$lightning\n";
+	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
-      system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*";
+	      system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
+	      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*";
+      }
 
       my $currentdir = getcwd;
 
@@ -235,6 +241,8 @@ foreach my $pid (@children) {
     print "\n";
     print getcwd;
     print "... installing mozmill\n";
+    rmdir('../mozmill-virtualenv');
+    rmdir('../mozbase');
     `python resources/installmozmill.py ../mozmill-virtualenv ../mozbase/`;
     $python = "$virtualpython";
   }
@@ -264,16 +272,16 @@ foreach my $pid (@children) {
   print $comp_apps;
   print "\n";
 
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader 2>&1`;
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header 2>&1`;
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display 2>&1`;
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js 2>&1`;
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1`;
+  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1\n";
+  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1`;
 
   chdir "$currentdir";
   my @timeData = localtime(time);

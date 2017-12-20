@@ -49,15 +49,12 @@ var EventUtils = {};
 Cu.import('resource://mozmill/stdlib/EventUtils.js', EventUtils);
 
 var RELATIVE_ROOT = "../shared-modules";
-var MODULE_REQUIRES = ["folder-display-helpers", "window-helpers", 
+var MODULE_REQUIRES = ["folder-display-helpers", "window-helpers",
                        "customization-helpers"];
 
-var browserPreferences = Components.classes["@mozilla.org/preferences-service;1"]
-                                            .getService(Components.interfaces.nsIPrefService)
-                                            .getBranch("browser.preferences.");
 const usesheetPref = "toolbar.customization.usesheet";
 var allPreferences = Cc["@mozilla.org/preferences-service;1"]
-                    .getService(Ci.nsIPrefService).getBranch(null);
+                    .getService(Ci.nsIPrefBranch);
 var L;
 var folderDisplayHelper;
 var gCDHelper;
@@ -67,7 +64,7 @@ function setupModule(module) {
   windowHelper = collector.getModule('window-helpers');
   let cu = collector.getModule('customization-helpers');
   cu.installInto(module);
- 
+
   var appInfo = Cc["@mozilla.org/xre/app-info;1"]
   .getService(Ci.nsIXULAppInfo);
   var versionChecker = Cc["@mozilla.org/xpcom/version-comparator;1"]
@@ -172,7 +169,7 @@ function open_preferences_dialog(aController, aSubtest) {
 
 function close_preferences_dialog(aController) {
   windowHelper.plan_for_window_close(aController);
-  if (browserPreferences.getBoolPref("instantApply")) {
+  if (allPreferences.getBoolPref("browser.preferences.instantApply")) {
     let cancelButton = aController.window.document.documentElement.getButton('cancel');
     aController.click(new elib.Elem(cancelButton));
   }
@@ -305,10 +302,10 @@ function filterInvisibleButtons(aController, aButtons) {
 }
 
 function canMoveToolbox() {
-  var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-    .getService(Components.interfaces.nsIXULAppInfo);
-  var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-    .getService(Components.interfaces.nsIVersionComparator);
+  var appInfo = Cc["@mozilla.org/xre/app-info;1"]
+    .getService(Ci.nsIXULAppInfo);
+  var versionChecker = Cc["@mozilla.org/xpcom/version-comparator;1"]
+    .getService(Ci.nsIVersionComparator);
   return (versionChecker.compare(appInfo.version, "10.0a2") >= 0)
 };
 
