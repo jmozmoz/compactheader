@@ -263,6 +263,12 @@ foreach my $pid (@children) {
 
   # We have out own tests for this, so delete it
   unlink("message-header/test-header-toolbar.js");
+
+
+  # disable test, because the default is now icons only, so this test does
+  # not work anymore
+  print `sed -i -e 's/test_toolbar_collapse_and_expand/notest_toolbar_collapse_and_expand/' ${testdir}/mozmill/message-header/test-message-header.js`;
+
   my @compatibility_apps = (
 #     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"), # lightning
 #     glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
