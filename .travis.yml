@@ -4,4 +4,7 @@ before_script:
   - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
   - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
 
-script: ant buildAMO
+script: 
+  - ant buildAMO
+  - cd test
+  - perl executeTests.pl --version 59.0a1
