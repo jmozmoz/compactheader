@@ -5,6 +5,9 @@ before_script:
   - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
   - sh -e /etc/init.d/xvfb start
 
+env:
+  - DISPLAY=':99.0'
+
 script: 
   - ant buildAMO
   - cd test
