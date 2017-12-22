@@ -274,7 +274,7 @@ foreach my $pid (@children) {
 
   @compatibility_apps = grep { $_ && !m/^\s+$/ } @compatibility_apps;
 
-  my $comp_apps = join(" -a", @compatibility_apps);
+  my $comp_apps = join(" -a ", @compatibility_apps);
   print $comp_apps;
   print "\n";
 
