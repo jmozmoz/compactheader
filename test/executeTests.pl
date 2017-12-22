@@ -43,6 +43,9 @@ use File::Copy;
 use POSIX;
 use Cwd;
 use Getopt::Long;
+use File::Path qw(make_path);
+
+my $TMPDIR = "/tmp";
 
 my $file = 'testapps.csv';
 my $xpiversion = `grep 'version>' ../install.rdf | sed -e 's/.*version>\\(.*\\)<\\/em.*/\\1/'`;
@@ -51,8 +54,8 @@ my $xpi = getcwd . "/../AMO/CompactHeader-${xpiversion}.xpi";
 
 print "xpi: $xpi\n";
 
-my $ftpdir = "/tmp/compactheader/ftp";
-mkdir "$ftpdir";
+my $ftpdir = "${TMPDIR}/compactheader/ftp";
+make_path "$ftpdir";
 copy($xpi, $ftpdir);
 $xpi = "../../ftp/CompactHeader-${xpiversion}.xpi";
 print "xpi: $xpi\n";
@@ -167,7 +170,7 @@ while (my $line = <F>)
 
       print "child: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
 
-      my $testdir = "/tmp/compactheader/test-$version";
+      my $testdir = "${TMPDIR}/compactheader/test-$version";
 
       mkdir "$testdir";
       print "$ftpdir/$ostype-$hosttype-$version\n";
@@ -230,7 +233,7 @@ foreach my $pid (@children) {
 
   print "$pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n";
 
-  my $testdir = "/tmp/compactheader/test-$version";
+  my $testdir = "${TMPDIR}/compactheader/test-$version";
   chdir "$testdir/mozmill";
   #system "pwd";
 
