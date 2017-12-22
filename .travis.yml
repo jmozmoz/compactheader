@@ -3,6 +3,7 @@ language: java
 before_script:
   - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
   - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
+  - sh -e /etc/init.d/xvfb start
 
 script: 
   - ant buildAMO
