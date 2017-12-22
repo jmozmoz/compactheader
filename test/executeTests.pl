@@ -272,6 +272,9 @@ foreach my $pid (@children) {
   print $comp_apps;
   print "\n";
 
+  print `pwd`;
+  print `ls $xpi`;
+x
   print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1`;
   print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1\n";
