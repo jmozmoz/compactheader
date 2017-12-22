@@ -95,7 +95,8 @@ elsif ($^O eq "linux") {
 my @children;
 my @files;
 my $dispMUAfile;
-my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/562/addon-562-latest.xpi";
+#my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/562/addon-562-latest.xpi";
+my $dispMUA = "https://addons.mozilla.org/thunderbird/downloads/latest/display-mail-user-agent/platform:5/addon-562-latest.xpi";
 
 my $mnenhyfile;
 my $mnenhy = "https://addons.mozilla.org/thunderbird/downloads/latest/2516/addon-2516-latest.xpi";
@@ -185,7 +186,7 @@ while (my $line = <F>)
 	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
 	      system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-	      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*";
+	      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*", "*jit-test*", "*bin*";
       }
 
       my $currentdir = getcwd;
@@ -263,17 +264,17 @@ foreach my $pid (@children) {
   # We have out own tests for this, so delete it
   unlink("message-header/test-header-toolbar.js");
   my @compatibility_apps = (
-#     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"),
+#     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"), # lightning
 #     glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
-#     "$dispMUAfile",
-#     glob("../../ftp/addon-562*.xpi"),
+    "$dispMUAfile",
+    glob("../../ftp/addon-562*.xpi"), # display mail user agent for AMO
     "$xpi"
 #    "$mnenhyfile" # activate when mozmill can handle this addon:
   );
 
   @compatibility_apps = grep { $_ && !m/^\s+$/ } @compatibility_apps;
 
-  my $comp_apps = join(",", @compatibility_apps);
+  my $comp_apps = join(" -a", @compatibility_apps);
   print $comp_apps;
   print "\n";
 
