@@ -57,6 +57,8 @@ copy($xpi, $ftpdir);
 $xpi = "../../ftp/CompactHeader-${xpiversion}.xpi";
 print "xpi: $xpi\n";
 
+print `ls ${ftpdir}`;
+
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
@@ -274,6 +276,7 @@ foreach my $pid (@children) {
 
   print `pwd`;
   print `ls $xpi`;
+  print `ls ${ftpdir}`;
 
   print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1`;
