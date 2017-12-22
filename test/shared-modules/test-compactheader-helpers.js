@@ -209,8 +209,10 @@ function collapse_and_assert_header(aController) {
 function assert_collapsed(aController) {
   let collapsedHeaderView = aController.e("CompactHeader_collapsedHeaderView");
   let expandedHeaderView = aController.e("expandedHeaderView");
-  folderDisplayHelper.assert_true(!collapsedHeaderView.hasAttribute("collapsed"));
-  folderDisplayHelper.assert_true(expandedHeaderView.getAttribute("collapsed"));
+  folderDisplayHelper.assert_true(!collapsedHeaderView.hasAttribute("collapsed"),
+    'collapsed header view has attribute collapsed but should not have it');
+  folderDisplayHelper.assert_true(expandedHeaderView.getAttribute("collapsed"),
+    'expanded header view does not have attribute collapsed but should have it');
 }
 
 function expand_and_assert_header(aController) {
@@ -226,8 +228,10 @@ function expand_and_assert_header(aController) {
 function assert_expanded(aController) {
   let collapsedHeaderView = aController.e("CompactHeader_collapsedHeaderView");
   let expandedHeaderView = aController.e("expandedHeaderView");
-  folderDisplayHelper.assert_true(collapsedHeaderView.getAttribute("collapsed"));
-  folderDisplayHelper.assert_true(!expandedHeaderView.hasAttribute("collapsed"));
+  folderDisplayHelper.assert_true(collapsedHeaderView.getAttribute("collapsed"),
+    'collapsed header view does not have attribute collapsed but should have it');
+  folderDisplayHelper.assert_true(!expandedHeaderView.hasAttribute("collapsed"),
+    'expanded header view has attribute collapsed but should not have it');
 }
 
 /**
