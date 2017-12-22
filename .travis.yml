@@ -11,7 +11,7 @@ before_script:
   - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16  -extension RANDR"
   - sleep 5 # give xvfb some time to start
-  - metacity --sm-disable --replace &
+  - metacity --sm-disable --replace 2>/dev/null &
 
 script: 
   - ant buildAMO
