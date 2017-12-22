@@ -3,7 +3,8 @@ language: java
 before_script:
   - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
   - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
-  - sh -e /etc/init.d/xvfb start
+#  - sh -e /etc/init.d/xvfb start
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 
 env:
   - DISPLAY=':99.0'
@@ -11,4 +12,4 @@ env:
 script: 
   - ant buildAMO
   - cd test
-#  - perl executeTests.pl --version 59.0a1
+  - perl executeTests.pl --version 59.0a1
