@@ -176,7 +176,7 @@ while (my $line = <F>)
 	      print "$ftppath/$tests\n";
 	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
 
-	      print "$ftppath/$lightning\n";
+	      print "$lightning\n";
 	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
 	      system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
@@ -258,10 +258,10 @@ foreach my $pid (@children) {
   # We have out own tests for this, so delete it
   unlink("message-header/test-header-toolbar.js");
   my @compatibility_apps = (
-    glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"),
-    glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
-    "$dispMUAfile",
-    glob("../../ftp/addon-562*.xpi"),
+#     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"),
+#     glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
+#     "$dispMUAfile",
+#     glob("../../ftp/addon-562*.xpi"),
     "$xpi"
 #    "$mnenhyfile" # activate when mozmill can handle this addon:
   );
