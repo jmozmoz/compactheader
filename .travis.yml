@@ -17,4 +17,4 @@ before_script:
 script: 
   - ant buildAMO
   - cd test
-  - perl executeTests.pl
+  - perl executeTests.pl --version 59.0a1
