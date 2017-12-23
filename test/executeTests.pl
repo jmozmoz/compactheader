@@ -218,6 +218,8 @@ while (my $line = <F>)
 
 close (F);
 
+my $log_lines = 0;
+
 foreach my $pid (@children) {
   waitpid($pid, 0);
 
@@ -312,10 +314,19 @@ foreach my $pid (@children) {
   foreach my $line (@logs) {
     if ($line =~ /(UNEXPECTED|^  )/) {
       print "$line\n";
+      $log_lines = $log_lines + 1;
     }
   }
   print "\n\n";
 }
+
+my $number_of_tests = 5;
+
+if ($log_lines != ((scalar @children) * $number_of_tests)) {
+    print "some tests failed!\n";
+    exit 1;
+}
+
 
 sub parse_csv {
   my $text = shift;
