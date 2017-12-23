@@ -44,11 +44,15 @@ use POSIX;
 use Cwd;
 use Getopt::Long;
 use File::Path qw(make_path);
+use XML::Simple;
 
 my $TMPDIR = "/tmp";
 
 my $file = 'testapps.csv';
-my $xpiversion = `grep 'version>' ../install.rdf | sed -e 's/.*version>\\(.*\\)<\\/em.*/\\1/'`;
+my $xml = new XML::Simple;
+my $versionXML = $xml->XMLin("../install.rdf");
+my $xpiversion = $versionXML->{'RDF:Description'}->{'em:version'};
+
 chomp($xpiversion);
 my $xpi = getcwd . "/../AMO/CompactHeader-${xpiversion}.xpi";
 
@@ -60,7 +64,7 @@ copy($xpi, $ftpdir);
 $xpi = "../../ftp/CompactHeader-${xpiversion}.xpi";
 print "xpi: $xpi\n";
 
-print `ls ${ftpdir}`;
+#print join("\n", <${ftpdir}/*>), "\n";
 
 my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
@@ -77,12 +81,12 @@ GetOptions('version:s' => \$testversion,
 open (F, $file) || die ("Could not open $file!");
 
 
-if ($^O eq "msys") {
+if ($^O eq "MSWin32") {
   $unpack = "unzip";
   $unpackargs = "-qo";
   $unpacktargetargs = "-d";
   $appbin = "thunderbird.exe";
-  $virtualpython = "../mozmill-virtualenv/Scripts/python";
+  $virtualpython = "..\\mozmill-virtualenv\\Scripts\\python";
 }
 elsif ($^O eq "linux") {
   $unpack = "tar";
@@ -107,6 +111,8 @@ my %testSpecs;
 system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$dispMUA";
 
 system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
+
+print "ostype: ${^O}, machine: ${machine}\n";
 
 while (my $line = <F>)
 {
@@ -192,7 +198,7 @@ while (my $line = <F>)
       my $currentdir = getcwd;
 
       # "Link" the add-on tests into the mozmill directory
-      if ($^O eq "msys") {
+      if (($^O eq "msys") or ($^O eq "MSWin32")) {
         # Do not delete the test-xxx directory! Otherwise not only the link to
         # the compactheader directory will be removed but also all files inside
         # it (i.e. in the source directory).
@@ -269,7 +275,7 @@ foreach my $pid (@children) {
 
   # disable test, because the default is now icons only, so this test does
   # not work anymore
-  print `sed -i -e 's/test_toolbar_collapse_and_expand/notest_toolbar_collapse_and_expand/' ${testdir}/mozmill/message-header/test-message-header.js`;
+  print `sed -i -e "s/test_toolbar_collapse_and_expand/notest_toolbar_collapse_and_expand/" ${testdir}/mozmill/message-header/test-message-header.js`;
 
   my @compatibility_apps = (
 #     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"), # lightning
@@ -286,9 +292,9 @@ foreach my $pid (@children) {
   print $comp_apps;
   print "\n";
 
-  print `pwd`;
-  print `ls $xpi`;
-  print `ls ${ftpdir}`;
+#  print `pwd`;
+#  print `ls $xpi`;
+#  print `ls ${ftpdir}`;
 
   print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1\n";
   $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1`;
