@@ -5,6 +5,7 @@ env:
 
 before_install:
   - sudo apt-get install metacity
+  - sudo apt-get install libxml-simple-perl
 
 before_script:
   - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
