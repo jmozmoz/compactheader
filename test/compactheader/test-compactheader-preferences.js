@@ -219,5 +219,6 @@ function test_dblclick_header(){
   open_preferences_dialog(mc, subtest_change_twoline_dblclick);
   collapse_and_assert_header(mc);
   mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  mc.sleep(1000); // see, if this make travis happy
   assert_expanded(mc);
 }
