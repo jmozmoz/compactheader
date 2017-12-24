@@ -209,6 +209,66 @@ function subtest_change_twoline_dblclick(aController) {
   close_preferences_dialog(aController);
 }
 
+function test_other_actions_button() {
+  select_message_in_folder(folder1, 0, mc);
+  open_preferences_dialog(mc, set_preferences_twoline);
+  mc.sleep(10);
+  restore_and_check_default_buttons(mc);
+  collapse_and_assert_header(mc);
+  set_and_assert_toolbox_position(mc, 'right');
+
+  // It is necessary to press the Other Actions Button to get the popup menu populated
+  mc.click(mc.eid("otherActionsButton"));
+  mc.ewait("CompactHeader_hidecohePreferencesButton");
+  mc.click(mc.eid("otherActionsButton"));
+
+  let menuItems = {
+    "otherActionsOpenConversation":      false, // always disabled, probably because messages are not indexed
+    "otherActionsOpenInNewWindow":       true,
+    "otherActionsOpenInNewTab":          true,
+    "CompactHeader_hdrPane-markFlagged": true,
+    "viewSourceMenuItem":                true,
+    //"markAsReadMenuItem":                true,  // this does not work, because the message is already set to read
+    "markAsUnreadMenuItem":              true,
+    "saveAsMenuItem":                    true,
+    "otherActionsPrint":                 true
+  };
+
+  for (let menu in menuItems) {
+    let menuEl = mc.e(menu);
+    assert_equals(menuEl.hasAttribute("disabled"), !menuItems[menu], menu);
+  }
+
+  select_none();
+  assert_nothing_selected();
+
+  // It is necessary to press the Other Actions Button to get the popup menu populated
+  mc.click(mc.eid("otherActionsButton"));
+  mc.ewait("CompactHeader_hidecohePreferencesButton");
+  mc.click(mc.eid("otherActionsButton"));
+
+  for (let menu in menuItems) {
+    let menuEl = mc.e(menu);
+    assert_equals(menuEl.getAttribute("disabled"), "true", menu);
+    break; // check only the first menu entry
+  }
+
+  select_message_in_folder(folder1, 3, mc);
+  select_control_click_row(0);
+  assert_selected_and_displayed(0, 3);
+
+  mc.click(mc.eid("otherActionsButton"));
+  mc.ewait("CompactHeader_hidecohePreferencesButton");
+  mc.click(mc.eid("otherActionsButton"));
+
+  for (let menu in menuItems) {
+    let menuEl = mc.e(menu);
+    assert_equals(menuEl.hasAttribute("disabled"), !menuItems[menu], menu);
+  }
+
+}
+
+
 function test_dblclick_header(){
   select_message_in_folder(folder1, 3, mc);
   set_and_assert_toolbox_position(mc, 'top'); // make sure, email addresses are out of the click way
