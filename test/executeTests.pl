@@ -225,6 +225,7 @@ while (my $line = <F>)
 close (F);
 
 my $log_lines = 0;
+my $number_of_tests = 0;
 
 foreach my $pid (@children) {
   waitpid($pid, 0);
@@ -296,16 +297,24 @@ foreach my $pid (@children) {
 #  print `ls $xpi`;
 #  print `ls ${ftpdir}`;
 
-  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1\n";
-  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1`;
-#  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1\n";
-#  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1`;
-#  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1\n";
-#  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1`;
-#  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1\n";
-#  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1`;
-#  print "\n$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1\n";
-#  $log = $log . `$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1`;
+my @mozmill_commands = (
+  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1",
+#  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1",
+#  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1",
+#  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1",
+#  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1"
+);
+
+  foreach my $command (@mozmill_commands) {
+  	print "\n${command}\n";
+  	open(F, "${command}|");
+	while (my $cmd_out = <F>) {
+	    print $cmd_out;
+        $log = $log . $cmd_out;
+	}
+	close(F);
+  	$number_of_tests = $number_of_tests + 1;
+  }
 
   chdir "$currentdir";
   my @timeData = localtime(time);
@@ -315,7 +324,7 @@ foreach my $pid (@children) {
   print LOG "$log";
   close(LOG);
 
-  print "Test failures:\n";
+  print "\n\nSuspicious test outputs:\n";
   my @logs = split(/\n/, $log);
   foreach my $line (@logs) {
     if ($line =~ /(UNEXPECTED|^  )/) {
@@ -326,13 +335,13 @@ foreach my $pid (@children) {
   print "\n\n";
 }
 
-my $number_of_tests = 5;
-
-if ($log_lines != ((scalar @children) * $number_of_tests)) {
+# there is one line of output per test (i.e. the date)
+if ($log_lines != $number_of_tests) {
     print "some tests failed!\n";
     exit 1;
 }
 
+print "loglines: $log_lines, number_of_tests: $number_of_tests\n";
 
 sub parse_csv {
   my $text = shift;
