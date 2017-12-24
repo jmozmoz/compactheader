@@ -284,8 +284,10 @@ function test_dblclick_header(){
 
   mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   assert_expanded(mc);
+  mc.sleep(1000);
 
   mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  mc.sleep(1000);
   assert_collapsed(mc);
 
   open_preferences_dialog(mc, subtest_change_oneline);
