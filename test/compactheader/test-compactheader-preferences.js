@@ -124,6 +124,17 @@ function setupModule(module) {
 
   let msg3 = create_message();
   add_message_to_folder(folder2, msg3);
+
+  // create message with empty email addresses to avoid double click
+  // confusion
+  let msg4 = create_message(
+      {
+        to: 't@t',
+        from: 't@t',
+        subject: "subject.",
+      });
+
+  add_message_to_folder(folder2, msg4);
 }
 
 
@@ -270,7 +281,7 @@ function test_other_actions_button() {
 
 
 function test_dblclick_header(){
-  select_message_in_folder(folder1, 3, mc);
+  select_message_in_folder(folder2, 1, mc);
   set_and_assert_toolbox_position(mc, 'top'); // make sure, email addresses are out of the click way
   open_preferences_dialog(mc, subtest_change_oneline);
   open_preferences_dialog(mc, subtest_change_no_dblclick);
