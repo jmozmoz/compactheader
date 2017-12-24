@@ -303,19 +303,23 @@ foreach my $pid (@children) {
 
 my @mozmill_commands = (
   "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1"
+  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1",
+  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1",
+  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1",
+  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1"
 );
 
+  my $old_cmd_out = '';
   foreach my $command (@mozmill_commands) {
     print "\n${command}\n";
     open(F, "${command}|");
+    $| = 1;
     while (my $cmd_out = <F>) {
-        $| = 1;
+      if ($cmd_out ne $old_cmd_out) {
         print $cmd_out;
-        $log = $log . $cmd_out;
+        $old_cmd_out = $cmd_out;
+      }
+      $log = $log . $cmd_out;
     }
     close(F);
     $number_of_tests = $number_of_tests + 1;
