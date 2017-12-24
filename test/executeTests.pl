@@ -56,13 +56,13 @@ my $xpiversion = $versionXML->{'RDF:Description'}->{'em:version'};
 chomp($xpiversion);
 my $xpi = getcwd . "/../AMO/CompactHeader-${xpiversion}.xpi";
 
-print "xpi: $xpi\n";
+print "xpi to be tested: $xpi\n";
 
 my $ftpdir = "${TMPDIR}/compactheader/ftp";
 make_path "$ftpdir";
 copy($xpi, $ftpdir);
 $xpi = "../../ftp/CompactHeader-${xpiversion}.xpi";
-print "xpi: $xpi\n";
+print "xpi at test location: $xpi\n\n";
 
 #print join("\n", <${ftpdir}/*>), "\n";
 
@@ -112,7 +112,7 @@ system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$dispMUA"
 
 system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
 
-print "ostype: ${^O}, machine: ${machine}\n";
+print "Test configuration: ostype: ${^O}, machine: ${machine}\n\n";
 
 while (my $line = <F>)
 {
@@ -136,6 +136,7 @@ while (my $line = <F>)
     }
     #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P $ftpdir 2>&1\n";
     #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\";\n";
+    print "look for available Thunderbird versions:\n\n";
     print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\" 2>&1";
     print "\n";
 
@@ -175,24 +176,26 @@ while (my $line = <F>)
     } else {
       # child
 
-      print "child: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
+      print "child process for downloading: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
 
       my $testdir = "${TMPDIR}/compactheader/test-$version";
 
       mkdir "$testdir";
-      print "$ftpdir/$ostype-$hosttype-$version\n";
-      print "$ftppath/$app\n";
+      print "download path:             $ftpdir/$ostype-$hosttype-$version\n";
+      print "Thunderbird download path: $ftppath/$app\n";
       if (! $nodownload) {
-	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
+        system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
 
-	      print "$ftppath/$tests\n";
-	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
+        print "Test download path:        $ftppath/$tests\n";
+        system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
 
-	      print "$lightning\n";
-	      system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
+        print "Lightning download path:   $lightning\n";
+        system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
 
-	      system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-	      system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*", "*jit-test*", "*bin*";
+        print "unzipping Thunderbird...\n";
+        system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
+        print "unzipping tests...\n";
+        system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*", "*jit-test*", "*bin*";
       }
 
       my $currentdir = getcwd;
@@ -217,6 +220,7 @@ while (my $line = <F>)
         }
       }
 
+      print "donwload/unzip finished\n\n";
       exit(0);
     } # child
   } # correct OS/architecture
@@ -241,7 +245,7 @@ foreach my $pid (@children) {
   $ostype   = $testSpecs{$pid}{ostype};
   $hosttype = $testSpecs{$pid}{hosttype};
 
-  print "$pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n";
+  print "Execute tests for: $pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n\n";
 
   my $testdir = "${TMPDIR}/compactheader/test-$version";
   chdir "$testdir/mozmill";
@@ -290,8 +294,8 @@ foreach my $pid (@children) {
   @compatibility_apps = grep { $_ && !m/^\s+$/ } @compatibility_apps;
 
   my $comp_apps = join(" -a ", @compatibility_apps);
-  print $comp_apps;
-  print "\n";
+#  print $comp_apps;
+#  print "\n";
 
 #  print `pwd`;
 #  print `ls $xpi`;
@@ -299,21 +303,22 @@ foreach my $pid (@children) {
 
 my @mozmill_commands = (
   "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t compactheader --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1",
-#  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1"
+  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t message-header --testing-modules-dir ../modules 2>&1",
+  "$python runtest.py --binary=../thunderbird/$appbin -a $xpi -t folder-display --testing-modules-dir ../modules 2>&1",
+  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-toolbar.js --testing-modules-dir ../modules 2>&1",
+  "$python runtest.py --binary=../thunderbird/$appbin -a $comp_apps -t compactheader/test-compactheader-preferences.js --testing-modules-dir ../modules 2>&1"
 );
 
   foreach my $command (@mozmill_commands) {
-  	print "\n${command}\n";
-  	open(F, "${command}|");
-	while (my $cmd_out = <F>) {
-	    print $cmd_out;
+    print "\n${command}\n";
+    open(F, "${command}|");
+    while (my $cmd_out = <F>) {
+        $| = 1;
+        print $cmd_out;
         $log = $log . $cmd_out;
-	}
-	close(F);
-  	$number_of_tests = $number_of_tests + 1;
+    }
+    close(F);
+    $number_of_tests = $number_of_tests + 1;
   }
 
   chdir "$currentdir";
