@@ -211,16 +211,30 @@ function subtest_change_twoline_dblclick(aController) {
 
 function test_dblclick_header(){
   select_message_in_folder(folder1, 3, mc);
+  set_and_assert_toolbox_position(mc, 'top'); // make sure, email addresses are out of the click way
   open_preferences_dialog(mc, subtest_change_oneline);
   open_preferences_dialog(mc, subtest_change_no_dblclick);
   collapse_and_assert_header(mc);
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   assert_collapsed(mc);
+
   open_preferences_dialog(mc, subtest_change_twoline_dblclick);
-  mc.sleep(1000); // see, if this make travis happy
   collapse_and_assert_header(mc);
-  mc.sleep(1000); // see, if this make travis happy
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
-  mc.sleep(1000); // see, if this make travis happy
+
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   assert_expanded(mc);
+
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  assert_collapsed(mc);
+
+  open_preferences_dialog(mc, subtest_change_oneline);
+  mc.sleep(250);
+  collapse_and_assert_header(mc);
+
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  assert_expanded(mc);
+
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  assert_collapsed(mc);
 }
