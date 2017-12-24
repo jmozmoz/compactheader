@@ -62,6 +62,7 @@ org_mozdev_compactHeader.debug = function() {
     logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
     if (logLevel >= gCurrentLogLevel) {
       Services.console.logStringMessage(Date() + " CH: " + str);
+//      console.log(Date() + " CH: " + str);
     }
   };
 
