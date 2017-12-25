@@ -49,19 +49,26 @@ Please send support questions to the [support threat at mozillazine](http://foru
 Download xmltask.jar from https://sourceforge.net/projects/xmltask/ and add
 the jar to CLASSPATH. Then:
 
-```ant buildAMO```
+```
+ant buildAMO
+```
 
 ## Running the tests
 
-In the directory [test] a Perl script is included which tests the add-on
-with different Thunderbird versions (see also [.travis.yml]).
+In the directory [test](https://github.com/jmozmoz/compactheader/test) a Perl script is included which tests the add-on
+with different Thunderbird versions (see also [.travis.yml](https://github.com/jmozmoz/compactheader/.travis.yml) using the [Thunderbird infrastructure for mozmill](https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Thunderbird_MozMill_Testing/Running_Thunderbird_MozMill_tests_from_packaged_tests).
 
-```perl executeTests.pl```
+```
+perl executeTests.pl
+```
 
 Available options:
-`--version`: Version of Thunderbird to use for tests
-`--nodownload`: Do not download the latest version of Thunderbird but use the one stored from the last test
-`--downloadonly`: Only download the latest version of Thunderbird but do not execute the tests
+
+`--version` Version of Thunderbird to use for tests
+
+`--nodownload` Do not download the latest version of Thunderbird but use the one stored from the last test
+
+`--downloadonly` Only download the latest version of Thunderbird but do not execute the tests
 
 ## Versioning
 
@@ -72,9 +79,9 @@ the [first message in the support threat](http://forums.mozillazine.org/viewtopi
 
 ## Authors
 
-* **Joachim Herb** - *Initial work* - [PurpleBooth](https://github.com/jmozmoz)
+* **Joachim Herb** - [jmozmoz](https://github.com/jmozmoz)
 
-See also the list of contributors in [install.rdf] who participated in this project.
+See also the list of contributors in [install.rdf]((https://github.com/jmozmoz/compactheader/install.rdf) who participated in this project.
 
 ## License
 
