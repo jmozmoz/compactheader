@@ -55,8 +55,8 @@ ant buildAMO
 
 ## Running the tests
 
-In the directory [test](https://github.com/jmozmoz/compactheader/test) a Perl script is included which tests the add-on
-with different Thunderbird versions (see also [.travis.yml](https://github.com/jmozmoz/compactheader/.travis.yml) using the [Thunderbird infrastructure for mozmill](https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Thunderbird_MozMill_Testing/Running_Thunderbird_MozMill_tests_from_packaged_tests).
+In the directory [test](https://github.com/jmozmoz/compactheader/tree/master/test) a Perl script is included which tests the add-on
+with different Thunderbird versions (see also [.travis.yml](https://github.com/jmozmoz/compactheader/blob/master/.travis.yml) using the [Thunderbird infrastructure for mozmill](https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Thunderbird_MozMill_Testing/Running_Thunderbird_MozMill_tests_from_packaged_tests).
 
 ```
 perl executeTests.pl
@@ -81,7 +81,7 @@ the [first message in the support threat](http://forums.mozillazine.org/viewtopi
 
 * **Joachim Herb** - [jmozmoz](https://github.com/jmozmoz)
 
-See also the list of contributors in [install.rdf]((https://github.com/jmozmoz/compactheader/install.rdf) who participated in this project.
+See the list of contributors and tranlators in [install.rdf](https://github.com/jmozmoz/compactheader/blob/master/install.rdf) who participated in this project.
 
 ## License
 
