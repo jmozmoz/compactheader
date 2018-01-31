@@ -212,6 +212,7 @@ while (my $line = <F>)
       }
       else {
         system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
+        system "ln", "-sfn", qq[$testdir/tools], qq[$testdir/../python];
       }
       copy("buildconfig.py","$testdir/mozmill/resources");
 
