@@ -61,7 +61,7 @@ print "xpi to be tested: $xpi\n";
 my $ftpdir = "${TMPDIR}/compactheader/ftp";
 make_path "$ftpdir";
 copy($xpi, $ftpdir);
-$xpi = "../../ftp/CompactHeader-${xpiversion}.xpi";
+$xpi = "../../../ftp/CompactHeader-${xpiversion}.xpi";
 print "xpi at test location: $xpi\n\n";
 
 #print join("\n", <${ftpdir}/*>), "\n";
@@ -178,9 +178,9 @@ while (my $line = <F>)
 
       print "child process for downloading: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
 
-      my $testdir = "${TMPDIR}/compactheader/test-$version";
+      my $testdir = "${TMPDIR}/compactheader/test-$version/testing";
 
-      mkdir "$testdir";
+      make_path "$testdir";
       print "download path:             $ftpdir/$ostype-$hosttype-$version\n";
       print "Thunderbird download path: $ftppath/$app\n";
       if (! $nodownload) {
@@ -207,10 +207,13 @@ while (my $line = <F>)
         # it (i.e. in the source directory).
         `junction -d $testdir/mozmill/compactheader`;
         `junction $testdir/mozmill/compactheader compactheader`;
+        `junction -d $testdir/../python`;
+        `junction $testdir/../python $testdir/tools`;
       }
       else {
         system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
       }
+      copy("buildconfig.py","$testdir/mozmill/resources");
 
       # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
       my @shared_files = glob("shared-modules/*");
@@ -247,7 +250,7 @@ foreach my $pid (@children) {
 
   print "Execute tests for: $pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n\n";
 
-  my $testdir = "${TMPDIR}/compactheader/test-$version";
+  my $testdir = "${TMPDIR}/compactheader/test-$version/testing";
   chdir "$testdir/mozmill";
   #system "pwd";
 
@@ -261,15 +264,20 @@ foreach my $pid (@children) {
     print getcwd;
     print "... installing mozmill\n";
     rmdir('../mozmill-virtualenv');
-    rmdir('../mozbase');
-    `python resources/installmozmill.py ../mozmill-virtualenv ../mozbase/`;
+    if (int($version) >= 59) {
+        `python resources/installmozmill.py ../mozmill-virtualenv`;
+    } else {
+        rmdir('../mozbase');
+        `python resources/installmozmill.py ../mozmill-virtualenv ../mozbase`;
+
+    }
     $python = "$virtualpython";
   }
   else {
     $python = "python"
   }
 
-  my @dispMUAfiles = glob("../../ftp/display_*");
+  my @dispMUAfiles = glob("../../../ftp/display_*");
   $dispMUAfile = $dispMUAfiles[-1];
   my @mnenhyfiles = glob("$ftpdir/mnenhy-*");
   $mnenhyfile = $mnenhyfiles[-1];
@@ -283,10 +291,10 @@ foreach my $pid (@children) {
   print `sed -i -e "s/test_toolbar_collapse_and_expand/notest_toolbar_collapse_and_expand/" ${testdir}/mozmill/message-header/test-message-header.js`;
 
   my @compatibility_apps = (
-#     glob("../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"), # lightning
-#     glob("../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
+#     glob("../../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"), # lightning
+#     glob("../../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
     "$dispMUAfile",
-    glob("../../ftp/addon-562*.xpi"), # display mail user agent for AMO
+    glob("../../../ftp/addon-562*.xpi"), # display mail user agent for AMO
     "$xpi"
 #    "$mnenhyfile" # activate when mozmill can handle this addon:
   );

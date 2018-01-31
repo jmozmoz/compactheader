@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 
+<!--
 <?xml-stylesheet type="text/css" href="chrome://global/skin/"?>
+ -->
+
+<?xml-stylesheet type="text/css" href="chrome://messenger/skin/preferences/preferences.css"?>
 <?xml-stylesheet type="text/css" href="chrome://communicator/skin/"?>
 <?xml-stylesheet type="text/css" href="chrome://CompactHeader/skin/preferences.css"?>
 <?xml-stylesheet type="text/css" href="chrome://CompactHeader-os/skin/osdef.css"?>

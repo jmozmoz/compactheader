@@ -31,10 +31,18 @@ overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/
 overlay chrome://messenger/content/msgHdrViewOverlay.xul chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 
-style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css
-style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css
+style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/osdef.css appversion<=58.0b3
+style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/skin/CompactHeader.css appversion<=58.0b3
+
+style   chrome://messenger/content/customizeToolbar.xul  chrome://CompactHeader-os/skin/osdef.css appversion>=59.0a1
+style   chrome://messenger/content/customizeToolbar.xul  chrome://CompactHeader/skin/CompactHeader.css appversion>=59.0a1
 
 overlay chrome://messenger/content/messageWindow.xul     chrome://CompactHeader/content/buttonsOverlay.xul
 overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/content/buttonsOverlay.xul
-style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/buttonsOverlay.css
+
+style   chrome://global/content/customizeToolbar.xul     chrome://CompactHeader-os/skin/buttonsOverlay.css appversion<=58.0b3
+
+style   chrome://messenger/content/customizeToolbar.xul  chrome://CompactHeader-os/skin/buttonsOverlay.css appversion>=59.0a1
+
+
 
