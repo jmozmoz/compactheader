@@ -35,22 +35,23 @@
 
  ***** END LICENSE BLOCK *****
 
+
 -->
 <!ENTITY CompactHeader_dialog.title "Preferencias de CompactHeader">
 <!ENTITY CompactHeader_dialog.accessKey "P">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Usar dos filas para la vista compacta">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Mostrar dos líneas en la vista compacta">
 <!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "c">
-<!ENTITY CompactHeader_menu.Linkify.caption "Mostrar el asunto en los canales RSS como un enlace">
+<!ENTITY CompactHeader_menu.Linkify.caption "Mostrar como enlace asuntos de canales RSS y de posts de grupos de news">
 <!ENTITY CompactHeader_menu.Linkify.accessKey "s">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar sólo las direcciones de correo">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Mostrar sólo la dirección de correo del interlocutor">
 <!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "r">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Mostrar botones «planos»">
 <!ENTITY CompactHeader_menu.flatButtons.accessKey "b">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Alternar la vista de las cabeceras mediante doble clic">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Alternar vista de la cabecera con doble clic">
 <!ENTITY CompactHeader_menu.dblclick_header.accessKey "l">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Oscurecer cabeceras si el cuerpo del mensaje recibe el foco">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "Oscurecer cabecera si el cuerpo del mensaje recibe el foco">
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "f">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posición de la barra de herramientas de cabeceras">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Posición de la barra de herramientas de la cabecera">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "Izquierda">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "I">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "Arriba">
