@@ -51,7 +51,7 @@
 <!ENTITY CompactHeader_menu.dblclick_header.accessKey "m">
 <!ENTITY CompactHeader_menu.darken_on_focus.caption "Gør headeren mørkere hvis meddelelsesruden er i fokus">
 <!ENTITY CompactHeader_menu.darken_on_focus.accessKey "f">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Position værktøjslinje i meddelelseshovedet">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Værktøjslinjens position i meddelelseshovedet">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "venstre">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "v">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "øverst">
