@@ -13,11 +13,23 @@
 		<em:contributor>Alex Dedul (original author of RSS Linkify Subject)</em:contributor>
 		<em:contributor>Marco (Help for Mac OS X theme)</em:contributor>
 		<em:contributor>Axel Grude (Help on DispMUA)</em:contributor>
+    <em:translator>Sam (cz)</em:translator>
 		<em:translator>Jørgen (da)</em:translator>
 		<em:translator>Joachim Herb (de)</em:translator>
+    <em:translator>strel (es-ES)</em:translator>
 		<em:translator>Joachim Herb (en-US)</em:translator>
+    <em:translator>Goofy (fr)</em:translator>
 		<em:translator>Óvári (hu)</em:translator>
+    <em:translator>Cai (ja)</em:translator>
+    <em:translator>oeekker (nl)</em:translator>
+    <em:translator>teo (pl)</em:translator>
+    <em:translator>ouesten (pt-BR)</em:translator>
+    <em:translator>Pinsky (ru)</em:translator>
+    <em:translator>Goofy (fr)</em:translator>
 		<em:translator>Peter Klofutar (sl)</em:translator>
+    <em:translator>Dak Srbija (sr)</em:translator>
+    <em:translator>Lakrits (sv-SE)</em:translator>
+    <em:translator>omrakin (tr)</em:translator>
 		<em:translator>Wang.H.K "whknnn" (zh-CN)</em:translator>
 		<em:optionsURL>chrome://CompactHeader/content/preferences.xul</em:optionsURL>
 		<em:homepageURL>http://compactheader.mozdev.org/</em:homepageURL>
