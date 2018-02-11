@@ -19,7 +19,7 @@
       "checksum": ".en-US.linux-x86_64.checksums"
     }
   },
-  "daily": {
+  "nightly": {
     "amd64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
       "appzip": "thunderbird-_VER_.en-US.win32.zip",
