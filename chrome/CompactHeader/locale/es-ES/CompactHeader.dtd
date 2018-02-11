@@ -36,9 +36,10 @@
  ***** END LICENSE BLOCK ***** 
 
 
+
 -->
 <!ENTITY CompactHeader_hideDetailsButton.label "Ocultar detalles">
-<!ENTITY CompactHeader_toggleDetails.key "h">
+<!ENTITY CompactHeader_toggleDetails.key "o">
 <!ENTITY CompactHeader_showDetailsButton.label "Mostrar detalles">
 <!ENTITY CompactHeader_compactMenu.label "Compacta">
-<!ENTITY CompactHeader_compactMenu.accesskey "C">
+<!ENTITY CompactHeader_compactMenu.accesskey "o">
