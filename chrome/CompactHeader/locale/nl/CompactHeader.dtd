@@ -34,9 +34,10 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** 
+
 -->
-<!ENTITY CompactHeader_hideDetailsButton.label "Verberg details">
-<!ENTITY CompactHeader_toggleDetails.key "h">
-<!ENTITY CompactHeader_showDetailsButton.label "Laat details zien">
+<!ENTITY CompactHeader_hideDetailsButton.label "Details verbergen">
+<!ENTITY CompactHeader_toggleDetails.key "D">
+<!ENTITY CompactHeader_showDetailsButton.label "Details laten zien">
 <!ENTITY CompactHeader_compactMenu.label "Compact">
 <!ENTITY CompactHeader_compactMenu.accesskey "C">

@@ -34,22 +34,23 @@
  the terms of any one of the MPL, the GPL or the LGPL.
 
  ***** END LICENSE BLOCK ***** 
+
 -->
 <!ENTITY CompactHeader_dialog.title "CompactHeader voorkeuren">
 <!ENTITY CompactHeader_dialog.accessKey "v">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Laat twee regels zien in compact beeld">
-<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "z">
-<!ENTITY CompactHeader_menu.Linkify.caption "Link in onderwerp van RSS feeds en nieuwsgroep berichten">
-<!ENTITY CompactHeader_menu.Linkify.accessKey "v">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Laat alleen adressen zien">
-<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "a">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.caption "Twee regels laten zien in compact beeld">
+<!ENTITY CompactHeader_checkbox.Compact.TwolineView.accessKey "T">
+<!ENTITY CompactHeader_menu.Linkify.caption "Koppeling laten zien in onderwerp van RSS feeds en nieuwsgroepberichten">
+<!ENTITY CompactHeader_menu.Linkify.accessKey "K">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.caption "Alleen adressen laten zien">
+<!ENTITY CompactHeader_menu.ShowOnlyAddress.accessKey "A">
 <!ENTITY CompactHeader_menu.flatButtons.caption "Platte knoppen">
-<!ENTITY CompactHeader_menu.flatButtons.accessKey "k">
-<!ENTITY CompactHeader_menu.dblclick_header.caption "Wissel berichtkop door te dubbel klikken">
-<!ENTITY CompactHeader_menu.dblclick_header.accessKey "d">
-<!ENTITY CompactHeader_menu.darken_on_focus.caption "Maak de berichtkop donkerder als het berichtpaneel focus heeft">
-<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "f">
-<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Plaats van Berichtkop werkbalk">
+<!ENTITY CompactHeader_menu.flatButtons.accessKey "P">
+<!ENTITY CompactHeader_menu.dblclick_header.caption "Berichtkop wisselen door te dubbelklikken">
+<!ENTITY CompactHeader_menu.dblclick_header.accessKey "w">
+<!ENTITY CompactHeader_menu.darken_on_focus.caption "De berichtkop donkerder maken als het berichtpaneel focus heeft">
+<!ENTITY CompactHeader_menu.darken_on_focus.accessKey "D">
+<!ENTITY CompactHeader_radiobox.ToolbarPosition.caption "Plaats van berichtkopwerkbalk">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left "links">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.left.accessKey "l">
 <!ENTITY CompactHeader_radiobox.ToolbarPosition.top "boven">
