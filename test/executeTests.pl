@@ -45,10 +45,11 @@ use Cwd;
 use Getopt::Long;
 use File::Path qw(make_path);
 use XML::Simple;
+use JSON qw( );
+use Data::Dumper;
 
 my $TMPDIR = "/tmp";
 
-my $file = 'testapps.csv';
 my $xml = new XML::Simple;
 my $versionXML = $xml->XMLin("../install.rdf");
 my $xpiversion = $versionXML->{'RDF:Description'}->{'em:version'};
@@ -66,7 +67,7 @@ print "xpi at test location: $xpi\n\n";
 
 #print join("\n", <${ftpdir}/*>), "\n";
 
-my ($ostype,$hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
+my ($hosttype,$version,$ftppath,$app,$tests,$lightning,$checksum);
 my ($unpack, $unpackargs, $unpacktargetargs, $appbin, $virtualpython);
 my ($sysname, $nodename, $release, $osversion, $machine) = POSIX::uname();
 
@@ -78,8 +79,17 @@ GetOptions('version:s' => \$testversion,
            'downloadonly' => \$downloadonly,
            'nodownload' => \$nodownload);
 
-open (F, $file) || die ("Could not open $file!");
+my $jsonfilename = 'testapps.json';
 
+my $json_text = do {
+   open(my $json_fh, "<:encoding(UTF-8)", $jsonfilename)
+      or die("Can't open \$filename\": $!\n");
+   local $/;
+   <$json_fh>
+};
+
+my $json = JSON->new;
+my $testapps = $json->decode($json_text);
 
 if ($^O eq "MSWin32") {
   $unpack = "unzip";
@@ -112,125 +122,116 @@ system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$dispMUA"
 
 system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir", "-N", "$mnenhy";
 
-print "Test configuration: ostype: ${^O}, machine: ${machine}\n\n";
+print "Test configuration: machine: ${machine}\n\n";
 
-while (my $line = <F>)
-{
-  ($ostype,$hosttype,$ftppath,$app,$tests,$checksum, $lightning) =
-    parse_csv($line);
-  next if (not defined($ostype));
+foreach my $appversion (keys %$testapps) {
+    next if (($testversion) && ($appversion ne $testversion));
+    if (exists $testapps->{$appversion}->{$machine}) {
+        my $appref = $testapps->{$appversion}->{$machine};
 
-#  print "$ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
+         $hosttype = $machine;
+         $ftppath = $appref->{url};
+         $app = $appref->{appzip};
+         $tests = $appref->{testzip};
+         $checksum = $appref->{checksum};
 
-  if (($ostype eq $^O)
-      && ($hosttype eq $machine)
-      ) {
-
-    # Download checksums file to determine version of Thunderbird, because
-    # we use a link to latest release/beta/earlybird/trunk build and do not
-    # know the version!
-    #    wget -r -l1 --no-parent --follow-ftp -A .checksums  '' -nd
-    my @files = glob("$ftpdir/thunderbird*$checksum");
-    foreach my $file (@files) {
-      unlink($file);
-    }
-    #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P $ftpdir 2>&1\n";
-    #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\";\n";
-    print "look for available Thunderbird versions:\n\n";
-    print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\" 2>&1";
-    print "\n";
-
-    `wget -r -l1 --no-check-certificate --no-parent --follow-ftp -A$checksum $ftppath/ -nd -P "$ftpdir" 2>&1`;
-    @files = glob("$ftpdir/thunderbird*$checksum");
-
-    my $file = $files[-1];
-
-    $file =~ /thunderbird-(.*)$checksum/;
-    $version = $1;
-
-    print "************\n";
-    print "found version: ", $version, "\n";
-    print "************\n";
-
-    next if (($testversion) && ($version ne $testversion));
-
-    # $ftppath =~ s/_VER_/${version}/g;
-    $app =~ s/_VER_/${version}/g;
-    $tests =~ s/_VER_/${version}/g;
-
-    # fork to run tests in parallel
-    my $pid = fork();
-    if ($pid) {
-      # parent
-#      print "pid: $pid\n";
-      $testSpecs{$pid} = {
-        version  => $version,
-        appbin   => $appbin,
-        tests    => $tests,
-        ostype   => $ostype,
-        hosttype => $hosttype,
-      };
-      push(@children, $pid);
-    } elsif (not defined $pid) {
-      die "couldn't fork: $!\n";
-    } else {
-      # child
-
-      print "child process for downloading: $ostype\t$hosttype\t$ftppath\t$app\t$tests\n";
-
-      my $testdir = "${TMPDIR}/compactheader/test-$version/testing";
-
-      make_path "$testdir";
-      print "download path:             $ftpdir/$ostype-$hosttype-$version\n";
-      print "Thunderbird download path: $ftppath/$app\n";
-      if (! $nodownload) {
-        system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$app";
-
-        print "Test download path:        $ftppath/$tests\n";
-        system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$ftppath/$tests";
-
-        print "Lightning download path:   $lightning\n";
-        system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$ostype-$hosttype-$version", "-N", "$lightning";
-
-        print "unzipping Thunderbird...\n";
-        system $unpack, $unpackargs, "$ftpdir//$ostype-$hosttype-$version/$app", $unpacktargetargs, $testdir;
-        print "unzipping tests...\n";
-        system "unzip", "-q", "-o", "$ftpdir//$ostype-$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*", "*jit-test*", "*bin*";
-      }
-
-      my $currentdir = getcwd;
-
-      # "Link" the add-on tests into the mozmill directory
-      if (($^O eq "msys") or ($^O eq "MSWin32")) {
-        # Do not delete the test-xxx directory! Otherwise not only the link to
-        # the compactheader directory will be removed but also all files inside
-        # it (i.e. in the source directory).
-        `junction -d $testdir/mozmill/compactheader`;
-        `junction $testdir/mozmill/compactheader compactheader`;
-        `junction -d $testdir/../python`;
-        `junction $testdir/../python $testdir/tools`;
-      }
-      else {
-        system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
-        system "ln", "-sfn", qq[$testdir/tools], qq[$testdir/../python];
-      }
-      copy("buildconfig.py","$testdir/mozmill/resources");
-
-      # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
-      my @shared_files = glob("shared-modules/*");
-      foreach my $file (@shared_files) {
-        if (! -e "$testdir/mozmill/shared-modules/$file") {
-          copy("$file","$testdir/mozmill/shared-modules");
+        # Download checksums file to determine version of Thunderbird, because
+        # we use a link to latest release/beta/earlybird/trunk build and do not
+        # know the version!
+        #    wget -r -l1 --no-parent --follow-ftp -A .checksums  '' -nd
+        my @files = glob("$ftpdir/thunderbird*$checksum");
+        foreach my $file (@files) {
+          unlink($file);
         }
-      }
+        #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P $ftpdir 2>&1\n";
+        #print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\";\n";
+        print "look for available Thunderbird versions:\n\n";
+        print "wget -r -l1 --no-parent --follow-ftp -A$checksum $ftppath -nd -P \"$ftpdir\" 2>&1";
+        print "\n";
 
-      print "donwload/unzip finished\n\n";
-      exit(0);
-    } # child
-  } # correct OS/architecture
-} # different versions
+        `wget -r -l1 --no-check-certificate --no-parent --follow-ftp -A$checksum $ftppath/ -nd -P "$ftpdir" 2>&1`;
+        @files = glob("$ftpdir/thunderbird*$checksum");
 
-close (F);
+        my $file = $files[-1];
+
+        $file =~ /thunderbird-(.*)$checksum/;
+        $version = $1;
+
+        print "************\n";
+        print "found version: ", $version, "\n";
+        print "************\n";
+
+        # $ftppath =~ s/_VER_/${version}/g;
+        $app =~ s/_VER_/${version}/g;
+        $tests =~ s/_VER_/${version}/g;
+
+        # fork to run tests in parallel
+        my $pid = fork();
+        if ($pid) {
+          # parent
+    #      print "pid: $pid\n";
+          $testSpecs{$pid} = {
+            version  => $version,
+            appbin   => $appbin,
+            tests    => $tests,
+            hosttype => $hosttype,
+          };
+          push(@children, $pid);
+        } elsif (not defined $pid) {
+          die "couldn't fork: $!\n";
+        } else {
+          # child
+
+          print "child process for downloading: host: $hosttype\tftppath: $ftppath\tapp: $app\ttests: $tests\n";
+          my $testdir = "${TMPDIR}/compactheader/test-$version/testing";
+
+          make_path "$testdir";
+          print "download path:             $ftpdir/$hosttype-$version\n";
+          print "Thunderbird download path: $ftppath/$app\n";
+          if (! $nodownload) {
+            system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$hosttype-$version", "-N", "$ftppath/$app";
+
+            print "Test download path:        $ftppath/$tests\n";
+            system "wget", "--no-check-certificate", "-q", "-P", "$ftpdir/$hosttype-$version", "-N", "$ftppath/$tests";
+
+            print "unzipping Thunderbird...\n";
+            system $unpack, $unpackargs, "$ftpdir//$hosttype-$version/$app", $unpacktargetargs, $testdir;
+            print "unzipping tests...\n";
+            system "unzip", "-q", "-o", "$ftpdir//$hosttype-$version/$tests", "-d", $testdir, "-x", "*mochitest*", "*xpcshell*", "*reftest*", "*jit-test*", "*bin*";
+          }
+
+          my $currentdir = getcwd;
+
+          # "Link" the add-on tests into the mozmill directory
+          if (($^O eq "msys") or ($^O eq "MSWin32")) {
+            # Do not delete the test-xxx directory! Otherwise not only the link to
+            # the compactheader directory will be removed but also all files inside
+            # it (i.e. in the source directory).
+            `junction -d $testdir/mozmill/compactheader`;
+            `junction $testdir/mozmill/compactheader compactheader`;
+            `junction -d $testdir/../python`;
+            `junction $testdir/../python $testdir/tools`;
+          }
+          else {
+            system "ln", "-sfn", qq[$currentdir/compactheader], qq[$testdir/mozmill/compactheader];
+            system "ln", "-sfn", qq[$testdir/tools], qq[$testdir/../python];
+          }
+          copy("buildconfig.py","$testdir/mozmill/resources");
+
+          # copy drag'n'drop helpers to shared-modules until they are added to thunderbird source
+          my @shared_files = glob("shared-modules/*");
+          foreach my $file (@shared_files) {
+            if (! -e "$testdir/mozmill/shared-modules/$file") {
+              copy("$file","$testdir/mozmill/shared-modules");
+            }
+          }
+
+          print "donwload/unzip finished\n\n";
+          exit(0);
+        } # child
+
+    }
+}
 
 my $log_lines = 0;
 my $number_of_tests = 0;
@@ -246,10 +247,9 @@ foreach my $pid (@children) {
   $version  = $testSpecs{$pid}{version};
   $appbin   = $testSpecs{$pid}{appbin};
   $tests    = $testSpecs{$pid}{tests};
-  $ostype   = $testSpecs{$pid}{ostype};
   $hosttype = $testSpecs{$pid}{hosttype};
 
-  print "Execute tests for: $pid\t$ostype\t$hosttype\t$version\t$appbin\t$tests\n\n";
+  print "Execute tests for: $pid\t$hosttype\t$version\t$appbin\t$tests\n\n";
 
   my $testdir = "${TMPDIR}/compactheader/test-$version/testing";
   chdir "$testdir/mozmill";
@@ -292,8 +292,8 @@ foreach my $pid (@children) {
   print `sed -i -e "s/test_toolbar_collapse_and_expand/notest_toolbar_collapse_and_expand/" ${testdir}/mozmill/message-header/test-message-header.js`;
 
   my @compatibility_apps = (
-#     glob("../../../ftp/$ostype-$hosttype-$version/addon-2313*.xpi"), # lightning
-#     glob("../../../ftp/$ostype-$hosttype-$version/lightning*.xpi"),
+#     glob("../../../ftp/$hosttype-$version/addon-2313*.xpi"), # lightning
+#     glob("../../../ftp/$hosttype-$version/lightning*.xpi"),
     "$dispMUAfile",
     glob("../../../ftp/addon-562*.xpi"), # display mail user agent for AMO
     "$xpi"
@@ -338,7 +338,7 @@ my @mozmill_commands = (
   my @timeData = localtime(time);
   my $datestr = sprintf "%04d%02d%02d%02d%02d", 1900+$timeData[5],
     1+$timeData[4], $timeData[3], $timeData[2], $timeData[1];
-  open (LOG, ">log-$version-$ostype-$hosttype-$datestr.txt");
+  open (LOG, ">log-$version-$hosttype-$datestr.txt");
   print LOG "$log";
   close(LOG);
 
@@ -360,16 +360,3 @@ if ($log_lines != $number_of_tests) {
 }
 
 print "loglines: $log_lines, number_of_tests: $number_of_tests\n";
-
-sub parse_csv {
-  my $text = shift;
-  my @new = ();
-  $text =~ s/#.*//;
-  push (@new, $+) while $text =~ m{
-          "([^\"\\]*(?:\\.[^\"\\]*)*)",?
-          | ([^,]+),?
-          | ,
-      }gx;
-  push (@new, undef) if substr($text, -1, 1) eq ",";
-  return @new;
-}
