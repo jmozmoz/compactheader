@@ -863,7 +863,11 @@ org_mozdev_compactHeader.pane = function() {
   }
 
   function darkenColor(color) {
-    var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+    if (color === "transparent") {
+      return color;
+    }
+
+    var digits = /(.*?)rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)/.exec(color);
 
     var red = parseInt(digits[2]);
     var green = parseInt(digits[3]);
