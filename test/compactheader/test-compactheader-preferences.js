@@ -91,6 +91,9 @@ function setupModule(module) {
   let chh = collector.getModule('compactheader-helpers');
   chh.installInto(module);
 
+// turn this on to mimic OSX behavior
+// Services.prefs.setBoolPref(PREF, true);
+
   // Get rid of possibly showing up lightning import wizard
   // Get rid of possibly showing up lightning import wizard
   let wizard = Services.wm.getMostRecentWindow("Calendar:MigrationWizard");

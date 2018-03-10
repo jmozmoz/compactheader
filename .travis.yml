@@ -1,24 +1,33 @@
 language: java
 
+os: 
+  - osx
+  - linux
+
 env:
   - VERSION=ESR
   - VERSION=nightly
 
 before_install:
-  - sudo apt-get install metacity
-  - sudo apt-get install libxml-simple-perl
-  - sudo apt-get install libjson-perl
-  - sudo pip install buildconfig
+  - |
+    if [[ $TRAVIS_OS_NAME != 'osx' ]]; then
+      sudo apt-get install metacity
+    else
+      HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
+    fi
 
 before_script:
-  - "export DISPLAY=:99.0"
   - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
   - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1920x1080x16  -extension RANDR"
-  - sleep 5 # give xvfb some time to start
-  - metacity --sm-disable --replace 2>/dev/null &
+  - |
+    if [[ $TRAVIS_OS_NAME != 'osx' ]]; then
+      export DISPLAY=:99.0
+      /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1920x1080x16  -extension RANDR
+      sleep 5 # give xvfb some time to start
+      metacity --sm-disable --replace 2>/dev/null &
+    fi
 
 script: 
   - ant buildAMO
   - cd test
-  - perl executeTests.pl --version $VERSION
+  - python ./executeTests.py --version $VERSION

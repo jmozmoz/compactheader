@@ -1,42 +1,54 @@
 {
   "ESR": {
-    "amd64": {
+    "WindowsAMD64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
       "appzip": "thunderbird-_VER_.en-US.win32.zip",
       "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
       "checksum": ".en-US.win32.checksums"
     },
-    "i686": {
+    "Linux": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
       "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2",
       "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip",
       "checksum": ".en-US.linux-i686.checksums"
     },
-    "x86_64": {
+    "Linuxx86_64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
       "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2",
       "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip",
       "checksum": ".en-US.linux-x86_64.checksums"
+    },
+    "Darwinx86_64": {
+      "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+      "appzip": "thunderbird-_VER_.en-US.mac.dmg",
+      "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip",
+      "checksum": ".en-US.mac.checksums"
     }
   },
   "nightly": {
-    "amd64": {
+    "WindowsAMD64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
       "appzip": "thunderbird-_VER_.en-US.win32.zip",
       "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
       "checksum": ".en-US.win32.checksums"
     },
-    "i686": {
+    "Linux": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
       "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2",
       "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip",
       "checksum": ".en-US.linux-i686.checksums"
     },
-    "x86_64": {
+    "Linuxx86_64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
       "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2",
       "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip",
       "checksum": ".en-US.linux-x86_64.checksums"
+    },
+    "Darwinx86_64": {
+      "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
+      "appzip": "thunderbird-_VER_.en-US.mac.dmg",
+      "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip",
+      "checksum": ".en-US.mac.checksums"
     }
   }
 }

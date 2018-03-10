@@ -77,7 +77,7 @@ function setupModule(module) {
   let curMessage = select_message_in_folder(folder1, 0, mc);
   let msgHeaderView = mc.window.document.getElementById("msgHeaderView");
   normalBackground = mc.window.getComputedStyle(msgHeaderView)
-                       .getPropertyValue("background-color");
+                       .getPropertyValue("background-color");  //fails on OSX
   mc.sleep(1000);
 }
 
@@ -93,7 +93,7 @@ function test_normal_background() {
   let curMessage = select_message_in_folder(folder1, 0, mc);
   set_pane_layout(kClassicMailLayout);
   assert_pane_layout(kClassicMailLayout);
-  sub_test_background(normalBackground, mc, mc.eid('threadTree'));
+  sub_test_background(normalBackground, mc, mc.eid('threadTree'));  //fails on OSX
   sub_test_background(normalBackground, mc, mc.eid('messagepane'));
 
   set_pane_layout(kWideMailLayout);
@@ -113,7 +113,7 @@ function test_darken_background() {
   mc = open3PaneWindow();
   abwc.window.close();
 
-  let darkenBackground = darkenColor(normalBackground, 0.9);
+  let darkenBackground = darkenColor(normalBackground, 0.9);  // fails on OSX
 
   let curMessage = select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
@@ -174,10 +174,11 @@ function sub_test_background(aColor, aController, aTarget) {
 }
 
 function darkenColor(color, factor) {
-  if (color.substr(0, 1) === '#') {
+  if ((color.substr(0, 1) === '#') || (color === "transparent")) {
     return color;
   }
-  var digits = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(color);
+
+  var digits = /(.*?)rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)/.exec(color);
 
   var red = parseInt(digits[2]);
   var green = parseInt(digits[3]);

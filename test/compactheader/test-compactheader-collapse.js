@@ -191,21 +191,47 @@ function test_toggle_header_view_oneline(){
   collapse_and_assert_header(mc);
 }
 
+
+function dump_header_size() {
+  dump('msgHeaderViewDeck width: ' +
+       mc.eid("msgHeaderViewDeck").getNode().boxObject.width +
+      '\n');
+  dump('msgHeaderViewDeck height: ' +
+       mc.eid("msgHeaderViewDeck").getNode().boxObject.height +
+       '\n');
+}
+
+
+function doubleClickRight(target) {
+  mc.doubleClick(target,
+      target.getNode().boxObject.width - 1,
+      target.getNode().boxObject.height/2);
+}
+
+
 function test_dblclick(){
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_oneline);
   mc.sleep(10);
   expand_and_assert_header(mc);
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  dump_header_size();
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  dump_header_size();
   assert_collapsed(mc);
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  dump_header_size();
   assert_expanded(mc);
   open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
   expand_and_assert_header(mc);
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  dump_header_size();
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   assert_collapsed(mc);
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"))
+  dump_header_size();
+  mc.sleep(10);
+  doubleClickRight(mc.eid("msgHeaderView"));
+  mc.sleep(10);
+  dump_header_size();
   assert_expanded(mc);
 }
 

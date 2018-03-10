@@ -170,8 +170,7 @@ function open_preferences_dialog(aController, aSubtest) {
 function close_preferences_dialog(aController) {
   windowHelper.plan_for_window_close(aController);
   if (allPreferences.getBoolPref("browser.preferences.instantApply")) {
-    let cancelButton = aController.window.document.documentElement.getButton('cancel');
-    aController.click(new elib.Elem(cancelButton));
+    windowHelper.close_window(aController);
   }
   else {
     let okButton = aController.window.document.documentElement.getButton('accept');

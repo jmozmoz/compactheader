@@ -98,8 +98,20 @@ function setupModule(module) {
 
   thread1 = create_thread(3);
   add_sets_to_folders([folder2], [thread1]);
+
+  let abwc = openAddressBook();
+  close3PaneWindow();
+  mc = open3PaneWindow();
+  abwc.window.close();
 }
 
+function teardownModule() {
+  let abwc = openAddressBook();
+  close3PaneWindow();
+  mc = open3PaneWindow();
+  abwc.window.close();
+  Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
+}
 
 /**
  *  Test header pane toolbar position
@@ -116,7 +128,10 @@ function test_button_visibility() {
 
     let button1 = ctc.e("wrapper-CompactHeader_button-starMessages");
     let button2 = mc.e("wrapper-hdrJunkButton");
-    drag_n_drop_element(button1, ctc.window, button2, mc.window, 0.25, 0.0, palette);
+    dump("drag target: " + button1 + "\n");
+    dump("drop target: " + button2 + "\n");
+    drag_n_drop_element(button1, ctc.window, button2, mc.window, 0.25,
+                        0.25, palette);  // fails on OSX
     close_header_pane_toolbar_customization(ctc);
 
     button1 = mc.e("CompactHeader_button-starMessages");
@@ -260,7 +275,7 @@ function test_customize_header_toolbar_reorder_buttons()
     let button2 = mc.e(currentSet[i-1]);
     // Move each button to the left of its left neighbour starting with
     // the second button, i.e. reverse the order of the buttons.
-    drag_n_drop_element(button1, mc.window, button2, mc.window, 0.25, 0.0, toolbar);
+    drag_n_drop_element(button1, mc.window, button2, mc.window, 0.25, 0.0, toolbar);  // fails on OSX
   }
   close_header_pane_toolbar_customization(ctc);
 
@@ -323,6 +338,7 @@ function test_customize_header_toolbar_separate_window()
   for (let i=1; i<currentSet.length; i++) {
     let button1 = msgc.e(currentSet[i]);
     let button2 = msgc.e(currentSet[i-1]);
+    dump("drag_n_drop button: " + i + "\n");
     // Move each button to the left of its left neighbour starting with
     // the second button, i.e. reverse the order of the buttons.
     drag_n_drop_element(button1, msgc.window, button2, msgc.window, 0.25, 0.0, toolbar);
@@ -388,7 +404,7 @@ function test_customize_header_toolbar_remove_buttons(){
   let target = ctc.e("palette-box");
   for (let i=0; i<lCurrentset.length; i++) {
     let button = mc.e(lCurrentset[i]);
-    drag_n_drop_element(button, mc.window, target, ctc.window, 0.5, 0.5, toolbar);
+    drag_n_drop_element(button, mc.window, target, ctc.window, 0.5, 0.5, toolbar);  // fails on OSX
   }
   close_header_pane_toolbar_customization(ctc);
 
@@ -442,7 +458,7 @@ function test_customize_header_toolbar_remove_buttons(){
     assert_true(button!=null, "Button " + lCurrentset[i] + " not in palette");
     // Drop each button to the right end of the toolbar, so we should get the
     // original order.
-    drag_n_drop_element(button, ctc.window, toolbar, mc.window, 0.99, 0.5, palette);
+    drag_n_drop_element(button, ctc.window, toolbar, mc.window, 0.99, 0.5, palette);  // fails on OSX
   }
   close_header_pane_toolbar_customization(ctc);
 
@@ -526,8 +542,12 @@ function test_customize_header_toolbar_add_all_buttons(){
   ctc = open_header_pane_toolbar_customization(mc);
   let target = ctc.e("palette-box");
   for (let i=wrappedButtons.length-1; i>= 0; i--) {
+    dump("drag_n_drop button: " + i + "\n");
+    dump("drag_n_drop button: " + wrappedButtons[i] + "\n");
     let button = mc.e(wrappedButtons[i]);
-    drag_n_drop_element(button, mc.window, target, ctc.window, 0.5, 0.5, toolbar);
+    dump("drag target: " + button + "\n");
+    dump("drop target: " + target + "\n");
+    drag_n_drop_element(button, mc.window, target, ctc.window, 0.5, 0.5, toolbar);  // fails on OSX
   }
   close_header_pane_toolbar_customization(ctc);
 
