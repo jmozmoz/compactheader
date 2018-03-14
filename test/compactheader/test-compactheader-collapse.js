@@ -192,20 +192,27 @@ function test_toggle_header_view_oneline(){
 }
 
 
+function get_deck_size(target) {
+  return mc.eid("msgHeaderViewDeck").getNode().boxObject;
+}
+
+
 function dump_header_size() {
+  deck_size = get_deck_size();
   dump('msgHeaderViewDeck width: ' +
-       mc.eid("msgHeaderViewDeck").getNode().boxObject.width +
+       deck_size.width +
       '\n');
   dump('msgHeaderViewDeck height: ' +
-       mc.eid("msgHeaderViewDeck").getNode().boxObject.height +
+       deck_size.height +
        '\n');
 }
 
 
 function doubleClickRight(target) {
+  deck_size = get_deck_size();
   mc.doubleClick(target,
-      target.getNode().boxObject.width - 1,
-      target.getNode().boxObject.height/2);
+      deck_size.width - 50,
+      deck_size.height/2);
 }
 
 
@@ -214,23 +221,28 @@ function test_dblclick(){
   open_preferences_dialog(mc, set_preferences_oneline);
   mc.sleep(10);
   expand_and_assert_header(mc);
+
   dump_header_size();
+  deck_size = get_deck_size();
   mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_collapsed(mc);
+
   mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_expanded(mc);
+
   open_preferences_dialog(mc, set_preferences_twoline);
   mc.sleep(10);
+
   expand_and_assert_header(mc);
   dump_header_size();
+
   mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   assert_collapsed(mc);
   dump_header_size();
-  mc.sleep(10);
-  doubleClickRight(mc.eid("msgHeaderView"));
-  mc.sleep(10);
+
+  doubleClickRight(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_expanded(mc);
 }

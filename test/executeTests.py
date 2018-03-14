@@ -463,17 +463,6 @@ class TestExecutor:
                 logging.debug("sed: %r" % sed_cmd)
                 subprocess.call(sed_cmd)
 
-            sed_cmd = [
-                "sed", "-i", "-e",
-                's/test_dblclick/' +
-                'notest_dblclick/',
-                os.path.join(
-                    testdir, "mozmill", "compactheader",
-                    "test-compactheader-collapse.js")
-                ]
-            logging.debug("sed: %r" % sed_cmd)
-            subprocess.call(sed_cmd)
-
         compatibility_apps = [
             dispMUAfile1, dispMUAfile2,
             self.xpi
