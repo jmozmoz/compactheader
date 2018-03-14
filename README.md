@@ -1,4 +1,5 @@
-# CompactHeader [![Build Status](https://travis-ci.org/jmozmoz/compactheader.svg?branch=master)](https://travis-ci.org/jmozmoz/compactheader)
+# CompactHeader [![Build Status](https://travis-ci.org/jmozmoz/compactheader.svg?branch=master)](https://travis-ci.org/jmozmoz/compactheader) [![Build status](https://ci.appveyor.com/api/projects/status/mmvvkm83lajuunms/branch/master?svg=true)](https://ci.appveyor.com/project/jmozmoz/compactheader/branch/master)
+
 
 Thunderbird extension to add a symbol in the header plane to switch between
 compact and expanded view. Options to switch between one or two lines compact

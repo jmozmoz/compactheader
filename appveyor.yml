@@ -1,0 +1,54 @@
+environment:
+  matrix:
+    - VERSION: ESR
+      PYTHON: "C:\\Python27_64"
+    - VERSION: nightly
+      PYTHON: "C:\\Python27_64"
+
+install:
+  - ECHO "Filesystem root:"
+  - ps: "ls \"C:/\""
+
+  # Add Python to PATH
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
+  - "md c:\\opt"
+  - ps: Invoke-WebRequest -Uri https://download.sysinternals.com/files/Junction.zip -OutFile C:\Junction.zip; Expand-Archive c:\Junction.zip -dest c:\opt
+  - "SET PATH=c:\\opt;%PATH%"
+
+  - cmd: choco install wget
+  
+  # Check if all required third party software is installed
+  - "python --version"
+  - "where python"
+  - "junction /?"
+  - "echo test >jtest"
+  - "junction -accepteula jtest2 jtest"
+  - "junction -d jtest2"
+  - "del jtest"
+  - "where junction"
+  - "unzip -v"
+  - "where unzip"
+  - "wget --version"
+  - "where wget"
+  - "sed --version"
+  - "where sed"
+
+  - wget -q --no-check-certificate https://www.us.apache.org/dist//ant/binaries/apache-ant-1.10.2-bin.zip
+  - ps: Expand-Archive apache-ant-1.10.2-bin.zip -dest c:\
+  - set PATH=C:\Program Files\Java\jdk1.8.0;c:\apache-ant-1.10.2\bin;%PATH%
+
+  - "ant -h"
+  - "where ant"
+
+  - wget -q --no-check-certificate https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
+  - set "CLASSPATH=%CD%\\xmltask.jar;%CLASSPATH%"
+
+build: false  # Not a C# project, build stuff at the test step instead.
+
+test_script:
+  # Build the compiled extension and run the project tests
+  - ant buildAMO
+  - cd test
+  - python ./executeTests.py --version %VERSION%
+

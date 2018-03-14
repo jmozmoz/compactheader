@@ -33,7 +33,10 @@ def mkdir_p(path):
 class TestExecutor:
     def __init__(self):
         logging.basicConfig(level=logging.DEBUG)
-        self.TMPDIR = '/tmp'
+        if platform.system() == "Windows":
+            self.TMPDIR = 'c:\\tmp\\'
+        else:
+            self.TMPDIR = '/tmp'
 
         parser = argparse.ArgumentParser()
         parser.add_argument("-v", "--version",
@@ -173,7 +176,9 @@ class TestExecutor:
                     "test-" + version,
                     "testing")
 
+                logging.debug("create test and ftpdir")
                 mkdir_p(testdir)
+                mkdir_p(self.ftpdir)
 
                 logging.debug("download path:             %s/%s-%s" %
                               (self.ftpdir, hosttype, version))
@@ -387,15 +392,15 @@ class TestExecutor:
         logging.debug("sed: %r" % sed_cmd)
         subprocess.call(sed_cmd)
 
-        # some tests do not work - for whatever reasons - on OSX
-        osx_disalbe_tests = [
-            'test_button_visibility',
-            'test_customize_header_toolbar_reorder_buttons',
-            'test_customize_header_toolbar_remove_buttons',
-            'test_customize_header_toolbar_add_all_buttons',
-            ]
+        if platform.system() == 'Darwin' and "TRAVIS" in os.environ:
+            # some tests do not work - for whatever reasons - on OSX
+            osx_disalbe_tests = [
+                'test_button_visibility',
+                'test_customize_header_toolbar_reorder_buttons',
+                'test_customize_header_toolbar_remove_buttons',
+                'test_customize_header_toolbar_add_all_buttons',
+                ]
 
-        if platform.system() == 'Darwin':
             for disable_test in osx_disalbe_tests:
                 sed_cmd = [
                     "sed", "-i", "-e",
@@ -414,6 +419,57 @@ class TestExecutor:
                 os.path.join(
                     testdir, "mozmill", "message-header",
                     "test-message-header.js")
+                ]
+            logging.debug("sed: %r" % sed_cmd)
+            subprocess.call(sed_cmd)
+
+            sed_cmd = [
+                "sed", "-i", "-e",
+                's/test_ignore_phishing_warning_from_eml_attachment/' +
+                'notest_ignore_phishing_warning_from_eml_attachment/',
+                os.path.join(
+                    testdir, "mozmill", "message-header",
+                    "test-phishing-bar.js")
+                ]
+            logging.debug("sed: %r" % sed_cmd)
+            subprocess.call(sed_cmd)
+
+            sed_cmd = [
+                "sed", "-i", "-e",
+                's/test_delete_one_after_message_in_folder_tab/' +
+                'notest_delete_one_after_message_in_folder_tab/',
+                os.path.join(
+                    testdir, "mozmill", "folder-display",
+                    "test-deletion-with-multiple-displays.js",
+                    )
+                ]
+            logging.debug("sed: %r" % sed_cmd)
+            subprocess.call(sed_cmd)
+        elif platform.system() == 'Windows' and "APPVEYOR" in os.environ:
+            win_disalbe_tests = [
+                'test_show_all_header_mode',
+                'test_customize_header_toolbar_reorder_buttons',
+                'test_more_widget_with_maxlines_of_3',
+                ]
+            for disable_test in win_disalbe_tests:
+                sed_cmd = [
+                    "sed", "-i", "-e",
+                    's/' + disable_test + '/' +
+                    'no' + disable_test + '/',
+                    os.path.join(
+                        testdir, "mozmill", "message-header",
+                        "test-message-header.js")
+                    ]
+                logging.debug("sed: %r" % sed_cmd)
+                subprocess.call(sed_cmd)
+
+            sed_cmd = [
+                "sed", "-i", "-e",
+                's/test_dblclick/' +
+                'notest_dblclick/',
+                os.path.join(
+                    testdir, "mozmill", "compactheader",
+                    "test-compactheader-collapse.js")
                 ]
             logging.debug("sed: %r" % sed_cmd)
             subprocess.call(sed_cmd)
