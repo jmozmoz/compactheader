@@ -56,16 +56,18 @@ ant buildAMO
 
 ## Running the tests
 
-In the directory [test](https://github.com/jmozmoz/compactheader/tree/master/test) a Perl script is included which tests the add-on
-with different Thunderbird versions (see also [.travis.yml](https://github.com/jmozmoz/compactheader/blob/master/.travis.yml) using the [Thunderbird infrastructure for mozmill](https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Thunderbird_MozMill_Testing/Running_Thunderbird_MozMill_tests_from_packaged_tests).
+In the directory [test](https://github.com/jmozmoz/compactheader/tree/master/test) a Python script is included which tests the add-on
+with different Thunderbird versions (see also [.travis.yml](https://github.com/jmozmoz/compactheader/blob/master/.travis.yml) and
+[appveyor.yml](https://github.com/jmozmoz/compactheader/blob/master/appveyor.yml)
+using the [Thunderbird infrastructure for mozmill](https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Thunderbird_MozMill_Testing/Running_Thunderbird_MozMill_tests_from_packaged_tests).
 
 ```
-perl executeTests.pl
+perl executeTests.py
 ```
 
 Available options:
 
-`--version` Version of Thunderbird to use for tests
+`--version` Version of Thunderbird to use for tests (currently supported ESR and nightly)
 
 `--nodownload` Do not download the latest version of Thunderbird but use the one stored from the last test
 
