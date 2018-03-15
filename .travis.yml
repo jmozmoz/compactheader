@@ -15,6 +15,7 @@ before_install:
       sudo apt-get install metacity
     else
       HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
+      where python
       python --version
       python -c "import ssl; print(ssl.OPENSSL_VERSION)"
       brew link --overwrite python
