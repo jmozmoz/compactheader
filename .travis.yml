@@ -18,8 +18,10 @@ before_install:
       brew install ant
       python --version
       python -c "import ssl; print(ssl.OPENSSL_VERSION)"
-      brew update python
-      brew update python2
+      brew install python
+      brew install python2
+      brew upgrade python
+      brew upgrade python2
       python --version
       python -c "import ssl; print(ssl.OPENSSL_VERSION)"
     fi
