@@ -15,8 +15,7 @@ before_install:
       sudo apt-get install metacity
     else
       HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
-      HOMEBREW_NO_AUTO_UPDATE=1 brew install openssl
-      HOMEBREW_NO_AUTO_UPDATE=1 brew install python2
+      brew unlink openssl --force --overwrite python && brew link openssl --force --overwrite python
     fi
 
 before_script:
