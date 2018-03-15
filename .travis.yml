@@ -14,7 +14,13 @@ before_install:
     if [[ $TRAVIS_OS_NAME != 'osx' ]]; then
       sudo apt-get install metacity
     else
-      HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
+      brew update
+#      HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
+      brew install ant
+      python --version
+      python -c "import ssl; print(ssl.OPENSSL_VERSION)"
+      brew update python
+      brew update python2
       python --version
       python -c "import ssl; print(ssl.OPENSSL_VERSION)"
     fi
