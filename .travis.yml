@@ -14,18 +14,16 @@ before_install:
     if [[ $TRAVIS_OS_NAME != 'osx' ]]; then
       sudo apt-get install metacity
     else
-      brew update
-      brew install ant
+      HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
       python --version
       python -c "import ssl; print(ssl.OPENSSL_VERSION)"
-      brew install python
-      brew install python2
-      brew upgrade python
-      brew upgrade python2
+      brew link --overwrite python
+      python --version
+      python -c "import ssl; print(ssl.OPENSSL_VERSION)"
+      export PATH="/usr/local/opt/python@2/libexec/bin:$PATH"
       python --version
       python -c "import ssl; print(ssl.OPENSSL_VERSION)"
     fi
-#      HOMEBREW_NO_AUTO_UPDATE=1 brew install ant
 
 before_script:
   - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
