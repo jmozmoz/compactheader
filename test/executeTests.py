@@ -527,7 +527,7 @@ class TestExecutor:
 
         logging.info("Suspicious test outputs:")
         suspicious = filter(
-            re.compile(r"(UNEXPECTED|^  )").search,
+            re.compile(r"(UNEXPECTED|^  |^Exception: Sorry, cannot )").search,
             log.splitlines())
         for line in suspicious:
             logging.info(line)
