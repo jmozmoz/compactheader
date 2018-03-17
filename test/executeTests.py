@@ -480,6 +480,9 @@ class TestExecutor:
 #           my $comp_apps = join(" -a ", @compatibility_apps);
 
         mozmill_commands = [
+            [python, "runtest.py", "--binary=" + appbin,
+             "-t", "message-header", "--testing-modules-dir", "../modules",
+             "2>&1"],
             [python, "runtest.py", "--binary=" + appbin, "-a", self.xpi,
              "-t", "compactheader", "--testing-modules-dir", "../modules",
              "2>&1"],
