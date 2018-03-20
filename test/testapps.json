@@ -28,9 +28,9 @@
   "nightly": {
     "WindowsAMD64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
-      "appzip": "thunderbird-_VER_.en-US.win32.zip",
-      "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
-      "checksum": ".en-US.win32.checksums"
+      "appzip": "thunderbird-_VER_.en-US.win64.zip",
+      "testzip": "thunderbird-_VER_.en-US.win64.common.tests.zip",
+      "checksum": ".en-US.win64.checksums"
     },
     "Linux": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
