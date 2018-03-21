@@ -480,21 +480,37 @@ class TestExecutor:
 #           my $comp_apps = join(" -a ", @compatibility_apps);
 
         mozmill_commands = [
-            [python, "runtest.py", "--binary=" + appbin, "-a", self.xpi,
-             "-t", "compactheader", "--testing-modules-dir", "../modules",
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin,
+             "-a", self.xpi,
+             "-t", "compactheader",
+             "--testing-modules-dir", "../modules",
              "2>&1"],
-            [python, "runtest.py", "--binary=" + appbin, "-a", self.xpi,
-             "-t", "message-header", "--testing-modules-dir", "../modules",
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin,
+             "-a", self.xpi,
+             "-t", "message-header",
+             "--testing-modules-dir", "../modules",
              "2>&1"],
-            [python, "runtest.py", "--binary=" + appbin, "-a", self.xpi,
-             "-t", "folder-display", "--testing-modules-dir", "../modules",
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin,
+             "-a", self.xpi,
+             "-t", "folder-display",
+             "--testing-modules-dir", "../modules",
              "2>&1"],
-            [python, "runtest.py", "--binary=" + appbin] +
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin] +
             compatibility_apps_args +
             ["-t", "compactheader/test-compactheader-preferences.js",
              "--testing-modules-dir", "../modules",
              "2>&1"],
-            [python, "runtest.py", "--binary=" + appbin] +
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin] +
             compatibility_apps_args +
             ["-t", "compactheader/test-compactheader-toolbar.js",
              "--testing-modules-dir", "../modules",
