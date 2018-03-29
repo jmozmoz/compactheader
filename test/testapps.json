@@ -27,7 +27,7 @@
   },
   "beta": {
     "WindowsAMD64": {
-      "url": "https://ftp.mozilla.org/pub/thunderbird/tinderbox-builds/comm-beta-linux64/1522145777",
+      "url": "https://ftp.mozilla.org/pub/thunderbird/tinderbox-builds/comm-beta-win32/1522145777",
       "appzip": "thunderbird-_VER_.en-US.win32.zip",
       "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
       "checksum": ".en-US.win32.checksums"
