@@ -184,6 +184,9 @@ class TestExecutor:
                               (self.ftpdir, hosttype, version))
                 logging.debug("Thunderbird download path: %s/%s" %
                               (ftppath, app))
+                logging.debug(
+                    "Tests download path:       %s/%s" %
+                    (ftppath, tests))
 
                 tools = self.package_tools[hosttype]
 
@@ -194,107 +197,104 @@ class TestExecutor:
                          "-N", ftppath + "/" + app
                          ]
                     )
-                    logging.debug(
-                        "Tests download path:       %s/%s" %
-                        (ftppath, tests))
                     subprocess.call(
                         ["wget", "--no-check-certificate", "-q", "-P",
                          os.path.join(self.ftpdir, hosttype + "-" + version),
                          "-N", ftppath + "/" + tests
                          ]
                     )
-                    logging.debug("unzipping tests...")
-                    unzip_test_cmd = [
-                        "unzip", "-q", "-o",
-                        os.path.join(
-                            self.ftpdir, hosttype + "-" + version, tests),
-                        "-d", testdir, "-x", "*mochitest*",
-                        "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
-                        ]
-                    logging.debug("unzip tests: %r" % unzip_test_cmd)
-                    subprocess.call(unzip_test_cmd)
+                logging.debug("unzipping tests...")
+                unzip_test_cmd = [
+                    "unzip", "-q", "-o",
+                    os.path.join(
+                        self.ftpdir, hosttype + "-" + version, tests),
+                    "-d", testdir, "-x", "*mochitest*",
+                    "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
+                    ]
+                logging.debug("unzip tests: %r" % unzip_test_cmd)
+                subprocess.call(unzip_test_cmd)
 
-                    testdir = os.path.abspath(os.path.join(
-                        self.TMPDIR,
-                        "compactheader",
-                        "test-" + version,
-                        "testing"))
+                testdir = os.path.abspath(os.path.join(
+                    self.TMPDIR,
+                    "compactheader",
+                    "test-" + version,
+                    "testing"))
 
-                    # "Link" the add-on tests into the mozmill directory
-                    if platform.system() == "Windows":
-                        subprocess.call(
-                            ["junction", "-d",
-                             os.path.join(testdir, "mozmill", "compactheader")
-                             ]
-                        )
-                        subprocess.call(
-                            ["junction",
-                             os.path.join(testdir, "mozmill", "compactheader"),
-                             os.path.join(script_dir, "compactheader")
-                             ]
-                        )
-                        subprocess.call(
-                            ["junction", "-d",
-                             os.path.join(testdir, "..", "python")
-                             ]
-                        )
-                        subprocess.call(
-                            ["junction",
-                             os.path.join(testdir, "..", "python"),
-                             os.path.join(testdir, "tools"),
-                             ]
-                        )
-                    else:
-                        subprocess.call(
-                            ["ln", "-sfn",
-                             os.path.join(script_dir, "compactheader"),
-                             os.path.join(testdir, "mozmill", "compactheader"),
-                             ]
-                        )
-                        subprocess.call(
-                            ["ln", "-sfn",
-                             os.path.join(testdir, "tools"),
-                             os.path.join(testdir, "..", "python"),
-                             ]
-                        )
+                # "Link" the add-on tests into the mozmill directory
+                if platform.system() == "Windows":
+                    subprocess.call(
+                        ["junction", "-d",
+                         os.path.join(testdir, "mozmill", "compactheader")
+                         ]
+                    )
+                    subprocess.call(
+                        ["junction",
+                         os.path.join(testdir, "mozmill", "compactheader"),
+                         os.path.join(script_dir, "compactheader")
+                         ]
+                    )
+                    subprocess.call(
+                        ["junction", "-d",
+                         os.path.join(testdir, "..", "python")
+                         ]
+                    )
+                    subprocess.call(
+                        ["junction",
+                         os.path.join(testdir, "..", "python"),
+                         os.path.join(testdir, "tools"),
+                         ]
+                    )
+                else:
+                    subprocess.call(
+                        ["ln", "-sfn",
+                         os.path.join(script_dir, "compactheader"),
+                         os.path.join(testdir, "mozmill", "compactheader"),
+                         ]
+                    )
+                    subprocess.call(
+                        ["ln", "-sfn",
+                         os.path.join(testdir, "tools"),
+                         os.path.join(testdir, "..", "python"),
+                         ]
+                    )
 
-                    shutil.copy(
-                        os.path.join(script_dir, "buildconfig.py"),
-                        os.path.join(testdir, "mozmill", "resources"))
+                shutil.copy(
+                    os.path.join(script_dir, "buildconfig.py"),
+                    os.path.join(testdir, "mozmill", "resources"))
 
-                    os.chdir(os.path.join(testdir, "mozmill"))
+                os.chdir(os.path.join(testdir, "mozmill"))
 
-                    logging.info("... installing mozmill")
-                    shutil.rmtree(os.path.join("..", "mozmill-virtualenv"),
-                                  ignore_errors=True)
+                logging.info("... installing mozmill")
+                shutil.rmtree(os.path.join("..", "mozmill-virtualenv"),
+                              ignore_errors=True)
 
-                    int_version = int(re.findall('^\d+', str(version))[0])
-                    logging.debug("int version: %d" % int_version)
-                    if int_version >= 59:
-                        install_cmd = [
-                            "python",
-                            os.path.join("resources", "installmozmill.py"),
-                            os.path.join("..", "mozmill-virtualenv")]
-                    else:
-                        # shutil.rmtree(os.path.join("..", "mozbase"),
-                        # ignore_errors=True)
-                        install_cmd = [
-                            "python",
-                            os.path.join("resources", "installmozmill.py"),
-                            os.path.join("..", "mozmill-virtualenv"),
-                            os.path.join("..", "mozbase")]
-
-                    logging.debug(install_cmd)
-                    subprocess.call(install_cmd)
-
+                int_version = int(re.findall('^\d+', str(version))[0])
+                logging.debug("int version: %d" % int_version)
+                if int_version >= 59:
                     install_cmd = [
-                        tools['virtualpython'],
-                        "-mpip",
-                        "install",
-                        os.path.join("..", "mozbase", "mozinstall")]
+                        "python",
+                        os.path.join("resources", "installmozmill.py"),
+                        os.path.join("..", "mozmill-virtualenv")]
+                else:
+                    # shutil.rmtree(os.path.join("..", "mozbase"),
+                    # ignore_errors=True)
+                    install_cmd = [
+                        "python",
+                        os.path.join("resources", "installmozmill.py"),
+                        os.path.join("..", "mozmill-virtualenv"),
+                        os.path.join("..", "mozbase")]
 
-                    logging.debug(install_cmd)
-                    subprocess.call(install_cmd)
+                logging.debug(install_cmd)
+                subprocess.call(install_cmd)
+
+                install_cmd = [
+                    tools['virtualpython'],
+                    "-mpip",
+                    "install",
+                    os.path.join("..", "mozbase", "mozinstall")]
+
+                logging.debug(install_cmd)
+                subprocess.call(install_cmd)
 
                 os.chdir(os.path.join(testdir, "mozmill"))
 

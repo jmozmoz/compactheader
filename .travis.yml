@@ -6,6 +6,7 @@ os:
 
 env:
   - VERSION=ESR
+  - VERSION=beta
   - VERSION=nightly
 
 before_install:

@@ -25,6 +25,32 @@
       "checksum": ".en-US.mac.checksums"
     }
   },
+  "beta": {
+    "WindowsAMD64": {
+      "url": "https://ftp.mozilla.org/pub/thunderbird/tinderbox-builds/comm-beta-linux64/1522145777",
+      "appzip": "thunderbird-_VER_.en-US.win32.zip",
+      "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
+      "checksum": ".en-US.win32.checksums"
+    },
+    "Linux": {
+      "url": "https://ftp.mozilla.org/pub/thunderbird/tinderbox-builds/comm-beta-linux/1522145777",
+      "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2",
+      "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip",
+      "checksum": ".en-US.linux-i686.checksums"
+    },
+    "Linuxx86_64": {
+      "url": "https://ftp.mozilla.org/pub/thunderbird/tinderbox-builds/comm-beta-linux64/1522145777",
+      "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2",
+      "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip",
+      "checksum": ".en-US.linux-x86_64.checksums"
+    },
+    "Darwinx86_64": {
+      "url": "https://ftp.mozilla.org/pub/thunderbird/tinderbox-builds/comm-beta-macosx64/1522145777",
+      "appzip": "thunderbird-_VER_.en-US.mac.dmg",
+      "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip",
+      "checksum": ".en-US.mac.checksums"
+    }
+  },
   "nightly": {
     "WindowsAMD64": {
       "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-central",
