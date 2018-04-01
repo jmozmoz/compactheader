@@ -211,7 +211,7 @@ class TestExecutor:
                     "-d", testdir, "-x", "*mochitest*",
                     "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
                     ]
-                logging.debug("unzip tests: %r" % unzip_test_cmd)
+                logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
                 subprocess.call(unzip_test_cmd)
 
                 testdir = os.path.abspath(os.path.join(
@@ -284,7 +284,7 @@ class TestExecutor:
                         os.path.join("..", "mozmill-virtualenv"),
                         os.path.join("..", "mozbase")]
 
-                logging.debug(install_cmd)
+                logging.debug(" ".join(install_cmd))
                 subprocess.call(install_cmd)
 
                 install_cmd = [
@@ -293,7 +293,7 @@ class TestExecutor:
                     "install",
                     os.path.join("..", "mozbase", "mozinstall")]
 
-                logging.debug(install_cmd)
+                logging.debug(" ".join(install_cmd))
                 subprocess.call(install_cmd)
 
                 os.chdir(os.path.join(testdir, "mozmill"))
@@ -308,7 +308,7 @@ class TestExecutor:
                     testdir
                     ]
 
-                logging.debug(install_cmd)
+                logging.debug(" ".join(install_cmd))
                 try:
                     appbin = subprocess.check_output(install_cmd)
                 except subprocess.CalledProcessError as e:
@@ -389,7 +389,7 @@ class TestExecutor:
             os.path.join(
                 testdir, "mozmill", "message-header", "test-message-header.js")
             ]
-        logging.debug("sed: %r" % sed_cmd)
+        logging.debug("sed: %r" % " " . join(sed_cmd))
         subprocess.call(sed_cmd)
 
         if platform.system() == 'Darwin' and "TRAVIS" in os.environ:
@@ -410,7 +410,7 @@ class TestExecutor:
                         testdir, "mozmill", "compactheader",
                         "test-compactheader-toolbar.js")
                     ]
-                logging.debug("sed: %r" % sed_cmd)
+                logging.debug("sed: %r" % " ".join(sed_cmd))
                 subprocess.call(sed_cmd)
             sed_cmd = [
                 "sed", "-i", "-e",
@@ -420,7 +420,7 @@ class TestExecutor:
                     testdir, "mozmill", "message-header",
                     "test-message-header.js")
                 ]
-            logging.debug("sed: %r" % sed_cmd)
+            logging.debug("sed: %r" % " ".join(sed_cmd))
             subprocess.call(sed_cmd)
 
             sed_cmd = [
@@ -431,7 +431,7 @@ class TestExecutor:
                     testdir, "mozmill", "message-header",
                     "test-phishing-bar.js")
                 ]
-            logging.debug("sed: %r" % sed_cmd)
+            logging.debug("sed: %r" % " ".join(sed_cmd))
             subprocess.call(sed_cmd)
 
             sed_cmd = [
@@ -443,7 +443,7 @@ class TestExecutor:
                     "test-deletion-with-multiple-displays.js",
                     )
                 ]
-            logging.debug("sed: %r" % sed_cmd)
+            logging.debug("sed: %r" % " ".join(sed_cmd))
             subprocess.call(sed_cmd)
         elif platform.system() == 'Windows' and "APPVEYOR" in os.environ:
             win_disalbe_tests = [
@@ -460,7 +460,7 @@ class TestExecutor:
                         testdir, "mozmill", "message-header",
                         "test-message-header.js")
                     ]
-                logging.debug("sed: %r" % sed_cmd)
+                logging.debug("sed: %r" % " ".join(sed_cmd))
                 subprocess.call(sed_cmd)
 
         compatibility_apps = [
@@ -521,7 +521,7 @@ class TestExecutor:
         number_of_tests = 0
 
         for command in mozmill_commands:
-            logging.info("mozmill command: %r" % command)
+            logging.info("mozmill command: %r" % " ".join(command))
             proc = subprocess.Popen(command,
                                     stdout=subprocess.PIPE,
                                     universal_newlines=True)
