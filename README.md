@@ -62,7 +62,7 @@ with different Thunderbird versions (see also [.travis.yml](https://github.com/j
 using the [Thunderbird infrastructure for mozmill](https://developer.mozilla.org/en-US/docs/Mozilla/Thunderbird/Thunderbird_MozMill_Testing/Running_Thunderbird_MozMill_tests_from_packaged_tests).
 
 ```
-perl executeTests.py
+python executeTests.py
 ```
 
 Available options:
