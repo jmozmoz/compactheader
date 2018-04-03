@@ -32,4 +32,5 @@ before_script:
 script: 
   - ant buildAMO
   - cd test
+  - python ./find_beta_build.py
   - python ./executeTests.py --version $VERSION
