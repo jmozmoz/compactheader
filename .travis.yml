@@ -28,6 +28,9 @@ before_script:
       sleep 5 # give xvfb some time to start
       metacity --sm-disable --replace 2>/dev/null &
     fi
+  - pip install bs4
+  - pip install lxml
+  - pip install requests
 
 script: 
   - ant buildAMO
