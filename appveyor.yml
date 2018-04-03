@@ -36,6 +36,7 @@ install:
   - "sed --version"
   - "where sed"
   - "pip install bs4"
+  - "pip install lxml"
   - "pip install requests"
 
   - wget -q --no-check-certificate https://www.us.apache.org/dist//ant/binaries/apache-ant-1.10.2-bin.zip
