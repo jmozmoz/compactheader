@@ -148,27 +148,52 @@ class TestExecutor:
                     ]
                 logging.debug("Download command: %r", " ".join(get_checksum))
                 subprocess.call(get_checksum)
+                get_checksum = [
+                    "wget", "--no-check-certificate",
+                    ftppath + "/" + checksum, "-P",  self.ftpdir
+                    ]
+                logging.debug("Download command: %r", " ".join(get_checksum))
+                subprocess.call(get_checksum)
                 files = glob.glob(self.ftpdir + "/thunderbird*" + checksum)
-                logging.debug("found checksums: %r" % files)
+                if len(files) > 0:
+                    logging.debug("found checksums: %r" % files)
 
-                file = files[-1]
+                    file = files[-1]
 
-                version = ""
-                m = re.search("thunderbird-(.*)" + checksum, file)
-                if m:
-                    version = m.group(1)
+                    version = ""
+                    m = re.search("thunderbird-(.*)" + checksum, file)
+                    if m:
+                        version = m.group(1)
 
-                logging.info("************")
-                logging.info("found version: %s " % version)
-                logging.info("************")
-#
-                app = re.sub(r'_VER_', version, app)
-                tests = re.sub(r'_VER_', version, tests)
+                    logging.info("************")
+                    logging.info("found version: %s " % version)
+                    logging.info("************")
+    #
+                    app = re.sub(r'_VER_', version, app)
+                    tests = re.sub(r'_VER_', version, tests)
 
-                logging.debug("app: %s" % app)
-                logging.debug("tests: %s" % tests)
-                logging.debug("hosttype: %s" % hosttype)
-                logging.debug("ftppath: %s" % ftppath)
+                    logging.debug("app: %s" % app)
+                    logging.debug("tests: %s" % tests)
+                    logging.debug("hosttype: %s" % hosttype)
+                    logging.debug("ftppath: %s" % ftppath)
+                else:
+                    files = glob.glob(self.ftpdir + "/" + checksum)
+                    if len(files) > 0:
+                        logging.debug("found checksums: %r" % files)
+
+                        version = '99nightly'
+
+                        logging.info("************")
+                        logging.info("found version: %s " % version)
+                        logging.info("************")
+        #
+                        app = re.sub(r'_VER_', version, app)
+                        tests = re.sub(r'_VER_', version, tests)
+
+                        logging.debug("app: %s" % app)
+                        logging.debug("tests: %s" % tests)
+                        logging.debug("hosttype: %s" % hosttype)
+                        logging.debug("ftppath: %s" % ftppath)
 
                 testdir = os.path.join(
                     self.TMPDIR,
@@ -251,11 +276,14 @@ class TestExecutor:
                          os.path.join(testdir, "mozmill", "compactheader"),
                          ]
                     )
-                    subprocess.call(
-                        ["ln", "-sfn",
-                         os.path.join(testdir, "tools"),
-                         os.path.join(testdir, "..", "python"),
-                         ]
+                    mkdir_p(os.path.join(testdir, "..", "python"))
+                    shutil.rmtree(
+                        os.path.join(testdir, "..", "python", "mozterm"),
+                        ignore_errors=True
+                    )
+                    shutil.copytree(
+                        os.path.join(testdir, "tools", "mozterm"),
+                        os.path.join(testdir, "..", "python", "mozterm")
                     )
 
                 shutil.copy(
@@ -270,7 +298,17 @@ class TestExecutor:
 
                 int_version = int(re.findall('^\d+', str(version))[0])
                 logging.debug("int version: %d" % int_version)
+
                 if int_version >= 59:
+                    install_cmd = [
+                        "pip",
+                        "wheel",
+                        os.path.join(testdir, "..", "python", "mozterm"),
+                        "--wheel-dir",
+                        "/tmp/compactheader"
+                    ]
+                    logging.debug(" ".join(install_cmd))
+                    subprocess.call(install_cmd)
                     install_cmd = [
                         "python",
                         os.path.join("resources", "installmozmill.py"),
@@ -480,13 +518,13 @@ class TestExecutor:
 #           my $comp_apps = join(" -a ", @compatibility_apps);
 
         mozmill_commands = [
-            [python, "runtest.py",
-             "--timeout=240",
-             "--binary=" + appbin,
-             "-a", self.xpi,
-             "-t", "compactheader",
-             "--testing-modules-dir", "../modules",
-             "2>&1"],
+#             [python, "runtest.py",
+#              "--timeout=240",
+#              "--binary=" + appbin,
+#              "-a", self.xpi,
+#              "-t", "compactheader",
+#              "--testing-modules-dir", "../modules",
+#              "2>&1"],
             [python, "runtest.py",
              "--timeout=600",
              "--binary=" + appbin,
@@ -501,20 +539,20 @@ class TestExecutor:
              "-t", "folder-display",
              "--testing-modules-dir", "../modules",
              "2>&1"],
-            [python, "runtest.py",
-             "--timeout=240",
-             "--binary=" + appbin] +
-            compatibility_apps_args +
-            ["-t", "compactheader/test-compactheader-preferences.js",
-             "--testing-modules-dir", "../modules",
-             "2>&1"],
-            [python, "runtest.py",
-             "--timeout=240",
-             "--binary=" + appbin] +
-            compatibility_apps_args +
-            ["-t", "compactheader/test-compactheader-toolbar.js",
-             "--testing-modules-dir", "../modules",
-             "2>&1"],
+#             [python, "runtest.py",
+#              "--timeout=240",
+#              "--binary=" + appbin] +
+#             compatibility_apps_args +
+#             ["-t", "compactheader/test-compactheader-preferences.js",
+#              "--testing-modules-dir", "../modules",
+#              "2>&1"],
+#             [python, "runtest.py",
+#              "--timeout=240",
+#              "--binary=" + appbin] +
+#             compatibility_apps_args +
+#             ["-t", "compactheader/test-compactheader-toolbar.js",
+#              "--testing-modules-dir", "../modules",
+#              "2>&1"],
             ]
 #
         log = ""
@@ -571,9 +609,7 @@ def main():
         log_lines, number_of_tests)
 
     # there is one line of output per test (i.e. the date)
-    if (
-            (platform.system() == "Darwin" and log_lines != 0) or
-            (platform.system() != "Darwin" and log_lines != number_of_tests)):
+    if log_lines != 0:
         logging.error("some tests failed!")
         exit(1)
 

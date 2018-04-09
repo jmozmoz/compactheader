@@ -35,18 +35,14 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var Ci = Components.interfaces;
-var Cc = Components.classes;
-var Cu = Components.utils;
-
 var MODULE_NAME = "compactheader-helpers";
 
 var elib = {};
-Cu.import('resource://mozmill/modules/elementslib.js', elib);
+ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js', elib);
 var mozmill = {};
-Cu.import('resource://mozmill/modules/mozmill.js', mozmill);
+ChromeUtils.import('chrome://mozmill/content/modules/mozmill.js', mozmill);
 var EventUtils = {};
-Cu.import('resource://mozmill/stdlib/EventUtils.js', EventUtils);
+ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.js', EventUtils);
 
 var RELATIVE_ROOT = "../shared-modules";
 var MODULE_REQUIRES = ["folder-display-helpers", "window-helpers",

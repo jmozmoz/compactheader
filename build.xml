@@ -35,6 +35,7 @@
     <zip destfile="${AMOdist.dir}/${app.name}-${app.version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
+        <include name="bootstrap.js" />
         <include name="defaults/**" />
         <include name="chrome/**" />
         <exclude name="**/.*" />
