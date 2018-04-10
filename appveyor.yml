@@ -4,8 +4,8 @@ environment:
       PYTHON: "C:\\Python27_64"
     - VERSION: beta
       PYTHON: "C:\\Python27_64"
-    - VERSION: nightly
-      PYTHON: "C:\\Python27_64"
+#     - VERSION: nightly
+#       PYTHON: "C:\\Python27_64"
 
 install:
   - ECHO "Filesystem root:"
