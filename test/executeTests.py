@@ -272,6 +272,15 @@ class TestExecutor:
                 logging.debug("int version: %d" % int_version)
                 if int_version >= 59:
                     install_cmd = [
+                        "pip",
+                        "wheel",
+                        os.path.join(testdir, "..", "python", "mozterm"),
+                        "--wheel-dir",
+                        "/tmp/compactheader"
+                    ]
+                    logging.debug(" ".join(install_cmd))
+                    subprocess.call(install_cmd)
+                    install_cmd = [
                         "python",
                         os.path.join("resources", "installmozmill.py"),
                         os.path.join("..", "mozmill-virtualenv")]
