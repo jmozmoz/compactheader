@@ -43,8 +43,9 @@ install:
   - "pip install requests"
   - "pip install treeherder-client"
 
-  - wget -q --no-check-certificate https://www.us.apache.org/dist//ant/binaries/apache-ant-1.10.2-bin.zip
-  - ps: Expand-Archive apache-ant-1.10.2-bin.zip -dest c:\
+  - ps: choco install ant --ignore-dependencies
+#   - wget -q --no-check-certificate https://www.us.apache.org/dist//ant/binaries/apache-ant-1.10.2-bin.zip
+#   - ps: Expand-Archive apache-ant-1.10.2-bin.zip -dest c:\
   - set PATH=C:\Program Files\Java\jdk1.8.0;c:\apache-ant-1.10.2\bin;%PATH%
 
   - "ant -h"
