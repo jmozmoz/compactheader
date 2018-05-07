@@ -5,6 +5,7 @@ from __future__ import division
 
 import json
 from thclient import TreeherderClient
+import argparse
 
 client = TreeherderClient()
 
@@ -19,18 +20,32 @@ mapping_builds = {
     'Linux': 'build-linux/opt',
 }
 
+branches = {
+    'beta': 'comm-beta',
+    'nightly': 'comm-central'
+}
+parser = argparse.ArgumentParser()
+parser.add_argument("-v", "--version",
+                    help="test against Thunderbird version",
+                    default=None,
+                    required=True)
+args = parser.parse_args()
+
+tb_version = args.version
+tb_branch = branches[tb_version]
+
 with open("testapps.json", "r") as jf:
     data = json.load(jf)
 
-nightly_data = data['nightly']
+nightly_data = data[tb_version]
 
-pushes = client.get_pushes('comm-central', )  # gets last 10 by default
+pushes = client.get_pushes(tb_branch, )  # gets last 10 by default
 for platform in nightly_data:
     platform_data = nightly_data[platform]
     found_artifacts = False
 
     for push in pushes:
-        jobs = client.get_jobs('comm-central', push_id=push['id'])
+        jobs = client.get_jobs(tb_branch, push_id=push['id'])
 
         for job in jobs:
             if (
@@ -68,8 +83,8 @@ for platform in nightly_data:
     if platform not in app_urls:
         raise ValueError('did not find URL!!!!')
     if app_urls[platform] == test_urls[platform]:
-        data['nightly'][platform]['url'] = app_urls[platform]
-        print("store URL:", data['nightly'][platform]['url'])
+        data[tb_version][platform]['url'] = app_urls[platform]
+        print("store URL:", data[tb_version][platform]['url'])
     else:
         raise ValueError('found inconsistent URL!!!!!')
 

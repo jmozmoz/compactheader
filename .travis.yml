@@ -50,8 +50,8 @@ script:
   - cd test
   - |
     if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-      python ./find_nightly_build.py
+      python ./find_nightly_build.py --version $VERSION
     else
-      python3 ./find_nightly_build.py
+      python3 ./find_nightly_build.py --version $VERSION
     fi
   - python ./executeTests.py --version $VERSION

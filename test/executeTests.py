@@ -181,7 +181,7 @@ class TestExecutor:
                     if len(files) > 0:
                         logging.debug("found checksums: %r" % files)
 
-                        version = '99nightly'
+                        version = '99' + appversion
 
                         logging.info("************")
                         logging.info("found version: %s " % version)
