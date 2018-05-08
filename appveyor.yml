@@ -2,8 +2,8 @@ environment:
   matrix:
     - VERSION: ESR
       PYTHON: "C:\\Python27_64"
-    - VERSION: beta
-      PYTHON: "C:\\Python27_64"
+#     - VERSION: beta
+#       PYTHON: "C:\\Python27_64"
 #     - VERSION: nightly
 #       PYTHON: "C:\\Python27_64"
 
