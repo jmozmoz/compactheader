@@ -512,6 +512,25 @@ org_mozdev_compactHeader.pane = function() {
       }
     }
 
+    var enigmailBox = document.getElementById("enigmailBox");
+
+    if (enigmailBox != null) {
+      if (gCoheCollapsedHeaderViewMode) {
+//        var parent = document.getElementById("expandedHeadersBox");
+//        var refElement = document.getElementById("CompactHeader_collapsed2LdateRow");
+//        if (parent != null && refElement != null) {
+//          parent.insertBefore(enigmailBox, refElement);
+//        }
+      }
+      else {
+        var parent = document.getElementById("expandedHeadersBox");
+        var refElement = document.getElementById("expandedHeadersTopBox");
+        if (parent != null && refElement != null) {
+          parent.insertBefore(enigmailBox, refElement);
+        }
+      }
+    }
+
     org_mozdev_compactHeader.messenger.loadToolboxData();
 
     if (gCoheCollapsedHeaderViewMode) {

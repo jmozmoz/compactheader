@@ -81,18 +81,14 @@
   </target>
 
   <target name="spreadVersion">
-  <!--
     <xmltask source="${www.dir}/availableVersion.xml" dest="${www.dir}/availableVersion.xml.new">
       <replace path="/updates/update[1]/version" withXml="&lt;version&gt;${app.version}&lt;/version&gt;"/>
     </xmltask>
     <move file="${www.dir}/availableVersion.xml.new" tofile="${www.dir}/availableVersion.xml"/>
-    -->
-    <!--
     <xmltask source="${www.dir}/availVersion.xml" dest="${www.dir}/availVersion.xml.new">
       <replace path="/updates/update[@server='mozdev']/@version" withText="${app.version}"/>
     </xmltask>
     <move file="${www.dir}/availVersion.xml.new" tofile="${www.dir}/availVersion.xml"/>
--->
     <replaceregexp file="${www.dir}/installation.html"
                    byline="true"
                    match="(.*update the version.*CompactHeader-).*(.xpi&quot;>Version ).*( of Co.*)"
