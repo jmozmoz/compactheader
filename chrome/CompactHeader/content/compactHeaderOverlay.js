@@ -516,11 +516,19 @@ org_mozdev_compactHeader.pane = function() {
 
     if (enigmailBox != null) {
       if (gCoheCollapsedHeaderViewMode) {
-//        var parent = document.getElementById("expandedHeadersBox");
-//        var refElement = document.getElementById("CompactHeader_collapsed2LdateRow");
-//        if (parent != null && refElement != null) {
-//          parent.insertBefore(enigmailBox, refElement);
-//        }
+        if (cohePrefBranch.getBoolPref("headersize.twolineview")) {
+          var parent = document.getElementById("CompactHeader_collapsed2LHeadersBox");
+          var refElement = document.getElementById("CompactHeader_collapsed2LHeaderViewFirstLine");
+          if (parent != null && refElement != null) {
+            parent.insertBefore(enigmailBox, refElement);
+          }
+        } else {
+          var parent = document.getElementById("CompactHeader_collapsed1LHeadersBox");
+          var refElement = document.getElementById("CompactHeader_collapsed1LHeaderViewFirstLine");
+          if (parent != null && refElement != null) {
+            parent.insertBefore(enigmailBox, refElement);
+          }
+        }
       }
       else {
         var parent = document.getElementById("expandedHeadersBox");
