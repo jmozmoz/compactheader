@@ -1,11 +1,14 @@
 environment:
   matrix:
-    - VERSION: ESR
-      PYTHON: "C:\\Python27_64"
+#     - VERSION: ESR
+#       PYTHON: "C:\\Python27_64"
 #     - VERSION: beta
 #       PYTHON: "C:\\Python27_64"
-#     - VERSION: nightly
-#       PYTHON: "C:\\Python27_64"
+    - VERSION: nightly
+      PYTHON: "C:\\Python27_64"
+
+cache:
+  - C:\tmp\compactheader\ftp
 
 install:
   - ECHO "Filesystem root:"
@@ -38,6 +41,7 @@ install:
   - "pip install bs4"
   - "pip install lxml"
   - "pip install requests"
+  - "pip install treeherder-client"
 
   - ps: choco install ant --ignore-dependencies
 #   - wget -q --no-check-certificate https://www.us.apache.org/dist//ant/binaries/apache-ant-1.10.2-bin.zip
@@ -56,6 +60,6 @@ test_script:
   # Build the compiled extension and run the project tests
   - ant buildAMO
   - cd test
-  - python ./find_beta_build.py
+  - python ./find_nightly_build.py --version %VERSION%
   - python ./executeTests.py --version %VERSION%
 
