@@ -52,11 +52,11 @@ org_mozdev_compactHeader.debug = function() {
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
-  var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
-                                           .getService(Components.interfaces.nsIConsoleService);
+//  var aConsoleService = Components.classes["@mozilla.org/consoleservice;1"]
+//                                           .getService(Components.interfaces.nsIConsoleService);
 
   pub.LOGLEVEL = {"debug": 0, "info":1, "warn": 2, "error": 3};
-  var gCurrentLogLevel = pub.LOGLEVEL.info; // TODO: Set to info
+  var gCurrentLogLevel = pub.LOGLEVEL.debug; // TODO: Set to info
 
   pub.log = function(str, logLevel) {
     logLevel = typeof logLevel !== 'undefined' ? logLevel : pub.LOGLEVEL.debug;
