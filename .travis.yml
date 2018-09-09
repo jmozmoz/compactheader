@@ -38,12 +38,11 @@ before_script:
     fi
   - |
     if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-      wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python
-      sudo python -m pip install --upgrade pyOpenSSL
-      sudo python -m pip install bs4
-      sudo python -m pip install lxml
-      sudo python -m pip install requests
-      sudo python -m pip install treeherder-client
+      wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python2
+      sudo python2 -m pip install bs4
+      sudo python2 -m pip install lxml
+      sudo python2 -m pip install requests
+      sudo python2 -m pip install treeherder-client
       export PIP_INDEX_URL=http://pypi.pub.build.mozilla.org/pub
       export PIP_TRUSTED_HOST="pypi.pub.build.mozilla.org"
       export PIP_FIND_LINKS="/tmp/compactheader http://pypi.pub.build.mozilla.org/pub"
@@ -52,5 +51,5 @@ before_script:
 script: 
   - ant buildAMO
   - cd test
-  - python ./find_nightly_build.py --version $VERSION
-  - python ./executeTests.py --version $VERSION
+  - python2 ./find_nightly_build.py --version $VERSION
+  - python2 ./executeTests.py --version $VERSION
