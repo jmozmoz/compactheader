@@ -1,105 +1,105 @@
 {
     "nightly": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/JgGcqX8sQxy0Vgp0w6xFvw/runs/0/artifacts/public/build", 
-            "appzip": "target.zip", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/JgGcqX8sQxy0Vgp0w6xFvw/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/FJqzFfIeRT6VatGjQgUafw/runs/0/artifacts/public/build", 
-            "appzip": "target.dmg", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/FJqzFfIeRT6VatGjQgUafw/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/XQ6aJ_VBTVW-4VwNNDMFkA/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/XQ6aJ_VBTVW-4VwNNDMFkA/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/TgrkytsOS2C-ES9K1QiNoA/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/TgrkytsOS2C-ES9K1QiNoA/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
         }
-    }, 
+    },
     "esr60": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/Dp1N2sEzTMaj9O3k5z6drA/runs/0/artifacts/public/build", 
-            "appzip": "target.zip", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/Dp1N2sEzTMaj9O3k5z6drA/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/YMSI2o5UT22oPu92CyuMdw/runs/0/artifacts/public/build", 
-            "appzip": "target.dmg", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/YMSI2o5UT22oPu92CyuMdw/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/Pwrdnp2tTPqG9VgsD1e3gw/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/Pwrdnp2tTPqG9VgsD1e3gw/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/MCGrYOcDRc-MGriFB3TMhw/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/MCGrYOcDRc-MGriFB3TMhw/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
         }
-    }, 
+    },
     "beta": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/dSIWqvmARDKHEmYPt_pO-w/runs/0/artifacts/public/build", 
-            "appzip": "target.zip", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/dSIWqvmARDKHEmYPt_pO-w/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/LZ7wFgy1RJaJZKQHRIcEiQ/runs/0/artifacts/public/build", 
-            "appzip": "target.dmg", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/LZ7wFgy1RJaJZKQHRIcEiQ/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/PEvQC9BOTZ6XLZzzI93Lhg/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/PEvQC9BOTZ6XLZzzI93Lhg/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
         }
-    }, 
+    },
     "ESR": {
         "WindowsAMD64": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.win32.zip", 
-            "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.win32.zip",
+            "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
             "checksum": ".en-US.win32.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.mac.dmg", 
-            "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.mac.dmg",
+            "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip",
             "checksum": ".en-US.mac.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2", 
-            "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2",
+            "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip",
             "checksum": ".en-US.linux-x86_64.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2", 
-            "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2",
+            "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip",
             "checksum": ".en-US.linux-i686.checksums"
         }
     }
