@@ -36,13 +36,13 @@
     <zip destfile="${AMOdist.dir}/${app.name}-${app.version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
-        <include name="bootstrap.js" />
         <include name="defaults/**" />
         <include name="chrome/**" />
         <exclude name="**/.*" />
         <exclude name="**/CVS/**" />
       </fileset>
       <fileset dir="${AMOdist.dir}">
+        <include name="install.rdf" />
         <include name="manifest.json" />
       </fileset>
     </zip>
@@ -53,6 +53,7 @@
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
         <include name="manifest.json" />
+        <include name="install.rdf" />
         <include name="defaults/**" />
         <include name="chrome/**" />
         <exclude name="**/.*" />

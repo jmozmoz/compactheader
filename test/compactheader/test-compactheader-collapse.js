@@ -44,10 +44,19 @@ var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
 
 const ENABLE_CHAT_PREF="mail.chat.enabled";
 
-var elib = {};
-Cu.import('resource://mozmill/modules/elementslib.js', elib);
-var controller = {};
-Cu.import('resource://mozmill/modules/controller.js', controller);
+try {
+  var elib = {};
+  ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js', elib);
+  var controller = {};
+  ChromeUtils.import('chrome://mozmill/content/modules/controller.js', controller);
+} catch(err) {
+  dump("err: " + err);
+
+  var elib = {};
+  Cu.import('resource://mozmill/modules/elementslib.js', elib);
+  var controller = {};
+  Cu.import('resource://mozmill/modules/controller.js', controller);
+}
 
 // The WindowHelper module
 var WindowHelper;
@@ -143,6 +152,9 @@ function test_wide_layout_and_compact() {
   let oneLineDispMUAIcon = mc.e("CompactHeader_dispMUAiconCompact");
 
   let orignalDispMUA = mc.e("dispMUA");
+
+  dump('orignalDispMUA: ' + orignalDispMUA + '\n');
+  dump('orignalDispMUA: ' + (orignalDispMUA == null) + '\n');
 
   if (orignalDispMUA == null) {
     assert_equals(oneLineDispMUAIcon.getAttribute("collapsed"), "true");

@@ -42,10 +42,19 @@ var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
                        'address-book-helpers', 'mouse-event-helpers',
                        'compactheader-helpers'];
 
-var elib = {};
-Cu.import('resource://mozmill/modules/elementslib.js', elib);
-var controller = {};
-Cu.import('resource://mozmill/modules/controller.js', controller);
+try {
+  var elib = {};
+  ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js', elib);
+  var controller = {};
+  ChromeUtils.import('chrome://mozmill/content/modules/controller.js', controller);
+} catch(err) {
+  dump("err: " + err);
+
+  var elib = {};
+  Cu.import('resource://mozmill/modules/elementslib.js', elib);
+  var controller = {};
+  Cu.import('resource://mozmill/modules/controller.js', controller);
+}
 
 // The WindowHelper module
 var WindowHelper;

@@ -363,6 +363,8 @@ org_mozdev_compactHeader.pane = function() {
 
   pub.coheOnUnloadMsgHeaderPane = function()
   {
+    org_mozdev_compactHeader.debug.log("coheOnUnloadMsgHeaderPane start");
+
     Components.classes["@mozilla.org/abmanager;1"]
               .getService(Components.interfaces.nsIAbManager)
               .removeAddressBookListener(coheAddressBookListener);
@@ -371,6 +373,7 @@ org_mozdev_compactHeader.pane = function() {
     pub.coheOnLoadMsgHeaderPane, true);
     removeEventListener('messagepane-unloaded',
       pub.coheOnUnloadMsgHeaderPane, true);
+    org_mozdev_compactHeader.debug.log("coheOnUnloadMsgHeaderPane stop");
   }
 
   var coheAddressBookListener =

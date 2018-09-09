@@ -228,16 +228,6 @@ class TestExecutor:
                          "-N", ftppath + "/" + tests
                          ]
                     )
-                logging.debug("unzipping tests...")
-                unzip_test_cmd = [
-                    "unzip", "-q", "-o",
-                    os.path.join(
-                        self.ftpdir, hosttype + "-" + version, tests),
-                    "-d", testdir, "-x", "*mochitest*",
-                    "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
-                    ]
-                logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
-                subprocess.call(unzip_test_cmd)
 
                 testdir = os.path.abspath(os.path.join(
                     self.TMPDIR,
@@ -245,6 +235,33 @@ class TestExecutor:
                     "test-" + version,
                     "testing"))
 
+                cur_dir = os.curdir
+
+                os.chdir(testdir)
+                logging.debug("unzipping tests...")
+                if '.tar.gz'in tests:
+                    unzip_test_cmd = [
+                        "tar", "xzf",
+                        os.path.join(
+                            self.ftpdir, hosttype + "-" + version, tests),
+                        "--exclude", "*mochitest*",
+                        "--exclude", "*xpcshell*",
+                        "--exclude", "*reftest*",
+                        "--exclude", "*jit-test*",
+                        "--exclude", "*bin*"
+                        ]
+                else:
+                    unzip_test_cmd = [
+                        "unzip", "-q", "-o",
+                        os.path.join(
+                            self.ftpdir, hosttype + "-" + version, tests),
+                        "-d", testdir, "-x", "*mochitest*",
+                        "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
+                        ]
+                logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
+                subprocess.call(unzip_test_cmd)
+
+                os.chdir(cur_dir)
                 # "Link" the add-on tests into the mozmill directory
                 if platform.system() == "Windows":
                     subprocess.call(
@@ -518,13 +535,13 @@ class TestExecutor:
 #           my $comp_apps = join(" -a ", @compatibility_apps);
 
         mozmill_commands = [
-#             [python, "runtest.py",
-#              "--timeout=240",
-#              "--binary=" + appbin,
-#              "-a", self.xpi,
-#              "-t", "compactheader",
-#              "--testing-modules-dir", "../modules",
-#              "2>&1"],
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin,
+             "-a", self.xpi,
+             "-t", "compactheader/test-compactheader-collapse.js",
+             "--testing-modules-dir", "../modules",
+             "2>&1"],
             [python, "runtest.py",
              "--timeout=600",
              "--binary=" + appbin,
@@ -539,20 +556,20 @@ class TestExecutor:
              "-t", "folder-display",
              "--testing-modules-dir", "../modules",
              "2>&1"],
-#             [python, "runtest.py",
-#              "--timeout=240",
-#              "--binary=" + appbin] +
-#             compatibility_apps_args +
-#             ["-t", "compactheader/test-compactheader-preferences.js",
-#              "--testing-modules-dir", "../modules",
-#              "2>&1"],
-#             [python, "runtest.py",
-#              "--timeout=240",
-#              "--binary=" + appbin] +
-#             compatibility_apps_args +
-#             ["-t", "compactheader/test-compactheader-toolbar.js",
-#              "--testing-modules-dir", "../modules",
-#              "2>&1"],
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin] +
+            compatibility_apps_args +
+            ["-t", "compactheader/test-compactheader-preferences.js",
+             "--testing-modules-dir", "../modules",
+             "2>&1"],
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin] +
+            compatibility_apps_args +
+            ["-t", "compactheader/test-compactheader-toolbar.js",
+             "--testing-modules-dir", "../modules",
+             "2>&1"],
             ]
 #
         log = ""
@@ -582,7 +599,14 @@ class TestExecutor:
         logging.info("Suspicious test outputs:")
         suspicious = filter(
             re.compile(r"(UNEXPECTED|^  |^Exception: Sorry, cannot )").search,
-            log.splitlines())
+            log.splitlines()
+        )
+        exclude = ["UTC"]
+        suspicious = filter(
+            lambda s: not any(x in s for x in exclude),
+            suspicious
+        )
+
         for line in suspicious:
             logging.info(line)
 
