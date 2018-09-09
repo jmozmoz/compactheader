@@ -251,7 +251,7 @@ class TestExecutor:
                         "--exclude", "*bin*"
                         ]
                     if platform.system() == 'Windows':
-                        unzip_test_cmd += "--force-local"
+                        unzip_test_cmd.append("--force-local")
                 else:
                     unzip_test_cmd = [
                         "unzip", "-q", "-o",
