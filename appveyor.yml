@@ -1,7 +1,5 @@
 environment:
   matrix:
-    - VERSION: ESR
-      PYTHON: "C:\\Python27_64"
     - VERSION: esr60
       PYTHON: "C:\\Python27_64"
     - VERSION: beta
