@@ -39,6 +39,7 @@ before_script:
   - |
     if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
       wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python
+      sudo python -m pip install --upgrade pyOpenSSL
       sudo python -m pip install bs4
       sudo python -m pip install lxml
       sudo python -m pip install requests

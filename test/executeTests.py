@@ -248,7 +248,9 @@ class TestExecutor:
                         "--exclude", "*xpcshell*",
                         "--exclude", "*reftest*",
                         "--exclude", "*jit-test*",
-                        "--exclude", "*bin*"
+                        "--exclude", "*bin*",
+                        "--force-local" if platform.system() == 'Windows'
+                        else ''
                         ]
                 else:
                     unzip_test_cmd = [

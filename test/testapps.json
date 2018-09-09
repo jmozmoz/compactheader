@@ -7,19 +7,19 @@
             "checksum": "target.checksums"
         }, 
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/KxcPf2zBSmyefV1OXXgysg/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/FJqzFfIeRT6VatGjQgUafw/runs/0/artifacts/public/build", 
             "appzip": "target.dmg", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/GtKyZVoATT6YsXI5cYVesQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/XQ6aJ_VBTVW-4VwNNDMFkA/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/c-QQos4sQrK0I0mknrKyiw/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/TgrkytsOS2C-ES9K1QiNoA/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
