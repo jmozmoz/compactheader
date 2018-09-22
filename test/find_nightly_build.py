@@ -62,6 +62,8 @@ pushes = client.get_pushes(tb_branch, )  # gets last 10 by default
 for platform in nightly_data:
     platform_data = nightly_data[platform]
     found_artifacts = False
+    platform_data['testzip'] = \
+        platform_data['testzip'].replace('.zip', '').replace('.tar.gz', '')
 
     for push in pushes:
         jobs = client.get_jobs(tb_branch, push_id=push['id'])
@@ -87,7 +89,11 @@ for platform in nightly_data:
                         if detail['url'].find(platform_data['testzip']) >= 0:
                             found_test = True
                             test_urls[platform] = '/'.join(
-                                detail['url'].split('/')[:-1])
+                                detail['url'].split('/')[:-1]
+                            )
+                            data[tb_version][platform]['testzip'] = (
+                                detail['url'].split('/')[-1]
+                            )
                         elif detail['url'].find(platform_data['appzip']) >= 0:
                             found_app = True
                             app_urls[platform] = '/'.join(
