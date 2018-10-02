@@ -51,6 +51,10 @@
 // view in the message header pane.
 ////////////////////////////////////////////////////////////////////////////////////
 
+function test_listener() {
+  org_mozdev_compactHeader.debug.log("test listener");
+}
+
 
 if (typeof org_mozdev_compactHeader == "undefined") {
   var org_mozdev_compactHeader = {};
@@ -370,7 +374,7 @@ org_mozdev_compactHeader.pane = function() {
               .removeAddressBookListener(coheAddressBookListener);
 
     removeEventListener('messagepane-loaded',
-    pub.coheOnLoadMsgHeaderPane, true);
+      pub.coheOnLoadMsgHeaderPane, true);
     removeEventListener('messagepane-unloaded',
       pub.coheOnUnloadMsgHeaderPane, true);
     org_mozdev_compactHeader.debug.log("coheOnUnloadMsgHeaderPane stop");
@@ -1000,9 +1004,31 @@ org_mozdev_compactHeader.pane = function() {
     }
   }
 
+  pub.firstRun = function() {
+    org_mozdev_compactHeader.debug.log("first_run start");
+    let header_toolbox = document.getElementById("header-view-toolbox");
+    if (header_toolbox) {
+      if (typeof header_toolbox.customizeDone === "function") {
+        org_mozdev_compactHeader.debug.log("messagepane-loaded was already issued");
+        pub.coheOnLoadMsgHeaderPane();
+      } else {
+        org_mozdev_compactHeader.debug.log("not function");
+      }
+    } else {
+      org_mozdev_compactHeader.debug.log("no header_toolbox");
+    }
+    org_mozdev_compactHeader.debug.log("first_run stop");
+  };
+
+
   return pub;
 }();
 
 addEventListener('messagepane-loaded', org_mozdev_compactHeader.pane.coheOnLoadMsgHeaderPane, true);
+addEventListener('messagepane-loaded', test_listener, true);
 addEventListener('messagepane-unloaded', org_mozdev_compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
 addEventListener('load', org_mozdev_compactHeader.pane.coheInitializeOverlay, false);
+
+// we need this, because the addon overlay might only be loaded after
+// the event messagepane-loaded has already been fired.
+org_mozdev_compactHeader.pane.firstRun();
