@@ -156,6 +156,9 @@ function test_wide_layout_and_compact() {
   dump('orignalDispMUA: ' + orignalDispMUA + '\n');
   dump('orignalDispMUA: ' + (orignalDispMUA == null) + '\n');
 
+  dump('oneLineDispMUAIcon: ' + oneLineDispMUAIcon + '\n');
+  dump('oneLineDispMUAIcon.collapsed: ' + oneLineDispMUAIcon.hasAttribute('collapsed') + '\n');
+
   if (orignalDispMUA == null) {
     assert_equals(oneLineDispMUAIcon.getAttribute("collapsed"), "true");
     assert_equals(twoLineDispMUAIcon.getAttribute("collapsed"), "true");
