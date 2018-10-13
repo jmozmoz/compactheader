@@ -39,6 +39,8 @@ before_script:
     fi
   - |
     if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
+      /Library/Application\ Support/VMware\ Tools/vmware-resolutionSet 1400x1200 #  1280 x 1024
+      system_profiler SPDisplaysDataType | grep Resolution
       wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python2
       sudo python2 -m pip install urllib3[secure]
       sudo python2 -m pip install bs4
