@@ -62,6 +62,6 @@ test_script:
   # Build the compiled extension and run the project tests
   - ant buildAMO
   - cd test
-  - python ./find_nightly_build.py --version %VERSION%
+  - if not %VERSION%==ESR ( python ./find_nightly_build.py --version %VERSION% )
   - python ./executeTests.py --version %VERSION%
 

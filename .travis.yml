@@ -56,5 +56,8 @@ before_script:
 script: 
   - ant buildAMO
   - cd test
-  - python2 ./find_nightly_build.py --version $VERSION
+  - |
+    if [[ $VERSION != 'ESR' ]]; then
+      python2 ./find_nightly_build.py --version $VERSION
+    fi
   - python2 ./executeTests.py --version $VERSION
