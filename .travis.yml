@@ -5,6 +5,7 @@ os:
   - linux
 
 env:
+  - VERSION=ESR
   - VERSION=esr60
   - VERSION=beta
   - VERSION=nightly
