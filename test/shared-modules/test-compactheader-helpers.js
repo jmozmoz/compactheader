@@ -476,22 +476,42 @@ function set_preferences_non_linkify(aController) {
   close_preferences_dialog(aController);
 }
 
-function isVisible(aElem) {
+function isVisible(aElem, stack=[]) {
+//  dump('test0, aElem: ');
+//  dump(aElem.id);
+//  dump('\n');
   if (   aElem.hidden || aElem.collapsed
       || aElem.state == "closed"
       || (typeof aElem.hasAttribute === 'function'
           && aElem.hasAttribute("collapsed")
           && aElem.getAttribute("collapsed") == "true"
          )
-     )
+     ) {
+//    dump('test1\n');
     return false;
+  }
   let parent = aElem.parentNode;
   if (parent == null)
     return true;
+
+//  dump("parent: ");
+//  dump(parent.id);
+//  dump('\n');
+
+  stack.push(aElem);
+
   if (("selectedPanel" in parent) &&
-      parent.selectedPanel != aElem)
+      !stack.includes(parent.selectedPanel)
+      ) {
+//    dump('selectedPanel: >>>');
+//    dump(parent.selectedPanel.id);
+//    dump('<<<\naElem: >>>');
+//    dump(aElem.id);
+//    dump('<<<\n');
     return false;
-  return isVisible(parent);
+  }
+//  dump('recursive!\n');
+  return isVisible(parent, stack);
 }
 
 function subtest_change_no_dblclick(aController) {
