@@ -53,6 +53,11 @@ class TestExecutor:
                             default=False,
                             action="store_true",
                             required=False)
+        parser.add_argument("-s", "--skip_install",
+                            help="skip installing files",
+                            default=False,
+                            action="store_true",
+                            required=False)
         self.args = parser.parse_args()
 
         logging.debug("command line args: %r" % self.args)
@@ -239,29 +244,30 @@ class TestExecutor:
 
                 os.chdir(testdir)
                 logging.debug("unzipping tests...")
-                if '.tar.gz'in tests:
-                    unzip_test_cmd = [
-                        "tar", "xzf",
-                        os.path.join(
-                            self.ftpdir, hosttype + "-" + version, tests),
-                        "--exclude", "*mochitest*",
-                        "--exclude", "*xpcshell*",
-                        "--exclude", "*reftest*",
-                        "--exclude", "*jit-test*",
-                        "--exclude", "*bin*"
-                        ]
-                    if platform.system() == 'Windows':
-                        unzip_test_cmd.append("--force-local")
-                else:
-                    unzip_test_cmd = [
-                        "unzip", "-q", "-o",
-                        os.path.join(
-                            self.ftpdir, hosttype + "-" + version, tests),
-                        "-d", testdir, "-x", "*mochitest*",
-                        "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
-                        ]
-                logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
-                subprocess.call(unzip_test_cmd)
+                if not self.args.skip_install:
+                    if '.tar.gz'in tests:
+                        unzip_test_cmd = [
+                            "tar", "xzf",
+                            os.path.join(
+                                self.ftpdir, hosttype + "-" + version, tests),
+                            "--exclude", "*mochitest*",
+                            "--exclude", "*xpcshell*",
+                            "--exclude", "*reftest*",
+                            "--exclude", "*jit-test*",
+                            "--exclude", "*bin*"
+                            ]
+                        if platform.system() == 'Windows':
+                            unzip_test_cmd.append("--force-local")
+                    else:
+                        unzip_test_cmd = [
+                            "unzip", "-q", "-o",
+                            os.path.join(
+                                self.ftpdir, hosttype + "-" + version, tests),
+                            "-d", testdir, "-x", "*mochitest*",
+                            "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
+                            ]
+                    logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
+                    subprocess.call(unzip_test_cmd)
 
                 os.chdir(cur_dir)
                 # "Link" the add-on tests into the mozmill directory
@@ -311,66 +317,69 @@ class TestExecutor:
 
                 os.chdir(os.path.join(testdir, "mozmill"))
 
-                logging.info("... installing mozmill")
-                shutil.rmtree(os.path.join("..", "mozmill-virtualenv"),
-                              ignore_errors=True)
+                if not self.args.skip_install:
+                    logging.info("... installing mozmill")
+                    shutil.rmtree(os.path.join("..", "mozmill-virtualenv"),
+                                  ignore_errors=True)
 
-                int_version = int(re.findall('^\d+', str(version))[0])
-                logging.debug("int version: %d" % int_version)
+                    int_version = int(re.findall('^\d+', str(version))[0])
+                    logging.debug("int version: %d" % int_version)
 
-                if int_version >= 59:
-                    install_cmd = [
-                        "pip",
-                        "wheel",
-                        os.path.join(testdir, "..", "python", "mozterm"),
-                        "--wheel-dir",
-                        "/tmp/compactheader"
-                    ]
+                    if int_version >= 59:
+                        install_cmd = [
+                            "pip",
+                            "wheel",
+                            os.path.join(testdir, "..", "python", "mozterm"),
+                            "--wheel-dir",
+                            "/tmp/compactheader"
+                        ]
+                        logging.debug(" ".join(install_cmd))
+                        subprocess.call(install_cmd)
+                        install_cmd = [
+                            "python",
+                            os.path.join("resources", "installmozmill.py"),
+                            os.path.join("..", "mozmill-virtualenv")]
+                    else:
+                        # shutil.rmtree(os.path.join("..", "mozbase"),
+                        # ignore_errors=True)
+                        install_cmd = [
+                            "python",
+                            os.path.join("resources", "installmozmill.py"),
+                            os.path.join("..", "mozmill-virtualenv"),
+                            os.path.join("..", "mozbase")]
+
                     logging.debug(" ".join(install_cmd))
                     subprocess.call(install_cmd)
+
                     install_cmd = [
-                        "python",
-                        os.path.join("resources", "installmozmill.py"),
-                        os.path.join("..", "mozmill-virtualenv")]
+                        tools['virtualpython'],
+                        "-mpip",
+                        "install",
+                        os.path.join("..", "mozbase", "mozinstall")]
+
+                    logging.debug(" ".join(install_cmd))
+                    subprocess.call(install_cmd)
+
+                    os.chdir(os.path.join(testdir, "mozmill"))
+
+                    logging.debug("unzipping Thunderbird...")
+                    install_cmd = [
+                        tools["unpack"],
+                        tools["unpack_args"],
+                        os.path.join(self.ftpdir, hosttype + "-" + version,
+                                     app),
+                        tools["unpack_target_args"],
+                        testdir
+                        ]
+
+                    logging.debug(" ".join(install_cmd))
+                    try:
+                        appbin = subprocess.check_output(install_cmd)
+                    except subprocess.CalledProcessError as e:
+                        logging.error("cannot install thunderbird %" %
+                                      e.output)
                 else:
-                    # shutil.rmtree(os.path.join("..", "mozbase"),
-                    # ignore_errors=True)
-                    install_cmd = [
-                        "python",
-                        os.path.join("resources", "installmozmill.py"),
-                        os.path.join("..", "mozmill-virtualenv"),
-                        os.path.join("..", "mozbase")]
-
-                logging.debug(" ".join(install_cmd))
-                subprocess.call(install_cmd)
-
-                install_cmd = [
-                    tools['virtualpython'],
-                    "-mpip",
-                    "install",
-                    os.path.join("..", "mozbase", "mozinstall")]
-
-                logging.debug(" ".join(install_cmd))
-                subprocess.call(install_cmd)
-
-                os.chdir(os.path.join(testdir, "mozmill"))
-
-                logging.debug("unzipping Thunderbird...")
-                install_cmd = [
-                    tools["unpack"],
-                    tools["unpack_args"],
-                    os.path.join(self.ftpdir, hosttype + "-" + version,
-                                 app),
-                    tools["unpack_target_args"],
-                    testdir
-                    ]
-
-                logging.debug(" ".join(install_cmd))
-                try:
-                    appbin = subprocess.check_output(install_cmd)
-                except subprocess.CalledProcessError as e:
-                    logging.error("cannot install thunderbird %" %
-                                  e.output)
+                    appbin = 'c:\\tmp\\compactheader\\test-99nightly\\testing\\thunderbird\\thunderbird.exe'
 
                 # copy drag'n'drop helpers to shared-modules until
                 # they are added to thunderbird source
@@ -541,7 +550,16 @@ class TestExecutor:
              "--timeout=240",
              "--binary=" + appbin,
              "-a", self.xpi,
+             '--show-all',
              "-t", "compactheader/test-compactheader-collapse.js",
+             "--testing-modules-dir", "../modules",
+             "2>&1"],
+            [python, "runtest.py",
+             "--timeout=240",
+             "--binary=" + appbin,
+             "-a", self.xpi,
+             '--show-all',
+             "-t", "compactheader",
              "--testing-modules-dir", "../modules",
              "2>&1"],
             [python, "runtest.py",

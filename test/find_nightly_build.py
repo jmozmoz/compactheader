@@ -121,7 +121,7 @@ for platform in nightly_data:
         logging.warn('found inconsistent URL!!!!!')
         data[tb_version][platform]['url'] = ''
 
-logging.info(data)
+logging.info(json.dumps(data,  indent=4))
 
 with open("testapps.json", "w") as jf:
     json.dump(data, jf, indent=4)

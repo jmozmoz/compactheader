@@ -51,10 +51,6 @@
 // view in the message header pane.
 ////////////////////////////////////////////////////////////////////////////////////
 
-function test_listener() {
-  org_mozdev_compactHeader.debug.log("test listener");
-}
-
 
 if (typeof org_mozdev_compactHeader == "undefined") {
   var org_mozdev_compactHeader = {};
@@ -293,12 +289,14 @@ org_mozdev_compactHeader.pane = function() {
 
     if (coheFirstTime)
     {
-      org_mozdev_compactHeader.debug.log("coheFirstTime");
+      org_mozdev_compactHeader.debug.log("coheFirstTime start");
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
       org_mozdev_compactHeader.messenger.loadToolboxData();
       org_mozdev_compactHeader.toolbar.fillToolboxPalette();
       org_mozdev_compactHeader.messenger.saveToolboxData();
+
+      org_mozdev_compactHeader.debug.log("coheFirstTime 1");
 
       let collapsed2LtoCcBccBox = document.getElementById("CompactHeader_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
@@ -324,6 +322,7 @@ org_mozdev_compactHeader.pane = function() {
           };
         }
       }
+      org_mozdev_compactHeader.debug.log("coheFirstTime stop");
     }
 
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 2a");
@@ -790,14 +789,16 @@ org_mozdev_compactHeader.pane = function() {
   function coheCheckFirstRun() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
                                      .getService(Components.interfaces.nsIXULAppInfo);
-//    org_mozdev_compactHeader.debug.log("first run 0");
+    org_mozdev_compactHeader.debug.log("coheCheckFirstRun start");
+    org_mozdev_compactHeader.debug.log("coheCheckFirstRun 0");
     var debugLevel = org_mozdev_compactHeader.debug.getLogLevel();
-    org_mozdev_compactHeader.debug.log("firstrun 3");
+    org_mozdev_compactHeader.debug.log("coheCheckFirstRun 1");
     org_mozdev_compactHeader.toolbar.populateEmptyToolbar();
+    org_mozdev_compactHeader.debug.log("coheCheckFirstRun 1a");
     Components.utils.import("resource://gre/modules/AddonManager.jsm");
     AddonManager.getAddonByID(COMPACTHEADER_EXTENSION_UUID,
       function(myAddon) {
-        org_mozdev_compactHeader.debug.log("first run 2");
+        org_mozdev_compactHeader.debug.log("coheCheckFirstRun 2");
         cohe.version = "";
         cohe.firstrun = false;
         cohe.current = myAddon.version;
@@ -825,7 +826,7 @@ org_mozdev_compactHeader.pane = function() {
         }
       }
     );
-    org_mozdev_compactHeader.debug.log("firstrun 4");
+    org_mozdev_compactHeader.debug.log("coheCheckFirstRun stop");
   }
 
 
@@ -1005,7 +1006,7 @@ org_mozdev_compactHeader.pane = function() {
   }
 
   pub.firstRun = function() {
-    org_mozdev_compactHeader.debug.log("first_run start");
+    org_mozdev_compactHeader.debug.log("firstRun start");
     let header_toolbox = document.getElementById("header-view-toolbox");
     if (header_toolbox) {
       if (typeof header_toolbox.customizeDone === "function") {
@@ -1017,7 +1018,7 @@ org_mozdev_compactHeader.pane = function() {
     } else {
       org_mozdev_compactHeader.debug.log("no header_toolbox");
     }
-    org_mozdev_compactHeader.debug.log("first_run stop");
+    org_mozdev_compactHeader.debug.log("firstRun stop");
   };
 
 
@@ -1025,7 +1026,6 @@ org_mozdev_compactHeader.pane = function() {
 }();
 
 addEventListener('messagepane-loaded', org_mozdev_compactHeader.pane.coheOnLoadMsgHeaderPane, true);
-addEventListener('messagepane-loaded', test_listener, true);
 addEventListener('messagepane-unloaded', org_mozdev_compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
 addEventListener('load', org_mozdev_compactHeader.pane.coheInitializeOverlay, false);
 

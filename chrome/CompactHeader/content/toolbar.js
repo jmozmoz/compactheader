@@ -40,6 +40,14 @@
 
 //Components.utils.import("chrome://CompactHeader/content/debug.jsm");
 
+
+try {
+  ChromeUtils.import("resource://gre/modules/Services.jsm");
+}
+catch(e) {
+
+}
+
 if (typeof org_mozdev_compactHeader == "undefined") {
   var org_mozdev_compactHeader = {};
 };
@@ -70,6 +78,14 @@ org_mozdev_compactHeader.toolbar = function() {
       saveAsMenuItem:               "cmd_saveAsFile",
       otherActionsPrint:            "cmd_print"
     };
+
+  function myPersist(ob, val) {
+    try {
+      Services.xulStore.persist(ob, val);
+    } catch(e) {
+      document.persist(ob.id, val);
+    }
+  }
 
   pub.cannotMoveToolbox = function() {
     var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
@@ -477,12 +493,12 @@ org_mozdev_compactHeader.toolbar = function() {
     hdrToolbar.currentSet = hdrBarDefaultSet;
     hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
 
-    document.persist(hdrToolbox.id,"labelalign");
-    document.persist(hdrToolbox.id,"iconsize");
-    document.persist(hdrToolbox.id,"mode");
-    document.persist(hdrToolbar.id,"iconsize");
-    document.persist(hdrToolbar.id,"mode");
-    document.persist(hdrToolbar.id,"currentset");
+    myPersist(hdrToolbox,"labelalign");
+    myPersist(hdrToolbox,"iconsize");
+    myPersist(hdrToolbox,"mode");
+    myPersist(hdrToolbar,"iconsize");
+    myPersist(hdrToolbar,"mode");
+    myPersist(hdrToolbar,"currentset");
   };
 
   pub.CHTCleanupButtons = function() {
@@ -499,12 +515,12 @@ org_mozdev_compactHeader.toolbar = function() {
     hdrToolbar.currentSet = hdrBarDefaultSet;
     hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
 
-    document.persist(hdrToolbox.id,"labelalign");
-    document.persist(hdrToolbox.id,"iconsize");
-    document.persist(hdrToolbox.id,"mode");
-    document.persist(hdrToolbar.id,"iconsize");
-    document.persist(hdrToolbar.id,"mode");
-    document.persist(hdrToolbar.id,"currentset");
+    myPersist(hdrToolbox,"labelalign");
+    myPersist(hdrToolbox,"iconsize");
+    myPersist(hdrToolbox,"mode");
+    myPersist(hdrToolbar,"iconsize");
+    myPersist(hdrToolbar,"mode");
+    myPersist(hdrToolbar,"currentset");
   };
 
   pub.populateEmptyToolbar = function() {
