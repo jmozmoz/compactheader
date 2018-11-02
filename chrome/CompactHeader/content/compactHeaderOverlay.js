@@ -250,6 +250,28 @@ org_mozdev_compactHeader.pane = function() {
     pressMores = null;
   }
 
+  function getCollapseState() {
+    let collapseState = cohePrefBranch.getBoolPref(
+        document.documentElement.getAttribute("windowtype") +
+        "collapseState", false);
+
+    org_mozdev_compactHeader.debug.log("getCollapseState: " +
+        collapseState);
+
+    return collapseState;
+  }
+
+  function setCollapseState(collapseState) {
+
+    cohePrefBranch.setBoolPref(
+        document.documentElement.getAttribute("windowtype") +
+        "collapseState", collapseState);
+
+    org_mozdev_compactHeader.debug.log("setCollapseState: " +
+        collapseState);
+    }
+
+
   pub.coheOnLoadMsgHeaderPane = function() {
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
 
@@ -264,8 +286,12 @@ org_mozdev_compactHeader.pane = function() {
 
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
 
-    gCoheCollapsedHeaderViewMode =
-      deckHeaderView.selectedPanel == document.getElementById('CompactHeader_collapsedHeaderView');
+    // XXX
+    org_mozdev_compactHeader.debug.log("coheFirstTime window type: " +
+        document.documentElement.getAttribute("windowtype"));
+
+
+    gCoheCollapsedHeaderViewMode = getCollapseState();
 
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 1");
 
@@ -447,6 +473,7 @@ org_mozdev_compactHeader.pane = function() {
   pub.coheToggleHeaderView = function() {
     org_mozdev_compactHeader.debug.log("coheToggleHeaderView start");
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
+    setCollapseState(gCoheCollapsedHeaderViewMode);
 
     let deck = document.getElementById('msgHeaderViewDeck');
     // Work around a xul deck bug where the height of the deck is determined
