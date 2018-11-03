@@ -251,17 +251,31 @@ org_mozdev_compactHeader.pane = function() {
   }
 
   function getCollapseState() {
-    let collapseState = cohePrefBranch.getBoolPref(
-        document.documentElement.getAttribute("windowtype") +
-        "collapseState", false);
+    org_mozdev_compactHeader.debug.log("getCollapseState start");
+
+    var deckHeaderView = document.getElementById("msgHeaderViewDeck");
+
+    let collapseState =
+      deckHeaderView.selectedPanel ==
+        document.getElementById('CompactHeader_collapsedHeaderView');
+
+    let collapseStatePrefs = cohePrefBranch.getBoolPref(
+          document.documentElement.getAttribute("windowtype") +
+          "collapseState");
+
+    collapseState = collapseState || collapseStatePrefs;
 
     org_mozdev_compactHeader.debug.log("getCollapseState: " +
         collapseState);
+
+    setCollapseState(collapseState);
+    org_mozdev_compactHeader.debug.log("getCollapseState stop");
 
     return collapseState;
   }
 
   function setCollapseState(collapseState) {
+    org_mozdev_compactHeader.debug.log("setCollapseState start");
 
     cohePrefBranch.setBoolPref(
         document.documentElement.getAttribute("windowtype") +
@@ -269,7 +283,9 @@ org_mozdev_compactHeader.pane = function() {
 
     org_mozdev_compactHeader.debug.log("setCollapseState: " +
         collapseState);
-    }
+
+    org_mozdev_compactHeader.debug.log("setCollapseState stop");
+  }
 
 
   pub.coheOnLoadMsgHeaderPane = function() {
@@ -366,6 +382,27 @@ org_mozdev_compactHeader.pane = function() {
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 4");
 
     coheToggleHeaderContent();
+
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 5");
+
+    // Make sure the correct panel is selected
+    let deck = document.getElementById('msgHeaderViewDeck');
+    // Work around a xul deck bug where the height of the deck is determined
+    // by the tallest panel in the deck even if that panel is not selected...
+    deck.selectedPanel.collapsed = true;
+
+    if (gCoheCollapsedHeaderViewMode) {
+      deck.selectedPanel = document.getElementById("CompactHeader_collapsedHeaderView")
+    } else {
+      deck.selectedPanel = document.getElementById("expandedHeaderView");
+    }
+
+    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 6");
+
+    // Work around a xul deck bug where the height of the deck is determined
+    // by the tallest panel in the deck even if that panel is not selected...
+    deck.selectedPanel.collapsed = false;
+    syncGridColumnWidths();
 
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane stop");
   }
