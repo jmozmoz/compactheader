@@ -287,6 +287,43 @@ org_mozdev_compactHeader.pane = function() {
     org_mozdev_compactHeader.debug.log("setCollapseState stop");
   }
 
+  function selectMsgHeaderPanePanel() {
+    org_mozdev_compactHeader.debug.log("selectMsgHeaderPanePanel start");
+    let deck = document.getElementById('msgHeaderViewDeck');
+    // Work around a xul deck bug where the height of the deck is determined
+    // by the tallest panel in the deck even if that panel is not selected...
+
+    let wantedselectedPanel;
+
+    if (gCoheCollapsedHeaderViewMode) {
+      wantedselectedPanel = document.getElementById("CompactHeader_collapsedHeaderView")
+    } else {
+      wantedselectedPanel = document.getElementById("expandedHeaderView");
+    }
+
+    if (wantedselectedPanel == deck.selectedPanel) {
+      org_mozdev_compactHeader.debug.log("selectMsgHeaderPanePanel no need to change, stop");
+      return;
+    }
+
+
+    deck.selectedPanel.collapsed = true;
+    deck.selectedPanel = wantedselectedPanel;
+
+    org_mozdev_compactHeader.debug.log("selectMsgHeaderPanePanel gCoheCollapsedHeaderViewMode: " +
+        gCoheCollapsedHeaderViewMode);
+
+    org_mozdev_compactHeader.debug.log("selectMsgHeaderPanePanel selectedPanel: " +
+        deck.selectedPanel.id);
+
+    org_mozdev_compactHeader.debug.log("selectMsgHeaderPanePanel 1");
+
+    // Work around a xul deck bug where the height of the deck is determined
+    // by the tallest panel in the deck even if that panel is not selected...
+    deck.selectedPanel.collapsed = false;
+    //syncGridColumnWidths();
+    org_mozdev_compactHeader.debug.log("selectMsgHeaderPanePanel stop");
+  }
 
   pub.coheOnLoadMsgHeaderPane = function() {
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane start");
@@ -302,7 +339,8 @@ org_mozdev_compactHeader.pane = function() {
 
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
 
-    // XXX
+    // selectMsgHeaderPanePanel();
+
     org_mozdev_compactHeader.debug.log("coheFirstTime window type: " +
         document.documentElement.getAttribute("windowtype"));
 
@@ -386,23 +424,7 @@ org_mozdev_compactHeader.pane = function() {
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 5");
 
     // Make sure the correct panel is selected
-    let deck = document.getElementById('msgHeaderViewDeck');
-    // Work around a xul deck bug where the height of the deck is determined
-    // by the tallest panel in the deck even if that panel is not selected...
-    deck.selectedPanel.collapsed = true;
 
-    if (gCoheCollapsedHeaderViewMode) {
-      deck.selectedPanel = document.getElementById("CompactHeader_collapsedHeaderView")
-    } else {
-      deck.selectedPanel = document.getElementById("expandedHeaderView");
-    }
-
-    org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 6");
-
-    // Work around a xul deck bug where the height of the deck is determined
-    // by the tallest panel in the deck even if that panel is not selected...
-    deck.selectedPanel.collapsed = false;
-    syncGridColumnWidths();
 
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane stop");
   }
@@ -411,6 +433,7 @@ org_mozdev_compactHeader.pane = function() {
   {
     onStartHeaders:
     function cML_onStartHeaders () {
+      selectMsgHeaderPanePanel();
       gCoheBuiltCollapsedView = false;
     },
 
@@ -923,6 +946,13 @@ org_mozdev_compactHeader.pane = function() {
 
     addMessagePaneBoxFocusHandler();
     setDblClickHeaderEventHandler();
+
+//    var deckHeaderView = document.getElementById("msgHeaderViewDeck");
+//
+//    org_mozdev_compactHeader.debug.log("coheInitializeOverlay deckHeaderView: " +
+//      deckHeaderView.selectedPanel.id);
+//
+//    selectMsgHeaderPanePanel();
     org_mozdev_compactHeader.debug.log("coheInitializeOverlay stop");
   };
 
