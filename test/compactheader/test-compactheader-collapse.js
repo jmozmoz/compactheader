@@ -239,11 +239,11 @@ function test_dblclick(){
 
   dump_header_size();
   deck_size = get_deck_size();
-  doubleClickRight(mc.eid("msgHeaderViewDeck"));
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_collapsed(mc);
 
-  doubleClickRight(mc.eid("msgHeaderViewDeck"));
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_expanded(mc);
 
@@ -253,7 +253,7 @@ function test_dblclick(){
   expand_and_assert_header(mc);
   dump_header_size();
 
-  doubleClickRight(mc.eid("msgHeaderViewDeck"));
+  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
   assert_collapsed(mc);
   dump_header_size();
 
@@ -470,7 +470,9 @@ function test_toCcBcc_without_chat_enabled(){
   collapse_and_assert_header(mc);
 
   let toDescription = mc.a('CompactHeader_collapsed2LtoCcBccBox', {class: "headerValue"});
+  dump("toDesc: " + JSON.stringify(toDescription) + "\n");
   let addrs = toDescription.getElementsByTagName('mail-emailaddress');
+  dump("addrs: " + JSON.stringify(addrs) + "\n");
   for (let i=0; i<addrs.length; i++) {
     let labels = mc.window.document.getAnonymousElementByAttribute(
       addrs[i], "anonid", "emaillabel");
