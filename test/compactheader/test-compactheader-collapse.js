@@ -239,11 +239,11 @@ function test_dblclick(){
 
   dump_header_size();
   deck_size = get_deck_size();
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  doubleClickRight(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_collapsed(mc);
 
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  doubleClickRight(mc.eid("msgHeaderViewDeck"));
   dump_header_size();
   assert_expanded(mc);
 
@@ -253,7 +253,7 @@ function test_dblclick(){
   expand_and_assert_header(mc);
   dump_header_size();
 
-  mc.doubleClick(mc.eid("msgHeaderViewDeck"));
+  doubleClickRight(mc.eid("msgHeaderViewDeck"));
   assert_collapsed(mc);
   dump_header_size();
 
@@ -474,6 +474,11 @@ function test_toCcBcc_without_chat_enabled(){
   for (let i=0; i<addrs.length; i++) {
     let labels = mc.window.document.getAnonymousElementByAttribute(
       addrs[i], "anonid", "emaillabel");
-    assert_true(labels.value.length > 0);
+    if (labels) {
+      assert_true(labels.value.length > 0);
+    } else {
+      labels = addrs[i].getElementsByTagName('label');
+      assert_true(labels.length > 0);
+    }
   }
 }
