@@ -577,13 +577,13 @@ class TestExecutor:
              "-t", "folder-display",
              "--testing-modules-dir", "../modules",
              "2>&1"],
-            [python, "runtest.py",
-             "--timeout=240",
-             "--binary=" + appbin] +
-            compatibility_apps_args +
-            ["-t", "compactheader/test-compactheader-preferences.js",
-             "--testing-modules-dir", "../modules",
-             "2>&1"],
+#             [python, "runtest.py",
+#              "--timeout=240",
+#              "--binary=" + appbin] +
+#             compatibility_apps_args +
+#             ["-t", "compactheader/test-compactheader-preferences.js",
+#              "--testing-modules-dir", "../modules",
+#              "2>&1"],
 #             [python, "runtest.py",
 #              "--timeout=240",
 #              "--binary=" + appbin] +
