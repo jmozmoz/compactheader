@@ -40,8 +40,9 @@ before_script:
   - |
     if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
       export DISPLAY=:99.0
-      ( sudo Xvfb :99 -ac -screen 0 1920x1080x16 +render +iglx; echo ok )&
+      ( sudo Xvfb :99 -ac -screen 0 1400x1200x24 +render +iglx; echo ok )&
       sleep 5 # give xvfb some time to start
+      
       # /Library/Application\ Support/VMware\ Tools/vmware-resolutionSet 1400 1200 #  1280 x 1024
       system_profiler SPDisplaysDataType | grep Resolution
       wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python2
