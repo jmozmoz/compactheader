@@ -39,7 +39,10 @@ before_script:
     fi
   - |
     if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-      /Library/Application\ Support/VMware\ Tools/vmware-resolutionSet 1400 1200 #  1280 x 1024
+      export DISPLAY=:99.0
+      ( sudo Xvfb :99 -ac -screen 0 1920x1080x16 +render +iglx; echo ok )&
+      sleep 5 # give xvfb some time to start
+      # /Library/Application\ Support/VMware\ Tools/vmware-resolutionSet 1400 1200 #  1280 x 1024
       system_profiler SPDisplaysDataType | grep Resolution
       wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python2
       sudo python2 -m pip install urllib3[secure]
