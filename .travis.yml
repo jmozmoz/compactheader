@@ -42,6 +42,7 @@ before_script:
       export DISPLAY=:99.0
       ( sudo Xvfb :99 -ac -screen 0 1400x1200x24 +render +iglx; echo ok )&
       sleep 5 # give xvfb some time to start
+      xrandr
       
       # /Library/Application\ Support/VMware\ Tools/vmware-resolutionSet 1400 1200 #  1280 x 1024
       system_profiler SPDisplaysDataType | grep Resolution
@@ -58,6 +59,6 @@ before_script:
 
 script: 
   - ant buildAMO
-  - cd test
-  - python2 ./find_nightly_build.py --version $VERSION
-  - python2 ./executeTests.py --version $VERSION
+#  - cd test
+#  - python2 ./find_nightly_build.py --version $VERSION
+#  - python2 ./executeTests.py --version $VERSION
