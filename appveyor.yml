@@ -56,6 +56,10 @@ install:
   - wget -q --no-check-certificate https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
   - set "CLASSPATH=%CD%\\xmltask.jar;%CLASSPATH%"
 
+before_build:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
+- ps: Set-ScreenResolution 1920 1080
+
 build: false  # Not a C# project, build stuff at the test step instead.
 
 test_script:
