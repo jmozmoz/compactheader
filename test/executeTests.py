@@ -318,9 +318,25 @@ class TestExecutor:
                 os.chdir(os.path.join(testdir, "mozmill"))
 
                 if not self.args.skip_install:
-                    logging.info("... installing mozmill")
                     shutil.rmtree(os.path.join("..", "mozmill-virtualenv"),
                                   ignore_errors=True)
+                    if not os.path.isdir(
+                            os.path.join("resources", "virtualenv")):
+                        logging.info("... installing virutalenv")
+                        install_cmd = [
+                            "pip",
+                            "install",
+                            "virtualenv"
+                        ]
+                        logging.debug(" ".join(install_cmd))
+                        subprocess.call(install_cmd)
+                        install_cmd = [
+                            "virtualenv",
+                            os.path.join("..", "mozmill-virtualenv")
+                        ]
+                        logging.debug(" ".join(install_cmd))
+                        subprocess.call(install_cmd)
+                    logging.info("... installing mozmill")
 
                     int_version = int(re.findall('^\d+', str(version))[0])
                     logging.debug("int version: %d" % int_version)
