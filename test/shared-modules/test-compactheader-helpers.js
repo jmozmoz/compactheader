@@ -156,6 +156,7 @@ function open3PaneWindow() {
   windowWatcher.openWindow(null,
                            "chrome://messenger/content/messenger.xul", "",
                            "all,chrome,dialog=no,status,toolbar",
+//                           "all,chrome,dialog=no,status,toolbar,outerheight=2000,outerWidth=2000",
                            null);
   return windowHelper.wait_for_new_window("mail:3pane");
 }
