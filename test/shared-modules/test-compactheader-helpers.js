@@ -181,11 +181,12 @@ function open_preferences_dialog(aController, aSubtest) {
 
 function close_preferences_dialog(aController) {
   windowHelper.plan_for_window_close(aController);
-  if (allPreferences.getBoolPref("browser.preferences.instantApply")) {
+  if (allPreferences.getBoolPref("browser.preferences.instantApply") ||
+      aController.eid("accept")) {
     windowHelper.close_window(aController);
   }
   else {
-    let okButton = aController.window.document.documentElement.getButton('accept');
+    aController.window.document.documentElement.getButton('accept');
     aController.click(new elib.Elem(okButton));
   }
   windowHelper.wait_for_window_close();
