@@ -38,26 +38,39 @@
 var MODULE_NAME = "compactheader-helpers";
 
 try {
-  try {
-    var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.jsm');
-
-  } catch (err) {
+  var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.jsm');
+} catch (err) {
+    try {
+      dump("xxxxxxxxxxxxxxxxxxxxxx err: " + err);
       var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js');
-  }
-  var EventUtils = ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.js');
-} catch(err) {
-  dump("err: " + err);
+    } catch(err2) {
+      dump("yyyyyyyyyyyyyyyyyyyyyyy err: " + err2);
+      var Ci = Components.interfaces;
+      var Cc = Components.classes;
+      var Cu = Components.utils;
 
-  var Ci = Components.interfaces;
-  var Cc = Components.classes;
-  var Cu = Components.utils;
+      var elib = {};
+      Cu.import('resource://mozmill/modules/elementslib.js', elib);
+    }
+}
 
-  var elib = {};
-  Cu.import('resource://mozmill/modules/elementslib.js', elib);
-  var mozmill = {};
-  Cu.import('resource://mozmill/modules/mozmill.js', mozmill);
-  var EventUtils = {};
-  Cu.import('resource://mozmill/stdlib/EventUtils.js', EventUtils);
+try {
+  var EventUtils = ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.jsm');
+} catch (err) {
+    try {
+      dump("xxxxxxxxxxxxxxxxxxxxxx err: " + err);
+      var EventUtils = ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.js');
+    } catch(err2) {
+      dump("yyyyyyyyyyyyyyyyyyyyyyy err: " + err2);
+      var Ci = Components.interfaces;
+      var Cc = Components.classes;
+      var Cu = Components.utils;
+
+      var mozmill = {};
+      Cu.import('resource://mozmill/modules/mozmill.js', mozmill);
+      var EventUtils = {};
+      Cu.import('resource://mozmill/stdlib/EventUtils.js', EventUtils);
+    }
 }
 
 var RELATIVE_ROOT = "../shared-modules";
