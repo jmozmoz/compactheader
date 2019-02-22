@@ -44,7 +44,6 @@ try {
   } catch (err) {
       var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js');
   }
-  var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js');
   var EventUtils = ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.js');
 } catch(err) {
   dump("err: " + err);
