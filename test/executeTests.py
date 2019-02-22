@@ -320,8 +320,8 @@ class TestExecutor:
                 if not self.args.skip_install:
                     shutil.rmtree(os.path.join("..", "mozmill-virtualenv"),
                                   ignore_errors=True)
-                    if not os.path.isdir(
-                            os.path.join("resources", "virtualenv")):
+                    if True:  # not os.path.isdir(
+                              # os.path.join("resources", "virtualenv")):
                         logging.info("... installing virutalenv")
                         install_cmd = [
                             "pip",
