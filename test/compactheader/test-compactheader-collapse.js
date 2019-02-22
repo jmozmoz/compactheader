@@ -45,17 +45,37 @@ var MODULE_REQUIRES = ['folder-display-helpers', 'window-helpers',
 const ENABLE_CHAT_PREF="mail.chat.enabled";
 
 try {
-  var elib = {};
-  ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js', elib);
-  var controller = {};
-  ChromeUtils.import('chrome://mozmill/content/modules/controller.js', controller);
-} catch(err) {
-  dump("err: " + err);
+  var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.jsm');
+} catch (err) {
+    try {
+      dump("xxxxxxxxxxxxxxxxxxxxxx err: " + err);
+      var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js');
+    } catch(err2) {
+      dump("yyyyyyyyyyyyyyyyyyyyyyy err: " + err2);
+      var Ci = Components.interfaces;
+      var Cc = Components.classes;
+      var Cu = Components.utils;
 
-  var elib = {};
-  Cu.import('resource://mozmill/modules/elementslib.js', elib);
-  var controller = {};
-  Cu.import('resource://mozmill/modules/controller.js', controller);
+      var elib = {};
+      Cu.import('resource://mozmill/modules/elementslib.js', elib);
+    }
+}
+
+try {
+  var controller = ChromeUtils.import('chrome://mozmill/content/modules/controller.jsm');
+} catch (err) {
+    try {
+      dump("xxxxxxxxxxxxxxxxxxxxxx err: " + err);
+      var controller = ChromeUtils.import('chrome://mozmill/content/modules/controller.js');
+    } catch(err2) {
+      dump("yyyyyyyyyyyyyyyyyyyyyyy err: " + err2);
+      var Ci = Components.interfaces;
+      var Cc = Components.classes;
+      var Cu = Components.utils;
+
+      var controller = {};
+      Cu.import('resource://mozmill/modules/controller.js', controller);
+    }
 }
 
 // The WindowHelper module
