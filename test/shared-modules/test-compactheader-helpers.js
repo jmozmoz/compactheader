@@ -38,12 +38,14 @@
 var MODULE_NAME = "compactheader-helpers";
 
 try {
-  var elib = {};
-  ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js', elib);
-  var mozmill = {};
-  ChromeUtils.import('chrome://mozmill/content/modules/mozmill.js', mozmill);
-  var EventUtils = {};
-  ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.js', EventUtils);
+  try {
+    var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.jsm');
+
+  } catch (err) {
+      var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js');
+  }
+  var elib = ChromeUtils.import('chrome://mozmill/content/modules/elementslib.js');
+  var EventUtils = ChromeUtils.import('chrome://mozmill/content/stdlib/EventUtils.js');
 } catch(err) {
   dump("err: " + err);
 
