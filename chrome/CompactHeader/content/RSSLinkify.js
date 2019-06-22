@@ -117,7 +117,13 @@ org_mozdev_compactHeader.RSSLinkify = function() {
     org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start");
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
-      RSSLinkify.newSubject = document.getElementById("CompactHeader_collapsedsubjectlinkBox") || document.createElement("label");
+      let newSubject = document.getElementById("CompactHeader_collapsedsubjectlinkBox");
+      if (newSubject) {
+        RSSLinkify.newSubject = newSubject;
+      } else
+      {
+        RSSLinkify.newSubject = document.createElement("label");
+      }
       org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
       RSSLinkify.newSubject.setAttribute("id", "CompactHeader_collapsedsubjectlinkBox");
       RSSLinkify.newSubject.setAttribute("class", "headerValue plain headerValueUrl");

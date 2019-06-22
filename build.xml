@@ -1,39 +1,51 @@
 <?xml version="1.0" ?>
 
-<project name="CompactHeader" default="dist">
+<project name="CompactHeader" default="dist" basedir=".">
+	<dirname property="my.project.dir" file="${ant.file}"/>
   <property name="src.dir" value="." />
 	<property name="mozdev.dir" value="${src.dir}/../../workspace/compactheader.mozdev.org"/>
   <property name="dist.dir" value="${mozdev.dir}/downloads/"/>
   <property name="AMOdist.dir" value="${src.dir}/AMO/"/>
   <property name="www.dir" value="${mozdev.dir}/www/"/>
   <property name="test.dir" value="${src.dir}/test/"/>
-  <property name="mccoy.cmd" value='c:/Program Files (x86)/mccoy/mccoy.exe'/>
 
-  <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask"/>
+	<!-- https://stackoverflow.com/questions/2527020/parse-json-with-ant -->
+ <macrodef name="json-properties">
+     <attribute name="jsonFile"/>
+     <sequential>
+         <local name="_jsonFile"/>
+         <property name="_jsonFile" value="@{jsonFile}"/>
+         <script language="javascript">//<![CDATA[
+             var json = new Packages.java.lang.String(
+                 Packages.java.nio.file.Files.readAllBytes(
+                     Packages.java.nio.file.Paths.get(project.getProperty("_jsonFile"))), "UTF-8");
+             var properties = JSON.parse(json);
+             for(key in properties) {
+                 project.setProperty(key, properties[key]);
+             }
+     //]]></script>
+     </sequential>
+ </macrodef>
 
-  <xmltask source="./install.rdf">
-    <copy path="//em:version/text()" property="app.version"/>
-    <copy path="//em:name/text()" property="app.name"/>
-    <copy path="//em:id/text()" property="app.id"/>
-  </xmltask>
-
+  <target name="testmacro">
+  	<json-properties jsonFile="${my.project.dir}/manifest.json"/>
+    <echo message="version ${version}"/>
+    <echo message="name ${name}"/>
+	</target>
   <target name="dist" depends="spreadVersion,buildAMO,buildMozdev">
 
   </target>
 
   <target name="clean">
-    <delete file="${dist.dir}/${app.name}-${app.version}.xpi" />
+    <json-properties jsonFile="${my.project.dir}/manifest.json"/>
+    <delete file="${dist.dir}/${name}-${version}.xpi" />
   </target>
 
 
   <target name="buildAMO">
-    <copy file="${src.dir}/install.rdf" tofile="${AMOdist.dir}/install.rdf"/>
+    <json-properties jsonFile="${my.project.dir}/manifest.json"/>
     <copy file="${src.dir}/manifest.json" tofile="${AMOdist.dir}/manifest.json"/>
-    <replaceregexp file="${AMOdist.dir}/install.rdf"
-                   byline="true"
-                   match=".*update.*"
-                   replace=""/>
-    <zip destfile="${AMOdist.dir}/${app.name}-${app.version}.xpi">
+    <zip destfile="${AMOdist.dir}/${name}-${version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
         <include name="defaults/**" />
@@ -42,60 +54,36 @@
         <exclude name="**/CVS/**" />
       </fileset>
       <fileset dir="${AMOdist.dir}">
-        <include name="install.rdf" />
         <include name="manifest.json" />
       </fileset>
     </zip>
   </target>
 
   <target name="buildMozdev">
-    <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
+    <json-properties jsonFile="${my.project.dir}/manifest.json"/>
+    <zip destfile="${dist.dir}/${name}-${version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
         <include name="manifest.json" />
-        <include name="install.rdf" />
         <include name="defaults/**" />
         <include name="chrome/**" />
         <exclude name="**/.*" />
         <exclude name="**/CVS/**" />
       </fileset>
     </zip>
-    <xmltask source="${www.dir}/update.rdf" dest="${www.dir}/update.rdf.new">
-      <replace path="/RDF:RDF/RDF:Description/@em:version" withText="${app.version}"/>
-      <replace path="/RDF:RDF/RDF:Description/@em:updateLink" withText="http://downloads.mozdev.org/compactheader/CompactHeader-${app.version}.xpi"/>
-    </xmltask>
-    <move file="${www.dir}/update.rdf.new" tofile="${www.dir}/update.rdf"/>
-    <property name="absUpdate" location="${www.dir}/update.rdf"/>
-    <property name="absXPI" location="${dist.dir}/${app.name}-${app.version}.xpi"/>
+    <property name="absXPI" location="${dist.dir}/${name}-${version}.xpi"/>
 
     <echo message="absUpdate ${absUpdate}"/>
     <echo message="absUpdate ${absXPI}"/>
 
-    <exec executable="${mccoy.cmd}">
-      <arg value="-command"/>
-      <arg value="update"/>
-      <arg value="-updateRDF"/>
-      <arg value="${absUpdate}"/>
-      <arg value="-key"/>
-      <arg value="compactheaderkey"/>
-      <arg value="-xpi"/>
-      <arg value="${absXPI}"/>
-    </exec>
   </target>
 
   <target name="spreadVersion">
-    <xmltask source="${www.dir}/availableVersion.xml" dest="${www.dir}/availableVersion.xml.new">
-      <replace path="/updates/update[1]/version" withXml="&lt;version&gt;${app.version}&lt;/version&gt;"/>
-    </xmltask>
-    <move file="${www.dir}/availableVersion.xml.new" tofile="${www.dir}/availableVersion.xml"/>
-    <xmltask source="${www.dir}/availVersion.xml" dest="${www.dir}/availVersion.xml.new">
-      <replace path="/updates/update[@server='mozdev']/@version" withText="${app.version}"/>
-    </xmltask>
-    <move file="${www.dir}/availVersion.xml.new" tofile="${www.dir}/availVersion.xml"/>
+    <json-properties jsonFile="${my.project.dir}/manifest.json"/>
     <replaceregexp file="${www.dir}/installation.html"
                    byline="true"
                    match="(.*update the version.*CompactHeader-).*(.xpi&quot;>Version ).*( of Co.*)"
-                   replace="\1${app.version}\2${app.version}\3"/>
+                   replace="\1${version}\2${version}\3"/>
 
   </target>
 

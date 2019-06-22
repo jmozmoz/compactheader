@@ -1,9 +1,5 @@
 environment:
   matrix:
-    - VERSION: ESR
-      PYTHON: "C:\\Python27_64"
-    - VERSION: esr60
-      PYTHON: "C:\\Python27_64"
     - VERSION: beta
       PYTHON: "C:\\Python27_64"
     - VERSION: nightly
@@ -53,8 +49,6 @@ install:
   - "ant -h"
   - "where ant"
 
-  - wget -q --no-check-certificate https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
-  - set "CLASSPATH=%CD%\\xmltask.jar;%CLASSPATH%"
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/set-screenresolution.ps1'))
   - ps: Set-ScreenResolution 1920 1080
 

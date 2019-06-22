@@ -156,7 +156,7 @@
             </columns>
             <rows>
               <row id="CompactHeader_collapsed1LfromRow">
-                <mail-multi-emailHeaderField id="CompactHeader_collapsed1LfromBox" flex="0"/>
+                <mail-multi-emailheaderfield id="CompactHeader_collapsed1LfromBox" flex="0"/>
               </row>
             </rows>
           </grid>
@@ -181,7 +181,7 @@
             </columns>
             <rows>
               <row id="CompactHeader_collapsed2LfromRow">
-                <mail-multi-emailHeaderField id="CompactHeader_collapsed2LfromBox" flex="0"/>
+                <mail-multi-emailheaderfield id="CompactHeader_collapsed2LfromBox" flex="0"/>
               </row>
             </rows>
           </grid>
@@ -195,7 +195,7 @@
             <row id="CompactHeader_collapsed2LtoCcBccRow" align="baseline">
               <label id="CompactHeader_collapsed2LtoCcBccLabel" class="headerName"
                      value="&toField4.label;" control="CompactHeader_collapsed2LtoCcBccBox"/>
-              <mail-multi-emailHeaderField id="CompactHeader_collapsed2LtoCcBccBox" flex="1"/>
+              <mail-multi-emailheaderfield id="CompactHeader_collapsed2LtoCcBccBox" flex="1"/>
             </row>
           </rows>
         </grid>

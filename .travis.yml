@@ -5,7 +5,6 @@ os:
 #  - osx
 
 env:
-  - VERSION=esr60
   - VERSION=beta
   - VERSION=nightly
 
@@ -23,8 +22,6 @@ before_install:
     fi
 
 before_script:
-  - wget https://downloads.sourceforge.net/project/xmltask/xmltask/1.16.1/xmltask.jar 
-  - export CLASSPATH=`pwd`/xmltask.jar:$CLASSPATH
   - |
     if [[ $TRAVIS_OS_NAME != 'osx' ]]; then
       export DISPLAY=:99.0

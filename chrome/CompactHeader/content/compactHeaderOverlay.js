@@ -60,6 +60,7 @@ org_mozdev_compactHeader.pane = function() {
   var pub = {};
 
   const COMPACTHEADER_EXTENSION_UUID = "{58D4392A-842E-11DE-B51A-C7B855D89593}";
+  ChromeUtils.import("resource:///modules/MailServices.jsm");
 
 //  var regex = {
 //    /* taken from https://bugzilla.mozilla.org/show_bug.cgi?id=57104 */
@@ -75,15 +76,15 @@ org_mozdev_compactHeader.pane = function() {
    */
   var gCoheCollapsedHeader1LListLongAddresses = [
     {name:"subject", outputFunction:coheOutputSubject},
-    {name:"from", useToggle:true, outputFunction:coheOutputEmailAddresses},
+    {name:"from", useToggle:true, useShortView:true, outputFunction:coheOutputEmailAddresses},
 //    {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
     {name:"date", outputFunction:coheUpdateDateValue}
     ];
 
   var gCoheCollapsedHeader2LListLongAddresses = [
     {name:"subject", outputFunction:coheOutputSubject},
-    {name:"from", useToggle:true, outputFunction:coheOutputEmailAddresses},
-    {name:"toCcBcc", useToggle:true, outputFunction:coheOutputEmailAddresses},
+    {name:"from", useToggle:true, useShortView:false, outputFunction:coheOutputEmailAddresses},
+    {name:"toCcBcc", useToggle:true, useShortView:false, outputFunction:coheOutputEmailAddresses},
     {name:"date", outputFunction:coheUpdateDateValue}
     ];
 
@@ -140,10 +141,31 @@ org_mozdev_compactHeader.pane = function() {
     let moreTooltip = gMoreTooltip;
 //    let moreTooltip = moreButton.getAttribute("tooltiptext");
 
-    var msgHeaderParser = Components.classes["@mozilla.org/messenger/headerparser;1"]
-                                    .getService(Components.interfaces.nsIMsgHeaderParser);
-    numAddresses = msgHeaderParser.parseHeadersWithArray(emailAddresses, addresses, names, fullNames);
+//    var msgHeaderParser = Components.classes["@mozilla.org/messenger/headerparser;1"]
+//                                    .getService(Components.interfaces.nsIMsgHeaderParser);
+//    numAddresses = msgHeaderParser.parseHeadersWithArray(emailAddresses, addresses, names, fullNames);
+
+
+    numAddresses = MailServices.headerParser
+                               .parseHeadersWithArray(emailAddresses, addresses,
+                                                      names, fullNames);
+
+
     var index = 0;
+
+//    if (headerEntry.useToggle)
+//      headerEntry.enclosingBox.resetAddressView(); // make sure we start clean
+
+    if (numAddresses == 0 && emailAddresses.includes(":")) {
+      // No addresses and a colon, so an empty group like "undisclosed-recipients: ;".
+      // Add group name so at least something displays.
+      let address = { displayName: emailAddresses };
+      if (headerEntry.useToggle)
+        headerEntry.enclosingBox.addAddressView(address);
+      else
+        updateEmailAddressNode(headerEntry.enclosingBox.emailAddressNode, address);
+    }
+
     while (index < numAddresses)
     {
       // if we want to include short/long toggle views and we have a long view, always add it.
@@ -153,14 +175,17 @@ org_mozdev_compactHeader.pane = function() {
       address.emailAddress = addresses.value[index];
       address.fullAddress = fullNames.value[index];
       address.addressType = addressType;
+
       if (cohePrefBranch.getBoolPref("headersize.addressstyle")) {
         address.displayName = address.emailAddress;
         address.fullAddress = address.emailAddress;
       } else {
         address.displayName = names.value[index];
       }
+
       org_mozdev_compactHeader.debug.log("0: " + address.fullAddress);
       org_mozdev_compactHeader.debug.log("0: " + addressType);
+
       if (address.fullAddress != "" &&
            (addressType == "to" || addressType == "cc" || addressType == "bcc")) {
         if (moreTooltip == "") {
@@ -175,12 +200,25 @@ org_mozdev_compactHeader.pane = function() {
       if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.addAddressView == 'function')) {
         headerEntry.enclosingBox.addAddressView(address);
       } else {
-        updateEmailAddressNode(headerEntry.enclosingBox.emailAddressNode, address);
+        var partialIDName = "CompactHeader_collapsed2LtoCcBccOut";
+        var myenclosingBox = document.getElementById(partialIDName + 'Box');
+
+        org_mozdev_compactHeader.debug.log("headerEntry: " + headerEntry);
+        org_mozdev_compactHeader.debug.log("emailAddressNode: " + headerEntry.enclosingBox.emailAddressNode);
+        try {
+          updateEmailAddressNode(headerEntry.enclosingBox.emailAddressNode, address);
+        }
+        catch(e) {
+          org_mozdev_compactHeader.debug.log("got execption " + e +
+            " from updateEmailAddressNode");
+        }
       }
       index++;
     }
     org_mozdev_compactHeader.debug.log("tooltiptext: " + moreTooltip);
-    moreButton.setAttribute("tooltiptext", moreTooltip);
+    if (moreButton) {
+      moreButton.setAttribute("tooltiptext", moreTooltip);
+    }
     gMoreTooltip = moreTooltip;
 
     if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.buildViews == 'function'))
@@ -689,7 +727,9 @@ org_mozdev_compactHeader.pane = function() {
 
     let moreButton = document.getAnonymousElementByAttribute(document.getElementById("CompactHeader_collapsed2LtoCcBccBox"),
         "anonid", "more");
-    moreButton.setAttribute("tooltiptext", "");
+    if (moreButton) {
+      moreButton.setAttribute("tooltiptext", "");
+    }
     gMoreTooltip = "";
 
     // iterate over each header we received and see if we have a matching entry
@@ -882,7 +922,7 @@ org_mozdev_compactHeader.pane = function() {
     org_mozdev_compactHeader.debug.log("coheCheckFirstRun 1");
     org_mozdev_compactHeader.toolbar.populateEmptyToolbar();
     org_mozdev_compactHeader.debug.log("coheCheckFirstRun 1a");
-    Components.utils.import("resource://gre/modules/AddonManager.jsm");
+    ChromeUtils.import("resource://gre/modules/AddonManager.jsm");
     AddonManager.getAddonByID(COMPACTHEADER_EXTENSION_UUID,
       function(myAddon) {
         org_mozdev_compactHeader.debug.log("coheCheckFirstRun 2");
@@ -1085,7 +1125,7 @@ org_mozdev_compactHeader.pane = function() {
 
       org_mozdev_compactHeader.debug.log("register uninstall neu 2");
       observerService.addObserver(this, "quit-application-granted", false);
-      Components.utils.import("resource://gre/modules/AddonManager.jsm");
+      ChromeUtils.import("resource://gre/modules/AddonManager.jsm");
       AddonManager.addAddonListener(this);
       org_mozdev_compactHeader.debug.log("register uninstall neu 2");
     },

@@ -48,7 +48,7 @@ org_mozdev_compactHeader.debug = function() {
   var pub = {};
   const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 
-  Cu.import("resource://gre/modules/Services.jsm");
+  ChromeUtils.import("resource://gre/modules/Services.jsm");
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
