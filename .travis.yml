@@ -6,8 +6,6 @@ os:
 
 env:
   - VERSION=esr60
-  - VERSION=beta
-  - VERSION=nightly
 
 cache:
    directories:

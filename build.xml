@@ -28,7 +28,6 @@
 
   <target name="buildAMO">
     <copy file="${src.dir}/install.rdf" tofile="${AMOdist.dir}/install.rdf"/>
-    <copy file="${src.dir}/manifest.json" tofile="${AMOdist.dir}/manifest.json"/>
     <replaceregexp file="${AMOdist.dir}/install.rdf"
                    byline="true"
                    match=".*update.*"
@@ -43,7 +42,6 @@
       </fileset>
       <fileset dir="${AMOdist.dir}">
         <include name="install.rdf" />
-        <include name="manifest.json" />
       </fileset>
     </zip>
   </target>
@@ -52,7 +50,6 @@
     <zip destfile="${dist.dir}/${app.name}-${app.version}.xpi">
       <fileset dir="${src.dir}">
         <include name="chrome.manifest" />
-        <include name="manifest.json" />
         <include name="install.rdf" />
         <include name="defaults/**" />
         <include name="chrome/**" />
