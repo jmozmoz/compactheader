@@ -248,14 +248,8 @@ class TestExecutor:
                             "--exclude", "*jit-test*",
                             "--exclude", "*bin*"
                             ]
-                        logging.debug("unzip tests: %r" %
-                                      " ".join(unzip_test_cmd))
-                        try:
-                            subprocess.call(unzip_test_cmd)
-                        except Exception as e:
-                            if platform.system() == 'Windows':
-                                unzip_test_cmd.append("--force-local")
-                            subprocess.call(unzip_test_cmd)
+                        if platform.system() == 'Windows':
+                            unzip_test_cmd.append("--force-local")
                     else:
                         unzip_test_cmd = [
                             "unzip", "-q", "-o",
@@ -264,9 +258,9 @@ class TestExecutor:
                             "-d", testdir, "-x", "*mochitest*",
                             "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
                             ]
-                        logging.debug("unzip tests: %r" %
-                                      " ".join(unzip_test_cmd))
-                        subprocess.call(unzip_test_cmd)
+                    logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
+                    subprocess.call(unzip_test_cmd)
+
                 os.chdir(cur_dir)
                 # "Link" the add-on tests into the mozmill directory
                 if platform.system() == "Windows":
