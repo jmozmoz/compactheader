@@ -2,8 +2,8 @@ environment:
   matrix:
     - VERSION: beta
       PYTHON: "C:\\Python27_64"
-    - VERSION: nightly
-      PYTHON: "C:\\Python27_64"
+#    - VERSION: nightly
+#      PYTHON: "C:\\Python27_64"
 
 cache:
   - C:\tmp\compactheader\ftp
@@ -37,7 +37,6 @@ install:
   - "sed --version"
   - "where sed"
   - "pip install bs4"
-  - "pip install lxml"
   - "pip install requests"
   - "pip install treeherder-client"
 

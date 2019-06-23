@@ -1,25 +1,25 @@
 {
     "nightly": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/XQeN-aU4Sr-pkj2ScWpmKA/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/IyzNnr2rQxmMUs3_XQeKTA/runs/0/artifacts/public/build", 
             "appzip": "target.zip", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/D0viVJTcRTOal4PhEtfg4g/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/Axl5_oubQ5CiSY1Vgx-_xA/runs/0/artifacts/public/build", 
             "appzip": "target.dmg", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/FuKvmKLuQnW0pYAmlJAxdw/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/by2nk4wKTEu1nT5c1bELKg/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/ZaWRiRsOTvSTmJz0f5StWQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/LT-1G_BJQYqsokndBktT3A/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
@@ -27,25 +27,25 @@
     }, 
     "esr60": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/TGy5nPDnRhKHt9AdIW34Ww/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/HSYPaidZQGCjAZz4OHbKuw/runs/0/artifacts/public/build", 
             "appzip": "target.zip", 
             "testzip": "target.common.tests.zip", 
             "checksum": "target.checksums"
         }, 
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/Hg12qf5QRcKkm8v-NmkzEQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/LP7ZjW_LSNCVVrl8HHV-9g/runs/0/artifacts/public/build", 
             "appzip": "target.dmg", 
             "testzip": "target.common.tests.zip", 
             "checksum": "target.checksums"
         }, 
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/Pd1YcClaRXyLqpUBCnDAOQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/Z9zPRoBgRMqURLegpDCX6Q/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.zip", 
             "checksum": "target.checksums"
         }, 
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/IXIYiV3XTISjTt7uqp4CrQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/ABkU_jxdSRuXtzgnUOK-Zg/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.zip", 
             "checksum": "target.checksums"
@@ -53,25 +53,25 @@
     }, 
     "beta": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/GlCnlny-TN2K2WJiXSx2dA/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/N3ealZrfToqAcg19jqs-_A/runs/0/artifacts/public/build", 
             "appzip": "target.zip", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/ZLz8bot9SnuvBLnkHjCDUw/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/HigOefD4SsaGKpeBYAJXzw/runs/0/artifacts/public/build", 
             "appzip": "target.dmg", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/IO0hPJh1TKyl53IcxgO2gQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/Q8uvpo9iSeSxUoC4FyILOQ/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"
         }, 
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/Klw4bvhmQsC_jfSOjew3jQ/runs/0/artifacts/public/build", 
+            "url": "https://queue.taskcluster.net/v1/task/fe0zyhxRQ0WA7maEyN4zzQ/runs/0/artifacts/public/build", 
             "appzip": "target.tar.bz2", 
             "testzip": "target.common.tests.tar.gz", 
             "checksum": "target.checksums"

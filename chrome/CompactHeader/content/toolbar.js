@@ -406,12 +406,22 @@ org_mozdev_compactHeader.toolbar = function() {
     var messengerWindow = document.getElementById("messengerWindow");
     if (dispMUAicon && messengerWindow && dispMUAicon.localName == "image") {
       org_mozdev_compactHeader.debug.log("hideDispMUABox 1");
-      var broadcasterset = document.createElement("broadcasterset");
+      try {
+        var broadcasterset = document.createElement("broadcasterset");
+      }
+      catch(e) {
+        var broadcasterset = document.createXULElement("broadcasterset");
+      }
       messengerWindow.appendChild(broadcasterset);
       org_mozdev_compactHeader.debug.log("hideDispMUABox 2");
       dispMUAicon.parentNode.removeChild(dispMUAicon);
       org_mozdev_compactHeader.debug.log("hideDispMUABox 3");
-      var dispMUAbroadcast = document.createElement("broadcaster");
+      try {
+        var dispMUAbroadcast = document.createElement("broadcaster");
+      }
+      catch(e) {
+        var dispMUAbroadcast = document.createXULElement("broadcaster");
+      }
       org_mozdev_compactHeader.debug.log("hideDispMUABox 4");
       dispMUAbroadcast.id = "dispMUAicon";
       //dispMUAbroadcast.setAttribute("src", "");

@@ -6,7 +6,7 @@ os:
 
 env:
   - VERSION=beta
-  - VERSION=nightly
+#  - VERSION=nightly
 
 cache:
    directories:
@@ -30,7 +30,6 @@ before_script:
       metacity --sm-disable --replace 2>/dev/null &
       sudo python2 -m pip install --upgrade urllib3[secure]
       sudo python2 -m pip install bs4
-      sudo python2 -m pip install lxml
       sudo python2 -m pip install requests
       sudo python2 -m pip install treeherder-client
     fi
@@ -41,7 +40,6 @@ before_script:
       wget -qO- https://bootstrap.pypa.io/get-pip.py | sudo python2
       sudo python2 -m pip install urllib3[secure]
       sudo python2 -m pip install bs4
-      sudo python2 -m pip install lxml
       sudo python2 -m pip install requests
       sudo python2 -m pip install treeherder-client
       export PIP_INDEX_URL=http://pypi.pub.build.mozilla.org/pub

@@ -15,9 +15,7 @@ import logging
 import re
 import errno
 import shutil
-import xml.etree.ElementTree as ET
 import datetime
-
 
 def mkdir_p(path):
     """Equivalent for unix command mkdir -p"""
@@ -62,13 +60,7 @@ class TestExecutor:
 
         logging.debug("command line args: %r" % self.args)
 
-        tree = ET.parse("../install.rdf")
-        root = tree.getroot()
-        ns = {
-            "RDF": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-            "em": "http://www.mozilla.org/2004/em-rdf#"}
-
-        xpiversion = root.findall("RDF:Description/em:version", ns)[0].text
+        xpiversion = json.load(open("../manifest.json"))["version"]
         self.xpi = os.path.abspath(os.path.join(
             "..", "AMO", "CompactHeader-" + xpiversion + ".xpi"
         ))
@@ -256,8 +248,14 @@ class TestExecutor:
                             "--exclude", "*jit-test*",
                             "--exclude", "*bin*"
                             ]
-                        if platform.system() == 'Windows':
-                            unzip_test_cmd.append("--force-local")
+                        logging.debug("unzip tests: %r" %
+                                      " ".join(unzip_test_cmd))
+                        try:
+                            subprocess.call(unzip_test_cmd)
+                        except Exception as e:
+                            if platform.system() == 'Windows':
+                                unzip_test_cmd.append("--force-local")
+                            subprocess.call(unzip_test_cmd)
                     else:
                         unzip_test_cmd = [
                             "unzip", "-q", "-o",
@@ -266,9 +264,9 @@ class TestExecutor:
                             "-d", testdir, "-x", "*mochitest*",
                             "*xpcshell*", "*reftest*", "*jit-test*", "*bin*"
                             ]
-                    logging.debug("unzip tests: %r" % " ".join(unzip_test_cmd))
-                    subprocess.call(unzip_test_cmd)
-
+                        logging.debug("unzip tests: %r" %
+                                      " ".join(unzip_test_cmd))
+                        subprocess.call(unzip_test_cmd)
                 os.chdir(cur_dir)
                 # "Link" the add-on tests into the mozmill directory
                 if platform.system() == "Windows":
@@ -562,14 +560,14 @@ class TestExecutor:
 #           my $comp_apps = join(" -a ", @compatibility_apps);
 
         mozmill_commands = [
-            [python, "runtest.py",
-             "--timeout=240",
-             "--binary=" + appbin,
-             "-a", self.xpi,
-             '--show-all',
-             "-t", "compactheader/test-compactheader-collapse.js",
-             "--testing-modules-dir", "../modules",
-             "2>&1"],
+#             [python, "runtest.py",
+#              "--timeout=240",
+#              "--binary=" + appbin,
+#              "-a", self.xpi,
+#              '--show-all',
+#              "-t", "compactheader/test-more-button.js",
+#              "--testing-modules-dir", "../modules",
+#              "2>&1"],
             [python, "runtest.py",
              "--timeout=240",
              "--binary=" + appbin,

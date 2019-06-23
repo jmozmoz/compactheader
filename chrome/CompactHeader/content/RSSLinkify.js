@@ -122,7 +122,15 @@ org_mozdev_compactHeader.RSSLinkify = function() {
         RSSLinkify.newSubject = newSubject;
       } else
       {
-        RSSLinkify.newSubject = document.createElement("label");
+        org_mozdev_compactHeader.debug.log("try to create label");
+        try {
+          RSSLinkify.newSubject = document.createElement("label");
+          org_mozdev_compactHeader.debug.log("created label");
+        }
+        catch(e) {
+          RSSLinkify.newSubject = document.createXULElement("label");
+          org_mozdev_compactHeader.debug.log("created XUL label");
+        }
       }
       org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
       RSSLinkify.newSubject.setAttribute("id", "CompactHeader_collapsedsubjectlinkBox");

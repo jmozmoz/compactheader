@@ -22,10 +22,10 @@ mapping_builds = {
         'Linux': 'build-linux-nightly/opt',
     },
     'beta': {
-        'WindowsAMD64': 'build-win64-nightly/opt',
-        'Linuxx86_64': 'build-linux64-nightly/opt',
-        'Darwinx86_64': 'build-macosx64-nightly/opt',
-        'Linux': 'build-linux-nightly/opt',
+        'WindowsAMD64': 'build-win64-shippable/opt',
+        'Linuxx86_64': 'build-linux64-shippable/opt',
+        'Darwinx86_64': 'build-macosx64-shippable/opt',
+        'Linux': 'build-linux-shippable/opt',
     },
     'nightly': {
         'WindowsAMD64': 'build-win64/opt',
@@ -53,7 +53,7 @@ args = parser.parse_args()
 tb_version = args.version
 tb_branch = branches[tb_version]
 
-with open("testapps.json", "r") as jf:
+with open("testapps_template.json", "r") as jf:
     data = json.load(jf)
 
 nightly_data = data[tb_version]
@@ -69,13 +69,17 @@ for platform in nightly_data:
         jobs = client.get_jobs(tb_branch, push_id=push['id'])
 
         for job in jobs:
-            logging.debug(job['job_type_name'])
+            logging.info("found build: %d\t%s\t%s\t%s" % (
+                job['start_timestamp'], job['build_platform'],
+                job['job_type_name'],
+                job['state'])
+            )
             if (
                     job['state'] == 'completed' and
                     job['job_type_name'] ==
                     mapping_builds[tb_version][platform]
                     ):
-                logging.info("%d\t%s\t%s\t%s\t%s\t%s" % (
+                logging.info("use build: %d\t%s\t%s\t%s\t%s\t%s" % (
                     job['start_timestamp'], job['build_platform'],
                     job['job_type_name'], job['platform'],
                     job['platform_option'], job['state'])

@@ -136,6 +136,8 @@ function installInto(module) {
   module.assert_collapsed = assert_collapsed;
   module.assert_expanded = assert_expanded;
   module.isVisible = isVisible;
+  module.getElementByClass = getElementByClass;
+  module.getElementByClassMoz = getElementByClassMoz;
 }
 
 function reopen_3pane_window() {
@@ -549,4 +551,21 @@ function subtest_change_dblclick(aController) {
     aController.click(dblClick);
   }
   close_preferences_dialog(aController);
+}
+
+function getElementByClass(aController, rootName, className) {
+  let target = getElementByClassMoz(aController, rootName, className).node;
+
+  return target;
+}
+
+function getElementByClassMoz(aController, rootName, className) {
+  let target = aController.eid(rootName);
+  dump(className + ": " + target + "\n");
+  target = target.node.getElementsByClassName(className)[0];
+  dump(className + ": " + target + "\n");
+  target = new elementslib.Elem(target);
+  dump(className + ": " + target + "\n");
+
+  return target;
 }
