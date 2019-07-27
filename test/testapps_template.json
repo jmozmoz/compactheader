@@ -1,105 +1,131 @@
 {
     "nightly": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/IyzNnr2rQxmMUs3_XQeKTA/runs/0/artifacts/public/build", 
-            "appzip": "target.zip", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/IyzNnr2rQxmMUs3_XQeKTA/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/Axl5_oubQ5CiSY1Vgx-_xA/runs/0/artifacts/public/build", 
-            "appzip": "target.dmg", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/Axl5_oubQ5CiSY1Vgx-_xA/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/by2nk4wKTEu1nT5c1bELKg/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/by2nk4wKTEu1nT5c1bELKg/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/LT-1G_BJQYqsokndBktT3A/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/LT-1G_BJQYqsokndBktT3A/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
         }
-    }, 
+    },
     "esr60": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/HSYPaidZQGCjAZz4OHbKuw/runs/0/artifacts/public/build", 
-            "appzip": "target.zip", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/HSYPaidZQGCjAZz4OHbKuw/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/LP7ZjW_LSNCVVrl8HHV-9g/runs/0/artifacts/public/build", 
-            "appzip": "target.dmg", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/LP7ZjW_LSNCVVrl8HHV-9g/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/Z9zPRoBgRMqURLegpDCX6Q/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/Z9zPRoBgRMqURLegpDCX6Q/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/ABkU_jxdSRuXtzgnUOK-Zg/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.zip", 
+            "url": "https://queue.taskcluster.net/v1/task/ABkU_jxdSRuXtzgnUOK-Zg/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
             "checksum": "target.checksums"
         }
-    }, 
+    },
+    "esr68": {
+        "WindowsAMD64": {
+            "url": "https://queue.taskcluster.net/v1/task/HSYPaidZQGCjAZz4OHbKuw/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.zip",
+            "checksum": "target.checksums"
+        },
+        "Darwinx86_64": {
+            "url": "https://queue.taskcluster.net/v1/task/LP7ZjW_LSNCVVrl8HHV-9g/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.zip",
+            "checksum": "target.checksums"
+        },
+        "Linuxx86_64": {
+            "url": "https://queue.taskcluster.net/v1/task/Z9zPRoBgRMqURLegpDCX6Q/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
+            "checksum": "target.checksums"
+        },
+        "Linux": {
+            "url": "https://queue.taskcluster.net/v1/task/ABkU_jxdSRuXtzgnUOK-Zg/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.zip",
+            "checksum": "target.checksums"
+        }
+    },
     "beta": {
         "WindowsAMD64": {
-            "url": "https://queue.taskcluster.net/v1/task/N3ealZrfToqAcg19jqs-_A/runs/0/artifacts/public/build", 
-            "appzip": "target.zip", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/N3ealZrfToqAcg19jqs-_A/runs/0/artifacts/public/build",
+            "appzip": "target.zip",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/HigOefD4SsaGKpeBYAJXzw/runs/0/artifacts/public/build", 
-            "appzip": "target.dmg", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/HigOefD4SsaGKpeBYAJXzw/runs/0/artifacts/public/build",
+            "appzip": "target.dmg",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://queue.taskcluster.net/v1/task/Q8uvpo9iSeSxUoC4FyILOQ/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/Q8uvpo9iSeSxUoC4FyILOQ/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://queue.taskcluster.net/v1/task/fe0zyhxRQ0WA7maEyN4zzQ/runs/0/artifacts/public/build", 
-            "appzip": "target.tar.bz2", 
-            "testzip": "target.common.tests.tar.gz", 
+            "url": "https://queue.taskcluster.net/v1/task/fe0zyhxRQ0WA7maEyN4zzQ/runs/0/artifacts/public/build",
+            "appzip": "target.tar.bz2",
+            "testzip": "target.common.tests.tar.gz",
             "checksum": "target.checksums"
         }
-    }, 
+    },
     "ESR": {
         "WindowsAMD64": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.win32.zip", 
-            "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.win32.zip",
+            "testzip": "thunderbird-_VER_.en-US.win32.common.tests.zip",
             "checksum": ".en-US.win32.checksums"
-        }, 
+        },
         "Darwinx86_64": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.mac.dmg", 
-            "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.mac.dmg",
+            "testzip": "thunderbird-_VER_.en-US.mac.common.tests.zip",
             "checksum": ".en-US.mac.checksums"
-        }, 
+        },
         "Linuxx86_64": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2", 
-            "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.linux-x86_64.tar.bz2",
+            "testzip": "thunderbird-_VER_.en-US.linux-x86_64.common.tests.zip",
             "checksum": ".en-US.linux-x86_64.checksums"
-        }, 
+        },
         "Linux": {
-            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52", 
-            "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2", 
-            "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip", 
+            "url": "https://ftp.mozilla.org/pub/thunderbird/nightly/latest-comm-esr52",
+            "appzip": "thunderbird-_VER_.en-US.linux-i686.tar.bz2",
+            "testzip": "thunderbird-_VER_.en-US.linux-i686.common.tests.zip",
             "checksum": ".en-US.linux-i686.checksums"
         }
     }

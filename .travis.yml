@@ -6,6 +6,7 @@ os:
 
 env:
   - VERSION=beta
+  - VERSION=esr68
 #  - VERSION=nightly
 
 cache:
