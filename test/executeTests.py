@@ -248,8 +248,8 @@ class TestExecutor:
                             "--exclude", "*jit-test*",
                             "--exclude", "*bin*"
                             ]
-                        if platform.system() == 'Windows':
-                            unzip_test_cmd.append("--force-local")
+#                         if platform.system() == 'Windows':
+#                             unzip_test_cmd.append("--force-local")
                     else:
                         unzip_test_cmd = [
                             "unzip", "-q", "-o",
@@ -550,6 +550,14 @@ class TestExecutor:
             compatibility_apps_args += ["-a", ca]
 
         logging.info("addons: %r" % compatibility_apps)
+
+        logging.info("check if thunderbird was really installed")
+
+        if not os.path.isfile(appbin):
+            raise Exception("Thunderbird was not found at the expected" +
+                            "location: " + appbin)
+        else:
+            logging.info("found thunderbird at: " + appbin)
 #
 #           my $comp_apps = join(" -a ", @compatibility_apps);
 
