@@ -7,7 +7,7 @@ os:
 env:
   - VERSION=beta
   - VERSION=esr68
-#  - VERSION=nightly
+  - VERSION=nightly
 
 cache:
    directories:

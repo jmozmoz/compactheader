@@ -4,8 +4,8 @@ environment:
       PYTHON: "C:\\Python27_64"
     - VERSION: esr68
       PYTHON: "C:\\Python27_64"
-#    - VERSION: nightly
-#      PYTHON: "C:\\Python27_64"
+    - VERSION: nightly
+      PYTHON: "C:\\Python27_64"
 
 cache:
   - C:\tmp\compactheader\ftp
