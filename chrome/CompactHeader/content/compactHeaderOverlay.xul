@@ -115,8 +115,6 @@
           </toolbar>
         </toolbox>
       </html:div>
-
-
     </vbox>
 
     <vbox id="CompactHeader_dispMUAexp" collapsed="false">

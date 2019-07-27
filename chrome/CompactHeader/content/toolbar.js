@@ -161,12 +161,16 @@ org_mozdev_compactHeader.toolbar = function() {
             }
           }
           //hdrButton.id = "hdr" + hdrButton.id;
-          hdrToolbox.palette.appendChild(hdrButton);
+          if (hdrToolbox && hdrToolbox.palette) {
+            hdrToolbox.palette.appendChild(hdrButton);
+          }
   /*        var bStyle = document.defaultView.getComputedStyle(button, null);
           hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
         }
         if (currentSet.indexOf(buttonName)>=0) {
-          var result = hdrToolbar.insertItem(hdrButton.id);
+          if (typeof hdrToolbar.insertItem === "function") {
+            var result = hdrToolbar.insertItem(hdrButton.id);
+          }
           currentSet = hdrToolbar.getAttribute("currentset");
           hdrToolbar.currentSet = currentSet;
         }
@@ -447,10 +451,13 @@ org_mozdev_compactHeader.toolbar = function() {
         button1.parentNode.removeChild(button1);
       }
 
-      var button2 = document.getElementById("header-view-toolbox").palette.
-                             getElementsByAttribute("id", "CompactHeader_button-dispMUA")[0];
-      if (button2) {
-        button2.parentNode.removeChild(button2);
+      var headerViewToolbox = document.getElementById("header-view-toolbox");
+      if (headerViewToolbox && headerViewToolbox.palette) {
+        var button2 = headerViewToolbox.palette.
+          getElementsByAttribute("id", "CompactHeader_button-dispMUA")[0];
+        if (button2) {
+          button2.parentNode.removeChild(button2);
+        }
       }
     }
     org_mozdev_compactHeader.debug.log("removeButtonDispMUA stop");

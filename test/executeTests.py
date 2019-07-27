@@ -248,8 +248,9 @@ class TestExecutor:
                             "--exclude", "*jit-test*",
                             "--exclude", "*bin*"
                             ]
-#                         if platform.system() == 'Windows':
-#                             unzip_test_cmd.append("--force-local")
+                        if (platform.system() == 'Windows'
+                                and "APPVEYOR" in os.environ):
+                            unzip_test_cmd.append("--force-local")
                     else:
                         unzip_test_cmd = [
                             "unzip", "-q", "-o",
@@ -533,6 +534,32 @@ class TestExecutor:
                     os.path.join(
                         testdir, "mozmill", "message-header",
                         "test-message-header.js")
+                    ]
+                logging.debug("sed: %r" % " ".join(sed_cmd))
+                subprocess.call(sed_cmd)
+
+        if 'beta' in version or 'nightly' in version:
+            os.rename(
+                os.path.join(
+                    testdir, "mozmill", "compactheader",
+                    "test-compactheader-toolbar.js"
+                ),
+                os.path.join(
+                    testdir, "mozmill", "compactheader",
+                    "notest-compactheader-toolbar.js"
+                )
+            )
+            beta_disalbe_tests = [
+                'test_neighbours_of_header_view_toolbox',
+                ]
+            for disable_test in beta_disalbe_tests:
+                sed_cmd = [
+                    "sed", "-i", "-e",
+                    's/' + disable_test + '/' +
+                    'no' + disable_test + '/',
+                    os.path.join(
+                        testdir, "mozmill", "compactheader",
+                        "test-compactheader-collapse.js")
                     ]
                 logging.debug("sed: %r" % " ".join(sed_cmd))
                 subprocess.call(sed_cmd)
