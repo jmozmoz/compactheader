@@ -38,7 +38,7 @@
   </keyset>
 
   <menupopup id="header-toolbar-context-menu">
-    <menuitem id="CompactHeader_hidecohePreferencesButton"
+    <menuitem id="CompactHeader_hidecohePreferencesButtonPopup"
               label="&CompactHeader_dialog.title;"
               accesskey="&CompactHeader_dialog.accessKey;"
               oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
@@ -280,4 +280,42 @@
     </vbox>
   </hbox>
 
+  <menupopup id="otherActionsPopup">
+    <menuitem id="CompactHeader_hidecohePreferencesButtonOther"
+              label="&CompactHeader_dialog.title;"
+              accesskey="&CompactHeader_dialog.accessKey;"
+              oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
+    <menuitem id="CompactHeader_hideDetailsMenuOther"
+              label="&CompactHeader_hideDetailsButton.label;"
+              oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
+              key="CompactHeader_hideDetailsKey"
+              accesskey="&CompactHeader_toggleDetails.key;"/>
+    <menuseparator id="CompactHeader_otherActionPopupAfterViewSourceOther"/>
+    <menu id="CompactHeader_hdrPane-HeadersPopupMenuOther" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+      <menupopup id="CompactHeader_menu_HeadersPopupOther" onpopupshowing="InitViewHeadersMenu();">
+        <menuitem id="CompactHeader_hdrPane-viewallheadersOther"
+                  type="radio"
+                  name="viewheadergroup"
+                  label="&headersAllCmd.label;"
+                  accesskey="&headersAllCmd.accesskey;"
+                  command="cmd_viewAllHeader"/>
+        <menuitem id="CompactHeader_hdrPane-viewnormalheadersOther"
+                  type="radio"
+                  name="viewheadergroup"
+                  label="&headersNormalCmd.label;"
+                  accesskey="&headersNormalCmd.accesskey;"
+                  command="cmd_viewNormalHeader"/>
+      </menupopup>
+    </menu>
+    <!--
+    <menuitem id="CompactHeader_hdrPane-markFlagged"
+              type="checkbox"
+              label="&markStarredCmd.label;"
+              accesskey="&markStarredCmd.accesskey;"
+              command="cmd_markAsFlagged"
+              insertbefore="viewSourceMenuItem"
+              key="key_toggleFlagged"/>
+     -->
+
+      </menupopup>>
 </overlay>

@@ -192,6 +192,7 @@ function openAddressBook() {
 function open_preferences_dialog(aController, aSubtest) {
   windowHelper.plan_for_modal_dialog("ext:options", aSubtest);
   aController.click(aController.eid("CompactHeader_hidecohePreferencesButton"));
+  aController.click(aController.eid("CompactHeader_hidecohePreferencesButtonOther"));
   windowHelper.wait_for_modal_dialog("ext:options", 1);
 }
 
