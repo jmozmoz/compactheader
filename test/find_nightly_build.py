@@ -25,7 +25,7 @@ mapping_builds = {
     'esr68': {
         'WindowsAMD64': 'build-win64-shippable/opt',
         'Darwinx86_64': 'build-macosx64-shippable/opt',
-        'Linuxx86_64': 'build-linux-shippable/opt',
+        'Linuxx86_64': 'build-linux64-shippable/opt',
         'Linux': 'build-linux-shippable/opt',
     },
     'beta': {
@@ -35,10 +35,10 @@ mapping_builds = {
         'Linux': 'build-linux-shippable/opt',
     },
     'nightly': {
-        'WindowsAMD64': 'build-win64/opt',
-        'Darwinx86_64': 'build-macosx64/opt',
-        'Linuxx86_64': 'build-linux64/opt',
-        'Linux': 'build-linux/opt',
+        'WindowsAMD64': 'build-win64-shippable/opt',
+        'Darwinx86_64': 'build-macosx64-shippable/opt',
+        'Linuxx86_64': 'build-linux64-shippable/opt',
+        'Linux': 'build-linux-shippable/opt',
     }
 }
 
@@ -82,6 +82,12 @@ for platform in nightly_data:
         platform_data['testzip'].replace('.zip', '').replace('.tar.gz', '')
 
     for push in pushes:
+        logging.info('push: %s by %s: %s',
+                     datetime.datetime.utcfromtimestamp(
+                         push['push_timestamp']).isoformat(),
+                     push['author'],
+                     push['revisions'][0]['comments']
+                     )
         jobs = client.get_jobs(tb_branch, push_id=push['id'])
 
         for job in jobs:
@@ -105,13 +111,19 @@ for platform in nightly_data:
                     job['platform_option'], job['state'])
                 )
 
+                if (job['result'] == 'retry'):
+                    (jid, jnum) = job['job_guid'].split('/')
+                    job['job_guid'] = jid + '/' + str(int(jnum) + 1)
+                    logging.debug('increase guid to: ' + job['job_guid'])
+
                 found_test = False
                 found_app = False
                 for detail in client.get_job_details(job_guid=job['job_guid']):
                     if detail['title'] == 'artifact uploaded':
-                        logging.debug('\t\t' + detail['url'])
+                        logging.debug('\t\t: ' + detail['url'])
                         if detail['url'].find(platform_data['testzip']) >= 0:
                             found_test = True
+                            logging.debug('\t\ttest: found')
                             test_urls[platform] = '/'.join(
                                 detail['url'].split('/')[:-1]
                             )
@@ -120,6 +132,7 @@ for platform in nightly_data:
                             )
                         elif detail['url'].find(platform_data['appzip']) >= 0:
                             found_app = True
+                            logging.debug('\t\tapp: found')
                             app_urls[platform] = '/'.join(
                                 detail['url'].split('/')[:-1])
                     if found_app and found_test:
@@ -128,9 +141,13 @@ for platform in nightly_data:
                                      ' ' + app_urls[platform])
                         break
             if found_artifacts:
+                logging.info('break jobs')
                 break
+        logging.debug('no more jobs')
         if found_artifacts:
+            logging.info('break push')
             break
+    logging.debug('no more pushes')
 
 for platform in nightly_data:
     logging.info('platform: ' + platform)
