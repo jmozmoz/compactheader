@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<!DOCTYPE overlay [
+  <!ENTITY % utilityDTD SYSTEM
+  "chrome://communicator/locale/utilityOverlay.dtd">
+  %utilityDTD; <!-- copyCmd -->
+  <!ENTITY % msgHeaderDTD SYSTEM
+  "chrome://messenger/locale/msgHdrViewOverlay.dtd">
+  %msgHeaderDTD;
+  <!ENTITY % compactHeaderDTD SYSTEM
+  "chrome://CompactHeader/locale/CompactHeader.dtd">
+  %compactHeaderDTD;
+  <!ENTITY % preferencesDTD SYSTEM
+  "chrome://CompactHeader/locale/preferences.dtd">
+  %preferencesDTD;
+  <!ENTITY % messengerDTD SYSTEM "chrome://messenger/locale/messenger.dtd">
+  %messengerDTD;
+]>
+
+<?xml-stylesheet href="chrome://CompactHeader/skin/CompactHeader.css" type="text/css"?>
+<?xml-stylesheet href="chrome://CompactHeader-os/skin/osdef.css" type="text/css"?>
+
+
+<overlay id="compactHeaderOverlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <menupopup id="otherActionsPopup">
+    <menuitem id="CompactHeader_hidecohePreferencesButton"
+              label="&CompactHeader_dialog.title;"
+              accesskey="&CompactHeader_dialog.accessKey;"
+              oncommand="openDialog('chrome://CompactHeader/content/preferences.xul', 'prefs', 'chrome,resizable=no,centerscreen,modal');"/>
+    <menuitem id="CompactHeader_hideDetailsMenu"
+              label="&CompactHeader_hideDetailsButton.label;"
+              oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
+              key="CompactHeader_hideDetailsKey"
+              accesskey="&CompactHeader_toggleDetails.key;"/>
+    <menuseparator id="CompactHeader_otherActionPopupAfterViewSource"/>
+    <menu id="CompactHeader_hdrPane-HeadersPopupMenu" label="&headersMenu.label;" accesskey="&headersMenu.accesskey;">
+      <menupopup id="CompactHeader_menu_HeadersPopup" onpopupshowing="InitViewHeadersMenu();">
+        <menuitem id="CompactHeader_hdrPane-viewallheaders"
+                  type="radio"
+                  name="viewheadergroup"
+                  label="&headersAllCmd.label;"
+                  accesskey="&headersAllCmd.accesskey;"
+                  command="cmd_viewAllHeader"/>
+        <menuitem id="CompactHeader_hdrPane-viewnormalheaders"
+                  type="radio"
+                  name="viewheadergroup"
+                  label="&headersNormalCmd.label;"
+                  accesskey="&headersNormalCmd.accesskey;"
+                  command="cmd_viewNormalHeader"/>
+      </menupopup>
+    </menu>
+    <!--
+    <menuitem id="CompactHeader_hdrPane-markFlagged"
+              type="checkbox"
+              label="&markStarredCmd.label;"
+              accesskey="&markStarredCmd.accesskey;"
+              command="cmd_markAsFlagged"
+              insertbefore="viewSourceMenuItem"
+              key="key_toggleFlagged"/>
+     -->
+
+  </menupopup>>
+
+</overlay>

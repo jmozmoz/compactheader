@@ -539,16 +539,6 @@ class TestExecutor:
                 subprocess.call(sed_cmd)
 
         if 'beta' in version or 'nightly' in version:
-            os.rename(
-                os.path.join(
-                    testdir, "mozmill", "compactheader",
-                    "test-compactheader-toolbar.js"
-                ),
-                os.path.join(
-                    testdir, "mozmill", "compactheader",
-                    "notest-compactheader-toolbar.js"
-                )
-            )
             beta_disalbe_tests = [
                 'test_neighbours_of_header_view_toolbox',
                 ]
@@ -560,6 +550,33 @@ class TestExecutor:
                     os.path.join(
                         testdir, "mozmill", "compactheader",
                         "test-compactheader-collapse.js")
+                    ]
+                logging.debug("sed: %r" % " ".join(sed_cmd))
+                subprocess.call(sed_cmd)
+            # disable all tests in test-compactheader-toolbar.js and
+            # test-other-actions-button.js
+            beta_disalbe_tests = [
+                'test',
+                ]
+            for disable_test in beta_disalbe_tests:
+                sed_cmd = [
+                    "sed", "-i", "-e",
+                    's/' + disable_test + '/' +
+                    'no' + disable_test + '/g',
+                    os.path.join(
+                        testdir, "mozmill", "compactheader",
+                        "test-compactheader-toolbar.js")
+                    ]
+                logging.debug("sed: %r" % " ".join(sed_cmd))
+                subprocess.call(sed_cmd)
+            for disable_test in beta_disalbe_tests:
+                sed_cmd = [
+                    "sed", "-i", "-e",
+                    's/' + disable_test + '/' +
+                    'no' + disable_test + '/g',
+                    os.path.join(
+                        testdir, "mozmill", "compactheader",
+                        "test-other-actions-button.js")
                     ]
                 logging.debug("sed: %r" % " ".join(sed_cmd))
                 subprocess.call(sed_cmd)

@@ -31,6 +31,12 @@ overlay chrome://messenger/content/messenger.xul         chrome://CompactHeader/
 overlay chrome://messenger/content/messageWindow.xul    chrome://CompactHeader/content/compactHeaderOverlay.xul
 overlay chrome://messenger/content/messenger.xul        chrome://CompactHeader/content/compactHeaderOverlay.xul
 
+overlay chrome://messenger/content/messageWindow.xul    chrome://CompactHeader/content/compactHeaderOverlayPre69.xul appversion<69
+overlay chrome://messenger/content/messenger.xul        chrome://CompactHeader/content/compactHeaderOverlayPre69.xul appversion<69
+
+overlay chrome://messenger/content/messageWindow.xul    chrome://CompactHeader/content/compactHeaderOverlayPost69.xul appversion>=69
+overlay chrome://messenger/content/messenger.xul        chrome://CompactHeader/content/compactHeaderOverlayPost69.xul appversion>=69
+
 overlay chrome://global/content/customizeToolbar.xul     chrome://CompactHeader/content/customizeToolbarOverlay.xul
 
 

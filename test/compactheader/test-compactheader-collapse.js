@@ -237,7 +237,7 @@ function test_toggle_header_view_oneline(){
 
 
 function get_deck_size(target) {
-  return mc.eid("msgHeaderViewDeck").getNode().boxObject;
+  return mc.eid("msgHeaderViewDeck").getNode().getBoundingClientRect();
 }
 
 
