@@ -762,6 +762,9 @@ org_mozdev_compactHeader.pane = function() {
       headerFirstTime = false;
       var toolbox = document.getElementById("header-view-toolbox");
       var mailToolbox = document.getElementById("mail-toolbox");
+      mailToolbox.myFunction = function() {
+        return;
+      }
       var oldCustomizeDone = toolbox.customizeDone;
       var oldCustomizeDoneMailToolbox = mailToolbox.customizeDone;
       toolbox.customizeDone = function(aEvent) {
@@ -957,7 +960,7 @@ org_mozdev_compactHeader.pane = function() {
     coheUninstallObserver.register();
     org_mozdev_compactHeader.debug.log("register PrefObserver");
     myPrefObserver.register();
-    org_mozdev_compactHeader.debug.log("after register");
+    org_mozdev_compactHeader.debug.log("after ");
     if ((typeof MessageDisplayWidget != "undefined") && MessageDisplayWidget) {
       org_mozdev_compactHeader.debug.log("coheInitializeOverlay found MessageDisplayWidget");
       var oldUpdateActiveMessagePane = MessageDisplayWidget.prototype._updateActiveMessagePane;
@@ -1137,11 +1140,16 @@ org_mozdev_compactHeader.pane = function() {
     org_mozdev_compactHeader.debug.log("firstRun start");
     let header_toolbox = document.getElementById("header-view-toolbox");
     if (header_toolbox) {
-      if (typeof header_toolbox.customizeDone === "function") {
-        org_mozdev_compactHeader.debug.log("messagepane-loaded was already issued");
+      if (header_toolbox.myFunction &&
+          (typeof header_toolbox.myFunction === "function")
+        ){
+        org_mozdev_compactHeader.debug.log("firstRun: messagepane-loaded was already issued");
         pub.coheOnLoadMsgHeaderPane();
+        org_mozdev_compactHeader.debug.log("firstRun: messagepane-loaded was already issued stop");
       } else {
-        org_mozdev_compactHeader.debug.log("not function");
+        org_mozdev_compactHeader.debug.log("firstRun: not function");
+        pub.coheOnLoadMsgHeaderPane();
+        org_mozdev_compactHeader.debug.log("firstRun: not function finished");
       }
     } else {
       org_mozdev_compactHeader.debug.log("no header_toolbox");

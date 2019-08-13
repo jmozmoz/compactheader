@@ -601,6 +601,7 @@ org_mozdev_compactHeader.toolbar = function() {
       org_mozdev_compactHeader.debug.log("curType: " + currentToolboxType + " targetType: " + targetType);
       org_mozdev_compactHeader.debug.log("setCurrentToolboxPosition does not need to change position/type");
       setToolboxRunning = false;
+      org_mozdev_compactHeader.debug.log("setCurrentToolboxPosition stop");
       return;
     }
 
