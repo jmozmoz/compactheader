@@ -141,8 +141,15 @@ org_mozdev_compactHeader.toolbar = function() {
     hdrToolbar.currentSet = currentSet;
     for (var i=0; i<buttons.length; i++) {
       var buttonName = buttons[i];
-      var button = document.getElementById(buttonName) ||
-          document.getElementById("mail-toolbox").palette.getElementsByAttribute("id", buttonName)[0];
+      let mailToolBox = document.getElementById("mail-toolbox");
+      var button;
+      if (mailToolBox && mailToolBox.palette) {
+        button = document.getElementById(buttonName) ||
+          mailToolBox.palette.getElementsByAttribute("id", buttonName)[0];
+      }
+      else {
+        button = document.getElementById(buttonName);
+      }
       if (button) {
         var hdrButton = button.cloneNode(true);
         if (hdrButton) {
@@ -445,12 +452,13 @@ org_mozdev_compactHeader.toolbar = function() {
         button.parentNode.removeChild(button);
       }
 
-      var button1 = document.getElementById("mail-toolbox").palette.
-                             getElementsByAttribute("id", "CompactHeader_button-dispMUA")[0];
-      if (button1) {
-        button1.parentNode.removeChild(button1);
+      let mailToolBox = document.getElementById("mail-toolbox");
+      if (mailToolBox && mailToolBox.palette) {
+        var button1 = mailToolBox.palette.getElementsByAttribute("id", "CompactHeader_button-dispMUA")[0];
+        if (button1) {
+          button1.parentNode.removeChild(button1);
+        }
       }
-
       var headerViewToolbox = document.getElementById("header-view-toolbox");
       if (headerViewToolbox && headerViewToolbox.palette) {
         var button2 = headerViewToolbox.palette.

@@ -147,8 +147,10 @@ org_mozdev_compactHeader.pane = function() {
 
     var index = 0;
 
-    if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.resetAddressView == 'function'))
-      headerEntry.enclosingBox.resetAddressView(); // make sure we start clean
+    // we are called for to, cc, bcc addresses separately, so this will delete
+    // the other entries! So we should not call it!
+//    if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.resetAddressView == 'function'))
+//      headerEntry.enclosingBox.resetAddressView(); // make sure we start clean
 
     if (numAddresses == 0 && emailAddresses.includes(":")) {
       // No addresses and a colon, so an empty group like "undisclosed-recipients: ;".
@@ -177,25 +179,35 @@ org_mozdev_compactHeader.pane = function() {
         address.displayName = names.value[index];
       }
 
+      org_mozdev_compactHeader.debug.log("0 index: " + index);
       org_mozdev_compactHeader.debug.log("0: " + address.fullAddress);
-      org_mozdev_compactHeader.debug.log("0: " + addressType);
+      org_mozdev_compactHeader.debug.log("0 type: " + addressType);
 
       if (address.fullAddress != "" &&
            (addressType == "to" || addressType == "cc" || addressType == "bcc")) {
         if (moreTooltip == "") {
           moreTooltip = address.fullAddress;
-          org_mozdev_compactHeader.debug.log("1: " + address.fullAddress);
+          org_mozdev_compactHeader.debug.log("1 first in list: " + address.fullAddress);
         } else {
           moreTooltip = moreTooltip + ", " + address.fullAddress;
-          org_mozdev_compactHeader.debug.log("2: " + address.fullAddress);
+          org_mozdev_compactHeader.debug.log("2 add to list: " + address.fullAddress);
         }
       }
 //      window.alert(address);
       if (headerEntry.useToggle && (typeof headerEntry.enclosingBox.addAddressView == 'function')) {
+        org_mozdev_compactHeader.debug.log("call addAddressView");
         headerEntry.enclosingBox.addAddressView(address);
+        org_mozdev_compactHeader.debug.log("headerEntry: " + headerEntry);
+        org_mozdev_compactHeader.debug.log("enclosingBox: " + headerEntry.enclosingBox);
+        let emailAddressNode = document.getAnonymousElementByAttribute(
+            headerEntry.enclosingBox, 'anonid', 'emailAddressNode'
+          );
+//        emailAddressNode.setAttribute("addressType", addressType);
       } else {
         try {
+          org_mozdev_compactHeader.debug.log("call updateEmailAddressNode");
           updateEmailAddressNode(headerEntry.enclosingBox.emailAddressNode, address);
+          headerEntry.enclosingBox.emailAddressNode.setAttribute("addressType", addressType);
         }
         catch(e) {
           org_mozdev_compactHeader.debug.log("got execption " + e +
@@ -237,11 +249,37 @@ org_mozdev_compactHeader.pane = function() {
                                .getElementsByClassName("moreIndicator")[0];
 
       if (moreButton) {
+        org_mozdev_compactHeader.debug.log("add togglewrap 1");
         let oldToggleWrap = moreButton.parentNode.toggleWrap;
+        org_mozdev_compactHeader.debug.log("add togglewrap 2: " + oldToggleWrap);
         moreButton.parentNode.toggleWrap = function() {
+          org_mozdev_compactHeader.debug.log("toggleWrap start");
           pressMores = pressMoreButtons;
+          org_mozdev_compactHeader.debug.log("toggleWrap 1");
+
+          let deck = document.getElementById('msgHeaderViewDeck');
+          // Work around a xul deck bug where the height of the deck is determined
+          // by the tallest panel in the deck even if that panel is not selected...
+
+          org_mozdev_compactHeader.debug.log("togglewrap old panel: " +
+              deck.selectedPanel.id);
+          org_mozdev_compactHeader.debug.log("togglewrap old panel collapsed: " +
+              deck.selectedPanel.collapsed);
+
           pub.coheToggleHeaderView();
+          org_mozdev_compactHeader.debug.log("toggleWrap stop");
         };
+        org_mozdev_compactHeader.debug.log("add togglewrap 3");
+        if (moreButton.hasAttribute("onclick")) {
+          org_mozdev_compactHeader.debug.log(
+              "add togglewrap: existing onclick" +
+              moreButton.getAttribute("onclick"));
+        }
+        else {
+          org_mozdev_compactHeader.debug.log("add togglewrap: no existing onclick");
+        }
+        moreButton.setAttribute("onclick", "this.parentNode.toggleWrap()");
+        org_mozdev_compactHeader.debug.log("add togglewrap 4");
       }
     } else {
       for (index = 0; index < gCoheCollapsedHeader1LListLongAddresses.length; index++) {
@@ -370,7 +408,7 @@ org_mozdev_compactHeader.pane = function() {
 
     var deckHeaderView = document.getElementById("msgHeaderViewDeck");
 
-    // selectMsgHeaderPanePanel();
+    selectMsgHeaderPanePanel();
 
     org_mozdev_compactHeader.debug.log("coheFirstTime window type: " +
         document.documentElement.getAttribute("windowtype"));
@@ -411,8 +449,13 @@ org_mozdev_compactHeader.pane = function() {
 
       let collapsed2LtoCcBccBox = document.getElementById("CompactHeader_collapsed2LtoCcBccBox");
       if (collapsed2LtoCcBccBox) {
-        let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox.updateEmailAddressNode;
-        collapsed2LtoCcBccBox.updateEmailAddressNode = function(aEmailNode, aAddress) {
+        org_mozdev_compactHeader.debug.log("overwrite collapsed2LtoCcBccBox._updateEmailAddressNode");
+        let updateEmailAddressNodeFunction = collapsed2LtoCcBccBox._updateEmailAddressNode;
+        org_mozdev_compactHeader.debug.log("overwrite collapsed2LtoCcBccBox.updateEmailAddressNode: "
+            + updateEmailAddressNodeFunction);
+
+        collapsed2LtoCcBccBox._updateEmailAddressNode = function(aEmailNode, aAddress) {
+          org_mozdev_compactHeader.debug.log("collapsed2LtoCcBccBox.updateEmailAddressNode start");
           try {
             updateEmailAddressNodeFunction(aEmailNode, aAddress);
           }
@@ -420,8 +463,12 @@ org_mozdev_compactHeader.pane = function() {
             org_mozdev_compactHeader.debug.log("got execption " + e +
               " from updateEmailAddressNode");
           }
+          org_mozdev_compactHeader.debug.log("collapsed2LtoCcBccBox.updateEmailAddressNode type:" +
+              aAddress.addressType);
           aEmailNode.setAttribute("addressType", aAddress.addressType);
+          org_mozdev_compactHeader.debug.log("collapsed2LtoCcBccBox.updateEmailAddressNode start");
         };
+
         if (typeof collapsed2LtoCcBccBox.setNMoreTooltiptext == 'function') {
           // remove setNMoreTooltiptext because we have our own function
           collapsed2LtoCcBccBox.setNMoreTooltiptext = function() {
@@ -464,18 +511,22 @@ org_mozdev_compactHeader.pane = function() {
   {
     onStartHeaders:
     function cML_onStartHeaders () {
+      org_mozdev_compactHeader.debug.log("cML_onStartHeaders start");
       selectMsgHeaderPanePanel();
       gCoheBuiltCollapsedView = false;
+      org_mozdev_compactHeader.debug.log("cML_onStartHeaders stop");
     },
 
     onEndHeaders:
     function cML_onEndHeaders() {
+      org_mozdev_compactHeader.debug.log("cML_onEndHeaders start");
       ClearHeaderView(gCoheCollapsedHeaderView);
       coheUpdateMessageHeaders();
       if (pressMores) {
         pressMoreButtons();
         pressMore = null;
       }
+      org_mozdev_compactHeader.debug.log("cML_onEndHeaders stop");
     },
 
     onEndAttachments: function cML_onEndAttachments(){}
@@ -563,28 +614,61 @@ org_mozdev_compactHeader.pane = function() {
 
   pub.coheToggleHeaderView = function() {
     org_mozdev_compactHeader.debug.log("coheToggleHeaderView start");
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView old view mode: " +
+        gCoheCollapsedHeaderViewMode);
     gCoheCollapsedHeaderViewMode = !gCoheCollapsedHeaderViewMode;
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView new view mode: " +
+        gCoheCollapsedHeaderViewMode);
     setCollapseState(gCoheCollapsedHeaderViewMode);
 
     let deck = document.getElementById('msgHeaderViewDeck');
     // Work around a xul deck bug where the height of the deck is determined
     // by the tallest panel in the deck even if that panel is not selected...
+
+    let oldSelectedPanel = deck.selectedPanel;
+
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView old panel: " +
+        deck.selectedPanel.id);
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView old panel collapsed: " +
+        deck.selectedPanel.collapsed);
+
     deck.selectedPanel.collapsed = true;
+    let otherPanel;
 
     if (gCoheCollapsedHeaderViewMode) {
       deck.selectedPanel = document.getElementById("CompactHeader_collapsedHeaderView")
+      otherPanel = document.getElementById("expandedHeaderView");
       gDBView.reloadMessage();
       //coheUpdateMessageHeaders();
     } else {
       deck.selectedPanel = document.getElementById("expandedHeaderView");
+      otherPanel = document.getElementById("CompactHeader_collapsedHeaderView")
       //ClearHeaderView(gExpandedHeaderView);
       gDBView.reloadMessage();
       //UpdateExpandedMessageHeaders();
     }
 
+    // make sure, the other panel is really collapsed
+    otherPanel.collapsed = true;
+
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView old panel: " +
+        oldSelectedPanel.id);
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView old panel collapsed: " +
+        oldSelectedPanel.collapsed);
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView other panel: " +
+        otherPanel.id);
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView other panel collapsed: " +
+        otherPanel.collapsed);
+
     // Work around a xul deck bug where the height of the deck is determined
     // by the tallest panel in the deck even if that panel is not selected...
     deck.selectedPanel.collapsed = false;
+
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView new panel: " +
+        deck.selectedPanel.id);
+    org_mozdev_compactHeader.debug.log("coheToggleHeaderView new panel collapsed: " +
+        deck.selectedPanel.collapsed);
+
     syncGridColumnWidths();
 
     coheToggleHeaderContent();
@@ -989,7 +1073,7 @@ org_mozdev_compactHeader.pane = function() {
 //    org_mozdev_compactHeader.debug.log("coheInitializeOverlay deckHeaderView: " +
 //      deckHeaderView.selectedPanel.id);
 //
-//    selectMsgHeaderPanePanel();
+    selectMsgHeaderPanePanel();
     org_mozdev_compactHeader.debug.log("coheInitializeOverlay stop");
   };
 

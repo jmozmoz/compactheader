@@ -6,7 +6,7 @@ compact and expanded view. Options to switch between one or two lines compact
 view, which buttons should be displayed in header pane.
 
 ### Build status
-|TB branch|Linux builds|Windows biulds|
+|TB branch|Linux builds|Windows builds|
 | ------------- | ------------- | ------------- |
 |ESR 60: |![Build Status](https://travis-ci.org/jmozmoz/compactheader.svg?branch=esr)|![Build Status](https://ci.appveyor.com/api/projects/status/mmvvkm83lajuunms/branch/esr?svg=true)|
 |ESR 68: |![Build Status](https://travis-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branches/master/2)|![Build Status](https://appveyor-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branch/master/2)|
