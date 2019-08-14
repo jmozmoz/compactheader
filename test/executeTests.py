@@ -459,8 +459,8 @@ class TestExecutor:
         # does not work anymore
         sed_cmd = [
             "sed", "-i", "-e",
-            's/test_toolbar_collapse_and_expand/' +
-            'notest_toolbar_collapse_and_expand/',
+            's/function test_toolbar_collapse_and_expand/' +
+            'function notest_toolbar_collapse_and_expand/',
             os.path.join(
                 testdir, "mozmill", "message-header", "test-message-header.js")
             ]
@@ -489,8 +489,8 @@ class TestExecutor:
                 subprocess.call(sed_cmd)
             sed_cmd = [
                 "sed", "-i", "-e",
-                's/test_a11y_attrs/' +
-                'notest_a11y_attrs/',
+                's/function test_a11y_attrs/' +
+                'function notest_a11y_attrs/',
                 os.path.join(
                     testdir, "mozmill", "message-header",
                     "test-message-header.js")
@@ -500,8 +500,8 @@ class TestExecutor:
 
             sed_cmd = [
                 "sed", "-i", "-e",
-                's/test_ignore_phishing_warning_from_eml_attachment/' +
-                'notest_ignore_phishing_warning_from_eml_attachment/',
+                's/function test_ignore_phishing_warning_from_eml_attachment/' +
+                'function notest_ignore_phishing_warning_from_eml_attachment/',
                 os.path.join(
                     testdir, "mozmill", "message-header",
                     "test-phishing-bar.js")
@@ -511,8 +511,8 @@ class TestExecutor:
 
             sed_cmd = [
                 "sed", "-i", "-e",
-                's/test_delete_one_after_message_in_folder_tab/' +
-                'notest_delete_one_after_message_in_folder_tab/',
+                's/function test_delete_one_after_message_in_folder_tab/' +
+                'function notest_delete_one_after_message_in_folder_tab/',
                 os.path.join(
                     testdir, "mozmill", "folder-display",
                     "test-deletion-with-multiple-displays.js",
