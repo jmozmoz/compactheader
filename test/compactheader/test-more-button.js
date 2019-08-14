@@ -101,7 +101,7 @@ function setupModule(module) {
   add_message_to_folder(folder1, msg);
 
   let msg2 = create_message({cc: msgGen.makeNamesAndAddresses(10),
-    to: msgGen.makeNamesAndAddresses(10)
+    to: msgGen.makeNamesAndAddresses(11)
   });
   add_message_to_folder(folder1, msg2);
 
@@ -112,7 +112,7 @@ function setupModule(module) {
 /* click the more button in compact view should change to expanded
  * header view
  */
-function notest_click_more(){
+function test_click_more(){
   select_message_in_folder(folder1, 1, mc);
   select_message_in_folder(folder1, 0, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
@@ -125,7 +125,7 @@ function notest_click_more(){
       "moreIndicator");
 
   assert_not_equals(null, moreIndicator);
-  assert_true(isVisible(moreIndicator))
+  assert_true(isVisible(moreIndicator));
   if (moreIndicator) {
     mc.click(moreIndicator);
   }
@@ -192,7 +192,7 @@ function test_more_tooltip(){
 
 /* check if more button shows correct number of missing addresses
  */
-function notest_more_number_indicator(){
+function test_more_number_indicator(){
   select_message_in_folder(folder1, 0, mc);
   let msg = select_message_in_folder(folder1, 1, mc);
   open_preferences_dialog(mc, set_preferences_twoline);
@@ -223,14 +223,13 @@ function notest_more_number_indicator(){
     }
   }
 
-  mc.sleep(10000);
-
   let hiddenAddresses = numAddressesCC + numAddressesTo - firstToCCBccAddrNum;
 
   dump("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
   dump("toCC:    " + numAddressesTo + "\n");
   dump("numCC:   " + numAddressesCC + "\n");
   dump("ToCCBCC: " + firstToCCBccAddrNum + "\n");
+  dump("hidden:  " + hiddenAddresses + "\n");
 
   let moreIndicator = getElementByClass(mc,
       "CompactHeader_collapsed2LtoCcBccBox",
@@ -275,12 +274,13 @@ function notest_more_number_indicator(){
   let hiddenAddressesCC = numAddressesCC - firstCCAddrNum;
   let hiddenAddressesTo = numAddressesTo - firstToAddrNum;
 
-  let expandedToBox = mc.e("expandedtoBox");
-  let expandedCCBox = mc.e("expandedccBox");
-  let eTOmoreIndicator = mc.window.document.getAnonymousElementByAttribute(
-      expandedToBox, "anonid", "more");
-  let eCCmoreIndicator = mc.window.document.getAnonymousElementByAttribute(
-      expandedCCBox, "anonid", "more");
+  let eTOmoreIndicator = getElementByClass(mc,
+      "expandedtoBox",
+      "moreIndicator");
+  let eCCmoreIndicator =  getElementByClass(mc,
+      "expandedccBox",
+      "moreIndicator");
+
   let moreTextTo = eTOmoreIndicator.getAttribute("value");
   let moreTextCC = eCCmoreIndicator.getAttribute("value");
 

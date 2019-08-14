@@ -321,8 +321,6 @@ function test_address_type_format(){
 //                    previousHeaderMode + ", new=" +
 //                    headerBox.node.getAttribute("show_header_mode"));
 
-  return; // FIXME The following test is skipped
-
   let toDescription = getElementByClass(mc,
       "CompactHeader_collapsed2LtoCcBccBox",
       "headerValue");
