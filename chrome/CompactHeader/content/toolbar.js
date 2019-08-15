@@ -56,6 +56,8 @@ if (typeof org_mozdev_compactHeader == "undefined") {
 org_mozdev_compactHeader.toolbar = function() {
   var pub = {};
 
+  var filledPalette = false;
+
   var cohePrefBranch = Components.classes["@mozilla.org/preferences-service;1"]
                                           .getService(Components.interfaces.nsIPrefService)
                                           .getBranch("extensions.CompactHeader.");
@@ -87,19 +89,8 @@ org_mozdev_compactHeader.toolbar = function() {
     }
   }
 
-  pub.cannotMoveToolbox = function() {
-    var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-      .getService(Components.interfaces.nsIXULAppInfo);
-    var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-      .getService(Components.interfaces.nsIVersionComparator);
-    return (versionChecker.compare(appInfo.version, "10.0a2") < 0)
-  };
-
   function getToolbarTarget(targetPos, targetHeader) {
     //targetPos = targetPos.replace('hdrToolbox.pos.', '');
-    if (pub.cannotMoveToolbox()) {
-      targetPos = "top";
-    }
     for (let i = 0; i < gToolboxes.length; i++) {
       if ((targetPos == gToolboxes[i].pos) &&
           ((gToolboxes[i].header == null) || (targetHeader == gToolboxes[i].header))
@@ -119,6 +110,19 @@ org_mozdev_compactHeader.toolbar = function() {
     removeButtonDispMUA();
     var hdrToolbar = document.getElementById("header-view-toolbar");
     var hdrToolbox = document.getElementById("header-view-toolbox");
+
+    if (!hdrToolbox || !hdrToolbox.palette) {
+      org_mozdev_compactHeader.debug.log("no header-view-toolbox or palette!",
+          org_mozdev_compactHeader.debug.LOGLEVEL.warn);
+      return;
+    }
+
+    if (filledPalette) {
+      return;
+    }
+
+    filledPalette = true;
+
     var buttons = ["button-reply", "button-replyall", "button-replylist",
                    "button-tag", "button-forward", "button-archive", "button-file",
                    "button-print", "button-mark", "CompactHeader_button-starMessages",
@@ -151,6 +155,8 @@ org_mozdev_compactHeader.toolbar = function() {
         button = document.getElementById(buttonName);
       }
       if (button) {
+        org_mozdev_compactHeader.debug.log("fillToolboxPalette add button: " +
+            button.id);
         var hdrButton = button.cloneNode(true);
         if (hdrButton) {
           if (hdrButton.localName == "toolbaritem") {
@@ -171,6 +177,9 @@ org_mozdev_compactHeader.toolbar = function() {
           if (hdrToolbox && hdrToolbox.palette) {
             hdrToolbox.palette.appendChild(hdrButton);
           }
+          else {
+            org_mozdev_compactHeader.debug.log("fillToolboxPalette: did not find header palette");
+          }
   /*        var bStyle = document.defaultView.getComputedStyle(button, null);
           hdrButton.style.listStyleImage = bStyle.listStyleImage;*/
         }
@@ -181,6 +190,10 @@ org_mozdev_compactHeader.toolbar = function() {
           currentSet = hdrToolbar.getAttribute("currentset");
           hdrToolbar.currentSet = currentSet;
         }
+      }
+      else {
+        org_mozdev_compactHeader.debug.log("fillToolboxPalette cannot add button: " +
+            buttonName);
       }
     org_mozdev_compactHeader.debug.log("fillToolboxPalette stop");
     };
@@ -218,6 +231,9 @@ org_mozdev_compactHeader.toolbar = function() {
     if (hdrToolbox && hdrToolbox.palette) {
       buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbarbutton"));
     }
+    else {
+      org_mozdev_compactHeader.debug.log("setButtonStyle: did not find header palette");
+    }
     var buttons = buttons1.concat(buttons2);
     for (var i=0; i<buttons.length; i++) {
       var button = buttons[i];
@@ -253,6 +269,9 @@ org_mozdev_compactHeader.toolbar = function() {
     var buttons2;
     if (hdrToolbox && hdrToolbox.palette) {
       buttons2 = Array.prototype.slice.call(hdrToolbox.palette.querySelectorAll("toolbaritem"));
+    }
+    else {
+      org_mozdev_compactHeader.debug.log("setButtonStyle did not find header palette");
     }
 
     var buttons = buttons1.concat(buttons2);
@@ -459,6 +478,7 @@ org_mozdev_compactHeader.toolbar = function() {
           button1.parentNode.removeChild(button1);
         }
       }
+
       var headerViewToolbox = document.getElementById("header-view-toolbox");
       if (headerViewToolbox && headerViewToolbox.palette) {
         var button2 = headerViewToolbox.palette.
@@ -502,6 +522,19 @@ org_mozdev_compactHeader.toolbar = function() {
   pub.CHTSetDefaultButtons = function () {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
+
+    if (!hdrToolbox) {
+      org_mozdev_compactHeader.debug.log("CHTSetDefaultButtons: no header toolbox!");
+      return;
+    }
+
+    if (hdrToolbar.hasAttribute("compactHeaderModified") &&
+        hdrToolbar.getAttribute("compactHeaderModified") == "true") {
+      org_mozdev_compactHeader.debug.log(
+        "CHTSetDefaultButtons: do not set default values, because it was already done once"
+      );
+      return;
+    }
     var hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
     var hdrBoxDefaultLabelalign = hdrToolbox.getAttribute("defaultlabelalign");
     var hdrBoxDefaultIconsize = hdrToolbox.getAttribute("defaulticonsize");
@@ -514,6 +547,7 @@ org_mozdev_compactHeader.toolbar = function() {
     hdrToolbox.setAttribute("mode", hdrBoxDefaultMode);
     hdrToolbar.setAttribute("iconsize", hdrBarDefaultIconsize);
     hdrToolbar.setAttribute("mode", hdrBarDefaultMode);
+    hdrToolbar.setAttribute("compactHeaderModified", "true");
 
     hdrToolbar.currentSet = hdrBarDefaultSet;
     hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
@@ -524,8 +558,13 @@ org_mozdev_compactHeader.toolbar = function() {
     myPersist(hdrToolbar,"iconsize");
     myPersist(hdrToolbar,"mode");
     myPersist(hdrToolbar,"currentset");
+    myPersist(hdrToolbar,"compactHeaderModified");
   };
 
+  /*
+   * Cleanup header toolbar to the default set when uninstalling
+   * this addon
+   */
   pub.CHTCleanupButtons = function() {
     var hdrToolbox = document.getElementById("header-view-toolbox");
     var hdrToolbar = document.getElementById("header-view-toolbar");
@@ -539,6 +578,7 @@ org_mozdev_compactHeader.toolbar = function() {
     hdrToolbar.setAttribute("mode", "full");
     hdrToolbar.currentSet = hdrBarDefaultSet;
     hdrToolbar.setAttribute("currentset", hdrBarDefaultSet);
+    hdrToolbar.removeAttribute("compactHeaderModified");
 
     myPersist(hdrToolbox,"labelalign");
     myPersist(hdrToolbox,"iconsize");
@@ -546,6 +586,7 @@ org_mozdev_compactHeader.toolbar = function() {
     myPersist(hdrToolbar,"iconsize");
     myPersist(hdrToolbar,"mode");
     myPersist(hdrToolbar,"currentset");
+    myPersist(hdrToolbar,"compactHeaderModified");
   };
 
   pub.populateEmptyToolbar = function() {

@@ -436,14 +436,18 @@ org_mozdev_compactHeader.pane = function() {
 
     org_mozdev_compactHeader.debug.log("coheOnLoadMsgHeaderPane 2");
 
+    org_mozdev_compactHeader.messenger.loadToolboxData();
+    org_mozdev_compactHeader.toolbar.fillToolboxPalette();
+    org_mozdev_compactHeader.messenger.saveToolboxData();
+
     if (coheFirstTime)
     {
       org_mozdev_compactHeader.debug.log("coheFirstTime start");
       coheFirstTime = false;
       gMessageListeners.push(coheMessageListener);
-      org_mozdev_compactHeader.messenger.loadToolboxData();
-      org_mozdev_compactHeader.toolbar.fillToolboxPalette();
-      org_mozdev_compactHeader.messenger.saveToolboxData();
+//      org_mozdev_compactHeader.messenger.loadToolboxData();
+//      org_mozdev_compactHeader.toolbar.fillToolboxPalette();
+//      org_mozdev_compactHeader.messenger.saveToolboxData();
 
       org_mozdev_compactHeader.debug.log("coheFirstTime 1");
 
@@ -595,7 +599,10 @@ org_mozdev_compactHeader.pane = function() {
       selectEmailDisplayed();
     }
 
-    //org_mozdev_compactHeader.toolbar.fillToolboxPalette(document);
+//    org_mozdev_compactHeader.messenger.loadToolboxData();
+//    org_mozdev_compactHeader.toolbar.fillToolboxPalette();
+//    org_mozdev_compactHeader.messenger.saveToolboxData();
+
     coheToggleHeaderContent();
     org_mozdev_compactHeader.toolbar.CHTUpdateReplyButton();
     org_mozdev_compactHeader.toolbar.CHTUpdateJunkButton();
@@ -1245,7 +1252,15 @@ org_mozdev_compactHeader.pane = function() {
   return pub;
 }();
 
-addEventListener('messagepane-loaded', org_mozdev_compactHeader.pane.coheOnLoadMsgHeaderPane, true);
+// https://hg.mozilla.org/comm-central/rev/e1b29b3607c4#l1.13
+if (document.getElementById("msgHeaderView").loaded) {
+  org_mozdev_compactHeader.debug.log("firstRun: messagepane-loaded was already issued");
+  org_mozdev_compactHeader.pane.coheOnLoadMsgHeaderPane();
+}
+else {
+  addEventListener('messagepane-loaded', org_mozdev_compactHeader.pane.coheOnLoadMsgHeaderPane, true);
+}
+
 addEventListener('messagepane-unloaded', org_mozdev_compactHeader.pane.coheOnUnloadMsgHeaderPane, true);
 addEventListener('load', org_mozdev_compactHeader.pane.coheInitializeOverlay, false);
 
