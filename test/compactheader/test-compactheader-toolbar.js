@@ -245,6 +245,8 @@ function test_customize_header_toolbar_check_default()
   expand_and_assert_header(msgc);
   hdrToolbar = msgc.eid("header-view-toolbar").node;
   hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+  dump("hdrBarDefaultSet: " + hdrBarDefaultSet + "\n");
+  dump("hdrToolbar.currentSet: " + hdrToolbar.currentSet + "\n");
   assert_equals(hdrToolbar.currentSet, hdrBarDefaultSet);
   // In a fresh profile the currentset attribute does not
   // exist, i.e. it returns empty. So check for both valid
@@ -381,6 +383,8 @@ function test_customize_header_toolbar_separate_window()
   assert_equals(filterInvisibleButtons(msgc, toolbar.getAttribute("currentset")),
       reverseSet);
 
+  dump("reversing finished\n");
+
   // Make sure we have a different window open, so that we don't start shutting
   // down just because the last window was closed
   let abwc = openAddressBook();
@@ -402,6 +406,7 @@ function test_customize_header_toolbar_separate_window()
   msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
   toolbar = msgc.eid("header-view-toolbar").node;
+
   assert_equals(filterInvisibleButtons(msgc, toolbar.currentSet), reverseSet);
   assert_equals(filterInvisibleButtons(msgc, toolbar.getAttribute("currentset")),
       reverseSet);
