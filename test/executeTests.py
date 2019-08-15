@@ -388,7 +388,10 @@ class TestExecutor:
                         logging.error("cannot install thunderbird %" %
                                       e.output)
                 else:
-                    appbin = 'c:\\tmp\\compactheader\\test-99nightly\\testing\\thunderbird\\thunderbird.exe'
+                    appbin = (
+                        'c:\\tmp\\compactheader\\test-' + version +
+                        '\\testing\\thunderbird\\thunderbird.exe'
+                    )
 
                 # copy drag'n'drop helpers to shared-modules until
                 # they are added to thunderbird source
@@ -479,8 +482,8 @@ class TestExecutor:
             for disable_test in osx_disalbe_tests:
                 sed_cmd = [
                     "sed", "-i", "-e",
-                    's/' + disable_test + '/' +
-                    'no' + disable_test + '/',
+                    's/function ' + disable_test + '/' +
+                    'function no' + disable_test + '/',
                     os.path.join(
                         testdir, "mozmill", "compactheader",
                         "test-compactheader-toolbar.js")
@@ -529,8 +532,8 @@ class TestExecutor:
             for disable_test in win_disalbe_tests:
                 sed_cmd = [
                     "sed", "-i", "-e",
-                    's/' + disable_test + '/' +
-                    'no' + disable_test + '/',
+                    's/function ' + disable_test + '/' +
+                    'function no' + disable_test + '/g',
                     os.path.join(
                         testdir, "mozmill", "message-header",
                         "test-message-header.js")
@@ -545,8 +548,8 @@ class TestExecutor:
             for disable_test in beta_disalbe_tests:
                 sed_cmd = [
                     "sed", "-i", "-e",
-                    's/' + disable_test + '/' +
-                    'no' + disable_test + '/',
+                    's/function ' + disable_test + '/' +
+                    'function no' + disable_test + '/g',
                     os.path.join(
                         testdir, "mozmill", "compactheader",
                         "test-compactheader-collapse.js")
@@ -556,13 +559,22 @@ class TestExecutor:
             # disable all tests in test-compactheader-toolbar.js and
             # test-other-actions-button.js
             beta_disalbe_tests = [
-                'test',
+                'test_button_visibility',
+                'test_get_msg_button_customize_header_toolbar',
+                'test_customize_header_toolbar_check_default',
+                'test_other_actions_icon',
+                'test_customize_header_toolbar_reorder_buttons',
+                'test_customize_header_toolbar_separate_window',
+                'test_customize_header_toolbar_remove_buttons',
+                'test_customize_header_toolbar_add_all_buttons',
+                'test_customize_header_toolbar_dialog_style',
+                'test_customize_header_toolbar_change_button_style'
                 ]
             for disable_test in beta_disalbe_tests:
                 sed_cmd = [
                     "sed", "-i", "-e",
-                    's/' + disable_test + '/' +
-                    'no' + disable_test + '/g',
+                    's/function ' + disable_test + '/' +
+                    'function no' + disable_test + '/g',
                     os.path.join(
                         testdir, "mozmill", "compactheader",
                         "test-compactheader-toolbar.js")
@@ -572,8 +584,8 @@ class TestExecutor:
             for disable_test in beta_disalbe_tests:
                 sed_cmd = [
                     "sed", "-i", "-e",
-                    's/' + disable_test + '/' +
-                    'no' + disable_test + '/g',
+                    's/function ' + disable_test + '/' +
+                    'function no' + disable_test + '/g',
                     os.path.join(
                         testdir, "mozmill", "compactheader",
                         "test-other-actions-button.js")
@@ -611,7 +623,7 @@ class TestExecutor:
 #              "--binary=" + appbin,
 #              "-a", self.xpi,
 #              '--show-all',
-#              "-t", "compactheader/test-more-button.js",
+#              "-t", "compactheader/test-compactheader-toolbar.js",
 #              "--testing-modules-dir", "../modules",
 #              "2>&1"],
             [python, "runtest.py",
