@@ -786,7 +786,7 @@ function test_set_toolbar_position() {
 
   select_message_in_folder(folder1, 0, mc);
   expand_and_assert_header(mc);
-  restore_and_check_default_buttons(mc);
+//  restore_and_check_default_buttons(mc);
 
   set_and_assert_toolbox_position(mc, 'top');
   set_and_assert_toolbox_position(mc, 'left');
@@ -870,7 +870,7 @@ function test_set_toolbar_position() {
   set_and_assert_toolbox_position(mc, 'top');
 
   expand_and_assert_header(mc);
-  restore_and_check_default_buttons(mc);
+//  restore_and_check_default_buttons(mc);
 }
 
 
