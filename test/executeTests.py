@@ -563,6 +563,7 @@ class TestExecutor:
                 'test_get_msg_button_customize_header_toolbar',
                 'test_customize_header_toolbar_check_default',
                 'test_other_actions_icon',
+                'test_other_actions_button',
                 'test_customize_header_toolbar_reorder_buttons',
                 'test_customize_header_toolbar_separate_window',
                 'test_customize_header_toolbar_remove_buttons',
