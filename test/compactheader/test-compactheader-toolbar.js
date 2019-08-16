@@ -149,9 +149,12 @@ function teardownModule() {
  */
 function test_1_header_toolbar_check_default() {
   let curMessage = select_message_in_folder(folder1, 0, mc);
-  let hdrToolbar = mc.eid("header-view-toolbar").node;
-  let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
-  expand_and_assert_header(mc);
+
+  let msgc;
+
+  open_preferences_dialog(mc, subtest_change_twoline);
+  collapse_and_assert_header(mc);
+
   set_and_assert_toolbox_position(mc, 'top');
 
   // only icons are shown
@@ -159,14 +162,37 @@ function test_1_header_toolbar_check_default() {
 
   // Display message in new window and check that the default
   // buttons are shown there.
-  let msgc = open_selected_message_in_new_window();
+  msgc = open_selected_message_in_new_window();
   assert_selected_and_displayed(msgc, curMessage);
-  expand_and_assert_header(msgc);
-  hdrToolbar = msgc.eid("header-view-toolbar").node;
+  collapse_and_assert_header(msgc);
+
   // only icons are shown
   subsubtest_button_style("hdrTrashButton", "-moz-box", "none", msgc);
 
   close_window(msgc);
+
+  open_preferences_dialog(mc, subtest_change_twoline);
+  expand_and_assert_header(mc);
+  set_and_assert_toolbox_position(mc, 'top');
+
+  // icons and labels are shown
+  subsubtest_button_style("hdrTrashButton", "-moz-box", "-moz-box", mc);
+
+  // Display message in new window and check that the default
+  // buttons are shown there.
+  msgc = open_selected_message_in_new_window();
+  assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
+
+  mc.sleep(10000);
+
+  // icons and labels are shown
+  subsubtest_button_style("hdrTrashButton", "-moz-box", "-moz-box", msgc);
+
+  collapse_and_assert_header(msgc);
+  close_window(msgc);
+
+  collapse_and_assert_header(mc);
 }
 
 
@@ -925,11 +951,30 @@ function subsubtest_button_style(button, aIconVisibility, aLabelVisibility, aCon
     let icon = aController.aid(button, {class: "toolbarbutton-icon"}).node;
     let label = aController.aid(button, {class: "toolbarbutton-text"}).node;
 
+    dump("icon1: " + icon + "\n");
+    dump("label1: " + label + "\n");
+
+    if (!icon) {
+      let node = aController.eid(button).node;
+      dump("node for icon: " + node + "\n");
+      if (node) {
+        icon = node.getElementsByAttribute("class", "toolbarbutton-icon")[0];
+        dump("icon2: " + icon + "\n");
+      }
+    }
     if (!icon) {
       let exp1 = aController.e(button);
       let node = aController.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
       if (node) {
         icon = aController.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-icon");
+      }    
+    }
+    if (!label) {
+      let node = aController.eid(button).node;
+      dump("node for label: " + node + "\n");
+      if (node) {
+        label = node.getElementsByAttribute("class", "toolbarbutton-text")[0];
+        dump("label2: " + label + "\n");
       }
     }
     if (!label) {
@@ -943,7 +988,5 @@ function subsubtest_button_style(button, aIconVisibility, aLabelVisibility, aCon
     assert_not_equals(null, icon, "No icon of button " + button + " found!");
     assert_equals(aController.window.getComputedStyle(icon).getPropertyValue("display"),
         aIconVisibility, "wrong visiibility for icon of button " + button);
-    assert_equals(aController.window.getComputedStyle(label).getPropertyValue("display"),
-        aLabelVisibility, "wrong visiibility for label of button " + i);
   }
 }
