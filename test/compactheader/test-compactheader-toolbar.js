@@ -143,6 +143,33 @@ function teardownModule() {
   Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
 }
 
+
+/**
+ *  Test at first that default button are sets with only icons
+ */
+function test_1_header_toolbar_check_default() {
+  let curMessage = select_message_in_folder(folder1, 0, mc);
+  let hdrToolbar = mc.eid("header-view-toolbar").node;
+  let hdrBarDefaultSet = hdrToolbar.getAttribute("defaultset");
+  expand_and_assert_header(mc);
+  set_and_assert_toolbox_position(mc, 'top');
+
+  // only icons are shown
+  subsubtest_button_style("hdrTrashButton", "-moz-box", "none", mc);
+
+  // Display message in new window and check that the default
+  // buttons are shown there.
+  let msgc = open_selected_message_in_new_window();
+  assert_selected_and_displayed(msgc, curMessage);
+  expand_and_assert_header(msgc);
+  hdrToolbar = msgc.eid("header-view-toolbar").node;
+  // only icons are shown
+  subsubtest_button_style("hdrTrashButton", "-moz-box", "none", msgc);
+
+  close_window(msgc);
+}
+
+
 /**
  *  Test header pane toolbar position
  */
@@ -687,7 +714,7 @@ function test_customize_header_toolbar_change_button_style(){
   restore_and_check_default_buttons(mc);
 
   // The default mode is icon visible only.
-  subtest_buttons_style("-moz-box", "none");
+  subtest_buttons_style("-moz-box", "none", mc);
 
   // Change the button style to text and icon mode
   let ctc = open_header_pane_toolbar_customization(mc);
@@ -696,7 +723,7 @@ function test_customize_header_toolbar_change_button_style(){
   ctc.click(new elib.Elem(iconMode));
   close_header_pane_toolbar_customization(ctc);
 
-  subtest_buttons_style("-moz-box", "-moz-box");
+  subtest_buttons_style("-moz-box", "-moz-box", mc);
 
   // Change the button style to icon mode only
   ctc = open_header_pane_toolbar_customization(mc);
@@ -705,7 +732,7 @@ function test_customize_header_toolbar_change_button_style(){
   ctc.click(new elib.Elem(iconMode));
   close_header_pane_toolbar_customization(ctc);
 
-  subtest_buttons_style("-moz-box", "none");
+  subtest_buttons_style("-moz-box", "none", mc);
 
   // Change the button style to text (only) mode
   ctc = open_header_pane_toolbar_customization(mc);
@@ -714,11 +741,11 @@ function test_customize_header_toolbar_change_button_style(){
   ctc.click(new elib.Elem(textMode));
   close_header_pane_toolbar_customization(ctc);
 
-  subtest_buttons_style("none", "-moz-box");
+  subtest_buttons_style("none", "-moz-box", mc);
 
   // The default mode is icon visible only.
   restore_and_check_default_buttons(mc);
-  subtest_buttons_style("-moz-box", "none");
+  subtest_buttons_style("-moz-box", "none", mc);
   Services.prefs.clearUserPref("toolkit.customization.unsafe_drag_events");
 }
 
@@ -878,41 +905,45 @@ function test_set_toolbar_position() {
  *  Check all buttons in the toolbar for the correct style
  *  of text and icon.
  */
-function subtest_buttons_style(aIconVisibility, aLabelVisibility)
-{
-  let toolbar = mc.eid("header-view-toolbar").node;
+function subtest_buttons_style(aIconVisibility, aLabelVisibility, aController) {
+  let toolbar = aController.eid("header-view-toolbar").node;
   let currentSet = filterInvisibleButtons(mc, toolbar.currentSet).split(",");
 
   for (let i=0; i<currentSet.length; i++) {
-    // XXX For the moment only consider normal toolbar buttons.
-    // XXX Handling of toolbaritem buttons has to be added later,
-    // XXX especially the smart reply button!
-    if ((mc.eid(currentSet[i]).node.tagName == "toolbarbutton") &&
-        (currentSet[i] != "otherActionsButton") // otherActionsButton does not have an icon anymore :-(
-        ) {
-      let icon = mc.aid(currentSet[i], {class: "toolbarbutton-icon"}).node;
-      let label = mc.aid(currentSet[i], {class: "toolbarbutton-text"}).node;
+    let button = currentSet[i];
+    subsubtest_button_style(button, aIconVisibility, aLabelVisibility, aController);
+  }
+}
 
-      if (!icon) {
-        let exp1 = mc.e(currentSet[i]);
-        let node = mc.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
-        if (node) {
-          icon = mc.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-icon");
-        }
+function subsubtest_button_style(button, aIconVisibility, aLabelVisibility, aController) {
+  // XXX For the moment only consider normal toolbar buttons.
+  // XXX Handling of toolbaritem buttons has to be added later,
+  // XXX especially the smart reply button!
+  if ((aController.eid(button).node.tagName == "toolbarbutton") &&
+      (button != "otherActionsButton") // otherActionsButton does not have an icon anymore :-(
+      ) {
+    let icon = aController.aid(button, {class: "toolbarbutton-icon"}).node;
+    let label = aController.aid(button, {class: "toolbarbutton-text"}).node;
+
+    if (!icon) {
+      let exp1 = aController.e(button);
+      let node = aController.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
+      if (node) {
+        icon = aController.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-icon");
       }
-      if (!label) {
-        let exp1 = mc.e(currentSet[i]);
-        let node = mc.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
-        if (node) {
-          label = mc.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-text");
-        }
-      }
-      assert_not_equals(null, label, "No label of button " + currentSet[i] + " found!");
-      assert_not_equals(null, icon, "No icon of button " + currentSet[i] + " found!");
-      assert_equals(mc.window.getComputedStyle(icon).getPropertyValue("display"),
-          aIconVisibility, "wrong visiibility for icon of button " + currentSet[i]);
-      assert_equals(mc.window.getComputedStyle(label).getPropertyValue("display"),
-          aLabelVisibility, "wrong visiibility for label of button " + i);
     }
+    if (!label) {
+      let exp1 = aController.e(button);
+      let node = aController.window.document.getAnonymousElementByAttribute(exp1, "anonid", "button");
+      if (node) {
+        label = aController.window.document.getAnonymousElementByAttribute(node, "class", "toolbarbutton-text");
+      }
+    }
+    assert_not_equals(null, label, "No label of button " + button + " found!");
+    assert_not_equals(null, icon, "No icon of button " + button + " found!");
+    assert_equals(aController.window.getComputedStyle(icon).getPropertyValue("display"),
+        aIconVisibility, "wrong visiibility for icon of button " + button);
+    assert_equals(aController.window.getComputedStyle(label).getPropertyValue("display"),
+        aLabelVisibility, "wrong visiibility for label of button " + i);
   }
 }
