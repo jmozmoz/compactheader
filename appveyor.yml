@@ -38,6 +38,7 @@ install:
   - "where wget"
   - "sed --version"
   - "where sed"
+  - "pip install wheel"
   - "pip install bs4"
   - "pip install requests"
   - "pip install treeherder-client"
