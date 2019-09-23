@@ -66,6 +66,7 @@ org_mozdev_compactHeader.RSSLinkify = function() {
       return;
     }
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
+      org_mozdev_compactHeader.debug.log("updateheaderview start 1");
       if (!RSSLinkify.newSubject) pub.InitializeHeaderViewTables();
       var url = currentHeaderData["content-base"] || currentHeaderData["x-post-url"];
       if(url) {
@@ -118,18 +119,19 @@ org_mozdev_compactHeader.RSSLinkify = function() {
     if (cohePrefBranch.getBoolPref("headersize.linkify")) {
       org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 1");
       let newSubject = document.getElementById("CompactHeader_collapsedsubjectlinkBox");
+      org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables newSubject: " + newSubject);
       if (newSubject) {
         RSSLinkify.newSubject = newSubject;
       } else
       {
         org_mozdev_compactHeader.debug.log("try to create label");
         try {
-          RSSLinkify.newSubject = document.createElement("label");
-          org_mozdev_compactHeader.debug.log("created label");
-        }
-        catch(e) {
           RSSLinkify.newSubject = document.createXULElement("label");
           org_mozdev_compactHeader.debug.log("created XUL label");
+        }
+        catch(e) {
+          RSSLinkify.newSubject = document.createElement("label");
+          org_mozdev_compactHeader.debug.log("created label");
         }
       }
       org_mozdev_compactHeader.debug.log("rss InitializeHeaderViewTables start 2");
@@ -155,6 +157,7 @@ org_mozdev_compactHeader.RSSLinkify = function() {
   };
 
   function linkifySubject(subjectValueStr) {
+    org_mozdev_compactHeader.debug.log("linkifySubject start");
     var subjectNode = document.getElementById(subjectValueStr);
     while(subjectNode.childNodes.length > 0) {
       subjectNode.removeChild(subjectNode.firstChild)
@@ -191,25 +194,30 @@ org_mozdev_compactHeader.RSSLinkify = function() {
     } else {
       subjectNode.appendChild(document.createTextNode(subject));
     }
+    org_mozdev_compactHeader.debug.log("linkifySubject stop");
   }
 
   /* :::: Subject Link onClick Listener Functions :::: */
   pub.subjectLinkOnClickListenter = function(event) {
+    org_mozdev_compactHeader.debug.log("subjectLinkOnClickListenter start");
     if (event.originalTarget && event.originalTarget.getAttribute("href")) {
       try {
         messenger.launchExternalURL(event.originalTarget.getAttribute("href"));
       } catch (e) { Application.console.log(e); }
     }
-  }
+    org_mozdev_compactHeader.debug.log("subjectLinkOnClickListenter stop");
+  };
 
   pub.CopyToClipboard = function(node, attr) {
+    org_mozdev_compactHeader.debug.log("CopyToClipboard start");
     if (node) {
       var contractid = "@mozilla.org/widget/clipboardhelper;1";
       var iid = Components.interfaces.nsIClipboardHelper;
       var clipboard = Components.classes[contractid].getService(iid);
       clipboard.copyString( node.getAttribute(attr) );
     }
-  }
+    org_mozdev_compactHeader.debug.log("CopyToClipboard stop");
+  };
 
   return pub;
 }();

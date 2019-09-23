@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "CompactHeader",
   "description": "Add ability to reduce header size to one or two lines. Linkify subjects in RSS feeds.",
-  "version": "3.0.0beta3",
+  "version": "3.0.0beta4",
   "author": "Joachim Herb",
   "homepage_url": "http://compactheader.mozdev.org/",
   "legacy": {

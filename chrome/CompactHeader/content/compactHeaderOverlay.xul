@@ -189,19 +189,6 @@
     </menuitem>
   </menupopup>
 
-  <menupopup id="appmenu_HeadersPopup">
-    <menuseparator id="CompactHeader_appmenu_viewMenuCompactSeparator"/>
-    <menuitem id="CompactHeader_appmenu_viewMenuCompact"
-              label="&CompactHeader_compactMenu.label;"
-              type="checkbox"
-              accesskey="&CompactHeader_compactMenu.accesskey;"
-              oncommand="org_mozdev_compactHeader.pane.coheToggleHeaderView();"
-              key="CompactHeader_hideDetailsKey">
-      <observes element="CompactHeader_viewMenuCompactBroadcast"
-                attribute="checked"/>
-    </menuitem>
-  </menupopup>
-
   <hbox id="messagepaneboxwrapper">
     <vbox id="CompactHeader_leftSidebar"
           class="main-header-area"
