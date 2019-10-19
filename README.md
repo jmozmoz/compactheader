@@ -10,8 +10,8 @@ view, which buttons should be displayed in header pane.
 | ------------- | ------------- | ------------- |
 |ESR 60: |![Build Status](https://travis-ci.org/jmozmoz/compactheader.svg?branch=esr)|![Build Status](https://ci.appveyor.com/api/projects/status/mmvvkm83lajuunms/branch/esr?svg=true)|
 |ESR 68: |![Build Status](https://travis-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branches/master/2)|![Build Status](https://appveyor-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branch/master/2)|
-|beta: |![Build Status](https://travis-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branches/master/1)|![Build Status](https://appveyor-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branch/master/1)|
-|daily: |![Build Status](https://travis-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branches/master/3)|![Build Status](https://appveyor-matrix-badges.herokuapp.com/repos/jmozmoz/compactheader/branch/master/3)|
+|beta: |disabled|disabled|
+|beta: |disabled|disabled|
 
 ### Description
 
