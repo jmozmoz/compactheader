@@ -10,7 +10,7 @@ pref("extensions.CompactHeader.header.darkenonfocus", false);
 
 pref("extensions.CompactHeader.version", "0");
 pref("extensions.CompactHeader.firstrun", true);
-pref("extensions.CompactHeader.debugLevel", 1);
+pref("extensions.CompactHeader.debugLevel", 3);
 
 pref("extensions.CompactHeader.mail:3panecollapseState", true);
 pref("extensions.CompactHeader.mail:messageWindowcollapseState", true);
