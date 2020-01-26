@@ -4,7 +4,7 @@
   "description": "Add ability to reduce header size to one or two lines. Linkify subjects in RSS feeds.",
   "version": "3.0.0beta5",
   "author": "Joachim Herb",
-  "homepage_url": "http://compactheader.mozdev.org/",
+  "homepage_url": "https://addons.thunderbird.net/thunderbird/addon/compactheader/",
   "legacy": {
     "options": {
       "page": "chrome://CompactHeader/content/preferences.xul",
